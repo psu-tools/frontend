@@ -1,22 +1,32 @@
 <script setup lang="ts">
-defineProps<{
+import type { Trip } from '@/services/api';
+
+interface Props {
+  trip: Trip;
   active?: boolean;
-}>()
+}
+
+defineProps<Props>();
 </script>
 
 <template>
-  <div class="min-h-32 rounded-[30px] py-4 px-5 flex justify-between items-center" :class="{
+  <div class="min-h-32 rounded-[30px] py-4 px-5 flex justify-between items-center text-xs" :class="{
     'bg-[#3F463E] text-white': active,
     'bg-[#F6F6F6] text-[#353A40]' : !active
   }">
+<!--    <div class="spacy-y-3" v-if="trip">-->
+<!--      <p>id: {{trip.id}}</p>-->
+<!--      <p>transport type: {{ trip.transportType }}</p>-->
+<!--      <p>overtime: {{ trip.overtime }}</p>-->
+<!--    </div>-->
+
     <div class="flex flex-col gap-2 justify-between items-start">
       <div>
         <p class="text-sm opacity-70">Сейчас</p>
-        <p class="font-semibold">Название поездки</p>
+        <p class="font-semibold truncate w-48">{{ trip.id }}</p>
       </div>
       <div>
-        <p class="text-sm opacity-70">пункт отправления</p>
-        <p class="text-sm opacity-70">пункт назначения</p>
+        <p class="text-sm opacity-70 truncate w-48" v-for="(point, index) in trip.route" :key="index">{{ point.name }} ({{ point.latitude }}, {{ point.longitude }})</p>
       </div>
     </div>
     <div>
