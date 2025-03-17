@@ -6,12 +6,12 @@ export interface Point {
 }
 
 export type TransportType =
-    | 'CAR'
-    | 'TAXI'
-    | 'WALK'
-    | 'BICYCLE'
-    | 'SCOOTER'
-    | 'PUBLIC_TRANSPORT';
+  | 'CAR'
+  | 'TAXI'
+  | 'WALK'
+  | 'BICYCLE'
+  | 'SCOOTER'
+  | 'PUBLIC_TRANSPORT';
 
 export interface Trip {
     id: string;
@@ -35,15 +35,15 @@ export interface GetTripsListResponse {
 }
 
 export async function fetchTrips(): Promise<Trip[]> {
-    const { data, error } = await useFetch<GetTripsListResponse>(
-        'https://api.psu-tools.ru/routes-service/trips',
-        { method: 'GET' }
-    );
+    try {
+        const config = useRuntimeConfig();
+        const response = await $fetch<GetTripsListResponse>(`${config.public.apiHost}/trips`, {
+            method: 'GET'
+        });
 
-    if (error.value) {
-        console.error('ёмаё, эрор!:', error.value);
+        return response?.data || [];
+    } catch (error) {
+        console.error('Data (trips) fetch error:', error);
         return [];
     }
-
-    return data.value?.data || [];
 }
