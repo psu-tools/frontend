@@ -25,6 +25,10 @@ export default defineNuxtConfig({
         href: 'https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap'
       }
     ]
-
+  },
+  runtimeConfig: {
+    public: {
+      apiHost: process.env.API_HOST || 'https://api.psu-tools.ru/routes-service',
+    }
   }
 })
