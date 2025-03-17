@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import type { Trip } from '@/services/api';
-import { fetchTrips } from '@/services/api';
-import TripCard from "~/entities/trip/TripCard.vue";
+import type { Trip } from '@/services/api'
+import { fetchTrips } from '@/services/api'
+import ActiveTripCard from '~/entities/trip/ActiveTripCard.vue'
 
-const trips = ref<Trip[]>([]);
+const trips = ref<Trip[]>([])
 
 onMounted(async () => {
-  trips.value = await fetchTrips();
+  trips.value = await fetchTrips()
   console.log(trips.value.route)
-});
+})
 </script>
 
 <template>
@@ -16,12 +16,7 @@ onMounted(async () => {
     <h2 class="text-3xl font-bold text-[#353A40]">Активные</h2>
     <div class="mt-6">
       <div v-if="trips.length" class="space-y-4">
-        <TripCard
-            v-for="trip in trips"
-            :key="trip.id"
-            :trip="trip"
-            :active="true"
-        />
+        <ActiveTripCard :key="trips[0].id" :trip="trips[0]" :active="true" />
       </div>
       <div v-else>
         <p>поездок нет</p>
@@ -30,6 +25,4 @@ onMounted(async () => {
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
