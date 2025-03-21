@@ -1,12 +1,9 @@
 services:
   nuxt-app:
     build: .
-    container_name: frontend
+    container_name: nuxt-app
     ports:
-      - "3000:3000"
+      - '3000:3000'
     environment:
       - NODE_ENV=production
-    volumes:
-      - .:/app
-      - /app/node_modules
     restart: unless-stopped
