@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import IcHome from '#shared/ui/icons/IcHome.vue'
-import IcRoutes from '#shared/ui/icons/IcRoutes.vue'
+import Home from '~/icons/IcHome.vue'
+import Routes from '~/icons/IcRoutes.vue'
 
 import { useRoute } from 'vue-router'
 
@@ -12,10 +12,10 @@ const isActive = path => route.path === path
 <template>
   <div class="z-10 flex justify-center gap-16 bg-white w-full pt-5 pb-6 rounded-3xl">
     <NuxtLink to="/" class="flex flex-col items-center gap-1">
-      <IcHome :is-active="isActive('/')" />
+      <Home :is-active="isActive('/')" />
     </NuxtLink>
     <NuxtLink to="/routes">
-      <IcRoutes :is-active="isActive('/routes')" />
+      <Routes :is-active="isActive('/routes')" />
     </NuxtLink>
     <NuxtLink to="/profile">
       <div class="flex flex-col items-center justify-center gap-1">
