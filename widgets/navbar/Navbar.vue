@@ -8,7 +8,6 @@ const route = useRoute()
 
 const isActive = path => route.path === path
 </script>
-
 <template>
   <div class="z-10 flex justify-center gap-16 bg-white w-full pt-5 pb-6 rounded-3xl">
     <NuxtLink to="/" class="flex flex-col items-center gap-1">
