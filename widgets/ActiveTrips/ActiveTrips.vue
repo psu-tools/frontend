@@ -1,25 +1,24 @@
 <script setup lang="ts">
-import type { Trip } from '@/services/api'
-import { fetchTrips } from '@/services/api'
 import ActiveTripCard from '~/entities/trip/ActiveTripCard.vue'
+import { useTripsStore } from '~/stores/trips'
 
-const trips = ref<Trip[]>([])
+const tripsStore = useTripsStore()
 
-onMounted(async () => {
-  trips.value = await fetchTrips()
-  console.log(trips.value.route)
-})
+defineProps<{ trips: Trip[] }>()
 </script>
 
 <template>
   <div>
     <h2 class="text-3xl font-bold text-[#353A40]">Активные</h2>
     <div class="mt-6">
-      <div v-if="trips.length" class="space-y-4">
-        <ActiveTripCard :key="trips[0].id" :trip="trips[0]" :active="true" />
+      <a href="https://api.psu-tools.ru/v1/routes-service/trips/fe3308af-9b4b-4b68-8b84-027c4c8e7993" v-if="trips.length" class="space-y-4">
+        <ActiveTripCard v-for="trip in trips" :key="trips.id" :trip="trip" :active="true" />
+      </a>
+      <div v-if="tripsStore.isLoading" class="text-center text-gray-500">
+        Загрузка...
       </div>
-      <div v-else>
-        <p>поездок нет</p>
+      <div v-else-if="tripsStore.activeTrips.length === 0" class="text-center text-gray-500">
+        Поездок нет
       </div>
     </div>
   </div>
