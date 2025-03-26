@@ -25,9 +25,9 @@ defineProps<Props>()
       </div>
     </div>
     <div class="flex gap-1">
-      <div class="rounded-full w-6 h-6 bg-indigo-100 flex items-center justify-center">
+      <div class="rounded-full w-6 h-6 bg-primary/10 flex items-center justify-center">
         <svg
-          class="fill-indigo-500"
+          class="fill-primary"
           width="9"
           height="15"
           viewBox="0 0 9 15"
@@ -41,9 +41,9 @@ defineProps<Props>()
           />
         </svg>
       </div>
-      <div class="rounded-full h-6 w-14 bg-indigo-100 flex justify-center items-center gap-0.5">
+      <div class="rounded-full h-6 w-14 bg-primary/10 flex justify-center items-center gap-0.5">
         <svg
-          class="fill-indigo-500"
+          class="fill-primary"
           width="15"
           height="15"
           viewBox="0 0 15 15"
@@ -60,7 +60,7 @@ defineProps<Props>()
             d="M7.50018 2.72729C7.87674 2.72729 8.182 3.03256 8.182 3.40911V7.07864L10.5324 8.25382C10.8692 8.42222 11.0057 8.83177 10.8373 9.16858C10.6689 9.50538 10.2593 9.6419 9.92253 9.4735L7.19526 8.10986C6.96427 7.99436 6.81836 7.75828 6.81836 7.50002V3.40911C6.81836 3.03256 7.12362 2.72729 7.50018 2.72729Z"
           />
         </svg>
-        <p class="text-[10px] font-semibold text-indigo-500">13:00</p>
+        <p class="text-[10px] font-semibold text-primary">13:00</p>
       </div>
     </div>
   </div>
