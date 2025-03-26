@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
 import { useNotificationsStore } from '@/stores/notifications'
 import { storeToRefs } from 'pinia'
 
