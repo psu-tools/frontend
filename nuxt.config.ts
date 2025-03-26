@@ -4,11 +4,13 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
   css: ['~/assets/css/main.css'],
+
   vite: {
     plugins: [
       tailwindcss(),
     ],
   },
+
   app: {
     link: [
       {
@@ -26,9 +28,12 @@ export default defineNuxtConfig({
       }
     ]
   },
+
   runtimeConfig: {
     public: {
-      apiHost: process.env.API_HOST || 'https://api.psu-tools.ru/routes-service',
+      apiHost: process.env.API_HOST || 'https://api.psu-tools.ru',
     }
-  }
+  },
+
+  modules: ['@pinia/nuxt']
 })

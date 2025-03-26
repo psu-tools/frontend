@@ -37,7 +37,7 @@ export interface GetTripsListResponse {
 export async function fetchTrips(): Promise<Trip[]> {
     try {
         const config = useRuntimeConfig();
-        const response = await $fetch<GetTripsListResponse>(`${config.public.apiHost}/trips`, {
+        const response = await $fetch<GetTripsListResponse>(`${config.public.apiHost}/routes-service/trips`, {
             method: 'GET'
         });
 
