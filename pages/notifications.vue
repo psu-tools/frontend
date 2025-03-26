@@ -53,7 +53,7 @@ onMounted(() => {
       <div
         v-for="notification in notifications"
         :key="notification.id"
-        class="border p-4 rounded-3xl"
+        class="p-5 rounded-[32px] bg-[#F8F9FD]"
       >
         <h2 class="font-bold">{{ notification.headerText }}</h2>
         <p>{{ notification.bodyText }}</p>
