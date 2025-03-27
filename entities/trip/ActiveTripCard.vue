@@ -16,7 +16,7 @@ defineProps<Props>()
   >
     <div class="flex flex-col gap-2 justify-between items-start w-full">
       <div class="space-y-1">
-        <p class="text-xs opacity-70">{{ tripsStore.formatDate(trip.arrivalDateTime) }}</p>
+        <p class="text-xs opacity-70">Сейчас</p>
         <p class="text-sm font-semibold truncate w-36">{{ trip.name }}</p>
       </div>
       <div class="flex items-center gap-1 text-xs w-full">
