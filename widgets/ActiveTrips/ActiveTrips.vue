@@ -20,7 +20,7 @@ defineProps<{ trips: Trip[] }>()
       </a>
       <div v-if="tripsStore.isLoading" class="text-center text-gray-500">Загрузка...</div>
       <div v-else-if="tripsStore.activeTrips.length === 0" class="text-center text-gray-500">
-        Поездок нет
+        Активных поездок нет
       </div>
     </div>
   </div>
