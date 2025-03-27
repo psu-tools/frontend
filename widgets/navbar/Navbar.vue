@@ -9,7 +9,9 @@ const route = useRoute()
 const isActive = path => route.path === path
 </script>
 <template>
-  <div class="z-10 flex justify-center gap-16 bg-white w-full pt-5 pb-6 rounded-3xl">
+  <div
+    class="fixed sm:absolute bottom-0 right-0 flex justify-center bg-white/40 backdrop-blur-2xl gap-16 w-full pt-5 pb-6 rounded-b-3xl"
+  >
     <NuxtLink to="/" class="flex flex-col items-center gap-1">
       <Home :is-active="isActive('/') || isActive('/notifications')" />
     </NuxtLink>

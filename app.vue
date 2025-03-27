@@ -9,7 +9,7 @@
       </h1>
     </div>
     <div class="sm:w-1/2 sm:pr-10">
-      <NuxtLayout class="sm:rounded-3xl sm:shadow-2xl sm:mx-auto">
+      <NuxtLayout class="sm:rounded-3xl sm:shadow-2xl sm:mx-auto overflow-hidden">
         <NuxtPage />
       </NuxtLayout>
     </div>
