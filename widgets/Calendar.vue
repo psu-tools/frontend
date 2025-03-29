@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { useTripsStore } from '@/stores/trips'
+
+const tripsStore = useTripsStore()
 
 const isExpanded = ref(false)
-const selectedDate = ref<Date | null>(null)
+const selectedDate = ref(tripsStore.selectedDate || new Date())
 const currentDate = ref(new Date())
 const today = new Date()
 
@@ -48,6 +50,7 @@ const formatMonthYear = (date: Date) =>
 const selectDate = (date: Date) => {
   if (date) {
     selectedDate.value = date
+    tripsStore.setSelectedDate(date)
   }
 }
 
@@ -141,7 +144,7 @@ const handleMouseUp = (event: MouseEvent) => {
       </span>
     </div>
 
-    <div class="mt-2 py-2 grid grid-cols-7 gap-1 text-center">
+    <div class="mt-2 py-2 grid grid-cols-7 gap-3 text-center">
       <span
         v-for="day in ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС']"
         :key="day"
@@ -176,7 +179,7 @@ const handleMouseUp = (event: MouseEvent) => {
     </div>
 
     <div
-      class="mx-auto my-1 h-1 w-8 rounded-full bg-gray-300 cursor-pointer"
+      class="mx-auto my-2 h-1 w-8 rounded-full bg-gray-300 cursor-pointer"
       @click="toggleCalendar"
     ></div>
   </div>

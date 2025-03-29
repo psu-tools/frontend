@@ -16,7 +16,13 @@ defineProps<{ trips: Trip[] }>()
         v-if="trips.length"
         class="space-y-4"
       >
-        <PrimaryTripCard v-for="trip in trips" :key="trip.id" :trip="trip" :active="false" />
+        <PrimaryTripCard
+          v-for="trip in trips"
+          :key="trip.id"
+          :trip="trip"
+          :active="false"
+          :has-date="true"
+        />
       </a>
       <div v-if="tripsStore.isLoading" class="text-center text-gray-500">Загрузка...</div>
       <div v-else-if="tripsStore.upcomingTrips.length === 0" class="text-center text-gray-500">
