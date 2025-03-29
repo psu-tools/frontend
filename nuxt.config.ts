@@ -25,7 +25,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      apiHost: process.env.API_HOST || 'https://api.psu-tools.ru',
+      apiHost: 'https://api.psu-tools.ru',
     },
   },
 
