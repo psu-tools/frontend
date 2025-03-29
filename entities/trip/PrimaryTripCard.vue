@@ -12,7 +12,7 @@ defineProps<Props>()
 
 <template>
   <div
-    class="relative overflow-hidden h-24 rounded-[32px] py-4 px-5 flex flex-col justify-between items-start text-xs bg-[#F8F9FD] text-[#353A40]"
+    class="relative overflow-hidden h-24 rounded-[32px] py-4 px-5 flex flex-col justify-between items-start text-xs bg-[#F8F9FD] text-text"
   >
     <div class="flex gap-2 justify-between items-start w-full">
       <div class="space-y-1">

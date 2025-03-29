@@ -31,7 +31,7 @@ onMounted(() => {
 <template>
   <div>
     <div class="flex justify-between items-center">
-      <h2 class="text-3xl font-bold text-[#353A40]">Уведомления</h2>
+      <h2 class="text-3xl font-bold text-text">Уведомления</h2>
       <NuxtLink class="mb-1" to="/">
         <svg
           class="rotate-180 opacity-50 hover:opacity-100"
