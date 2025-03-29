@@ -15,8 +15,8 @@ const isActive = path => route.path === path
     <NuxtLink to="/" class="flex flex-col items-center gap-1">
       <Home :is-active="isActive('/') || isActive('/notifications')" />
     </NuxtLink>
-    <NuxtLink to="/routes">
-      <Routes :is-active="isActive('/routes')" />
+    <NuxtLink to="/trips">
+      <Routes :is-active="isActive('/trips')" />
     </NuxtLink>
     <NuxtLink to="/profile">
       <Profile :is-active="isActive('/profile')" />
