@@ -7,4 +7,5 @@ body {
 @theme {
     --color-primary: #FF724C;
     --color-secondary: #FDBF50;
+    --color-text: #353A40;
 }

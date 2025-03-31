@@ -9,7 +9,7 @@ defineProps<{ trips: Trip[] }>()
 
 <template>
   <div>
-    <h2 class="text-3xl font-bold text-[#353A40]">Активные</h2>
+    <h2 class="text-3xl font-bold text-text">Активные</h2>
     <div class="mt-6">
       <a
         href="https://api.psu-tools.ru/v1/routes-service/trips/fe3308af-9b4b-4b68-8b84-027c4c8e7993"

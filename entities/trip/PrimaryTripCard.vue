@@ -5,6 +5,7 @@ const tripsStore = useTripsStore()
 
 interface Props {
   trip: Trip
+  hasDate: boolean
 }
 
 defineProps<Props>()
@@ -12,11 +13,17 @@ defineProps<Props>()
 
 <template>
   <div
-    class="relative overflow-hidden h-24 rounded-[32px] py-4 px-5 flex flex-col justify-between items-start text-xs bg-[#F8F9FD] text-[#353A40]"
+    class="relative overflow-hidden rounded-[32px] py-4 px-5 flex flex-col justify-between items-start text-xs bg-[#F8F9FD] text-text"
+    :class="{ 'h-24': hasDate, 'h-20': !hasDate }"
   >
-    <div class="flex gap-2 justify-between items-start w-full">
+    <div
+      class="flex gap-2 justify-between items-start w-full"
+      :class="{ 'items-start': hasDate, 'items-center': !hasDate }"
+    >
       <div class="space-y-1">
-        <p class="text-xs opacity-70">{{ tripsStore.formatDate(trip.arrivalDateTime) }}</p>
+        <p v-if="hasDate" class="text-xs opacity-70">
+          {{ tripsStore.formatDate(trip.arrivalDateTime) }}
+        </p>
         <p class="font-semibold text-sm truncate w-36">{{ trip.name }}</p>
       </div>
       <div class="flex gap-1">

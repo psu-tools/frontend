@@ -37,6 +37,7 @@ export interface GetTripsListResponse {
 }
 
 export const useTripsStore = defineStore('trips', () => {
+  const selectedDate = ref<Date | null>(new Date())
   const trips = ref<Trip[]>([])
   const isLoading = ref(false)
 
@@ -66,7 +67,7 @@ export const useTripsStore = defineStore('trips', () => {
     const formattedDate = date.toLocaleDateString('ru-RU', {
       weekday: 'long',
       day: 'numeric',
-      month: 'long'
+      month: 'long',
     })
 
     return formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1)
@@ -77,5 +78,36 @@ export const useTripsStore = defineStore('trips', () => {
     return date.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' })
   }
 
-  return { trips, isLoading, fetchTrips, activeTrips, upcomingTrips, formatTime, formatDate }
+  const setSelectedDate = (date: Date | null) =>
+    (selectedDate.value = date ? new Date(date.setHours(0, 0, 0, 0)) : new Date())
+
+  const filteredTrips = computed(() => {
+    if (!selectedDate.value) return trips.value
+    return trips.value.filter(trip => {
+      const tripDate = new Date(trip.departureDateTime)
+      tripDate.setHours(0, 0, 0, 0)
+      const selected = new Date(selectedDate.value!)
+      selected.setHours(0, 0, 0, 0)
+      return tripDate.getTime() === selected.getTime()
+    })
+  })
+
+  const sortedFilteredTrips = computed(() => {
+    return [...filteredTrips.value].sort((a, b) => {
+      return new Date(a.departureDateTime).getTime() - new Date(b.departureDateTime).getTime()
+    })
+  })
+
+  return {
+    trips,
+    isLoading,
+    fetchTrips,
+    activeTrips,
+    upcomingTrips,
+    formatTime,
+    formatDate,
+    selectedDate,
+    setSelectedDate,
+    filteredTrips: sortedFilteredTrips,
+  }
 })
