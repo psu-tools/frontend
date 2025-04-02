@@ -8,7 +8,6 @@ import Navbar from '~/widgets/navbar/Navbar.vue'
       <slot />
     </div>
     <Navbar />
+    <div id="modal-container"></div>
   </div>
 </template>
-
-<style scoped></style>

@@ -1,44 +1,9 @@
-<template>
-  <Teleport to="body">
-    <div
-      v-if="modal.isOpen"
-      class="fixed inset-0 z-50 flex justify-center items-end bg-black/20 transition-opacity duration-300"
-      :class="{ 'opacity-100': isVisible, 'opacity-0': !isVisible }"
-      @click="closeModal"
-    >
-      <div
-        class="w-full bg-(--primary-white) items-end rounded-t-2xl pt-2 px-5 transition-all duration-300 touch-none"
-        :class="{
-          'h-6/10 translate-y-0': !isExpanded,
-          'h-9/10 translate-y-0': isExpanded,
-          'translate-y-full': !isVisible,
-        }"
-        @click.stop
-        ref="popup"
-        @touchstart="onTouchStart"
-        @touchmove="onTouchMove"
-        @touchend="onTouchEnd"
-      >
-        <div class="w-full flex justify-center">
-          <div
-            @click="toggleExpand"
-            class="mx-auto my-2 h-1 w-8 rounded-full bg-(--medium-gray) cursor-pointer"
-          ></div>
-        </div>
-        <button @click="closeModal" class="absolute top-3 right-5 text-lg">✖</button>
-        <h2>
-          {{ modal.tripData }}
-        </h2>
-      </div>
-    </div>
-  </Teleport>
-</template>
-
 <script setup lang="ts">
-import { ref, watchEffect } from 'vue'
 import { useModalStore } from '~/stores/modal'
+import { useTripsStore } from '~/stores/trips'
 
-const modal = useModalStore()
+const modalStore = useModalStore()
+const tripsStore = useTripsStore()
 const isExpanded = ref(false)
 const isVisible = ref(false)
 
@@ -53,12 +18,12 @@ const closeModal = () => {
   isExpanded.value = false
   isVisible.value = false
   setTimeout(() => {
-    modal.closeModal()
+    modalStore.closeModal()
   }, 300)
 }
 
 watchEffect(() => {
-  if (modal.isOpen) {
+  if (modalStore.isOpen) {
     setTimeout(() => {
       isVisible.value = true
     }, 10)
@@ -87,3 +52,42 @@ const onTouchEnd = () => {
   }
 }
 </script>
+<template>
+  <Teleport to="#modal-container">
+    <div
+      v-if="modalStore.isOpen"
+      class="absolute inset-0 z-50 flex justify-center items-end bg-black/20 transition-opacity duration-300"
+      :class="{ 'opacity-100': isVisible, 'opacity-0': !isVisible }"
+      @click="closeModal"
+    >
+      <div
+        class="w-full bg-(--primary-white) items-end rounded-t-2xl pt-2 px-5 transition-all duration-300 touch-none"
+        :class="{
+          'h-6/10 translate-y-0': !isExpanded,
+          'h-9/10 translate-y-0': isExpanded,
+          'translate-y-full': !isVisible,
+        }"
+        @click.stop
+        ref="popup"
+        @touchstart="onTouchStart"
+        @touchmove="onTouchMove"
+        @touchend="onTouchEnd"
+      >
+        <div class="w-full flex justify-center flex-col">
+          <div
+            @click="toggleExpand"
+            class="mx-auto my-2 h-1 w-8 rounded-full bg-(--medium-gray) cursor-pointer mb-[20px]"
+          ></div>
+          <div class="">
+            <h2 class="text-2xl font-bold text-text">
+              {{ modalStore?.tripData?.name }}
+            </h2>
+            <p>{{ tripsStore.formatDate(modalStore?.tripData?.arrivalDateTime) }}</p>
+          </div>
+        </div>
+        <button @click="closeModal" class="absolute top-3 right-5 text-lg">✖</button>
+        <h2></h2>
+      </div>
+    </div>
+  </Teleport>
+</template>
