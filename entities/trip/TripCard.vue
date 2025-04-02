@@ -2,6 +2,8 @@
 import ActiveTripCard from '~/entities/trip/ActiveTripCard.vue'
 import PrimaryTripCard from '~/entities/trip/PrimaryTripCard.vue'
 
+import { useModalStore } from '~/stores/modal'
+
 interface TripProps {
   status: string
   trip: Trip
@@ -9,12 +11,14 @@ interface TripProps {
 }
 
 defineProps<TripProps>()
+
+const modal = useModalStore()
 </script>
 <template>
-  <div v-if="status === 'active'">
+  <div v-if="status === 'active'" @click="modal.openModal(trip)">
     <ActiveTripCard :trip="trip" />
   </div>
-  <div v-else-if="status === 'primary'">
+  <div v-else-if="status === 'primary'" @click="modal.openModal(trip)">
     <PrimaryTripCard :trip="trip" :has-date="hasDate" />
   </div>
 </template>

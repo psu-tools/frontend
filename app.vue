@@ -11,8 +11,11 @@
     <div class="sm:w-1/2 sm:pr-10">
       <NuxtLayout class="sm:rounded-3xl sm:shadow-2xl sm:mx-auto overflow-hidden">
         <NuxtPage />
+        <TripPopup />
       </NuxtLayout>
     </div>
   </div>
 </template>
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import TripPopup from '~/pages/tripPopup.vue'
+</script>
