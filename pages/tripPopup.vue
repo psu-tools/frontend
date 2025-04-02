@@ -6,13 +6,20 @@
       @click="modal.closeModal"
     >
       <div
-        class="w-full h-3/5 bg-(--primary-white) items-end rounded-tl-2xl rounded-tr-2xl pt-[10px] pr-[20px] pl-[20px]"
+        class="w-full bg-(--primary-white) items-end rounded-tl-2xl rounded-tr-2xl pt-[10px] pr-[20px] pl-[20px] transition-all duration-300"
+        :class="{
+          'h-6/10': !isExpanded,
+          'h-9/10': isExpanded,
+        }"
         @click.stop
       >
-        <div class="w-full">
-          <div class="w-40 h-3 bg-(--medium-gray)"></div>
+        <div class="w-full flex justify-center">
+          <div
+            @click="toggleExpand"
+            class="mx-auto my-2 h-1 w-8 rounded-full bg-(--medium-gray) cursor-pointer"
+          ></div>
         </div>
-        <button @click="modal.closeModal"></button>
+        <button @click="modal.closeModal">Закрыть</button>
         <h2>{{ modal.tripData }}</h2>
       </div>
     </div>
@@ -23,4 +30,9 @@
 import { useModalStore } from '~/stores/modal'
 
 const modal = useModalStore()
+const isExpanded = ref(false)
+
+const toggleExpand = () => {
+  isExpanded.value = !isExpanded.value
+}
 </script>
