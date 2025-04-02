@@ -7,7 +7,7 @@ defineProps({ isActive: Boolean })
     <svg
       class="w-5 transition-colors duration-200"
       :class="{
-        'fill-primary opacity-100': isActive,
+        'fill-(--primary-orange) opacity-100': isActive,
         'fill-[#ADAFB1] opacity-40 group-hover:fill-[#3F463E] group-hover:opacity-100': !isActive,
       }"
       viewBox="0 0 20 20"
@@ -23,7 +23,7 @@ defineProps({ isActive: Boolean })
     <p
       class="transition-colors duration-200 text-[10px] font-semibold"
       :class="{
-        'text-primary opacity-100': isActive,
+        'text-(--primary-orange) opacity-100': isActive,
         'text-[#ADAFB1] opacity-40 group-hover:text-[#3F463E] group-hover:opacity-100': !isActive,
       }"
     >

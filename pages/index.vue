@@ -21,5 +21,3 @@ onMounted(async () => {
     <UpcomingTrips :trips="tripsStore.upcomingTrips" />
   </div>
 </template>
-
-<style scoped></style>

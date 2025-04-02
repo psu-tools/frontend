@@ -5,8 +5,13 @@ body {
 }
 
 @theme {
-  --color-primary: #ff724c;
+  /* colors */
+  --primary-orange: #ff724c;
   --color-secondary: #fdbf50;
   --color-text: #353a40;
+  --primary-gray: #999999;
+  --light-gray: #d9d9d9;
+
+  /* radius */
   --radius-2xl: 25px;
 }
