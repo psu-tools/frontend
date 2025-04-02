@@ -11,8 +11,8 @@ export const useModalStore = defineStore('modal', {
       this.isOpen = true
     },
     closeModal() {
-      this.isOpen = false
       this.tripData = null
+      this.isOpen = false
     },
   },
 })

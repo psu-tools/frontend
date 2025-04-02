@@ -1,11 +1,12 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 body {
-    font-family: 'Open Sans', sans-serif;
+  font-family: 'Open Sans', sans-serif;
 }
 
 @theme {
-    --color-primary: #FF724C;
-    --color-secondary: #FDBF50;
-    --color-text: #353A40;
+  --color-primary: #ff724c;
+  --color-secondary: #fdbf50;
+  --color-text: #353a40;
+  --radius-2xl: 25px;
 }
