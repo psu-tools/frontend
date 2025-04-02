@@ -2,14 +2,16 @@
   <Teleport to="body">
     <div
       v-if="modal.isOpen"
-      class="fixed top-0 left-0 w-full h-full z-50 flex justify-center items-end bg-black/20"
-      @click="modal.closeModal"
+      class="fixed inset-0 z-50 flex justify-center items-end bg-black/20 transition-opacity duration-300"
+      :class="{ 'opacity-100': isVisible, 'opacity-0': !isVisible }"
+      @click="closeModal"
     >
       <div
-        class="w-full bg-(--primary-white) items-end rounded-tl-2xl rounded-tr-2xl pt-[10px] pr-[20px] pl-[20px] transition-all duration-300"
+        class="w-full bg-(--primary-white) items-end rounded-t-2xl pt-2 px-5 transition-all duration-300"
         :class="{
-          'h-6/10': !isExpanded,
-          'h-9/10': isExpanded,
+          'h-6/10 translate-y-0': !isExpanded,
+          'h-9/10 translate-y-0': isExpanded,
+          'translate-y-full': !isVisible,
         }"
         @click.stop
       >
@@ -19,8 +21,10 @@
             class="mx-auto my-2 h-1 w-8 rounded-full bg-(--medium-gray) cursor-pointer"
           ></div>
         </div>
-        <button @click="modal.closeModal">Закрыть</button>
-        <h2>{{ modal.tripData }}</h2>
+        <button @click="closeModal" class="absolute top-3 right-5 text-lg">✖</button>
+        <h2>
+          {{ modal.tripData }}
+        </h2>
       </div>
     </div>
   </Teleport>
@@ -31,8 +35,25 @@ import { useModalStore } from '~/stores/modal'
 
 const modal = useModalStore()
 const isExpanded = ref(false)
+const isVisible = ref(false)
 
 const toggleExpand = () => {
   isExpanded.value = !isExpanded.value
 }
+
+const closeModal = () => {
+  isExpanded.value = false
+  isVisible.value = false
+  setTimeout(() => {
+    modal.closeModal()
+  }, 300)
+}
+
+watchEffect(() => {
+  if (modal.isOpen) {
+    setTimeout(() => {
+      isVisible.value = true
+    }, 10)
+  }
+})
 </script>
