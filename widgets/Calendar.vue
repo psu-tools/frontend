@@ -163,11 +163,11 @@ const handleMouseUp = (event: MouseEvent) => {
         :key="date?.toISOString() || index"
         class="text-xs py-2.5 text-center rounded-xl cursor-pointer"
         :class="{
-          'bg-(--primary-orange) text-white font-semibold':
+          'bg-(--primary-orange) text-(--primary-white) font-semibold':
             date && selectedDate && date.toDateString() === selectedDate.toDateString(),
           'text-(--primary-orange) font-semibold':
             date && date.toDateString() === today.toDateString(),
-          'text-gray-400 font-normal':
+          'text-(--primary-gray) font-normal':
             date &&
             date.setHours(0, 0, 0, 0) < today.setHours(0, 0, 0, 0) &&
             !(date.toDateString() === today.toDateString()),

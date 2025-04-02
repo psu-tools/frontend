@@ -6,11 +6,11 @@
       @click="modal.closeModal"
     >
       <div
-        class="w-full h-3/5 bg-white items-end rounded-tl-2xl rounded-tr-2xl pt-[10px] pr-[20px] pl-[20px]"
+        class="w-full h-3/5 bg-(--primary-white) items-end rounded-tl-2xl rounded-tr-2xl pt-[10px] pr-[20px] pl-[20px]"
         @click.stop
       >
         <div class="w-full">
-          <div class="w-40 h-3 bg-(--light-gray)"></div>
+          <div class="w-40 h-3 bg-(--medium-gray)"></div>
         </div>
         <button @click="modal.closeModal"></button>
         <h2>{{ modal.tripData }}</h2>

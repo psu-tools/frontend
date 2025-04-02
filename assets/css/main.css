@@ -7,10 +7,14 @@ body {
 @theme {
   /* colors */
   --primary-orange: #ff724c;
-  --color-secondary: #fdbf50;
-  --color-text: #353a40;
+  --primary-white: #ffffff;
+  --primary-yellow: #fdbf50;
   --primary-gray: #999999;
-  --light-gray: #d9d9d9;
+  --primary-light-gray: #adafb1;
+  --primary-dark-gray: #3f463e;
+  --medium-gray: #d9d9d9;
+  --smoke-gray: #f8f9fd;
+  --color-text: #353a40;
 
   /* radius */
   --radius-2xl: 25px;

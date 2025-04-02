@@ -18,8 +18,13 @@ defineProps<{ trips: Trip[] }>()
         :status="'primary'"
         :has-date="true"
       />
-      <div v-if="tripsStore.isLoading" class="text-center text-gray-500">Загрузка...</div>
-      <div v-else-if="tripsStore.upcomingTrips.length === 0" class="text-center text-gray-500">
+      <div v-if="tripsStore.isLoading" class="text-center text-(--primary-light-gray)">
+        Загрузка...
+      </div>
+      <div
+        v-else-if="tripsStore.upcomingTrips.length === 0"
+        class="text-center text-(--primary-light-gray)"
+      >
         Поездок на этой неделе нет
       </div>
     </div>
