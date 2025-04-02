@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Calendar from '~/widgets/Calendar.vue'
 import { useTripsStore } from '~/stores/trips'
-import PrimaryTripCard from '~/entities/trip/PrimaryTripCard.vue'
+import TripCard from '~/entities/trip/TripCard.vue'
 
 const tripsStore = useTripsStore()
 
@@ -18,9 +18,10 @@ onMounted(() => tripsStore.fetchTrips())
         {{ tripsStore.formatDate(tripsStore.selectedDate.toISOString()) }}
       </h2>
       <div v-if="tripsStore.filteredTrips.length !== 0">
-        <PrimaryTripCard
+        <TripCard
           v-for="trip in tripsStore.filteredTrips"
           :key="trip.id"
+          :status="'primary'"
           :trip="trip"
           :has-date="false"
         />

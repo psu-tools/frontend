@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import PrimaryTripCard from '~/entities/trip/PrimaryTripCard.vue'
+import TripCard from '~/entities/trip/TripCard.vue'
 import { useTripsStore } from '~/stores/trips'
 
 const tripsStore = useTripsStore()
@@ -16,11 +16,11 @@ defineProps<{ trips: Trip[] }>()
         v-if="trips.length"
         class="space-y-4"
       >
-        <PrimaryTripCard
+        <TripCard
           v-for="trip in trips"
           :key="trip.id"
           :trip="trip"
-          :active="false"
+          :status="'primary'"
           :has-date="true"
         />
       </a>
