@@ -69,11 +69,11 @@ defineProps<Props>()
       </div>
     </div>
     <div class="flex items-center gap-1 text-xs w-full">
-      <p class="max-w-1/2 truncate whitespace-nowrap">{{ trip.route.at(0).name }}</p>
+      <p class="max-w-1/2 truncate whitespace-nowrap">{{ trip?.route.at(0)?.name }}</p>
       <p>→</p>
       <p v-if="trip.route.length > 2" class="whitespace-nowrap">... →</p>
       <p class="max-w-1/2 truncate whitespace-nowrap">
-        {{ trip.route.at(-1).name }}
+        {{ trip?.route.at(-1)?.name }}
       </p>
     </div>
   </div>
