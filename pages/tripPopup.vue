@@ -2,6 +2,9 @@
 import { useModalStore } from '~/stores/modal'
 import { useTripsStore } from '~/stores/trips'
 
+import IcTrash from '~/icons/IcTrash.vue'
+import IcClose from '~/icons/IcClose.vue'
+
 const modalStore = useModalStore()
 const tripsStore = useTripsStore()
 const isExpanded = ref(false)
@@ -79,14 +82,22 @@ const onTouchEnd = () => {
             class="mx-auto my-2 h-1 w-8 rounded-full bg-(--medium-gray) cursor-pointer mb-[20px]"
           ></div>
           <div class="">
-            <h2 class="text-2xl font-bold text-text">
-              {{ modalStore?.tripData?.name }}
-            </h2>
+            <div class="flex justify-between items-center">
+              <h2 class="text-2xl font-bold text-text">
+                {{ modalStore?.tripData?.name }}
+              </h2>
+              <div class="flex gap-3">
+                <button>
+                  <IcTrash />
+                </button>
+                <button @click="closeModal">
+                  <IcClose />
+                </button>
+              </div>
+            </div>
             <p>{{ tripsStore.formatDate(modalStore?.tripData?.arrivalDateTime) }}</p>
           </div>
         </div>
-        <button @click="closeModal" class="absolute top-3 right-5 text-lg">✖</button>
-        <h2></h2>
       </div>
     </div>
   </Teleport>
