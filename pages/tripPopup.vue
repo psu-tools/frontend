@@ -81,21 +81,24 @@ const onTouchEnd = () => {
             @click="toggleExpand"
             class="mx-auto my-2 h-1 w-8 rounded-full bg-(--medium-gray) cursor-pointer mb-[20px]"
           ></div>
-          <div class="">
+          <div class="mb-[15px]">
             <div class="flex justify-between items-center">
               <h2 class="text-2xl font-bold text-text">
                 {{ modalStore?.tripData?.name }}
               </h2>
               <div class="flex gap-3">
-                <button>
+                <button class="cursor-pointer">
                   <IcTrash />
                 </button>
-                <button @click="closeModal">
+                <button @click="closeModal" class="cursor-pointer">
                   <IcClose />
                 </button>
               </div>
             </div>
             <p>{{ tripsStore.formatDate(modalStore?.tripData?.arrivalDateTime) }}</p>
+          </div>
+          <div class="">
+            {{ modalStore?.tripData }}
           </div>
         </div>
       </div>
