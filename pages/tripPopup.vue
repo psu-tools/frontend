@@ -2,6 +2,8 @@
 import { useModalStore } from '~/stores/modal'
 import { useTripsStore } from '~/stores/trips'
 
+import PopupDestination from '~/entities/popup/PopupDestination.vue'
+
 import IcTrash from '~/icons/IcTrash.vue'
 import IcClose from '~/icons/IcClose.vue'
 
@@ -54,6 +56,10 @@ const onTouchEnd = () => {
     }
   }
 }
+
+const stopsList = ref(modalStore?.tripData?.route)
+
+console.log('asdsd', stopsList)
 </script>
 <template>
   <Teleport to="#modal-container">
@@ -64,7 +70,7 @@ const onTouchEnd = () => {
       @click="closeModal"
     >
       <div
-        class="w-full bg-(--primary-white) items-end rounded-t-2xl pt-2 px-5 transition-all duration-300 touch-none"
+        class="w-full bg-(--primary-white-bg) items-end rounded-t-3xl pt-2 px-5 transition-all duration-300 touch-none"
         :class="{
           'h-6/10 translate-y-0': !isExpanded,
           'h-9/10 translate-y-0': isExpanded,
@@ -98,7 +104,9 @@ const onTouchEnd = () => {
             <p>{{ tripsStore.formatDate(modalStore?.tripData?.arrivalDateTime) }}</p>
           </div>
           <div class="">
-            {{ modalStore?.tripData }}
+            <div class="bg-(--primary-white) rounded-2xl pt-[16px] pl-[15px] pr-[15px] pb-[16px]">
+              <PopupDestination :stops-list="stopsList" />
+            </div>
           </div>
         </div>
       </div>
