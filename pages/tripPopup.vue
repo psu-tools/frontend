@@ -104,7 +104,7 @@ console.log('asdsd', stopsList)
             <p>{{ tripsStore.formatDate(modalStore?.tripData?.arrivalDateTime) }}</p>
           </div>
           <div class="">
-            <div class="bg-(--primary-white) rounded-2xl pt-[16px] pl-[15px] pr-[15px] pb-[16px]">
+            <div class="bg-(--primary-white) rounded-2xl pt-[16px] pl-[15px] pr-[5px] pb-[16px]">
               <PopupDestination :stops-list="stopsList" />
             </div>
           </div>
