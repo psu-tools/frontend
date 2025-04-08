@@ -111,7 +111,7 @@ console.log('asdsd', stopsList)
               <RouteDestination :stops-list="stopsList" />
             </div>
             <div class="">
-              {{ stopsList }}
+              <!-- {{ modalStore?.tripData }} -->
               <RoutesContainer :stops-list="stopsList" />
             </div>
           </div>

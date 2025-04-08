@@ -21,11 +21,13 @@ const stopsList = ref([
 ])
 </script>
 <template>
-  <div v-for="(stop, index) in stopsList">
-    <RouteBlock
-      v-if="index !== stopsList.length - 1"
-      :start="stopsList[index]"
-      :end="stopsList[index + 1]"
-    />
+  <div class="flex flex-col gap-[25px]">
+    <div v-for="(stop, index) in stopsList">
+      <RouteBlock
+        v-if="index !== stopsList.length - 1"
+        :starting-point="stopsList[index]"
+        :arrival-point="stopsList[index + 1]"
+      />
+    </div>
   </div>
 </template>
