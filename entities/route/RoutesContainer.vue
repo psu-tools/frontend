@@ -15,7 +15,7 @@ defineProps<Routes>()
 
 const stopsList = ref([
   {
-    name: 'Perm State Universitniversitnsdsdsdsdiversitdsy',
+    name: 'Perm State Universitniversitnsdsdiversitdsy',
     latitude: 58.01045,
     longitude: 56.229446,
     stopTime: 15,
@@ -35,8 +35,8 @@ const stopsList = ref([
       />
     </div>
     <div
-      class="absolute top-0 left-0 w-[20px] bg-[#eeeeee] rounded-full"
-      style="height: calc(100% - 25px)"
+      class="absolute top-[10px] left-0 w-[20px] bg-[#eeeeee] rounded-full"
+      style="height: calc(100% - 35px)"
     ></div>
   </div>
 </template>

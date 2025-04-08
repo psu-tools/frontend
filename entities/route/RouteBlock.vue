@@ -15,7 +15,7 @@ defineProps<RoutesBlockProps>()
 </script>
 <template>
   <div class="w-full flex items-stretch gap-[15px]">
-    <div class="bg-(--primary-orange) w-[20px] rounded-full z-10 relative">
+    <div class="bg-(--primary-orange) w-[20px] rounded-full z-10 mt-[10px] relative">
       <span
         class="absolute top-[4px] left-1/2 transform -translate-x-1/2 bg-(--primary-white) w-[12px] h-[12px] rounded-full z-20"
       ></span>
