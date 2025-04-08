@@ -71,7 +71,7 @@ console.log('asdsd', stopsList)
       @click="closeModal"
     >
       <div
-        class="w-full bg-(--primary-white-bg) items-end rounded-t-3xl pt-2 px-5 transition-all duration-300 touch-none overflow-auto"
+        class="w-full bg-(--primary-white-bg) items-end rounded-t-3xl pt-2 px-5 transition-all duration-300 touch-none overflow-auto scrollbar-hide"
         :class="{
           'h-6/10 translate-y-0': !isExpanded,
           'h-9/10 translate-y-0': isExpanded,
@@ -120,3 +120,12 @@ console.log('asdsd', stopsList)
     </div>
   </Teleport>
 </template>
+<style scoped>
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  scrollbar-width: none;
+}
+</style>
