@@ -2,7 +2,8 @@
 import { useModalStore } from '~/stores/modal'
 import { useTripsStore } from '~/stores/trips'
 
-import PopupDestination from '~/entities/popup/PopupDestination.vue'
+import RouteDestination from '~/entities/route/RouteDestination.vue'
+import RoutesContainer from '~/entities/route/RoutesContainer.vue'
 
 import IcTrash from '~/icons/IcTrash.vue'
 import IcClose from '~/icons/IcClose.vue'
@@ -101,13 +102,18 @@ console.log('asdsd', stopsList)
                 </button>
               </div>
             </div>
-            <p>{{ tripsStore.formatDate(modalStore?.tripData?.arrivalDateTime) }}</p>
+            <p class="text-(--primary-gray) font-semibold">
+              {{ tripsStore.formatDate(modalStore?.tripData?.arrivalDateTime) }}
+            </p>
           </div>
           <div class="flex flex-col gap-[25px] mt-[25px]">
             <div class="bg-(--primary-white) rounded-2xl pt-[16px] pl-[15px] pr-[5px] pb-[16px]">
-              <PopupDestination :stops-list="stopsList" />
+              <RouteDestination :stops-list="stopsList" />
             </div>
-            <div class=""></div>
+            <div class="">
+              {{ stopsList }}
+              <RoutesContainer :stops-list="stopsList" />
+            </div>
           </div>
         </div>
       </div>

@@ -31,7 +31,7 @@ defineProps<DestinationProps>()
       <p class="ml-3">{{ stop?.name }}</p>
       <div
         v-if="index !== stopsList.length - 1"
-        class="absolute bottom-[-50%] h-[1.5px] bg-[#eeeeee] ml-[30px] w-[calc(100%-40px)]"
+        class="absolute bottom-[-60%] h-[1.5px] bg-[#eeeeee] ml-[30px] w-[calc(100%-40px)]"
       ></div>
     </div>
   </div>
