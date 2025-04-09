@@ -1,18 +1,23 @@
 import { defineStore } from 'pinia'
 
-export const useModalStore = defineStore('modal', {
-  state: () => ({
-    isOpen: false,
-    tripData: null as any | null,
-  }),
-  actions: {
-    openModal(trip: Trip) {
-      this.tripData = trip
-      this.isOpen = true
-    },
-    closeModal() {
-      this.tripData = null
-      this.isOpen = false
-    },
-  },
+export const useModalStore = defineStore('modal', () => {
+  const isOpen = ref(false)
+  const tripData = ref<Trip | null>(null)
+
+  const openModal = (trip: Trip) => {
+    tripData.value = trip
+    isOpen.value = true
+  }
+
+  const closeModal = () => {
+    tripData.value = null
+    isOpen.value = false
+  }
+
+  return {
+    isOpen,
+    tripData,
+    openModal,
+    closeModal,
+  }
 })
