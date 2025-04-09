@@ -52,11 +52,11 @@ onMounted(() => {
       <div
         v-for="notification in notifications"
         :key="notification.id"
-        class="p-5 rounded-[32px] bg-[#F8F9FD]"
+        class="p-5 rounded-[32px] bg-(--smoke-gray)"
       >
         <h2 class="font-bold">{{ notification.headerText }}</h2>
         <p>{{ notification.bodyText }}</p>
-        <span class="text-sm text-gray-500">{{ notification.createdAt }}</span>
+        <span class="text-sm text-(--medium-gray)">{{ notification.createdAt }}</span>
       </div>
     </div>
     <div ref="sentinel" class="h-1"></div>
