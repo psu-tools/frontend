@@ -5,6 +5,7 @@ import { useTripsStore } from '~/stores/trips'
 import RouteDestination from '~/entities/route/RouteDestination.vue'
 import RoutesContainer from '~/entities/route/RoutesContainer.vue'
 import RouteEdit from '~/entities/route/RouteEdit.vue'
+import RouteDelete from '~/entities/route/RouteDelete.vue'
 
 import IcTrash from '~/icons/IcTrash.vue'
 import IcClose from '~/icons/IcClose.vue'
@@ -70,6 +71,7 @@ console.log('asdsd', stopsList)
       class="absolute inset-0 z-50 flex justify-center items-end bg-black/20 transition-opacity duration-300"
       :class="{ 'opacity-100': isVisible, 'opacity-0': !isVisible }"
       @click="closeModal"
+      id="trip-info"
     >
       <div
         class="w-full bg-(--primary-white-bg) items-end rounded-t-3xl px-5 transition-all duration-300 touch-none overflow-auto scrollbar-hide pb-[120px]"
@@ -96,7 +98,7 @@ console.log('asdsd', stopsList)
                   {{ modalStore?.tripData?.name }}
                 </h2>
                 <div class="flex gap-3">
-                  <button class="cursor-pointer">
+                  <button @click="modalStore.isInnerModalOpen = true" class="cursor-pointer">
                     <IcTrash />
                   </button>
                   <button @click="closeModal" class="cursor-pointer">
@@ -124,6 +126,10 @@ console.log('asdsd', stopsList)
         <RouteEdit />
       </div>
     </div>
+    <RouteDelete
+      :is-open="modalStore.isInnerModalOpen"
+      @close="modalStore.isInnerModalOpen = false"
+    />
   </Teleport>
 </template>
 <style scoped>
