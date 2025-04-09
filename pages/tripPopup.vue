@@ -4,6 +4,7 @@ import { useTripsStore } from '~/stores/trips'
 
 import RouteDestination from '~/entities/route/RouteDestination.vue'
 import RoutesContainer from '~/entities/route/RoutesContainer.vue'
+import RouteEdit from '~/entities/route/RouteEdit.vue'
 
 import IcTrash from '~/icons/IcTrash.vue'
 import IcClose from '~/icons/IcClose.vue'
@@ -71,7 +72,7 @@ console.log('asdsd', stopsList)
       @click="closeModal"
     >
       <div
-        class="w-full bg-(--primary-white-bg) items-end rounded-t-3xl pt-2 px-5 transition-all duration-300 touch-none overflow-auto scrollbar-hide"
+        class="w-full bg-(--primary-white-bg) items-end rounded-t-3xl px-5 transition-all duration-300 touch-none overflow-auto scrollbar-hide pb-[120px]"
         :class="{
           'h-6/10 translate-y-0': !isExpanded,
           'h-9/10 translate-y-0': isExpanded,
@@ -84,7 +85,7 @@ console.log('asdsd', stopsList)
         @touchend="onTouchEnd"
       >
         <div class="w-full flex justify-center flex-col">
-          <div class="sticky left-0 top-0 z-10 bg-(--primary-white-bg)">
+          <div class="sticky left-0 top-0 z-40 bg-(--primary-white-bg)">
             <div
               @click="toggleExpand"
               class="mx-auto my-2 h-1 w-8 rounded-full bg-(--medium-gray) cursor-pointer mb-[20px]"
@@ -118,6 +119,9 @@ console.log('asdsd', stopsList)
             </div>
           </div>
         </div>
+      </div>
+      <div class="fixed b-0 l-0 z-20 sm:w-[384px] w-full h-[105px] bg-(--primary-white-bg)">
+        <RouteEdit />
       </div>
     </div>
   </Teleport>
