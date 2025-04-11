@@ -1,13 +1,18 @@
 <script setup lang="ts">
-import { useAddTripFormStore } from '~/stores/addTripForm'
+interface Stop { name: string }
 
-const addTripFormStore = useAddTripFormStore()
+const props = defineProps({
+  stopsList: {
+    type: Array as PropType<Stop[]>,
+    required: true
+  }
+})
 
-const stopsList = ref([{ name: 'Мое местоположение' }, { name: 'Куда поедем?' }])
+const emit = defineEmits<{ (e: 'open-selector', index: number): void }>()
 
-const onClickButton = () => {
-  stopsList.value.push({ name: 'Новая точка' })
-}
+const onInputClick = (index: number) => emit('open-selector', index)
+
+const addStop = () => props.stopsList.push({ name: 'Новая точка' })
 </script>
 
 <template>
@@ -29,6 +34,8 @@ const onClickButton = () => {
         :placeholder="stop?.name"
         class="ml-3 text-sm outline-none"
         :class="{ 'text-(--primary-gray)': index === 1 && stopsList.length === 2 }"
+        readonly
+        @click="onInputClick(index)"
       />
       <div
         v-if="index !== stopsList.length"
@@ -38,7 +45,7 @@ const onClickButton = () => {
     <div
       v-if="stopsList.length >= 2"
       class="relative flex items-center py-0.5"
-      @click="onClickButton"
+      @click="addStop"
     >
       <span
         class="flex items-center justify-center w-3.5 h-3.5 text-(--primary-white) font-light bg-(--primary-gray) rounded-full"
