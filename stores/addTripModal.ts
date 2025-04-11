@@ -1,21 +1,17 @@
 import { defineStore } from 'pinia'
-import type { Point } from '~/stores/trips'
 
-export const useAddTripFormStore = defineStore('addTripForm', () => {
-  const tripName = ref<string>()
-  const tripPoints = ref<Point[]>([])
-  const tripDate = ref<Date | null>(null)
-  const tripArrivingTime = ref<Date | null>(null)
-  const tripReminderTime = ref<Date | null>(null)
+export const useAddTripModalStore = defineStore('addTripModal', () => {
+  const isModalOpen = ref(false)
+  const isModalExpanded = ref(true)
 
-  const addTripPoint = (point: Point) => tripPoints.value.push(point)
+  const toggleModalOpen = () => isModalOpen.value = !isModalOpen.value
+
+  const toggleModalExpanded = () => isModalExpanded.value = !isModalExpanded.value
 
   return {
-    tripName,
-    tripPoints,
-    tripDate,
-    tripArrivingTime,
-    tripReminderTime,
-    addTripPoint,
+    isModalOpen,
+    isModalExpanded,
+    toggleModalOpen,
+    toggleModalExpanded,
   }
 })
