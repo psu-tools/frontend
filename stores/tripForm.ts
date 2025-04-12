@@ -5,31 +5,21 @@ export const useTripFormStore = defineStore('tripForm', () => {
 
   const tripDate = ref<Date>(new Date())
 
-  const arrivalTime = ref<string>(new Date().getHours() + 1 + ':' + new Date().getMinutes())
+  const arrivalTime = ref<string>(new Date().getHours() + ':' + new Date().getMinutes())
 
-  const reminderTime = ref<string>('')
+  const reminderTime = ref<number>(10)
 
   const tripPoints = ref<{ name: string }[]>([])
 
-  const setTripName = (name: string) => {
-    tripName.value = name
-  }
+  const setTripName = (name: string) => tripName.value = name
 
-  const setTripDate = (date: Date) => {
-    tripDate.value = date
-  }
+  const setTripDate = (date: Date) => tripDate.value = date
 
-  const setArrivalTime = (time: string) => {
-    arrivalTime.value = time
-  }
+  const setArrivalTime = (time: string) => arrivalTime.value = time
 
-  const setReminderTime = (time: string) => {
-    reminderTime.value = time
-  }
+  const setReminderTime = (time: number) => reminderTime.value = time
 
-  const addTripPoint = (point: { name: string }) => {
-    tripPoints.value.push(point)
-  }
+  const addTripPoint = (point: { name: string }) => tripPoints.value.push(point)
 
   const updateTripPoint = (index: number, point: { name: string }) => {
     if (index >= 0 && index < tripPoints.value.length) {
