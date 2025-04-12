@@ -6,7 +6,6 @@ const emit = defineEmits<{ (e: 'select', value: string): void }>()
 const hours = Array.from({ length: 24 }, (_, i) => String(i).padStart(2, '0'))
 const minutes = Array.from({ length: 60 }, (_, i) => String(i).padStart(2, '0'))
 
-
 const selectedHourIndex = ref(0)
 const selectedMinuteIndex = ref(0)
 
@@ -48,6 +47,12 @@ const hourCol = ref<HTMLElement | null>(null)
 const minuteCol = ref<HTMLElement | null>(null)
 
 onMounted(() => {
+  const initial = props.initialTime ?? '00:00'
+  const [initialHour, initialMinute] = initial.split(':').map(part => parseInt(part, 10))
+
+  selectedHourIndex.value = isNaN(initialHour) ? 0 : initialHour
+  selectedMinuteIndex.value = isNaN(initialMinute) ? 0 : initialMinute
+
   nextTick(() => {
     scrollToIndex(hourCol.value, selectedHourIndex.value)
     scrollToIndex(minuteCol.value, selectedMinuteIndex.value)
