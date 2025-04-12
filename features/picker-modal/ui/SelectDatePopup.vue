@@ -27,7 +27,7 @@ const handleSelectedDate = (date: Date) => {
         />
 
         <button
-          class="w-full mt-5 py-3 rounded-xl text-white text-base font-semibold bg-(--primary-orange)"
+          class="w-full mt-5 py-3 rounded-xl text-white text-sm font-semibold bg-(--primary-orange)"
           @click="emit('close')"
         >
           Готово
