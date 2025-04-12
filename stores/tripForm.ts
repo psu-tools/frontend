@@ -5,7 +5,7 @@ export const useTripFormStore = defineStore('tripForm', () => {
 
   const tripDate = ref<Date>(new Date())
 
-  const arrivalTime = ref<string>('')
+  const arrivalTime = ref<string>(new Date().getHours() + 1 + ':' + new Date().getMinutes())
 
   const reminderTime = ref<string>('')
 
