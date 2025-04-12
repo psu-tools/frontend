@@ -5,6 +5,7 @@ import PointSelector from '~/features/trip-form/ui/PointSelector.vue'
 import SelectDatePopup from '~/features/picker-modal/ui/SelectDatePopup.vue'
 import { useAddTripModalStore } from '~/stores/addTripModal'
 import { useTripFormStore } from '~/stores/tripForm'
+import SelectTimePopup from '~/features/picker-modal/ui/SelectTimePopup.vue'
 
 const addTripModalStore = useAddTripModalStore()
 const tripFormStore = useTripFormStore()
@@ -133,12 +134,12 @@ const updateStop = (newValue: string) => {
           <div class="mt-[25px] space-y-[15px]">
             <div class="bg-(--primary-white) rounded-2xl flex justify-between items-center py-2.5 pl-[15px] pr-2.5">
               <p class="text-sm text-(--color-text)">Дата</p>
-              <p class="bg-(--secondary-white-bg) py-2 px-2.5 text-sm text-(--color-text) rounded-xl" @click="isDayMonthYearPopupOpen = true">{{ tripFormStore.tripDate?.toLocaleDateString() }}</p>
+              <p class="bg-(--secondary-white-bg) py-2 px-2.5 text-sm text-(--color-text) rounded-xl cursor-pointer" @click="isDayMonthYearPopupOpen = true">{{ tripFormStore.tripDate?.toLocaleDateString() }}</p>
             </div>
 
             <div class="bg-(--primary-white) rounded-2xl flex justify-between items-center py-2.5 pl-[15px] pr-2.5">
               <p class="text-sm text-(--color-text)">Время прибытия</p>
-              <p class="bg-(--secondary-white-bg) py-2 px-2.5 text-sm text-(--color-text) rounded-xl">08:00</p>
+              <p class="bg-(--secondary-white-bg) py-2 px-2.5 text-sm text-(--color-text) rounded-xl cursor-pointer" @click="isTimePopupOpen = true">{{ tripFormStore?.arrivalTime }}</p>
             </div>
 
             <div class="bg-(--primary-white) rounded-2xl flex justify-between items-center py-2.5 pl-[15px] pr-2.5">
@@ -147,11 +148,15 @@ const updateStop = (newValue: string) => {
             </div>
           </div>
 
-          <SelectDatePopup
-            v-if="isDayMonthYearPopupOpen"
-            @close="isDayMonthYearPopupOpen = false"
-          />
+            <SelectDatePopup
+              v-if="isDayMonthYearPopupOpen"
+              @close="isDayMonthYearPopupOpen = false"
+            />
 
+          <SelectTimePopup
+          v-if="isTimePopupOpen"
+          @close="isTimePopupOpen = false"
+          />
 
         </form>
         <Transition name="fade" appear>
