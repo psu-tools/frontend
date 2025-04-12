@@ -6,6 +6,7 @@ import SelectDatePopup from '~/features/picker-modal/ui/SelectDatePopup.vue'
 import { useAddTripModalStore } from '~/stores/addTripModal'
 import { useTripFormStore } from '~/stores/tripForm'
 import SelectTimePopup from '~/features/picker-modal/ui/SelectTimePopup.vue'
+import SelectReminderPopup from '~/features/picker-modal/ui/SelectReminderPopup.vue'
 
 const addTripModalStore = useAddTripModalStore()
 const tripFormStore = useTripFormStore()
@@ -18,7 +19,7 @@ const isVisible = ref(addTripModalStore.isModalOpen)
 const touchStartY = ref(0)
 const touchMoveY = ref(0)
 
-const showModal = () => isVisible.value = true
+const showModal = () => (isVisible.value = true)
 
 const closeModal = () => {
   isExpanded.value = false
@@ -28,16 +29,15 @@ const closeModal = () => {
   }, 300)
 }
 
-
 const isDayMonthYearPopupOpen = ref(false)
 const isTimePopupOpen = ref(false)
 const isReminderPopupOpen = ref(false)
 
-const toggleExpand = () => isExpanded.value = !isExpanded.value
+const toggleExpand = () => (isExpanded.value = !isExpanded.value)
 
-const onTouchStart = (event: TouchEvent) => touchStartY.value = event.touches[0].clientY
+const onTouchStart = (event: TouchEvent) => (touchStartY.value = event.touches[0].clientY)
 
-const onTouchMove = (event: TouchEvent) => touchMoveY.value = event.touches[0].clientY
+const onTouchMove = (event: TouchEvent) => (touchMoveY.value = event.touches[0].clientY)
 
 const onTouchEnd = () => {
   const deltaY = touchStartY.value - touchMoveY.value
@@ -62,10 +62,7 @@ onMounted(() => {
 const isPointSelectorOpen = ref(false)
 const activePointIndex = ref<number | null>(null)
 
-const stopsList = ref([
-  { name: 'Моё местоположение' },
-  { name: 'Куда поедем?' }
-])
+const stopsList = ref([{ name: 'Моё местоположение' }, { name: 'Куда поедем?' }])
 
 const openPointSelector = (index: number) => {
   activePointIndex.value = index
@@ -105,7 +102,11 @@ const updateStop = (newValue: string) => {
         @touchmove="onTouchMove"
         @touchend="onTouchEnd"
       >
-        <form v-if="!isPointSelectorOpen" @submit.prevent class="w-full flex justify-center flex-col">
+        <form
+          v-if="!isPointSelectorOpen"
+          @submit.prevent
+          class="w-full flex justify-center flex-col"
+        >
           <div class="sticky left-0 top-0 z-40 bg-(--primary-white-bg)">
             <div
               @click="toggleExpand"
@@ -124,7 +125,6 @@ const updateStop = (newValue: string) => {
                 </button>
               </div>
             </div>
-
           </div>
 
           <div class="bg-(--primary-white) rounded-2xl py-[16px] pl-[15px] pr-[5px]">
@@ -132,32 +132,50 @@ const updateStop = (newValue: string) => {
           </div>
 
           <div class="mt-[25px] space-y-[15px]">
-            <div class="bg-(--primary-white) rounded-2xl flex justify-between items-center py-2.5 pl-[15px] pr-2.5">
+            <div
+              class="bg-(--primary-white) rounded-2xl flex justify-between items-center py-2.5 pl-[15px] pr-2.5"
+            >
               <p class="text-sm text-(--color-text)">Дата</p>
-              <p class="bg-(--secondary-white-bg) py-2 px-2.5 text-sm text-(--color-text) rounded-xl cursor-pointer" @click="isDayMonthYearPopupOpen = true">{{ tripFormStore.tripDate?.toLocaleDateString() }}</p>
+              <p
+                class="bg-(--secondary-white-bg) py-2 px-2.5 text-sm text-(--color-text) rounded-xl cursor-pointer"
+                @click="isDayMonthYearPopupOpen = true"
+              >
+                {{ tripFormStore.tripDate?.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', year: 'numeric' }) }}
+              </p>
             </div>
 
-            <div class="bg-(--primary-white) rounded-2xl flex justify-between items-center py-2.5 pl-[15px] pr-2.5">
+            <div
+              class="bg-(--primary-white) rounded-2xl flex justify-between items-center py-2.5 pl-[15px] pr-2.5"
+            >
               <p class="text-sm text-(--color-text)">Время прибытия</p>
-              <p class="bg-(--secondary-white-bg) py-2 px-2.5 text-sm text-(--color-text) rounded-xl cursor-pointer" @click="isTimePopupOpen = true">{{ tripFormStore?.arrivalTime }}</p>
+              <p
+                class="bg-(--secondary-white-bg) py-2 px-2.5 text-sm text-(--color-text) rounded-xl cursor-pointer"
+                @click="isTimePopupOpen = true"
+              >
+                {{ tripFormStore?.arrivalTime }}
+              </p>
             </div>
 
-            <div class="bg-(--primary-white) rounded-2xl flex justify-between items-center py-2.5 pl-[15px] pr-2.5">
+            <div
+              class="bg-(--primary-white) rounded-2xl flex justify-between items-center py-2.5 pl-[15px] pr-2.5"
+            >
               <p class="text-sm text-(--color-text)">Напоминание</p>
-              <p class="bg-(--secondary-white-bg) py-2 px-2.5 text-sm text-(--color-text) rounded-xl">за 10 минут</p>
+              <p
+                class="bg-(--secondary-white-bg) py-2 px-2.5 text-sm text-(--color-text) rounded-xl cursor-pointer" @click="isReminderPopupOpen = true"
+              >
+                За {{ tripFormStore?.reminderTime }} минут
+              </p>
             </div>
           </div>
 
-            <SelectDatePopup
-              v-if="isDayMonthYearPopupOpen"
-              @close="isDayMonthYearPopupOpen = false"
-            />
-
-          <SelectTimePopup
-          v-if="isTimePopupOpen"
-          @close="isTimePopupOpen = false"
+          <SelectDatePopup
+            v-if="isDayMonthYearPopupOpen"
+            @close="isDayMonthYearPopupOpen = false"
           />
 
+          <SelectTimePopup v-if="isTimePopupOpen" @close="isTimePopupOpen = false" />
+
+          <SelectReminderPopup v-if="isReminderPopupOpen" @close="isReminderPopupOpen = false" />
         </form>
         <Transition name="fade" appear>
           <PointSelector
@@ -168,10 +186,10 @@ const updateStop = (newValue: string) => {
             @toggle-expand="toggleExpand"
           />
         </Transition>
+      </div>
 
-    </div>
-
-      <div v-if="!isPointSelectorOpen && !isDayMonthYearPopupOpen"
+      <div
+        v-if="!isPointSelectorOpen && !isDayMonthYearPopupOpen"
         class="absolute bottom-0 left-0 bg-(--primary-white-bg)/40 backdrop-blur-2xl w-full border-t border-(--medium-gray) pt-2.5 pb-10 px-5 flex justify-center items-center"
       >
         <button
@@ -181,7 +199,6 @@ const updateStop = (newValue: string) => {
           Добавить поездку
         </button>
       </div>
-
     </div>
   </Teleport>
 </template>
@@ -203,5 +220,4 @@ const updateStop = (newValue: string) => {
 .fade-leave-to {
   opacity: 0;
 }
-
 </style>
