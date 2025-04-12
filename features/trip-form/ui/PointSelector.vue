@@ -74,7 +74,7 @@ const toggleExpand = () => emit('toggleExpand')
       <h2 class="font-semibold text-(--color-text) mb-1">Мои адреса</h2>
       <div
         v-for="(item, index) in userAddresses"
-        :key="item"
+        :key="index"
         class="relative py-2.5 flex items-center gap-2.5"
       >
         <AddressItem icon="point" :name="item.name" :address="item.address" />
@@ -89,7 +89,7 @@ const toggleExpand = () => emit('toggleExpand')
       <h2 class="font-semibold text-(--color-text) mb-1">Недавние</h2>
       <div
         v-for="(item, index) in recentlyAddresses"
-        :key="item"
+        :key="index"
         class="relative py-2.5 flex items-center gap-2.5"
       >
         <AddressItem icon="clock" :name="item.name" :address="item.address" />
