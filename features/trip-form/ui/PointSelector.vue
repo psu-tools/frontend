@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import IcClose from '~/icons/IcClose.vue'
 import IcCompas from '~/icons/IcCompas.vue'
+import AddressItem from '~/shaared/ui/AddressItem.vue'
 
 const props = defineProps({
   initialValue: {
