@@ -2,11 +2,9 @@
 import IcClose from '~/icons/IcClose.vue'
 import StopsInput from '~/features/trip-form/ui/StopsInput.vue'
 import PointSelector from '~/features/trip-form/ui/PointSelector.vue'
-import SelectDatePopup from '~/features/picker-modal/ui/SelectDatePopup.vue'
 import { useAddTripModalStore } from '~/stores/addTripModal'
 import { useTripFormStore } from '~/stores/tripForm'
-import SelectTimePopup from '~/features/picker-modal/ui/SelectTimePopup.vue'
-import SelectReminderPopup from '~/features/picker-modal/ui/SelectReminderPopup.vue'
+import PickerSelectPopup from '~/features/picker-modal/ui/PickerSelectPopup.vue'
 
 const addTripModalStore = useAddTripModalStore()
 const tripFormStore = useTripFormStore()
@@ -168,14 +166,11 @@ const updateStop = (newValue: string) => {
             </div>
           </div>
 
-          <SelectDatePopup
-            v-if="isDayMonthYearPopupOpen"
-            @close="isDayMonthYearPopupOpen = false"
-          />
+          <PickerSelectPopup v-if="isTimePopupOpen" @close="isTimePopupOpen = false" type="time" />
 
-          <SelectTimePopup v-if="isTimePopupOpen" @close="isTimePopupOpen = false" />
+          <PickerSelectPopup v-if="isReminderPopupOpen" @close="isReminderPopupOpen = false" type="reminder" />
 
-          <SelectReminderPopup v-if="isReminderPopupOpen" @close="isReminderPopupOpen = false" />
+          <PickerSelectPopup v-if="isDayMonthYearPopupOpen" @close="isDayMonthYearPopupOpen = false" type="date" />
         </form>
         <Transition name="fade" appear>
           <PointSelector
