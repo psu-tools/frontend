@@ -9,7 +9,7 @@ const months = [
 ]
 
 const days = ref<number[]>([])
-const years = Array.from({ length: 5 }, (_, i) => 2025 + i)
+const years = Array.from({ length: 30 }, (_, i) => 2025 + i)
 
 const selectedDayIndex = ref(0)
 const selectedMonthIndex = ref(0)
