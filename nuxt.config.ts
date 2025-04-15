@@ -11,7 +11,6 @@ export default defineNuxtConfig({
   vite: {
     plugins: [tailwindcss()],
   },
-
   app: {
     head: {
       link: [
@@ -22,12 +21,10 @@ export default defineNuxtConfig({
       ],
     },
   },
-
   runtimeConfig: {
     public: {
       apiHost: 'https://api.psu-tools.ru',
     },
   },
-
   modules: ['@pinia/nuxt', '@nuxt/test-utils/module'],
 })

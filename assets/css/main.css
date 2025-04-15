@@ -17,6 +17,7 @@ body {
   --smoke-gray: #f8f9fd;
   --color-text: #353a40;
   --primary-white-bg: #fafafa;
+  --secondary-white-bg: #f5f7f9;
 
   /* radius */
   --radius-2xl: 20px;

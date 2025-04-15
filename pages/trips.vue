@@ -2,8 +2,11 @@
 import Calendar from '~/widgets/Calendar.vue'
 import { useTripsStore } from '~/stores/trips'
 import TripCard from '~/entities/trip/TripCard.vue'
+import IcPlus from '~/icons/IcPlus.vue'
+import AddTripModal from './addTripModal.vue'
 
 const tripsStore = useTripsStore()
+const isModalOpen = ref(false)
 
 onMounted(() => tripsStore.fetchTrips())
 </script>
@@ -27,6 +30,15 @@ onMounted(() => tripsStore.fetchTrips())
         />
       </div>
       <div v-else class="text-center opacity-40 py-5">Нет поездок</div>
+
+      <button
+        class="bg-(--primary-yellow) p-4 rounded-[15px] drop-shadow-lg absolute bottom-28 right-5 overflow-hidden group transition cursor-pointer"
+        @click="isModalOpen = true"
+      >
+        <IcPlus />
+      </button>
+
+      <AddTripModal v-if="isModalOpen" @close="isModalOpen = false" />
     </div>
   </div>
 </template>
