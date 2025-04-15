@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import TripCard from '~/entities/trip/TripCard.vue'
 import { useTripsStore } from '~/stores/trips'
+import NoTripsMessage from '~/shaared/ui/NoTripsMessage.vue'
 
 const tripsStore = useTripsStore()
 
@@ -10,7 +11,7 @@ defineProps<{ trips: Trip[] }>()
 <template>
   <div>
     <h2 class="text-3xl font-bold text-text">На этой неделе</h2>
-    <div class="mt-6 space-y-4">
+    <div v-if="tripsStore.upcomingTrips.length !== 0" class="mt-6 space-y-4">
       <TripCard
         v-for="trip in trips"
         :key="trip.id"
@@ -18,15 +19,9 @@ defineProps<{ trips: Trip[] }>()
         :status="'primary'"
         :has-date="true"
       />
-      <div v-if="tripsStore.isLoading" class="text-center text-(--primary-light-gray)">
-        Загрузка...
-      </div>
-      <div
-        v-else-if="tripsStore.upcomingTrips.length === 0"
-        class="text-center text-(--primary-light-gray)"
-      >
-        Поездок на этой неделе нет
-      </div>
+    </div>
+    <div v-else class="my-24">
+      <NoTripsMessage />
     </div>
   </div>
 </template>
