@@ -39,11 +39,12 @@ export interface GetTripsListResponse {
 export const useTripsStore = defineStore('trips', () => {
   const selectedDate = ref<Date | null>(new Date())
   const trips = ref<Trip[]>([])
-  const isLoading = ref(false)
+  const isLoading = ref(true)
 
   const fetchTrips = async () => {
     try {
       isLoading.value = true
+      console.log(isLoading.value)
       const config = useRuntimeConfig()
       const response = await $fetch<GetTripsListResponse>(
         `${config.public.apiHost}/v1/routes-service/trips`,
