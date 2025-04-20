@@ -8,25 +8,16 @@ defineProps<{ trips: Trip[] }>()
 </script>
 
 <template>
-  <div>
+  <div v-if="tripsStore.activeTrips.length !== 0">
     <h2 class="text-3xl font-bold text-text">Активные</h2>
     <div class="mt-6 space-y-4">
       <TripCard
         v-for="trip in trips"
-        :key="trips.id"
+        :key="trip.id"
         :status="'active'"
         :trip="trip"
-        :active="true"
+        :has-date="true"
       />
-      <div v-if="tripsStore.isLoading" class="text-center text-(--primary-light-gray)">
-        Загрузка...
-      </div>
-      <div
-        v-else-if="tripsStore.activeTrips.length === 0"
-        class="text-center text-(--primary-light-gray)"
-      >
-        Активных поездок нет
-      </div>
     </div>
   </div>
 </template>
