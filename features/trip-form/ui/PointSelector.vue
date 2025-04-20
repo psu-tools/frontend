@@ -2,7 +2,7 @@
 import IcClose from '~/icons/IcClose.vue'
 import IcCompas from '~/icons/IcCompas.vue'
 import AddressItem from '~/shaared/ui/AddressItem.vue'
-import GoogleAddressInput from '~/features/google-autocomplete/GoogleAddressInput.vue'
+import AddressAutocomplete from '~/features/yandex-autocomplete/AddressAutocomplete.vue'
 
 const props = defineProps({
   initialValue: {
@@ -40,13 +40,6 @@ const selectPoint = () => emit('select', inputValue.value)
 const closeSelector = () => emit('close')
 
 const toggleExpand = () => emit('toggleExpand')
-
-const setPlace = (place: google.maps.places.PlaceResult) => {
-  if (place?.formatted_address) {
-    inputValue.value = place.formatted_address
-    emit('select', place.formatted_address)
-  }
-}
 </script>
 
 <template>
@@ -59,11 +52,12 @@ const setPlace = (place: google.maps.places.PlaceResult) => {
 
       <div class="mb-2.5">
         <div class="flex justify-between items-center gap-2.5">
-          <GoogleAddressInput
+          <!-- <GoogleAddressInput
             class="text-sm text-text outline-none caret-(--primary-orange) py-[18px] px-[15px] rounded-2xl bg-(--primary-white) w-full"
             placeholder="Куда поедем?"
             @place_changed="setPlace($event)"
-          />
+          /> -->
+          <AddressAutocomplete />
           <button @click="closeSelector" class="cursor-pointer">
             <IcClose />
           </button>

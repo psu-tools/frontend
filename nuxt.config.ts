@@ -24,7 +24,11 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       apiHost: 'https://api.psu-tools.ru',
+      yandexApiKey: '8cec5f84-dac6-4b09-ae85-de5fb8372081', // Добавляем переменную для ключа Яндекса
     },
   },
+  plugins: [
+    '~/plugins/yandexMaps.js', // Подключаем плагин для Яндекс API
+  ],
   modules: ['@pinia/nuxt', '@nuxt/test-utils/module'],
 })
