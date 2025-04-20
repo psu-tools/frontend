@@ -27,4 +27,7 @@ export default defineNuxtConfig({
     },
   },
   modules: ['@pinia/nuxt', '@nuxt/test-utils/module'],
+  build: {
+    transpile: ['@fawmi/vue-google-maps'],
+  },
 })
