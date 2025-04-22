@@ -1,4 +1,9 @@
+<script setup lang="ts">
+import TripPopup from '~/pages/tripPopup.vue'
+</script>
+
 <template>
+  <VitePwaManifest />
   <div
     class="sm:flex sm:justify-between sm:items-center sm:px-10 lg:px-24 2xl:justify-center 2xl:gap-20 sm:h-screen sm:bg-gradient-to-br sm:from-[#f4f4f8] sm:to-(--primary-orange)"
   >
@@ -16,6 +21,3 @@
     </div>
   </div>
 </template>
-<script setup lang="ts">
-import TripPopup from '~/pages/tripPopup.vue'
-</script>
