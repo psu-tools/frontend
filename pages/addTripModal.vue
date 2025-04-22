@@ -60,8 +60,6 @@ onMounted(() => {
 const isPointSelectorOpen = ref(false)
 const activePointIndex = ref<number | null>(null)
 
-const stopsList = ref([{ name: 'Моё местоположение' }, { name: 'Куда поедем?' }])
-
 const openPointSelector = (index: number) => {
   activePointIndex.value = index
   isPointSelectorOpen.value = true
@@ -74,7 +72,7 @@ const closePointSelector = () => {
 
 const updateStop = (newValue: string) => {
   if (activePointIndex.value !== null) {
-    stopsList.value[activePointIndex.value].name = newValue
+    tripFormStore.updateTripPoint(activePointIndex.value, { name: newValue })
   }
   closePointSelector()
 }
@@ -126,7 +124,7 @@ const updateStop = (newValue: string) => {
           </div>
 
           <div class="bg-(--primary-white) rounded-2xl py-[16px] pl-[15px] pr-[5px]">
-            <StopsInput :stopsList="stopsList" @open-selector="openPointSelector" />
+            <StopsInput @open-selector="openPointSelector" />
           </div>
 
           <div class="mt-[25px] space-y-[15px]">
@@ -138,7 +136,13 @@ const updateStop = (newValue: string) => {
                 class="bg-(--secondary-white-bg) py-2 px-2.5 text-sm text-(--color-text) rounded-xl cursor-pointer"
                 @click="isDayMonthYearPopupOpen = true"
               >
-                {{ tripFormStore.tripDate?.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', year: 'numeric' }) }}
+                {{
+                  tripFormStore.tripDate?.toLocaleDateString('ru-RU', {
+                    day: 'numeric',
+                    month: 'short',
+                    year: 'numeric',
+                  })
+                }}
               </p>
             </div>
 
@@ -159,7 +163,8 @@ const updateStop = (newValue: string) => {
             >
               <p class="text-sm text-(--color-text)">Напоминание</p>
               <p
-                class="bg-(--secondary-white-bg) py-2 px-2.5 text-sm text-(--color-text) rounded-xl cursor-pointer" @click="isReminderPopupOpen = true"
+                class="bg-(--secondary-white-bg) py-2 px-2.5 text-sm text-(--color-text) rounded-xl cursor-pointer"
+                @click="isReminderPopupOpen = true"
               >
                 За {{ tripFormStore?.reminderTime }} минут
               </p>
@@ -168,19 +173,27 @@ const updateStop = (newValue: string) => {
 
           <PickerSelectPopup v-if="isTimePopupOpen" @close="isTimePopupOpen = false" type="time" />
 
-          <PickerSelectPopup v-if="isReminderPopupOpen" @close="isReminderPopupOpen = false" type="reminder" />
-
-          <PickerSelectPopup v-if="isDayMonthYearPopupOpen" @close="isDayMonthYearPopupOpen = false" type="date" />
-        </form>
-        <Transition name="fade" appear>
-          <PointSelector
-            v-if="isPointSelectorOpen"
-            :initialValue="activePointIndex !== null ? stopsList[activePointIndex].name : ''"
-            @close="closePointSelector"
-            @select="updateStop"
-            @toggle-expand="toggleExpand"
+          <PickerSelectPopup
+            v-if="isReminderPopupOpen"
+            @close="isReminderPopupOpen = false"
+            type="reminder"
           />
-        </Transition>
+
+          <PickerSelectPopup
+            v-if="isDayMonthYearPopupOpen"
+            @close="isDayMonthYearPopupOpen = false"
+            type="date"
+          />
+        </form>
+        <PointSelector
+          v-if="isPointSelectorOpen"
+          :initialValue="
+            activePointIndex !== null ? tripFormStore.tripPoints[activePointIndex].name : ''
+          "
+          @close="closePointSelector"
+          @select="updateStop"
+          @toggle-expand="toggleExpand"
+        />
       </div>
 
       <div
@@ -204,15 +217,5 @@ const updateStop = (newValue: string) => {
 }
 .scrollbar-hide {
   scrollbar-width: none;
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.25s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
 }
 </style>
