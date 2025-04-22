@@ -13,7 +13,7 @@ interface Stop {
 defineProps<DestinationProps>()
 </script>
 <template>
-  <div class="flex flex-col gap-7">
+  <div class="flex flex-col gap-7 text-sm">
     <div v-for="(stop, index) in stopsList" :key="index" class="relative flex items-center">
       <span
         class="flex items-center justify-center w-3.5 h-3.5 text-(--primary-white) text-xs font-bold"
