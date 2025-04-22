@@ -13,10 +13,22 @@ export const useTripFormStore = defineStore('tripForm', () => {
 
   const reminderTime = ref<number>(10)
 
-  const tripPoints = ref<{ name: string }[]>([
-    { name: 'Моё местоположение' },
-    { name: 'Куда поедем?' },
+  const tripPoints = ref<Point[]>([
+    {
+      name: 'Моё местоположение',
+      latitude: Number.POSITIVE_INFINITY,
+      longitude: Number.POSITIVE_INFINITY,
+      stopTime: Number.POSITIVE_INFINITY,
+    },
+    {
+      name: 'Куда поедем?',
+      latitude: Number.POSITIVE_INFINITY,
+      longitude: Number.POSITIVE_INFINITY,
+      stopTime: Number.POSITIVE_INFINITY,
+    },
   ])
+
+  const transportType = ref<TransportType>('WALK')
 
   const setTripName = (name: string) => (tripName.value = name)
 
@@ -26,19 +38,20 @@ export const useTripFormStore = defineStore('tripForm', () => {
 
   const setReminderTime = (time: number) => (reminderTime.value = time)
 
-  const addTripPoint = (point: { name: string }) => tripPoints.value.push(point)
+  const setTransportType = (transport: TransportType) => (transportType.value = transport)
+
+  const addTripPoint = (point: Point) => tripPoints.value.push(point)
 
   const updateTripPoint = (index: number, point: { name: string }) => {
     if (index >= 0 && index < tripPoints.value.length) {
-      tripPoints.value[index] = point
+      tripPoints.value[index].name = point.name
     }
   }
 
   const isFirstStepValid = computed(() => {
     return (
-      tripName.value !== '' &&
       tripPoints.value.length >= 2 &&
-      tripPoints.value[1].name.trim() !== '' &&
+      tripPoints.value[1].name?.trim() !== '' &&
       tripPoints.value[1].name !== 'Куда поедем?'
     )
   })
@@ -49,10 +62,12 @@ export const useTripFormStore = defineStore('tripForm', () => {
     arrivalTime,
     reminderTime,
     tripPoints,
+    transportType,
     setTripName,
     setTripDate,
     setArrivalTime,
     setReminderTime,
+    setTransportType,
     addTripPoint,
     updateTripPoint,
     isFirstStepValid,
