@@ -10,14 +10,21 @@ body {
   --primary-white: #ffffff;
   --primary-yellow: #fdbf50;
   --primary-gray: #999999;
+  --secondary-gray: #c0c0c0;
   --primary-light-gray: #adafb1;
+  --secondary-light-gray: #808080;
   --primary-dark-gray: #3f463e;
   --medium-gray: #d9d9d9;
   --dark-gray: #4d4d4d;
   --smoke-gray: #f8f9fd;
   --color-text: #353a40;
+  --color-text-dark: #727272;
+  --color-text-gray: #5a5b5c;
   --primary-white-bg: #fafafa;
   --secondary-white-bg: #f5f7f9;
+  --primary-black-bg: #1f1f1f;
+  --secondary-black-bg: #292929;
+  --third-black-bg: #3d3d3d;
 
   /* radius */
   --radius-2xl: 20px;
