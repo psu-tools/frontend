@@ -46,7 +46,9 @@ const addStop = () => tripFormStore.addTripPoint({ name: 'Новая точка'
     </div>
     <div
       v-if="
-        tripFormStore.tripPoints.length >= 2 && tripFormStore.tripPoints[1].name !== 'Куда поедем?'
+        tripFormStore.tripPoints.length >= 2 &&
+        tripFormStore.tripPoints[1].name !== 'Куда поедем?' &&
+        tripFormStore.tripPoints[tripFormStore.tripPoints.length - 1].name !== 'Новая точка'
       "
       class="relative flex items-center py-0.5 cursor-pointer"
       @click="addStop"
