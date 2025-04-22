@@ -4,8 +4,18 @@ const props = defineProps<{ initialDate?: Date }>()
 const emit = defineEmits<{ (e: 'select', value: Date): void }>()
 
 const months = [
-  'янв.', 'фев.', 'мар.', 'апр.', 'май', 'июнь',
-  'июль','авг.', 'сен.', 'окт.', 'ноя.', 'дек.'
+  'янв.',
+  'фев.',
+  'мар.',
+  'апр.',
+  'май',
+  'июнь',
+  'июль',
+  'авг.',
+  'сен.',
+  'окт.',
+  'ноя.',
+  'дек.',
 ]
 
 const days = ref<number[]>([])
@@ -46,20 +56,23 @@ const scrollToIndex = (el: HTMLElement | null, index: number) => {
   el.scrollTop = (index + 1) * itemHeight - paddingOffset
 }
 
-const getCurrentIndex = (scrollTop: number) => Math.round((scrollTop + paddingOffset) / itemHeight) - 1
+const getCurrentIndex = (scrollTop: number) =>
+  Math.round((scrollTop + paddingOffset) / itemHeight) - 1
 
-const onScroll = (
-  e: Event,
-  type: 'day' | 'month' | 'year',
-) => {
+const onScroll = (e: Event, type: 'day' | 'month' | 'year') => {
   const el = e.target as HTMLElement
   const index = getCurrentIndex(el.scrollTop)
 
-  if (index < 0 || index >= {
-    day: days.value.length,
-    month: months.length,
-    year: years.length
-  }[type]) return
+  if (
+    index < 0 ||
+    index >=
+      {
+        day: days.value.length,
+        month: months.length,
+        year: years.length,
+      }[type]
+  )
+    return
 
   if (type === 'day') selectedDayIndex.value = index
   if (type === 'month') selectedMonthIndex.value = index
@@ -85,11 +98,13 @@ onMounted(() => {
 })
 
 watch([selectedMonthIndex, selectedYearIndex], updateDays)
-watch([selectedDayIndex, selectedMonthIndex, selectedYearIndex], () => emit('select', selectedDate.value))
+watch([selectedDayIndex, selectedMonthIndex, selectedYearIndex], () =>
+  emit('select', selectedDate.value)
+)
 </script>
 
 <template>
-  <div class="relative">
+  <div class="relative dark:text-(--primary-white)">
     <div class="relative z-10 flex gap-4 items-center justify-center">
       <div
         class="w-[75px] h-[124px] overflow-y-scroll snap-y snap-mandatory scrollbar-hide"
@@ -100,8 +115,7 @@ watch([selectedDayIndex, selectedMonthIndex, selectedYearIndex], () => emit('sel
           v-for="(day, i) in paddedDays"
           :key="'day-' + i"
           class="h-12 leading-12 text-center snap-center text-sm"
-          :class="{'opacity-50': day !== 0 && i-1 !== selectedDayIndex}"
-
+          :class="{ 'opacity-50': day !== 0 && i - 1 !== selectedDayIndex }"
         >
           {{ day || '' }}
         </div>
@@ -116,7 +130,7 @@ watch([selectedDayIndex, selectedMonthIndex, selectedYearIndex], () => emit('sel
           v-for="(month, i) in paddedMonths"
           :key="'month-' + i"
           class="h-12 leading-12 text-center snap-center text-sm"
-          :class="{'opacity-50': month !== 0 && i-1 !== selectedMonthIndex}"
+          :class="{ 'opacity-50': month !== 0 && i - 1 !== selectedMonthIndex }"
         >
           {{ month || '' }}
         </div>
@@ -131,16 +145,24 @@ watch([selectedDayIndex, selectedMonthIndex, selectedYearIndex], () => emit('sel
           v-for="(year, i) in paddedYears"
           :key="'year-' + i"
           class="h-12 leading-12 text-center snap-center text-sm"
-          :class="{'opacity-50': year !== 0 && i-1 !== selectedYearIndex}"
+          :class="{ 'opacity-50': year !== 0 && i - 1 !== selectedYearIndex }"
         >
           {{ year || '' }}
         </div>
       </div>
     </div>
-    <div class="absolute  left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 flex gap-4 items-center justify-center">
-      <div class=" w-[75px] h-[45px] bg-(--secondary-white-bg) rounded-xl" />
-      <div class=" w-[75px] h-[45px] bg-(--secondary-white-bg) rounded-xl" />
-      <div class=" w-[75px] h-[45px] bg-(--secondary-white-bg) rounded-xl" />
+    <div
+      class="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 flex gap-4 items-center justify-center"
+    >
+      <div
+        class="w-[75px] h-[45px] bg-(--secondary-white-bg) dark:bg-(--third-black-bg) rounded-xl"
+      />
+      <div
+        class="w-[75px] h-[45px] bg-(--secondary-white-bg) dark:bg-(--third-black-bg) rounded-xl"
+      />
+      <div
+        class="w-[75px] h-[45px] bg-(--secondary-white-bg) dark:bg-(--third-black-bg) rounded-xl"
+      />
     </div>
   </div>
 </template>

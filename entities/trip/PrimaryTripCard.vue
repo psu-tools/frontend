@@ -13,18 +13,18 @@ defineProps<Props>()
 
 <template>
   <div
-    class="relative overflow-hidden rounded-[32px] py-4 px-5 flex flex-col justify-between items-start text-xs bg-(--smoke-gray) text-text"
+    class="relative overflow-hidden rounded-[32px] py-4 px-5 flex flex-col justify-between items-start text-xs bg-(--smoke-gray) dark:bg-(--secondary-black-bg) text-text dark:text-(--primary-white)"
     :class="{ 'h-24': hasDate, 'h-20': !hasDate }"
   >
     <div
       class="flex gap-2 justify-between items-start w-full"
       :class="{ 'items-start': hasDate, 'items-center': !hasDate }"
     >
-      <div class="space-y-1">
-        <p v-if="hasDate" class="text-xs opacity-70">
+      <div class="space-y-1 w-2/3">
+        <p v-if="hasDate" class="text-xs opacity-60">
           {{ tripsStore.formatDate(trip.arrivalDateTime) }}
         </p>
-        <p class="font-semibold text-sm truncate w-36">{{ trip.name }}</p>
+        <p class="font-semibold text-sm truncate">{{ trip.name }}</p>
       </div>
       <div class="flex gap-1">
         <div class="rounded-full w-6 h-6 bg-(--primary-orange)/10 flex items-center justify-center">

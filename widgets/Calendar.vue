@@ -121,7 +121,10 @@ const handleMouseUp = (event: MouseEvent) => {
     <div class="flex items-center gap-3 cursor-pointer" @click="toggleCalendar">
       <span
         class="font-semibold transition-colors text-xs"
-        :class="{ 'text-text': !isExpanded, 'text-(--primary-orange)': isExpanded }"
+        :class="{
+          'text-text dark:text-(--primary-white)': !isExpanded,
+          'text-(--primary-orange)': isExpanded,
+        }"
       >
         {{ formatMonthYear(headerDate) }}
       </span>
@@ -135,7 +138,10 @@ const handleMouseUp = (event: MouseEvent) => {
         >
           <path
             class="transition-colors"
-            :class="{ 'fill-text': !isExpanded, 'fill-(--primary-orange)': isExpanded }"
+            :class="{
+              'fill-text dark:fill-(--primary-white)': !isExpanded,
+              'fill-(--primary-orange)': isExpanded,
+            }"
             fill-rule="evenodd"
             clip-rule="evenodd"
             d="M5.808 4.5509L1.136 0.179641C0.864 -0.0598802 0.448 -0.0598802 0.192 0.179641C-0.064 0.419162 -0.064 0.808383 0.192 1.06287L4.4 5L0.192 8.93713C-0.064 9.17665 -0.064 9.58084 0.192 9.82036C0.448 10.0599 0.864 10.0599 1.136 9.82036L5.808 5.43413C6.064 5.19461 6.064 4.80539 5.808 4.5509Z"
@@ -148,7 +154,7 @@ const handleMouseUp = (event: MouseEvent) => {
       <span
         v-for="day in ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС']"
         :key="day"
-        class="font-semibold text-(--primary-gray) text-[10px]"
+        class="font-semibold text-(--primary-gray) dark:text-(--secondary-light-gray) text-[10px]"
       >
         {{ day }}
       </span>
@@ -172,6 +178,10 @@ const handleMouseUp = (event: MouseEvent) => {
             date.setHours(0, 0, 0, 0) < today.setHours(0, 0, 0, 0) &&
             !(date.toDateString() === today.toDateString()),
           'font-bold': !date,
+          'dark:text-(--primary-white)':
+            date &&
+            date.setHours(0, 0, 0, 0) > today.setHours(0, 0, 0, 0) &&
+            !(date.toDateString() === today.toDateString()),
         }"
         @click="date && selectDate(date)"
       >

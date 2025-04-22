@@ -8,7 +8,7 @@ defineProps({ isActive: Boolean })
       class="w-5 transition-colors duration-200"
       :class="{
         'fill-(--primary-orange) opacity-100': isActive,
-        'fill-(--primary-light-gray) opacity-40 group-hover:fill-(--primary-dark-gray) group-hover:opacity-100':
+        'fill-(--primary-light-gray) group-hover:fill-(--primary-dark-gray) group-hover:opacity-100':
           !isActive,
       }"
       viewBox="0 0 20 20"
@@ -23,7 +23,7 @@ defineProps({ isActive: Boolean })
       class="transition-colors duration-200 text-[10px] font-semibold"
       :class="{
         'text-(--primary-orange) opacity-100': isActive,
-        'text-(--primary-light-gray) opacity-40 group-hover:text-(--primary-dark-gray) group-hover:opacity-100':
+        'text-(--primary-light-gray) group-hover:text-(--primary-dark-gray) group-hover:opacity-100':
           !isActive,
       }"
     >

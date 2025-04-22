@@ -72,7 +72,7 @@ console.log('asdsd', stopsList)
       @click="closeModal"
     >
       <div
-        class="w-full bg-(--primary-white-bg) items-end rounded-t-3xl px-5 transition-all duration-300 touch-none overflow-auto scrollbar-hide pb-[120px]"
+        class="w-full bg-(--primary-white-bg) dark:bg-(--primary-black-bg) items-end rounded-t-3xl px-5 transition-all duration-300 touch-none overflow-auto scrollbar-hide pb-[120px]"
         :class="{
           'h-6/10 translate-y-0': !isExpanded,
           'h-9/10 translate-y-0': isExpanded,
@@ -85,14 +85,16 @@ console.log('asdsd', stopsList)
         @touchend="onTouchEnd"
       >
         <div class="w-full flex justify-center flex-col">
-          <div class="sticky left-0 top-0 z-40 bg-(--primary-white-bg)">
+          <div
+            class="sticky left-0 top-0 z-40 bg-(--primary-white-bg) dark:bg-(--primary-black-bg)"
+          >
             <div
               @click="toggleExpand"
               class="mx-auto my-2 h-1 w-8 rounded-full bg-(--medium-gray) cursor-pointer mb-[20px]"
             ></div>
             <div class="mb-[15px]">
               <div class="flex justify-between items-center">
-                <h2 class="text-2xl font-bold text-text">
+                <h2 class="text-2xl font-bold text-text dark:text-(--primary-white)">
                   {{ modalStore?.tripData?.name }}
                 </h2>
                 <div class="flex gap-3">
@@ -110,7 +112,9 @@ console.log('asdsd', stopsList)
             </div>
           </div>
           <div class="flex flex-col gap-[25px] mt-[25px]">
-            <div class="bg-(--primary-white) rounded-2xl pt-[16px] pl-[15px] pr-[5px] pb-[16px]">
+            <div
+              class="bg-(--primary-white) dark:bg-(--secondary-black-bg) rounded-2xl pt-[16px] pl-[15px] pr-[5px] pb-[16px]"
+            >
               <RouteDestination :stops-list="stopsList" />
             </div>
             <div class="">
@@ -120,7 +124,9 @@ console.log('asdsd', stopsList)
           </div>
         </div>
       </div>
-      <div class="fixed b-0 l-0 z-20 sm:w-[384px] w-full h-[105px] bg-(--primary-white-bg)">
+      <div
+        class="fixed b-0 l-0 z-20 sm:w-[384px] w-full h-[105px] bg-(--primary-white-bg) dark:bg-(--primary-black-bg)"
+      >
         <RouteEdit />
       </div>
     </div>

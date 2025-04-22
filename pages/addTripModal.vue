@@ -88,7 +88,7 @@ const updateStop = (newValue: string) => {
       @click="closeModal"
     >
       <div
-        class="w-full bg-(--primary-white-bg) items-end rounded-t-3xl px-5 transition-all duration-300 touch-none overflow-auto scrollbar-hide pb-[120px]"
+        class="w-full bg-(--primary-white-bg) dark:bg-(--primary-black-bg) items-end rounded-t-3xl px-5 transition-all duration-300 touch-none overflow-auto scrollbar-hide pb-[120px]"
         :class="{
           'h-6/10 translate-y-0': !isExpanded,
           'h-9/10 translate-y-0': isExpanded,
@@ -105,7 +105,9 @@ const updateStop = (newValue: string) => {
           @submit.prevent
           class="w-full flex justify-center flex-col"
         >
-          <div class="sticky left-0 top-0 z-40 bg-(--primary-white-bg)">
+          <div
+            class="sticky left-0 top-0 z-40 bg-(--primary-white-bg) dark:bg-(--primary-black-bg)"
+          >
             <div
               @click="toggleExpand"
               class="mx-auto my-2 h-1 w-8 rounded-full bg-(--medium-gray) cursor-pointer mb-[20px]"
@@ -116,7 +118,7 @@ const updateStop = (newValue: string) => {
                 <input
                   type="text"
                   placeholder="Название поездки"
-                  class="text-2xl font-bold text-text outline-none caret-(--primary-orange)"
+                  class="text-2xl font-bold text-text dark:text-(--color-text-dark) outline-none caret-(--primary-orange)"
                 />
                 <button @click="closeModal" class="cursor-pointer">
                   <IcClose />
@@ -125,29 +127,37 @@ const updateStop = (newValue: string) => {
             </div>
           </div>
 
-          <div class="bg-(--primary-white) rounded-2xl py-[16px] pl-[15px] pr-[5px]">
+          <div
+            class="bg-(--primary-white) dark:bg-(--secondary-black-bg) rounded-2xl py-[16px] pl-[15px] pr-[5px]"
+          >
             <StopsInput :stopsList="stopsList" @open-selector="openPointSelector" />
           </div>
 
           <div class="mt-[25px] space-y-[15px]">
             <div
-              class="bg-(--primary-white) rounded-2xl flex justify-between items-center py-2.5 pl-[15px] pr-2.5"
+              class="bg-(--primary-white) dark:bg-(--secondary-black-bg) rounded-2xl flex justify-between items-center py-2.5 pl-[15px] pr-2.5"
             >
-              <p class="text-sm text-(--color-text)">Дата</p>
+              <p class="text-sm text-(--color-text) dark:text-(--primary-white)">Дата</p>
               <p
-                class="bg-(--secondary-white-bg) py-2 px-2.5 text-sm text-(--color-text) rounded-xl cursor-pointer"
+                class="bg-(--secondary-white-bg) dark:bg-(--third-black-bg) py-2 px-2.5 text-sm text-(--color-text) dark:text-(--primary-white) rounded-xl cursor-pointer"
                 @click="isDayMonthYearPopupOpen = true"
               >
-                {{ tripFormStore.tripDate?.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', year: 'numeric' }) }}
+                {{
+                  tripFormStore.tripDate?.toLocaleDateString('ru-RU', {
+                    day: 'numeric',
+                    month: 'short',
+                    year: 'numeric',
+                  })
+                }}
               </p>
             </div>
 
             <div
-              class="bg-(--primary-white) rounded-2xl flex justify-between items-center py-2.5 pl-[15px] pr-2.5"
+              class="bg-(--primary-white) dark:bg-(--secondary-black-bg) rounded-2xl flex justify-between items-center py-2.5 pl-[15px] pr-2.5"
             >
-              <p class="text-sm text-(--color-text)">Время прибытия</p>
+              <p class="text-sm text-(--color-text) dark:text-(--primary-white)">Время прибытия</p>
               <p
-                class="bg-(--secondary-white-bg) py-2 px-2.5 text-sm text-(--color-text) rounded-xl cursor-pointer"
+                class="bg-(--secondary-white-bg) dark:bg-(--third-black-bg) py-2 px-2.5 text-sm text-(--color-text) dark:text-(--primary-white) rounded-xl cursor-pointer"
                 @click="isTimePopupOpen = true"
               >
                 {{ tripFormStore?.arrivalTime }}
@@ -155,11 +165,12 @@ const updateStop = (newValue: string) => {
             </div>
 
             <div
-              class="bg-(--primary-white) rounded-2xl flex justify-between items-center py-2.5 pl-[15px] pr-2.5"
+              class="bg-(--primary-white) dark:bg-(--secondary-black-bg) rounded-2xl flex justify-between items-center py-2.5 pl-[15px] pr-2.5"
             >
-              <p class="text-sm text-(--color-text)">Напоминание</p>
+              <p class="text-sm text-(--color-text) dark:text-(--primary-white)">Напоминание</p>
               <p
-                class="bg-(--secondary-white-bg) py-2 px-2.5 text-sm text-(--color-text) rounded-xl cursor-pointer" @click="isReminderPopupOpen = true"
+                class="bg-(--secondary-white-bg) dark:bg-(--third-black-bg) py-2 px-2.5 text-sm text-(--color-text) dark:text-(--primary-white) rounded-xl cursor-pointer"
+                @click="isReminderPopupOpen = true"
               >
                 За {{ tripFormStore?.reminderTime }} минут
               </p>
@@ -168,9 +179,17 @@ const updateStop = (newValue: string) => {
 
           <PickerSelectPopup v-if="isTimePopupOpen" @close="isTimePopupOpen = false" type="time" />
 
-          <PickerSelectPopup v-if="isReminderPopupOpen" @close="isReminderPopupOpen = false" type="reminder" />
+          <PickerSelectPopup
+            v-if="isReminderPopupOpen"
+            @close="isReminderPopupOpen = false"
+            type="reminder"
+          />
 
-          <PickerSelectPopup v-if="isDayMonthYearPopupOpen" @close="isDayMonthYearPopupOpen = false" type="date" />
+          <PickerSelectPopup
+            v-if="isDayMonthYearPopupOpen"
+            @close="isDayMonthYearPopupOpen = false"
+            type="date"
+          />
         </form>
         <Transition name="fade" appear>
           <PointSelector
@@ -185,7 +204,7 @@ const updateStop = (newValue: string) => {
 
       <div
         v-if="!isPointSelectorOpen && !isDayMonthYearPopupOpen"
-        class="absolute bottom-0 left-0 bg-(--primary-white-bg)/40 backdrop-blur-2xl w-full border-t border-(--medium-gray) pt-2.5 pb-10 px-5 flex justify-center items-center"
+        class="absolute bottom-0 left-0 bg-(--primary-white-bg)/40 dark:bg-(--primary-black-bg)/40 backdrop-blur-2xl w-full border-t border-(--medium-gray) dark:border-(--third-black-bg) pt-2.5 pb-10 px-5 flex justify-center items-center"
       >
         <button
           class="bg-(--primary-yellow) py-4 w-full rounded-2xl text-(--primary-white) disabled:opacity-60"
