@@ -201,10 +201,10 @@ const updateStop = (newValue: string) => {
         class="absolute bottom-0 left-0 bg-(--primary-white-bg)/40 backdrop-blur-2xl w-full border-t border-(--medium-gray) pt-2.5 pb-10 px-5 flex justify-center items-center"
       >
         <button
-          class="bg-(--primary-yellow) py-4 w-full rounded-2xl text-(--primary-white) disabled:opacity-60"
-          disabled
+          class="bg-(--primary-yellow) py-4 w-full rounded-2xl text-(--primary-white) disabled:opacity-60 cursor-pointer"
+          :disabled="!tripFormStore.isFirstStepValid"
         >
-          Добавить поездку
+          Продолжить
         </button>
       </div>
     </div>

@@ -34,6 +34,15 @@ export const useTripFormStore = defineStore('tripForm', () => {
     }
   }
 
+  const isFirstStepValid = computed(() => {
+    return (
+      tripName.value !== '' &&
+      tripPoints.value.length >= 2 &&
+      tripPoints.value[1].name.trim() !== '' &&
+      tripPoints.value[1].name !== 'Куда поедем?'
+    )
+  })
+
   return {
     tripName,
     tripDate,
@@ -46,5 +55,6 @@ export const useTripFormStore = defineStore('tripForm', () => {
     setReminderTime,
     addTripPoint,
     updateTripPoint,
+    isFirstStepValid,
   }
 })
