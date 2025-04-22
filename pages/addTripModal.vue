@@ -5,6 +5,10 @@ import PointSelector from '~/features/trip-form/ui/PointSelector.vue'
 import { useAddTripModalStore } from '~/stores/addTripModal'
 import { useTripFormStore } from '~/stores/tripForm'
 import PickerSelectPopup from '~/features/picker-modal/ui/PickerSelectPopup.vue'
+import TransportSelect from '~/features/transport-select/ui/TransportSelect.vue'
+import IcBack from '~/icons/IcBack.vue'
+import RoutesContainer from '~/entities/route/RoutesContainer.vue'
+import RouteDestination from '~/entities/route/RouteDestination.vue'
 
 const addTripModalStore = useAddTripModalStore()
 const tripFormStore = useTripFormStore()
@@ -13,6 +17,8 @@ const emit = defineEmits(['close'])
 
 const isExpanded = ref(addTripModalStore.isModalExpanded)
 const isVisible = ref(addTripModalStore.isModalOpen)
+
+const partOfForm = ref<1 | 2>(1)
 
 const touchStartY = ref(0)
 const touchMoveY = ref(0)
@@ -99,7 +105,7 @@ const updateStop = (newValue: string) => {
         @touchend="onTouchEnd"
       >
         <form
-          v-if="!isPointSelectorOpen"
+          v-if="!isPointSelectorOpen && partOfForm === 1"
           @submit.prevent
           class="w-full flex justify-center flex-col"
         >
@@ -115,6 +121,7 @@ const updateStop = (newValue: string) => {
                   type="text"
                   placeholder="Название поездки"
                   class="text-2xl font-bold text-text outline-none caret-(--primary-orange)"
+                  v-model="tripFormStore.tripName"
                 />
                 <button @click="closeModal" class="cursor-pointer">
                   <IcClose />
@@ -185,6 +192,35 @@ const updateStop = (newValue: string) => {
             type="date"
           />
         </form>
+
+        <div v-if="partOfForm === 2" class="flex flex-col justify-center">
+          <div class="sticky left-0 top-0 z-40 bg-(--primary-white-bg) pb-[15px]">
+            <div
+              @click="toggleExpand"
+              class="mx-auto my-2 h-1 w-8 rounded-full bg-(--medium-gray) cursor-pointer mb-[20px]"
+            ></div>
+
+            <div class="mb-4">
+              <div class="flex items-center gap-2.5">
+                <button @click.stop="partOfForm = 1" class="cursor-pointer">
+                  <IcBack />
+                </button>
+                <input
+                  type="text"
+                  placeholder="Название поездки"
+                  class="text-2xl font-bold text-text outline-none caret-(--primary-orange)"
+                  v-model="tripFormStore.tripName"
+                />
+              </div>
+            </div>
+          </div>
+          <TransportSelect class="mt-2.5" />
+          <div class="bg-(--primary-white) rounded-2xl mt-[25px] py-[16px] pl-[15px] pr-[5px]">
+            <RouteDestination :stops-list="tripFormStore.tripPoints" />
+          </div>
+          <RoutesContainer class="mt-[25px]" :stops-list="tripFormStore.tripPoints" />
+        </div>
+
         <PointSelector
           v-if="isPointSelectorOpen"
           :initialValue="
@@ -203,8 +239,9 @@ const updateStop = (newValue: string) => {
         <button
           class="bg-(--primary-yellow) py-4 w-full rounded-2xl text-(--primary-white) disabled:opacity-60 cursor-pointer"
           :disabled="!tripFormStore.isFirstStepValid"
+          @click.stop="partOfForm = 2"
         >
-          Продолжить
+          {{ partOfForm === 1 ? 'Продолжить' : 'Добавить поездку' }}
         </button>
       </div>
     </div>
