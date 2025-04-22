@@ -1,41 +1,44 @@
+<script setup lang="ts">
+import { ref, watch } from 'vue'
+import { fetchYandexSuggestions } from '~/utils/yandexSuggest'
+
+const inputValue = ref('')
+const suggestions = ref<{ title: string; subtitle: string }[]>([])
+
+watch(inputValue, async val => {
+  if (val.length >= 3) {
+    suggestions.value = await fetchYandexSuggestions(val)
+    console.log('Подсказки:', suggestions.value)
+  } else {
+    suggestions.value = []
+  }
+})
+
+const selectSuggestion = (suggestion: string) => {
+  inputValue.value = suggestion
+  suggestions.value = []
+}
+</script>
+
 <template>
   <div>
     <input
-      id="address_input"
+      v-model="inputValue"
       type="text"
       placeholder="Введите адрес"
-      class="text-sm text-text outline-none caret-(--primary-orange) py-[18px] px-[15px] rounded-2xl bg-(--primary-white) w-full"
+      class="w-full p-2 border rounded"
     />
+
+    <ul v-if="suggestions.length" class="mt-2 border rounded bg-white">
+      <li
+        v-for="(s, i) in suggestions"
+        :key="i"
+        @click="selectSuggestion(s.title)"
+        class="p-2 hover:bg-gray-100 cursor-pointer"
+      >
+        <div class="font-semibold">{{ s.title }}</div>
+        <div class="text-sm text-gray-500">{{ s.subtitle }}</div>
+      </li>
+    </ul>
   </div>
 </template>
-
-<script setup>
-import { onMounted } from 'vue'
-
-// Инициализируем автодополнение адресов через Яндекс API
-onMounted(() => {
-  ymaps.ready(() => {
-    const inputElement = document.getElementById('address_input')
-
-    if (inputElement) {
-      const autoComplete = new ymaps.control.SearchControl({
-        options: {
-          provider: 'yandex#search', // Используем автодополнение от Яндекса
-          useMapBounds: true, // Ограничиваем поиск по карте
-        },
-      })
-
-      // Встраиваем автодополнение в input
-      inputElement.parentNode.insertBefore(autoComplete.getContainer(), inputElement)
-
-      // Обрабатываем выбор адреса
-      autoComplete.events.add('resultselect', function (event) {
-        const result = event.get('result')
-        const selectedAddress = result.properties.get('text')
-        console.log('Выбранный адрес:', selectedAddress)
-        // Здесь ты можешь сделать что-то с выбранным адресом
-      })
-    }
-  })
-})
-</script>

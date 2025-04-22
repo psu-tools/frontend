@@ -28,7 +28,7 @@ export default defineNuxtConfig({
     },
   },
   plugins: [
-    '~/plugins/yandexMaps.js', // Подключаем плагин для Яндекс API
+    '~/plugins/yandexMaps.ts', // Подключаем плагин для Яндекс API
   ],
   modules: ['@pinia/nuxt', '@nuxt/test-utils/module'],
 })
