@@ -3,10 +3,9 @@ import IcClose from '~/icons/IcClose.vue'
 import IcCompas from '~/icons/IcCompas.vue'
 import AddressItem from '~/shaared/ui/AddressItem.vue'
 
-import { ref, watch } from 'vue'
+const config = useRuntimeConfig()
 
-// Конфиг для OpenCage API
-const apiKey = 'f5b0ea03c1d946dca4128c2297e83360'
+const apiKey = config.public.openCageApiKey
 const apiUrl = `https://api.opencagedata.com/geocode/v1/json?key=${apiKey}&q=`
 
 const props = defineProps({
@@ -39,12 +38,11 @@ const recentlyAddresses = <Address[]>[
 ]
 
 const inputValue = ref(props.initialValue)
-const suggestions = ref<string[]>([]) // Массив для подсказок
+const suggestions = ref<string[]>([])
 
-// Функция для получения подсказок
 const fetchSuggestions = async (query: string) => {
   if (!query) {
-    suggestions.value = [] // Если запрос пустой, очищаем список
+    suggestions.value = []
     return
   }
 
@@ -55,21 +53,19 @@ const fetchSuggestions = async (query: string) => {
     if (data.results) {
       suggestions.value = data.results.map((result: any) => result.formatted)
     } else {
-      suggestions.value = [] // Если нет результатов, очищаем список
+      suggestions.value = []
     }
   } catch (error) {
     console.error('Ошибка при получении подсказок:', error)
   }
 }
 
-watch(inputValue, newValue => {
-  fetchSuggestions(newValue) // Каждый раз при изменении значения инпута обновляем подсказки
-})
+watch(inputValue, newValue => fetchSuggestions(newValue))
 
 const selectPoint = (address: string) => {
   inputValue.value = address
-  emit('select', address) // Отправляем выбранное значение
-  suggestions.value = [] // Очищаем подсказки
+  emit('select', address)
+  suggestions.value = []
 }
 
 const closeSelector = () => emit('close')
@@ -99,7 +95,6 @@ const toggleExpand = () => emit('toggleExpand')
           </button>
         </div>
 
-        <!-- Подсказки адресов -->
         <div
           v-if="suggestions.length > 0"
           class="absolute top-[100%] left-0 w-full bg-white shadow-lg mt-2"

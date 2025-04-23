@@ -68,7 +68,6 @@ export const useNotificationsStore = defineStore('notifications', () => {
     loading,
     error,
     fetchNotifications,
-    loadNextPage
+    loadNextPage,
   }
-
 })
