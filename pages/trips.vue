@@ -32,7 +32,7 @@ onMounted(() => tripsStore.fetchTrips())
       <div v-else class="text-center opacity-40 py-5">Нет поездок</div>
 
       <button
-        class="bg-(--primary-yellow) p-4 rounded-[15px] drop-shadow-lg absolute bottom-28 right-5 overflow-hidden group transition cursor-pointer"
+        class="bg-(--primary-yellow) p-4 rounded-[15px] shadow-lg absolute bottom-28 right-5 overflow-hidden group transition cursor-pointer"
         @click="isModalOpen = true"
       >
         <IcPlus />
