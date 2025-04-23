@@ -2,7 +2,7 @@ import tailwindcss from '@tailwindcss/vite'
 
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
-  devtools: { enabled: true },
+  devtools: { enabled: false },
   css: ['~/assets/css/main.css'],
   devServer: {
     host: '0.0.0.0',
@@ -24,8 +24,11 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       apiHost: 'https://api.psu-tools.ru',
+      yandexApiKey: '8cec5f84-dac6-4b09-ae85-de5fb8372081',
+      openCageApiKey: 'f5b0ea03c1d946dca4128c2297e83360',
     },
   },
+  plugins: ['~/plugins/yandexMaps.ts'],
   modules: ['@pinia/nuxt', '@nuxt/test-utils/module', '@vite-pwa/nuxt'],
   pwa: {
     registerType: 'autoUpdate',

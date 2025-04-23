@@ -3,6 +3,11 @@ import IcClose from '~/icons/IcClose.vue'
 import IcCompas from '~/icons/IcCompas.vue'
 import AddressItem from '~/shaared/ui/AddressItem.vue'
 
+const config = useRuntimeConfig()
+
+const apiKey = config.public.openCageApiKey
+const apiUrl = `https://api.opencagedata.com/geocode/v1/json?key=${apiKey}&q=`
+
 const props = defineProps({
   initialValue: {
     type: String,
@@ -15,8 +20,6 @@ const emit = defineEmits<{
   (e: 'close'): void
   (e: 'toggleExpand'): void
 }>()
-
-const inputValue = ref(props.initialValue)
 
 interface Address {
   name: string
@@ -34,7 +37,36 @@ const recentlyAddresses = <Address[]>[
   { name: 'Аэропорт Пермь, Терминал А', address: 'ш. Космонавтов, 455, д. Большое Савино' },
 ]
 
-const selectPoint = () => emit('select', inputValue.value)
+const inputValue = ref(props.initialValue)
+const suggestions = ref<string[]>([])
+
+const fetchSuggestions = async (query: string) => {
+  if (!query) {
+    suggestions.value = []
+    return
+  }
+
+  try {
+    const response = await fetch(`${apiUrl}${query}`)
+    const data = await response.json()
+
+    if (data.results) {
+      suggestions.value = data.results.map((result: any) => result.formatted)
+    } else {
+      suggestions.value = []
+    }
+  } catch (error) {
+    console.error('Ошибка при получении подсказок:', error)
+  }
+}
+
+watch(inputValue, newValue => fetchSuggestions(newValue))
+
+const selectPoint = (address: string) => {
+  inputValue.value = address
+  emit('select', address)
+  suggestions.value = []
+}
 
 const closeSelector = () => emit('close')
 
@@ -56,11 +88,27 @@ const toggleExpand = () => emit('toggleExpand')
             placeholder="Куда поедем?"
             class="text-sm text-text outline-none caret-(--primary-orange) py-[18px] px-[15px] rounded-2xl bg-(--primary-white) w-full"
             v-model="inputValue"
-            @keyup.enter="selectPoint"
+            @keyup.enter="selectPoint(inputValue)"
           />
           <button @click="closeSelector" class="cursor-pointer">
             <IcClose />
           </button>
+        </div>
+
+        <div
+          v-if="suggestions.length > 0"
+          class="absolute top-[100%] left-0 w-full bg-white shadow-lg mt-2"
+        >
+          <ul>
+            <li
+              v-for="(suggestion, index) in suggestions"
+              :key="index"
+              @click="selectPoint(suggestion)"
+              class="px-4 py-2 cursor-pointer hover:bg-gray-100"
+            >
+              {{ suggestion }}
+            </li>
+          </ul>
         </div>
       </div>
     </div>
