@@ -18,6 +18,8 @@ const isVisible = ref(false)
 const touchStartY = ref(0)
 const touchMoveY = ref(0)
 
+const currentId = ref('')
+
 const toggleExpand = () => {
   isExpanded.value = !isExpanded.value
 }
@@ -73,10 +75,24 @@ const closeDeleteConfirm = () => {
 }
 
 const confirmDelete = () => {
-  console.log('Trip deleted')
+  if (currentId.value) {
+    tripsStore.deleteTrip(currentId.value)
+  }
   closeDeleteConfirm()
   closeModal()
 }
+
+onMounted(() => {
+  watch(
+    () => modalStore?.tripData,
+    newTripData => {
+      if (newTripData?.id) {
+        currentId.value = newTripData.id
+      }
+    },
+    { immediate: true }
+  )
+})
 </script>
 <template>
   <Teleport to="#modal-container">
