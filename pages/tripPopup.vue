@@ -60,8 +60,6 @@ const onTouchEnd = () => {
 }
 
 const stopsList = computed(() => modalStore?.tripData?.route)
-
-console.log('asdsd', stopsList)
 </script>
 <template>
   <Teleport to="#modal-container">

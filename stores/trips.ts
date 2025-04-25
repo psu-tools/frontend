@@ -44,13 +44,14 @@ export const useTripsStore = defineStore('trips', () => {
   const fetchTrips = async () => {
     try {
       isLoading.value = true
-      console.log(isLoading.value)
       const config = useRuntimeConfig()
       const response = await $fetch<GetTripsListResponse>(
-        `${config.public.apiHost}/v1/routes-service/trips`,
-        { method: 'GET' }
+        `${config.public.apiHost}/${config.public.apiVersion}/routes-service/trips`,
+        {
+          method: 'GET',
+          query: { userId: '4cef84ba-a98a-4089-b6d8-bf0416ad2208' },
+        }
       )
-      console.log('Response:', response)
       trips.value = response?.data || []
     } catch (error) {
       console.error('Data (trips) fetch error:', error)

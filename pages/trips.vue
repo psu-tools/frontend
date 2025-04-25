@@ -7,8 +7,6 @@ import AddTripModal from './addTripModal.vue'
 
 const tripsStore = useTripsStore()
 const isModalOpen = ref(false)
-
-onMounted(() => tripsStore.fetchTrips())
 </script>
 
 <template>

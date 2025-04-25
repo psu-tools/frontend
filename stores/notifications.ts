@@ -33,10 +33,10 @@ export const useNotificationsStore = defineStore('notifications', () => {
     try {
       const config = useRuntimeConfig()
       const response = await $fetch<NotificationsResponse>(
-        `${config.public.apiHost}/v1/notifications-service/notifications?receiverId=4cef84ba-a98a-4089-b6d8-bf0416ad2208`,
+        `${config.public.apiHost}/${config.public.apiVersion}/notifications-service/notifications`,
         {
           method: 'GET',
-          query: { pageNumber: page, pageSize },
+          query: { pageNumber: page, pageSize, receiverId: '4cef84ba-a98a-4089-b6d8-bf0416ad2208' },
         }
       )
       if (response.success) {

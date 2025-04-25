@@ -24,6 +24,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       apiHost: 'https://api.psu-tools.ru',
+      apiVersion: 'v1',
       yandexApiKey: '8cec5f84-dac6-4b09-ae85-de5fb8372081',
       openCageApiKey: 'f5b0ea03c1d946dca4128c2297e83360',
     },
