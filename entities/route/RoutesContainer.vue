@@ -15,7 +15,7 @@ defineProps<Routes>()
 </script>
 <template>
   <div class="relative flex flex-col gap-[25px]">
-    <div v-for="(stop, index) in stopsList">
+    <div v-for="(_, index) in stopsList">
       <RouteBlock
         v-if="index !== stopsList.length - 1"
         :starting-point="stopsList[index]"
@@ -23,7 +23,7 @@ defineProps<Routes>()
       />
     </div>
     <div
-      class="absolute top-[10px] left-0 w-[20px] bg-[#eeeeee] rounded-full"
+      class="absolute top-[10px] left-0 w-[20px] bg-[#eeeeee] dark:bg-(--third-black-bg) rounded-full"
       style="height: calc(100% - 35px)"
     ></div>
   </div>
