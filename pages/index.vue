@@ -5,8 +5,6 @@ import IcNotifications from '~/icons/IcNotifications.vue'
 import { useTripsStore } from '@/stores/trips'
 
 const tripsStore = useTripsStore()
-
-onMounted(async () => await tripsStore.fetchTrips())
 </script>
 
 <template>
