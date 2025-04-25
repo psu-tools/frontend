@@ -190,7 +190,7 @@ const handleMouseUp = (event: MouseEvent) => {
     </div>
 
     <div
-      class="mx-auto my-2 h-1 w-8 rounded-full bg-(--medium-gray) cursor-pointer"
+      class="mx-auto my-2 h-1 w-8 rounded-full bg-(--medium-gray) dark:opacity-30 cursor-pointer"
       @click="toggleCalendar"
     ></div>
   </div>

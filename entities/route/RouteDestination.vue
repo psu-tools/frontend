@@ -12,14 +12,15 @@ interface Stop {
 
 defineProps<DestinationProps>()
 </script>
+
 <template>
-  <div class="flex flex-col gap-7 dark:text-(--primary-white)">
+  <div class="flex flex-col gap-7 dark:text-(--primary-white) text-sm">
     <div v-for="(stop, index) in stopsList" :key="index" class="relative flex items-center">
       <span
         class="flex items-center justify-center w-3.5 h-3.5 text-(--primary-white) text-xs font-bold"
         :class="{
           'bg-(--primary-orange) rounded-full': index === 0,
-          'bg-(--primary-white) rounded-full border-2 border-(--dark-gray)':
+          'rounded-full border-2 border-(--dark-gray) dark:border-(--primary-gray)':
             index === stopsList.length - 1,
           'bg-(--dark-gray) rounded-sm ': index !== 0 && index !== stopsList.length - 1,
         }"

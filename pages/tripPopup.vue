@@ -88,7 +88,7 @@ const stopsList = computed(() => modalStore?.tripData?.route)
           >
             <div
               @click="toggleExpand"
-              class="mx-auto my-2 h-1 w-8 rounded-full bg-(--medium-gray) cursor-pointer mb-[20px]"
+              class="mx-auto my-2 h-1 w-8 rounded-full bg-(--medium-gray) dark:opacity-30 cursor-pointer mb-[20px]"
             ></div>
             <div class="mb-[15px]">
               <div class="flex justify-between items-center">
