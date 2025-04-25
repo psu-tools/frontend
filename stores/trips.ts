@@ -70,7 +70,7 @@ export const useTripsStore = defineStore('trips', () => {
     try {
       const config = useRuntimeConfig()
       const response = await $fetch<DeleteTripResponse>(
-        `${config.public.apiHost}/${config.public.apiVersion}/routes-service/trips`,
+        `${config.public.apiHost}/${config.public.apiVersion}/routes-service/trips/${tripId}`,
         {
           method: 'DELETE',
           query: { userId: '4cef84ba-a98a-4089-b6d8-bf0416ad2208' },
