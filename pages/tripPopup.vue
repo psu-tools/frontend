@@ -8,6 +8,7 @@ import RouteEdit from '~/entities/route/RouteEdit.vue'
 
 import IcTrash from '~/icons/IcTrash.vue'
 import IcClose from '~/icons/IcClose.vue'
+import IcWarn from '~/icons/IcWarn.vue'
 
 const modalStore = useModalStore()
 const tripsStore = useTripsStore()
@@ -156,8 +157,11 @@ const confirmDelete = () => {
           @click.stop
         >
           <div
-            class="bg-(--primary-white) dark:bg-(--secondary-black-bg) p-5 rounded-2xl w-[300px]"
+            class="bg-(--primary-white) dark:bg-(--secondary-black-bg) p-[20px] rounded-2xl w-[300px]"
           >
+            <div class="w-full flex justify-center items-center mb-[15px]">
+              <IcWarn />
+            </div>
             <h3
               class="text-lg text-(--color-text) dark:text-(--primary-white) font-semibold text-center mb-[10px]"
             >
