@@ -14,7 +14,6 @@
     "test:coverage": "vitest --coverage"
   },
   "dependencies": {
-    "@fawmi/vue-google-maps": "^0.9.72",
     "@pinia/nuxt": "^0.10.1",
     "@tailwindcss/vite": "^4.0.12",
     "@vite-pwa/nuxt": "^1.0.0",
