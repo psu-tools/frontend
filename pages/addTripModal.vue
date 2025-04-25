@@ -5,6 +5,10 @@ import PointSelector from '~/features/trip-form/ui/PointSelector.vue'
 import { useAddTripModalStore } from '~/stores/addTripModal'
 import { useTripFormStore } from '~/stores/tripForm'
 import PickerSelectPopup from '~/features/picker-modal/ui/PickerSelectPopup.vue'
+import TransportSelect from '~/features/transport-select/ui/TransportSelect.vue'
+import IcBack from '~/icons/IcBack.vue'
+import RoutesContainer from '~/entities/route/RoutesContainer.vue'
+import RouteDestination from '~/entities/route/RouteDestination.vue'
 
 const addTripModalStore = useAddTripModalStore()
 const tripFormStore = useTripFormStore()
@@ -13,6 +17,8 @@ const emit = defineEmits(['close'])
 
 const isExpanded = ref(addTripModalStore.isModalExpanded)
 const isVisible = ref(addTripModalStore.isModalOpen)
+
+const partOfForm = ref<1 | 2>(1)
 
 const touchStartY = ref(0)
 const touchMoveY = ref(0)
@@ -60,8 +66,6 @@ onMounted(() => {
 const isPointSelectorOpen = ref(false)
 const activePointIndex = ref<number | null>(null)
 
-const stopsList = ref([{ name: 'Моё местоположение' }, { name: 'Куда поедем?' }])
-
 const openPointSelector = (index: number) => {
   activePointIndex.value = index
   isPointSelectorOpen.value = true
@@ -74,7 +78,7 @@ const closePointSelector = () => {
 
 const updateStop = (newValue: string) => {
   if (activePointIndex.value !== null) {
-    stopsList.value[activePointIndex.value].name = newValue
+    tripFormStore.updateTripPoint(activePointIndex.value, { name: newValue })
   }
   closePointSelector()
 }
@@ -101,7 +105,7 @@ const updateStop = (newValue: string) => {
         @touchend="onTouchEnd"
       >
         <form
-          v-if="!isPointSelectorOpen"
+          v-if="!isPointSelectorOpen && partOfForm === 1"
           @submit.prevent
           class="w-full flex justify-center flex-col"
         >
@@ -117,6 +121,7 @@ const updateStop = (newValue: string) => {
                   type="text"
                   placeholder="Название поездки"
                   class="text-2xl font-bold text-text outline-none caret-(--primary-orange)"
+                  v-model="tripFormStore.tripName"
                 />
                 <button @click="closeModal" class="cursor-pointer">
                   <IcClose />
@@ -126,7 +131,7 @@ const updateStop = (newValue: string) => {
           </div>
 
           <div class="bg-(--primary-white) rounded-2xl py-[16px] pl-[15px] pr-[5px]">
-            <StopsInput :stopsList="stopsList" @open-selector="openPointSelector" />
+            <StopsInput @open-selector="openPointSelector" />
           </div>
 
           <div class="mt-[25px] space-y-[15px]">
@@ -138,7 +143,13 @@ const updateStop = (newValue: string) => {
                 class="bg-(--secondary-white-bg) py-2 px-2.5 text-sm text-(--color-text) rounded-xl cursor-pointer"
                 @click="isDayMonthYearPopupOpen = true"
               >
-                {{ tripFormStore.tripDate?.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', year: 'numeric' }) }}
+                {{
+                  tripFormStore.tripDate?.toLocaleDateString('ru-RU', {
+                    day: 'numeric',
+                    month: 'short',
+                    year: 'numeric',
+                  })
+                }}
               </p>
             </div>
 
@@ -159,7 +170,8 @@ const updateStop = (newValue: string) => {
             >
               <p class="text-sm text-(--color-text)">Напоминание</p>
               <p
-                class="bg-(--secondary-white-bg) py-2 px-2.5 text-sm text-(--color-text) rounded-xl cursor-pointer" @click="isReminderPopupOpen = true"
+                class="bg-(--secondary-white-bg) py-2 px-2.5 text-sm text-(--color-text) rounded-xl cursor-pointer"
+                @click="isReminderPopupOpen = true"
               >
                 За {{ tripFormStore?.reminderTime }} минут
               </p>
@@ -168,19 +180,56 @@ const updateStop = (newValue: string) => {
 
           <PickerSelectPopup v-if="isTimePopupOpen" @close="isTimePopupOpen = false" type="time" />
 
-          <PickerSelectPopup v-if="isReminderPopupOpen" @close="isReminderPopupOpen = false" type="reminder" />
-
-          <PickerSelectPopup v-if="isDayMonthYearPopupOpen" @close="isDayMonthYearPopupOpen = false" type="date" />
-        </form>
-        <Transition name="fade" appear>
-          <PointSelector
-            v-if="isPointSelectorOpen"
-            :initialValue="activePointIndex !== null ? stopsList[activePointIndex].name : ''"
-            @close="closePointSelector"
-            @select="updateStop"
-            @toggle-expand="toggleExpand"
+          <PickerSelectPopup
+            v-if="isReminderPopupOpen"
+            @close="isReminderPopupOpen = false"
+            type="reminder"
           />
-        </Transition>
+
+          <PickerSelectPopup
+            v-if="isDayMonthYearPopupOpen"
+            @close="isDayMonthYearPopupOpen = false"
+            type="date"
+          />
+        </form>
+
+        <div v-if="partOfForm === 2" class="flex flex-col justify-center">
+          <div class="sticky left-0 top-0 z-40 bg-(--primary-white-bg) pb-[15px]">
+            <div
+              @click="toggleExpand"
+              class="mx-auto my-2 h-1 w-8 rounded-full bg-(--medium-gray) cursor-pointer mb-[20px]"
+            ></div>
+
+            <div class="mb-4">
+              <div class="flex items-center gap-2.5">
+                <button @click.stop="partOfForm = 1" class="cursor-pointer">
+                  <IcBack />
+                </button>
+                <input
+                  type="text"
+                  placeholder="Название поездки"
+                  class="text-2xl font-bold text-text outline-none caret-(--primary-orange)"
+                  v-model="tripFormStore.tripName"
+                />
+              </div>
+            </div>
+          </div>
+          <TransportSelect class="mt-2.5" />
+          <div class="bg-(--primary-white) rounded-2xl mt-[25px] py-[16px] pl-[15px] pr-[5px]">
+            <RouteDestination :stops-list="tripFormStore.tripPoints" />
+          </div>
+          <RoutesContainer class="mt-[25px]" :stops-list="tripFormStore.tripPoints" />
+        </div>
+
+        <PointSelector
+          v-if="isPointSelectorOpen"
+          :initialValue="
+            activePointIndex !== null ? tripFormStore.tripPoints[activePointIndex].name : ''
+          "
+          @close="closePointSelector"
+          @select="updateStop"
+          @toggle-expand="toggleExpand"
+        />
       </div>
 
       <div
@@ -188,10 +237,11 @@ const updateStop = (newValue: string) => {
         class="absolute bottom-0 left-0 bg-(--primary-white-bg)/40 backdrop-blur-2xl w-full border-t border-(--medium-gray) pt-2.5 pb-10 px-5 flex justify-center items-center"
       >
         <button
-          class="bg-(--primary-yellow) py-4 w-full rounded-2xl text-(--primary-white) disabled:opacity-60"
-          disabled
+          class="bg-(--primary-yellow) py-4 w-full rounded-2xl text-(--primary-white) disabled:opacity-60 cursor-pointer"
+          :disabled="!tripFormStore.isFirstStepValid"
+          @click.stop="partOfForm = 2"
         >
-          Добавить поездку
+          {{ partOfForm === 1 ? 'Продолжить' : 'Добавить поездку' }}
         </button>
       </div>
     </div>
@@ -204,15 +254,5 @@ const updateStop = (newValue: string) => {
 }
 .scrollbar-hide {
   scrollbar-width: none;
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.25s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
 }
 </style>
