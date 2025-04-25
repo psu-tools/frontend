@@ -33,26 +33,28 @@ onMounted(() => {
 <template>
   <div>
     <div
-      class="flex gap-2.5 items-center absolute top-0 pt-8 w-full pb-[15px] bg-(--primary-white) z-10"
+      class="flex gap-2.5 items-center absolute top-0 pt-8 w-full pb-[15px] bg-(--primary-white) dark:bg-(--primary-black-bg) z-10"
     >
       <NuxtLink to="/">
         <IcBack />
       </NuxtLink>
-      <h2 class="text-xl font-bold text-text">Уведомления</h2>
+      <h2 class="text-xl font-bold text-text dark:text-(--primary-white)">Уведомления</h2>
     </div>
     <div class="mt-11 space-y-4">
       <div
         v-for="notification in notifications"
         :key="notification.id"
-        class="py-[17px] px-5 rounded-(--radius-4xl) bg-(--smoke-gray)"
+        class="py-[17px] px-5 rounded-(--radius-4xl) bg-(--smoke-gray) dark:bg-(--secondary-black-bg)"
       >
         <p class="text-xs text-(--secondary-light-gray) opacity-80 font-semibold">
           {{ getHumanDate(notification.createdAt) }}
         </p>
-        <h2 class="text-sm text-(--color-text) font-semibold mt-1.5">
+        <h2 class="text-sm text-(--color-text) dark:text-(--primary-white) font-semibold mt-1.5">
           {{ notification.headerText }}
         </h2>
-        <p class="text-xs text-(--color-text) mt-[3px]">{{ notification.bodyText }}</p>
+        <p class="text-xs text-(--color-text) dark:text-(--primary-white) mt-[3px]">
+          {{ notification.bodyText }}
+        </p>
       </div>
     </div>
     <div ref="sentinel" class="h-1"></div>
