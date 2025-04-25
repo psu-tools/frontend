@@ -25,6 +25,7 @@ body {
   --primary-black-bg: #1f1f1f;
   --secondary-black-bg: #292929;
   --third-black-bg: #3d3d3d;
+  --primary-gray-icon: #a6a6a6;
 
   /* radius */
   --radius-2xl: 20px;

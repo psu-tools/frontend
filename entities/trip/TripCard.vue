@@ -15,10 +15,12 @@ defineProps<TripProps>()
 const modal = useModalStore()
 </script>
 <template>
-  <div v-if="status === 'active'" @click="modal.openModal(trip)">
-    <ActiveTripCard :trip="trip" />
-  </div>
-  <div v-else-if="status === 'primary'" @click="modal.openModal(trip)">
-    <PrimaryTripCard :trip="trip" :has-date="hasDate" />
+  <div class="cursor-pointer">
+    <div v-if="status === 'active'" @click="modal.openModal(trip)">
+      <ActiveTripCard :trip="trip" />
+    </div>
+    <div v-else-if="status === 'primary'" @click="modal.openModal(trip)">
+      <PrimaryTripCard :trip="trip" :has-date="hasDate" />
+    </div>
   </div>
 </template>
