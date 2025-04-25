@@ -7,7 +7,10 @@ defineProps<{
 <template>
   <div
     class="h-10 w-10 flex justify-center items-center rounded-xl cursor-pointer"
-    :class="{ 'bg-(--primary-white)': !selected, 'bg-(--primary-orange)': selected }"
+    :class="{
+      'bg-(--primary-white) dark:bg-(--secondary-black-bg)': !selected,
+      'bg-(--primary-orange)': selected,
+    }"
   >
     <svg width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
