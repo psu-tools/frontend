@@ -19,15 +19,34 @@ const handleSelectedReminder = (time: number) => tripFormStore.setReminderTime(t
 
 <template>
   <Teleport to="#modal-container">
-    <div class="absolute inset-0 z-50 bg-black/40 flex items-end px-5 pb-11" @click.self="emit('close')">
-      <div class="w-full max-w-md mx-auto bg-white rounded-2xl px-[30px] py-5 shadow-xl">
-        <h2 class="text-left text-sm font-semibold pb-8">Время прибытия</h2>
+    <div
+      class="absolute inset-0 z-50 bg-black/40 flex items-end px-5 pb-11"
+      @click.self="emit('close')"
+    >
+      <div
+        class="w-full max-w-md mx-auto bg-white dark:bg-(--secondary-black-bg) rounded-2xl px-[30px] py-5 shadow-xl"
+      >
+        <h2 class="text-left text-sm font-semibold pb-8 dark:text-(--primary-white)">
+          Время прибытия
+        </h2>
 
-        <TimePicker v-if="props.type === 'time'" :initial-time="tripFormStore.arrivalTime" @select="handleSelectedTime" />
+        <TimePicker
+          v-if="props.type === 'time'"
+          :initial-time="tripFormStore.arrivalTime"
+          @select="handleSelectedTime"
+        />
 
-        <DayMonthYearPicker v-if="props.type === 'date'" :initial-date="tripFormStore.tripDate" @select="handleSelectedDate" />
+        <DayMonthYearPicker
+          v-if="props.type === 'date'"
+          :initial-date="tripFormStore.tripDate"
+          @select="handleSelectedDate"
+        />
 
-        <ReminderTimePicker v-if="props.type === 'reminder'" :initial-reminder-time="tripFormStore.reminderTime" @select="handleSelectedReminder" />
+        <ReminderTimePicker
+          v-if="props.type === 'reminder'"
+          :initial-reminder-time="tripFormStore.reminderTime"
+          @select="handleSelectedReminder"
+        />
 
         <button
           class="w-full mt-5 py-3 rounded-xl text-white text-sm font-semibold bg-(--primary-orange) cursor-pointer"

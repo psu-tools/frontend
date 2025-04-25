@@ -40,6 +40,11 @@ const addStop = () => tripFormStore.addTripPoint({ name: 'Новая точка'
         @click="onInputClick(index)"
       />
       <div
+        v-if="index !== stopsList.length"
+        class="absolute bottom-[-60%] h-[1.5px] bg-[#eeeeee] dark:bg-(--third-black-bg) ml-[26px] w-[calc(100%-34px)]"
+      ></div>
+    </div>
+    <div v-if="stopsList.length >= 2" class="relative flex items-center py-0.5" @click="addStop">
         v-if="index !== tripFormStore.tripPoints.length - 1"
         class="absolute bottom-[-60%] h-[1.5px] bg-[#eeeeee] ml-[26px] w-[calc(100%-34px)]"
       ></div>

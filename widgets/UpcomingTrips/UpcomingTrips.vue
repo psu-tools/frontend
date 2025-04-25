@@ -10,7 +10,7 @@ defineProps<{ trips: Trip[] }>()
 
 <template>
   <div>
-    <h2 class="text-3xl font-bold text-text">На этой неделе</h2>
+    <h2 class="text-3xl font-bold text-text dark:text-(--primary-white)">На этой неделе</h2>
     <div v-if="tripsStore.upcomingTrips.length !== 0" class="mt-6 space-y-4">
       <TripCard
         v-for="trip in trips"

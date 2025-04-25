@@ -13,7 +13,7 @@ defineProps<{
   <IcAddressPoint v-if="icon === 'point'" />
   <IcAddressRecently v-if="icon === 'clock'" />
   <div class="flex flex-col items-start gap-1">
-    <p class="text-sm text-(--color-text)">{{ name }}</p>
+    <p class="text-sm text-(--color-text) dark:text-(--primary-white)">{{ name }}</p>
     <p class="text-xs text-(--primary-gray)">{{ address }}</p>
   </div>
 </template>

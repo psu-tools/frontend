@@ -20,7 +20,8 @@ const scrollToIndex = (el: HTMLElement | null, index: number) => {
   el.scrollTop = (index + 1) * itemHeight - paddingOffset
 }
 
-const getCurrentIndex = (scrollTop: number) => Math.round((scrollTop + paddingOffset) / itemHeight) - 1
+const getCurrentIndex = (scrollTop: number) =>
+  Math.round((scrollTop + paddingOffset) / itemHeight) - 1
 
 const onScroll = (event: Event) => {
   const el = event.target as HTMLElement
@@ -44,7 +45,7 @@ watch([selectedReminderTimeIndex], () => emit('select', selectedTime.value))
 </script>
 
 <template>
-  <div class="relative">
+  <div class="relative dark:text-(--primary-white)">
     <div class="relative z-10 flex gap-6 items-center justify-center">
       <div
         class="w-[120px] h-[124px] overflow-y-scroll snap-y snap-mandatory scrollbar-hide"
@@ -55,7 +56,10 @@ watch([selectedReminderTimeIndex], () => emit('select', selectedTime.value))
           v-for="(time, i) in paddedReminderTime"
           :key="'month-' + i"
           class="h-12 leading-12 text-center snap-center text-sm"
-          :class="{ 'opacity-50': time !== 0 && i - 1 !== selectedReminderTimeIndex, 'invisible': i === 0 || i ===  paddedReminderTime.length - 1}"
+          :class="{
+            'opacity-50': time !== 0 && i - 1 !== selectedReminderTimeIndex,
+            invisible: i === 0 || i === paddedReminderTime.length - 1,
+          }"
         >
           За {{ time || '' }} минут
         </div>
@@ -64,7 +68,9 @@ watch([selectedReminderTimeIndex], () => emit('select', selectedTime.value))
     <div
       class="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 flex gap-2.5 items-center justify-center"
     >
-      <div class="w-[120px] h-[45px] bg-(--secondary-white-bg) rounded-xl" />
+      <div
+        class="w-[120px] h-[45px] bg-(--secondary-white-bg) dark:bg-(--third-black-bg) rounded-xl"
+      />
     </div>
   </div>
 </template>

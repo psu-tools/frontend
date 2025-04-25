@@ -27,7 +27,8 @@ const scrollToIndex = (el: HTMLElement | null, index: number) => {
   el.scrollTop = (index + 1) * itemHeight - paddingOffset
 }
 
-const getCurrentIndex = (scrollTop: number) => Math.round((scrollTop + paddingOffset) / itemHeight) - 1
+const getCurrentIndex = (scrollTop: number) =>
+  Math.round((scrollTop + paddingOffset) / itemHeight) - 1
 
 const onScrollHour = (event: Event) => {
   const el = event.target as HTMLElement
@@ -65,7 +66,7 @@ watch([selectedHourIndex, selectedMinuteIndex], () => {
 </script>
 
 <template>
-  <div class="relative">
+  <div class="relative dark:text-(--primary-white)">
     <div class="relative z-10 flex gap-6 items-center justify-center">
       <div
         class="w-[75px] h-[124px] overflow-y-scroll snap-y snap-mandatory scrollbar-hide"
@@ -76,7 +77,7 @@ watch([selectedHourIndex, selectedMinuteIndex], () => {
           v-for="(hour, i) in paddedHours"
           :key="'hour-' + i"
           class="h-12 leading-12 text-center snap-center text-sm"
-          :class="{'opacity-50': hour !== 0 && i-1 !== selectedHourIndex}"
+          :class="{ 'opacity-50': hour !== 0 && i - 1 !== selectedHourIndex }"
         >
           {{ hour || '' }}
         </div>
@@ -91,15 +92,22 @@ watch([selectedHourIndex, selectedMinuteIndex], () => {
           v-for="(minute, i) in paddedMinutes"
           :key="'month-' + i"
           class="h-12 leading-12 text-center snap-center text-sm"
-          :class="{'opacity-50': minute !== 0 && i-1 !== selectedMinuteIndex}"
+          :class="{ 'opacity-50': minute !== 0 && i - 1 !== selectedMinuteIndex }"
         >
           {{ minute || '' }}
         </div>
       </div>
     </div>
-    <div class="absolute  left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 flex gap-2.5 items-center justify-center">
-      <div class=" w-[75px] h-[45px] bg-(--secondary-white-bg) rounded-xl" />:
-      <div class=" w-[75px] h-[45px] bg-(--secondary-white-bg) rounded-xl" />
+    <div
+      class="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 flex gap-2.5 items-center justify-center"
+    >
+      <div
+        class="w-[75px] h-[45px] bg-(--secondary-white-bg) dark:bg-(--third-black-bg) rounded-xl"
+      />
+      :
+      <div
+        class="w-[75px] h-[45px] bg-(--secondary-white-bg) dark:bg-(--third-black-bg) rounded-xl"
+      />
     </div>
   </div>
 </template>

@@ -2,7 +2,7 @@
 
 <template>
   <div>
-    <h1 class="text-3xl font-bold text-text">Профиль</h1>
+    <h1 class="text-3xl font-bold text-text dark:text-(--primary-white)">Профиль</h1>
   </div>
 </template>
 
