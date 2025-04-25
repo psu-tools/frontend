@@ -32,4 +32,5 @@ body {
   /* radius */
   --radius-2xl: 20px;
   --radius-3xl: 25px;
+  --radius-4xl: 30px;
 }
