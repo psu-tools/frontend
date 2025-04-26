@@ -21,7 +21,7 @@ const handleSelectedDate = (date: Date) => tripFormStore.setTripDate(date)
 const handleSelectedReminder = (time: number) => tripFormStore.setReminderTime(time)
 
 const handleSelectedStopTime = (time: number) => {
-  if (props.stopTimeIndex) {
+  if (props.stopTimeIndex && tripFormStore.tripPoints[props.stopTimeIndex].stopTime !== time) {
     tripFormStore.setPointStopTime(props.stopTimeIndex, time)
     console.log(tripFormStore.tripPoints)
   }
