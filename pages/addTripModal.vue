@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import IcClose from '~/icons/IcClose.vue'
 import StopsInput from '~/features/trip-form/ui/StopsInput.vue'
-import PointSelector from '~/features/trip-form/ui/PointSelector.vue'
+import PointSelector, { type SuggestionPoint } from '~/features/trip-form/ui/PointSelector.vue'
 import { useAddTripModalStore } from '~/stores/addTripModal'
 import { useTripFormStore } from '~/stores/tripForm'
 import PickerSelectPopup from '~/features/picker-modal/ui/PickerSelectPopup.vue'
@@ -36,6 +36,7 @@ const closeModal = () => {
 const isDayMonthYearPopupOpen = ref(false)
 const isTimePopupOpen = ref(false)
 const isReminderPopupOpen = ref(false)
+const isStopTimePopupOpen = ref(false)
 
 const toggleExpand = () => (isExpanded.value = !isExpanded.value)
 
@@ -76,9 +77,13 @@ const closePointSelector = () => {
   activePointIndex.value = null
 }
 
-const updateStop = (newValue: string) => {
+const updateStop = (newValue: SuggestionPoint) => {
   if (activePointIndex.value !== null) {
-    tripFormStore.updateTripPoint(activePointIndex.value, { name: newValue })
+    tripFormStore.updateTripPoint(activePointIndex.value, {
+      name: newValue.formatted,
+      latitude: newValue.geometry.lat,
+      longitude: newValue.geometry.lng,
+    })
   }
   closePointSelector()
 }
@@ -136,6 +141,30 @@ const updateStop = (newValue: string) => {
             class="bg-(--primary-white) dark:bg-(--secondary-black-bg) rounded-2xl py-[16px] pl-[15px] pr-[5px]"
           >
             <StopsInput @open-selector="openPointSelector" />
+          </div>
+
+          <div
+            v-if="tripFormStore.tripPoints.length > 2"
+            class="mt-[25px] space-y-[15px] text-(--color-text) dark:text-(--primary-white) text-sm"
+          >
+            <div
+              v-for="(_, i) in tripFormStore.tripPoints.length - 2"
+              class="bg-(--primary-white) dark:bg-(--secondary-black-bg) rounded-2xl flex justify-between items-center py-2.5 pl-[15px] pr-2.5"
+            >
+              <p>Остановка в точке {{ i + 1 }}</p>
+              <p
+                class="bg-(--secondary-white-bg) dark:bg-(--third-black-bg) py-2 px-2.5 rounded-xl cursor-pointer"
+                @click="isStopTimePopupOpen = true"
+              >
+                {{ tripFormStore.tripPoints[i + 1].stopTime }} мин.
+              </p>
+              <PickerSelectPopup
+                v-if="isStopTimePopupOpen"
+                type="stopTime"
+                :stop-time-index="i + 1"
+                @close="isStopTimePopupOpen = false"
+              />
+            </div>
           </div>
 
           <div
