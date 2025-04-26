@@ -61,7 +61,6 @@ const fetchSuggestions = async (query: string) => {
   try {
     const response = await fetch(`${apiUrl}${query}`)
     const data = await response.json()
-    console.log(data.results)
     if (data.results) {
       suggestions.value = data.results
     } else {

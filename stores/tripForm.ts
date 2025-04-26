@@ -51,8 +51,7 @@ export const useTripFormStore = defineStore('tripForm', () => {
       tripPoints.value[index].latitude = point.latitude
       tripPoints.value[index].longitude = point.longitude
       tripPoints.value[index].stopTime = 0
-      console.log('point index: ', index)
-      console.log('point: ', tripPoints.value[index])
+      console.log('point index: ', index, 'point: ', tripPoints.value[index])
     }
   }
 
