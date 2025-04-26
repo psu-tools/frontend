@@ -80,9 +80,10 @@ const closePointSelector = () => {
 const updateStop = (newValue: SuggestionPoint) => {
   if (activePointIndex.value !== null) {
     tripFormStore.updateTripPoint(activePointIndex.value, {
-      name: newValue.formatted,
+      name: newValue.formatted.split(',')[0],
       latitude: newValue.geometry.lat,
       longitude: newValue.geometry.lng,
+      address: newValue.formatted,
     })
   }
   closePointSelector()

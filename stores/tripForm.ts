@@ -19,12 +19,14 @@ export const useTripFormStore = defineStore('tripForm', () => {
       latitude: Number.POSITIVE_INFINITY,
       longitude: Number.POSITIVE_INFINITY,
       stopTime: 0,
+      address: 'idfn',
     },
     {
       name: 'Куда поедем?',
       latitude: Number.POSITIVE_INFINITY,
       longitude: Number.POSITIVE_INFINITY,
       stopTime: 0,
+      address: '',
     },
   ])
 
@@ -51,6 +53,7 @@ export const useTripFormStore = defineStore('tripForm', () => {
       tripPoints.value[index].latitude = point.latitude
       tripPoints.value[index].longitude = point.longitude
       tripPoints.value[index].stopTime = 0
+      tripPoints.value[index].address = point.address
       console.log('point index: ', index, 'point: ', tripPoints.value[index])
     }
   }
