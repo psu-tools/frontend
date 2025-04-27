@@ -8,6 +8,7 @@ import RouteEdit from '~/entities/route/RouteEdit.vue'
 
 import IcTrash from '~/icons/IcTrash.vue'
 import IcClose from '~/icons/IcClose.vue'
+import IcWarn from '~/icons/IcWarn.vue'
 
 const modalStore = useModalStore()
 const tripsStore = useTripsStore()
@@ -16,6 +17,8 @@ const isVisible = ref(false)
 
 const touchStartY = ref(0)
 const touchMoveY = ref(0)
+
+const currentId = ref('')
 
 const toggleExpand = () => {
   isExpanded.value = !isExpanded.value
@@ -60,6 +63,36 @@ const onTouchEnd = () => {
 }
 
 const stopsList = computed(() => modalStore?.tripData?.route)
+
+const isDeleteConfirmOpen = ref(false)
+
+const openDeleteConfirm = () => {
+  isDeleteConfirmOpen.value = true
+}
+
+const closeDeleteConfirm = () => {
+  isDeleteConfirmOpen.value = false
+}
+
+const confirmDelete = () => {
+  if (currentId.value) {
+    tripsStore.deleteTrip(currentId.value)
+  }
+  closeDeleteConfirm()
+  closeModal()
+}
+
+onMounted(() => {
+  watch(
+    () => modalStore?.tripData,
+    newTripData => {
+      if (newTripData?.id) {
+        currentId.value = newTripData.id
+      }
+    },
+    { immediate: true }
+  )
+})
 </script>
 <template>
   <Teleport to="#modal-container">
@@ -96,7 +129,7 @@ const stopsList = computed(() => modalStore?.tripData?.route)
                   {{ modalStore?.tripData?.name }}
                 </h2>
                 <div class="flex gap-3">
-                  <button class="cursor-pointer">
+                  <button @click="openDeleteConfirm" class="cursor-pointer">
                     <IcTrash />
                   </button>
                   <button @click="closeModal" class="cursor-pointer">
@@ -115,8 +148,7 @@ const stopsList = computed(() => modalStore?.tripData?.route)
             >
               <RouteDestination :stops-list="stopsList" />
             </div>
-            <div class="">
-              <!-- {{ modalStore?.tripData }} -->
+            <div>
               <RoutesContainer :stops-list="stopsList" />
             </div>
           </div>
@@ -127,6 +159,52 @@ const stopsList = computed(() => modalStore?.tripData?.route)
       >
         <RouteEdit />
       </div>
+      <transition
+        enter-active-class="transition-opacity duration-200"
+        enter-from-class="opacity-0"
+        enter-to-class="opacity-100"
+        leave-active-class="transition-opacity duration-200"
+        leave-from-class="opacity-100"
+        leave-to-class="opacity-0"
+      >
+        <div
+          v-if="isDeleteConfirmOpen"
+          class="absolute top-0 left-0 right-0 bottom-0 z-60 bg-black/50 flex items-center justify-center"
+          @click.stop
+        >
+          <div
+            class="bg-(--primary-white) dark:bg-(--secondary-black-bg) p-[20px] rounded-2xl w-[300px]"
+          >
+            <div class="w-full flex justify-center items-center mb-[15px]">
+              <IcWarn />
+            </div>
+            <h3
+              class="text-lg text-(--color-text) dark:text-(--primary-white) font-semibold text-center mb-[10px]"
+            >
+              Удалить поездку
+            </h3>
+            <p
+              class="text-sm text-center mb-[20px] text-(--primary-gray) dark:text-(--primary-gray)"
+            >
+              Вы уверены, что хотите удалить эту поездку?
+            </p>
+            <div class="flex items-center justify-center gap-[20px]">
+              <button
+                @click="closeDeleteConfirm"
+                class="px-[30px] py-[11px] rounded-[12px] bg-[#F6F6F6] dark:bg-(--third-black-bg) text-(--color-text) dark:text-white"
+              >
+                Отмена
+              </button>
+              <button
+                @click="confirmDelete"
+                class="px-[30px] py-[11px] rounded-[12px] bg-(--primary-red) text-white"
+              >
+                Удалить
+              </button>
+            </div>
+          </div>
+        </div>
+      </transition>
     </div>
   </Teleport>
 </template>

@@ -37,6 +37,11 @@ export interface GetTripsListResponse {
   paging: PagingResponse
 }
 
+export interface DeleteTripResponse {
+  success: boolean
+  data: object
+}
+
 export const useTripsStore = defineStore('trips', () => {
   const selectedDate = ref<Date | null>(new Date())
   const trips = ref<Trip[]>([])
@@ -59,6 +64,22 @@ export const useTripsStore = defineStore('trips', () => {
       trips.value = []
     } finally {
       isLoading.value = false
+    }
+  }
+
+  const deleteTrip = async (tripId: string) => {
+    try {
+      const config = useRuntimeConfig()
+      const response = await $fetch<DeleteTripResponse>(
+        `${config.public.apiHost}/${config.public.apiVersion}/routes-service/trips/${tripId}`,
+        {
+          method: 'DELETE',
+          query: { userId: '4cef84ba-a98a-4089-b6d8-bf0416ad2208' },
+        }
+      )
+      console.log(response)
+    } catch (error) {
+      console.error("The trip wasn't deleted:", error)
     }
   }
 
@@ -105,6 +126,7 @@ export const useTripsStore = defineStore('trips', () => {
     trips,
     isLoading,
     fetchTrips,
+    deleteTrip,
     activeTrips,
     upcomingTrips,
     formatTime,
