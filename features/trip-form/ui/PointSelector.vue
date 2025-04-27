@@ -16,10 +16,22 @@ const props = defineProps({
 })
 
 const emit = defineEmits<{
-  (e: 'select', newValue: string): void
+  (e: 'select', newValue: SuggestionPoint): void
   (e: 'close'): void
   (e: 'toggleExpand'): void
 }>()
+
+export interface SuggestionPoint {
+  annotations?: {}
+  bounds?: {}
+  components?: {}
+  confidence: number
+  formatted: string
+  geometry: {
+    lat: number
+    lng: number
+  }
+}
 
 interface Address {
   name: string
@@ -38,7 +50,7 @@ const recentlyAddresses = <Address[]>[
 ]
 
 const inputValue = ref(props.initialValue)
-const suggestions = ref<string[]>([])
+const suggestions = ref<SuggestionPoint[]>([])
 
 const fetchSuggestions = async (query: string) => {
   if (!query) {
@@ -49,9 +61,8 @@ const fetchSuggestions = async (query: string) => {
   try {
     const response = await fetch(`${apiUrl}${query}`)
     const data = await response.json()
-
     if (data.results) {
-      suggestions.value = data.results.map((result: any) => result.formatted)
+      suggestions.value = data.results
     } else {
       suggestions.value = []
     }
@@ -62,9 +73,9 @@ const fetchSuggestions = async (query: string) => {
 
 watch(inputValue, newValue => fetchSuggestions(newValue))
 
-const selectPoint = (address: string) => {
-  inputValue.value = address
-  emit('select', address)
+const selectPoint = (point: SuggestionPoint) => {
+  inputValue.value = point.formatted
+  emit('select', point)
   suggestions.value = []
 }
 
@@ -108,7 +119,7 @@ const toggleExpand = () => emit('toggleExpand')
               @click="selectPoint(suggestion)"
               class="px-4 py-2 cursor-pointer hover:bg-gray-100"
             >
-              {{ suggestion }}
+              {{ suggestion.formatted }}
             </li>
           </ul>
         </div>

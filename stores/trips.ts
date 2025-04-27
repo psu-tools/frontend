@@ -5,6 +5,7 @@ export interface Point {
   latitude: number
   longitude: number
   stopTime?: number
+  address: string
 }
 
 export type TransportType = 'CAR' | 'TAXI' | 'WALK' | 'BICYCLE' | 'SCOOTER' | 'PUBLIC_TRANSPORT'

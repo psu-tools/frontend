@@ -3,10 +3,14 @@ import TimePicker from '~/shaared/ui/TimePicker.vue'
 import { useTripFormStore } from '@/stores/tripForm'
 import DayMonthYearPicker from '~/shaared/ui/DayMonthYearPicker.vue'
 import ReminderTimePicker from '~/shaared/ui/ReminderTimePicker.vue'
+import StopTimePicker from '~/shaared/ui/StopTimePicker.vue'
 
 const tripFormStore = useTripFormStore()
 
-const props = defineProps<{ type: 'date' | 'time' | 'reminder' }>()
+const props = defineProps<{
+  type: 'date' | 'time' | 'reminder' | 'stopTime'
+  stopTimeIndex?: number
+}>()
 
 const emit = defineEmits<{ (e: 'close'): void }>()
 
@@ -15,6 +19,13 @@ const handleSelectedTime = (time: string) => tripFormStore.setArrivalTime(time)
 const handleSelectedDate = (date: Date) => tripFormStore.setTripDate(date)
 
 const handleSelectedReminder = (time: number) => tripFormStore.setReminderTime(time)
+
+const handleSelectedStopTime = (time: number) => {
+  if (props.stopTimeIndex && tripFormStore.tripPoints[props.stopTimeIndex].stopTime !== time) {
+    tripFormStore.setPointStopTime(props.stopTimeIndex, time)
+    console.log(tripFormStore.tripPoints)
+  }
+}
 </script>
 
 <template>
@@ -46,6 +57,12 @@ const handleSelectedReminder = (time: number) => tripFormStore.setReminderTime(t
           v-if="props.type === 'reminder'"
           :initial-reminder-time="tripFormStore.reminderTime"
           @select="handleSelectedReminder"
+        />
+
+        <StopTimePicker
+          v-if="props.type === 'stopTime' && stopTimeIndex"
+          :initial-reminder-time="tripFormStore.tripPoints[stopTimeIndex].stopTime"
+          @select="handleSelectedStopTime"
         />
 
         <button

@@ -18,13 +18,15 @@ export const useTripFormStore = defineStore('tripForm', () => {
       name: 'Моё местоположение',
       latitude: Number.POSITIVE_INFINITY,
       longitude: Number.POSITIVE_INFINITY,
-      stopTime: Number.POSITIVE_INFINITY,
+      stopTime: 0,
+      address: 'idfn',
     },
     {
       name: 'Куда поедем?',
       latitude: Number.POSITIVE_INFINITY,
       longitude: Number.POSITIVE_INFINITY,
-      stopTime: Number.POSITIVE_INFINITY,
+      stopTime: 0,
+      address: '',
     },
   ])
 
@@ -40,11 +42,19 @@ export const useTripFormStore = defineStore('tripForm', () => {
 
   const setTransportType = (transport: TransportType) => (transportType.value = transport)
 
+  const setPointStopTime = (pointIndex: number, time: number) =>
+    (tripPoints.value[pointIndex].stopTime = time)
+
   const addTripPoint = (point: Point) => tripPoints.value.push(point)
 
-  const updateTripPoint = (index: number, point: { name: string }) => {
+  const updateTripPoint = (index: number, point: Point) => {
     if (index >= 0 && index < tripPoints.value.length) {
       tripPoints.value[index].name = point.name
+      tripPoints.value[index].latitude = point.latitude
+      tripPoints.value[index].longitude = point.longitude
+      tripPoints.value[index].stopTime = 0
+      tripPoints.value[index].address = point.address
+      console.log('point index: ', index, 'point: ', tripPoints.value[index])
     }
   }
 
@@ -68,6 +78,7 @@ export const useTripFormStore = defineStore('tripForm', () => {
     setArrivalTime,
     setReminderTime,
     setTransportType,
+    setPointStopTime,
     addTripPoint,
     updateTripPoint,
     isFirstStepValid,

@@ -29,7 +29,6 @@ export default defineNuxtConfig({
       openCageApiKey: 'f5b0ea03c1d946dca4128c2297e83360',
     },
   },
-  plugins: ['~/plugins/yandexMaps.ts'],
   modules: ['@pinia/nuxt', '@nuxt/test-utils/module', '@vite-pwa/nuxt'],
   pwa: {
     registerType: 'autoUpdate',
