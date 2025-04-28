@@ -16,6 +16,7 @@ const addStop = () => tripFormStore.addTripPoint({ name: 'Новая точка'
       <div
         v-for="(stop, index) in tripFormStore.tripPoints"
         :key="index"
+        @click="onInputClick(index)"
         class="relative flex items-center py-[16px] pl-[15px] pr-[5px] cursor-pointer hover:bg-(--primary-white-hover) transition-colors dark:hover:bg-(--secondary-black-bg-hover)"
       >
         <span
@@ -37,11 +38,10 @@ const addStop = () => tripFormStore.addTripPoint({ name: 'Новая точка'
         </span>
         <input
           type="text"
-          :placeholder="stop?.name"
+          :placeholder="index === 0 ? 'От куда поедем?' : 'Куда поедем?'"
           class="ml-3 text-sm cursor-pointer outline-none truncate w-5/6"
-          :class="{ 'text-(--primary-gray)': index === 1 && tripFormStore.tripPoints.length === 2 }"
           readonly
-          @click="onInputClick(index)"
+          v-model="stop.name"
         />
         <div
           v-if="index !== tripFormStore.tripPoints.length - 1"
@@ -54,11 +54,11 @@ const addStop = () => tripFormStore.addTripPoint({ name: 'Новая точка'
           tripFormStore.tripPoints[1].name !== 'Куда поедем?' &&
           tripFormStore.tripPoints[tripFormStore.tripPoints.length - 1].name !== 'Новая точка'
         "
-        class="relative flex items-center py-0.5 cursor-pointer"
+        class="relative flex items-center cursor-pointer py-[16px] pl-[15px] pr-[5px] hover:bg-(--primary-white-hover) transition-colors dark:hover:bg-(--secondary-black-bg-hover)"
         @click="addStop"
       >
         <div
-          class="absolute top-[-60%] h-[1.5px] bg-[#eeeeee] dark:bg-(--third-black-bg) ml-[26px] w-[calc(100%-34px)]"
+          class="absolute top-0 h-[1.5px] bg-[#eeeeee] dark:bg-(--third-black-bg) ml-[26px] w-[calc(100%-50px)]"
         ></div>
         <span
           class="flex items-center justify-center w-3.5 h-3.5 text-(--primary-white) font-light bg-(--primary-gray) rounded-full"
