@@ -12,30 +12,28 @@ defineProps<Props>()
 
 <template>
   <div
-    class="relative overflow-hidden h-24 rounded-[32px] py-4 px-5 flex justify-between items-center text-xs bg-(--primary-orange) text-(--primary-white)"
+    class="relative overflow-hidden h-24 rounded-[32px] py-4 px-5 flex justify-between items-center text-xs bg-(--primary-orange) hover:bg-(--primary-orange-hover) transition-colors text-(--primary-white) cursor-pointer"
   >
-    <div class="flex flex-col gap-2 justify-between items-start w-full">
-      <div class="space-y-1">
+    <div class="flex flex-col gap-2 justify-between items-start w-2/3">
+      <div class="space-y-1 w-full">
         <p class="text-xs opacity-70">Сейчас</p>
-        <p class="text-sm font-semibold truncate w-36">{{ trip.name }}</p>
+        <p class="text-sm font-semibold truncate whitespace-nowrap">{{ trip.name }}</p>
       </div>
       <div class="flex items-center gap-1 text-xs w-full">
-        <p class="max-w-1/2 truncate whitespace-nowrap">{{ trip.route.at(0).name }}</p>
+        <p class="max-w-1/2 truncate whitespace-nowrap">{{ trip.route.at(0)?.name }}</p>
         <p>→</p>
         <p v-if="trip.route.length > 2" class="whitespace-nowrap">... →</p>
         <p class="max-w-1/2 truncate whitespace-nowrap">
-          {{ trip.route.at(-1).name }}
+          {{ trip.route.at(-1)?.name }}
         </p>
       </div>
     </div>
-    <div>
-      <div
-        class="rounded-full border-2 flex flex-col items-center justify-center gap-0.5 h-14 w-14 border-[rgba(255,255,255,0.5)]"
-      ></div>
-    </div>
-    <div class="absolute -right-3 border-2 rounded-full h-72 w-72 blur-xs opacity-20"></div>
+    <div class="absolute right-16 border-l-2 rounded-full h-52 w-52 blur-xs opacity-20"></div>
     <div class="absolute -right-5 border-2 rounded-full h-52 w-52 blur-xs opacity-50"></div>
     <div class="absolute -right-2 border-2 rounded-full h-32 w-32 opacity-50"></div>
+    <div
+      class="absolute top-5 right-5 rounded-full border-2 gap-0.5 h-14 w-14 border-[rgba(255,255,255,0.5)]"
+    ></div>
   </div>
 </template>
 

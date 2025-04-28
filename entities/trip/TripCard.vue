@@ -15,7 +15,7 @@ defineProps<TripProps>()
 const modal = useModalStore()
 </script>
 <template>
-  <div class="cursor-pointer">
+  <div>
     <div v-if="status === 'active'" @click="modal.openModal(trip)">
       <ActiveTripCard :trip="trip" />
     </div>
