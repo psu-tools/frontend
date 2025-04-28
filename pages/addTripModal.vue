@@ -146,9 +146,7 @@ const onClickStopPoint = (index: number) => {
             </div>
           </div>
 
-          <div
-            class="bg-(--primary-white) dark:bg-(--secondary-black-bg) rounded-2xl py-[16px] pl-[15px] pr-[5px]"
-          >
+          <div>
             <StopsInput @open-selector="openPointSelector" />
           </div>
 
