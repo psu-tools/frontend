@@ -68,6 +68,7 @@ onMounted(() => {
 
 const isPointSelectorOpen = ref(false)
 const activePointIndex = ref<number | null>(null)
+const currentStopPointIndex = ref(0)
 
 const openPointSelector = (index: number) => {
   activePointIndex.value = index
@@ -91,9 +92,8 @@ const updateStop = (newValue: SuggestionPoint) => {
   closePointSelector()
 }
 
-const currentPointIndex = ref(0)
 const onClickStopPoint = (index: number) => {
-  currentPointIndex.value = index
+  currentStopPointIndex.value = index
   isStopTimePopupOpen.value = true
 }
 </script>
@@ -156,28 +156,26 @@ const onClickStopPoint = (index: number) => {
           >
             <div
               v-for="(_, i) in tripFormStore.tripPoints.length - 2"
-              class="bg-(--primary-white) dark:bg-(--secondary-black-bg) rounded-2xl flex justify-between items-center py-2.5 pl-[15px] pr-2.5"
+              class="transition-colors bg-(--primary-white) hover:bg-(--primary-white-hover) dark:bg-(--secondary-black-bg) dark:hover:bg-(--secondary-black-bg-hover) text-(--color-text) dark:text-(--primary-white) text-sm rounded-2xl flex justify-between items-center py-2.5 pl-[15px] pr-2.5 cursor-pointer"
+              @click="onClickStopPoint(i)"
             >
               <p>Остановка в точке {{ i + 1 }}</p>
               <p
-                class="bg-(--secondary-white-bg) dark:bg-(--third-black-bg) py-2 px-2.5 rounded-xl cursor-pointer"
-                @click="onClickStopPoint(i)"
+                class="bg-(--secondary-white-bg) dark:bg-(--third-black-bg) py-2 px-2.5 rounded-xl"
               >
-                {{ tripFormStore.tripPoints[i + 1].stopTime }} мин.
+                {{ tripFormStore.tripPoints[i + 1].stopTime }} мин
               </p>
             </div>
           </div>
 
-          <div
-            class="mt-[25px] space-y-[15px] text-(--color-text) dark:text-(--primary-white) text-sm"
-          >
+          <div class="mt-[25px] space-y-[15px]">
             <div
-              class="bg-(--primary-white) dark:bg-(--secondary-black-bg) rounded-2xl flex justify-between items-center py-2.5 pl-[15px] pr-2.5"
+              class="transition-colors bg-(--primary-white) hover:bg-(--primary-white-hover) dark:bg-(--secondary-black-bg) dark:hover:bg-(--secondary-black-bg-hover) text-(--color-text) dark:text-(--primary-white) text-sm rounded-2xl flex justify-between items-center py-2.5 pl-[15px] pr-2.5 cursor-pointer"
+              @click="isDayMonthYearPopupOpen = true"
             >
               <p>Дата</p>
               <p
-                class="bg-(--secondary-white-bg) dark:bg-(--third-black-bg) py-2 px-2.5 rounded-xl cursor-pointer"
-                @click="isDayMonthYearPopupOpen = true"
+                class="bg-(--secondary-white-bg) dark:bg-(--third-black-bg) py-2 px-2.5 rounded-xl"
               >
                 {{
                   tripFormStore.tripDate?.toLocaleDateString('ru-RU', {
@@ -190,26 +188,26 @@ const onClickStopPoint = (index: number) => {
             </div>
 
             <div
-              class="bg-(--primary-white) dark:bg-(--secondary-black-bg) rounded-2xl flex justify-between items-center py-2.5 pl-[15px] pr-2.5"
+              class="transition-colors bg-(--primary-white) hover:bg-(--primary-white-hover) dark:bg-(--secondary-black-bg) dark:hover:bg-(--secondary-black-bg-hover) text-(--color-text) dark:text-(--primary-white) text-sm rounded-2xl flex justify-between items-center py-2.5 pl-[15px] pr-2.5 cursor-pointer"
+              @click="isTimePopupOpen = true"
             >
               <p>Время прибытия</p>
               <p
-                class="bg-(--secondary-white-bg) dark:bg-(--third-black-bg) py-2 px-2.5 rounded-xl cursor-pointer"
-                @click="isTimePopupOpen = true"
+                class="bg-(--secondary-white-bg) dark:bg-(--third-black-bg) py-2 px-2.5 rounded-xl"
               >
                 {{ tripFormStore?.arrivalTime }}
               </p>
             </div>
 
             <div
-              class="bg-(--primary-white) dark:bg-(--secondary-black-bg) rounded-2xl flex justify-between items-center py-2.5 pl-[15px] pr-2.5"
+              class="transition-colors bg-(--primary-white) hover:bg-(--primary-white-hover) dark:bg-(--secondary-black-bg) dark:hover:bg-(--secondary-black-bg-hover) text-(--color-text) dark:text-(--primary-white) text-sm rounded-2xl flex justify-between items-center py-2.5 pl-[15px] pr-2.5 cursor-pointer"
+              @click="isReminderPopupOpen = true"
             >
               <p>Напоминание</p>
               <p
-                class="bg-(--secondary-white-bg) dark:bg-(--third-black-bg) py-2 px-2.5 rounded-xl cursor-pointer"
-                @click="isReminderPopupOpen = true"
+                class="bg-(--secondary-white-bg) dark:bg-(--third-black-bg) py-2 px-2.5 rounded-xl"
               >
-                За {{ tripFormStore?.reminderTime }} минут
+                за {{ tripFormStore?.reminderTime }} минут
               </p>
             </div>
           </div>
@@ -217,7 +215,7 @@ const onClickStopPoint = (index: number) => {
           <PickerSelectPopup
             v-if="isStopTimePopupOpen"
             type="stopTime"
-            :stop-time-index="currentPointIndex + 1"
+            :stop-time-index="currentStopPointIndex + 1"
             @close="isStopTimePopupOpen = false"
           />
 
