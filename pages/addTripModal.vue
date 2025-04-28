@@ -9,6 +9,8 @@ import TransportSelect from '~/features/transport-select/ui/TransportSelect.vue'
 import IcBack from '~/icons/IcBack.vue'
 import RoutesContainer from '~/entities/route/RoutesContainer.vue'
 import RouteDestination from '~/entities/route/RouteDestination.vue'
+import PrimaryYellowButton from '~/shaared/ui/buttons/PrimaryYellowButton.vue'
+import BottomSheetBottomBar from '~/shaared/ui/BottomSheetBottomBar.vue'
 
 const addTripModalStore = useAddTripModalStore()
 const tripFormStore = useTripFormStore()
@@ -88,6 +90,12 @@ const updateStop = (newValue: SuggestionPoint) => {
   }
   closePointSelector()
 }
+
+const currentPointIndex = ref(0)
+const onClickStopPoint = (index: number) => {
+  currentPointIndex.value = index
+  isStopTimePopupOpen.value = true
+}
 </script>
 
 <template>
@@ -155,16 +163,10 @@ const updateStop = (newValue: SuggestionPoint) => {
               <p>Остановка в точке {{ i + 1 }}</p>
               <p
                 class="bg-(--secondary-white-bg) dark:bg-(--third-black-bg) py-2 px-2.5 rounded-xl cursor-pointer"
-                @click="isStopTimePopupOpen = true"
+                @click="onClickStopPoint(i)"
               >
                 {{ tripFormStore.tripPoints[i + 1].stopTime }} мин.
               </p>
-              <PickerSelectPopup
-                v-if="isStopTimePopupOpen"
-                type="stopTime"
-                :stop-time-index="i + 1"
-                @close="isStopTimePopupOpen = false"
-              />
             </div>
           </div>
 
@@ -213,6 +215,13 @@ const updateStop = (newValue: SuggestionPoint) => {
               </p>
             </div>
           </div>
+
+          <PickerSelectPopup
+            v-if="isStopTimePopupOpen"
+            type="stopTime"
+            :stop-time-index="currentPointIndex + 1"
+            @close="isStopTimePopupOpen = false"
+          />
 
           <PickerSelectPopup v-if="isTimePopupOpen" @close="isTimePopupOpen = false" type="time" />
 
@@ -271,24 +280,20 @@ const updateStop = (newValue: SuggestionPoint) => {
           @toggle-expand="toggleExpand"
         />
       </div>
-
-      <div
+      <BottomSheetBottomBar
         v-if="
           !isPointSelectorOpen &&
           !isDayMonthYearPopupOpen &&
           !isReminderPopupOpen &&
           !isTimePopupOpen
         "
-        class="absolute bottom-0 left-0 bg-(--primary-white-bg)/40 dark:bg-(--primary-black-bg)/40 backdrop-blur-2xl w-full border-t border-(--medium-gray) dark:border-(--third-black-bg) pt-2.5 pb-10 px-5 flex justify-center items-center"
       >
-        <button
-          class="bg-(--primary-yellow) py-4 w-full rounded-2xl text-(--primary-white) disabled:opacity-60 cursor-pointer"
+        <PrimaryYellowButton
           :disabled="!tripFormStore.isFirstStepValid"
           @click.stop="partOfForm = 2"
+          >{{ partOfForm === 1 ? 'Продолжить' : 'Добавить поездку' }}</PrimaryYellowButton
         >
-          {{ partOfForm === 1 ? 'Продолжить' : 'Добавить поездку' }}
-        </button>
-      </div>
+      </BottomSheetBottomBar>
     </div>
   </Teleport>
 </template>
