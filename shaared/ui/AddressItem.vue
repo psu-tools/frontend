@@ -4,8 +4,8 @@ import IcAddressRecently from '~/icons/IcAddressRecently.vue'
 
 defineProps<{
   icon: 'point' | 'clock'
-  name: string
-  address: string
+  name: string | null
+  address: string | null
 }>()
 </script>
 

@@ -80,14 +80,23 @@ const closePointSelector = () => {
   activePointIndex.value = null
 }
 
-const updateStop = (newValue: SuggestionPoint) => {
+const updateStop = (newValue: SuggestionPoint, pointType: 'api' | 'user') => {
   if (activePointIndex.value !== null) {
-    tripFormStore.updateTripPoint(activePointIndex.value, {
-      name: newValue.formatted.split(',')[0],
-      latitude: newValue.geometry.lat,
-      longitude: newValue.geometry.lng,
-      address: newValue.formatted,
-    })
+    if (pointType === 'api') {
+      tripFormStore.updateTripPoint(activePointIndex.value, {
+        name: newValue.formatted.split(',')[0],
+        latitude: newValue.geometry.lat,
+        longitude: newValue.geometry.lng,
+        address: newValue.formatted,
+      })
+    } else if (pointType === 'user') {
+      tripFormStore.updateTripPoint(activePointIndex.value, {
+        name: newValue.name,
+        latitude: newValue.latitude,
+        longitude: newValue.longitude,
+        address: newValue.address,
+      })
+    }
   }
   closePointSelector()
 }
@@ -101,7 +110,7 @@ const onClickStopPoint = (index: number) => {
 <template>
   <Teleport to="#modal-container">
     <div
-      class="absolute inset-0 z-10 flex justify-center items-end bg-black/20 transition-opacity duration-300"
+      class="absolute inset-0 z-20 flex justify-center items-end bg-black/20 transition-opacity duration-300"
       :class="{ 'opacity-100': isVisible, 'opacity-0': !isVisible }"
       @click="closeModal"
     >
@@ -123,7 +132,9 @@ const onClickStopPoint = (index: number) => {
           @submit.prevent
           class="w-full flex justify-center flex-col"
         >
-          <div class="sticky left-0 top-0 bg-(--primary-white-bg) dark:bg-(--primary-black-bg)">
+          <div
+            class="sticky z-10 left-0 top-0 bg-(--primary-white-bg) dark:bg-(--primary-black-bg)"
+          >
             <div
               @click="toggleExpand"
               class="mx-auto my-2 h-1 w-8 rounded-full bg-(--medium-gray) dark:opacity-30 cursor-pointer mb-[20px]"
@@ -281,8 +292,9 @@ const onClickStopPoint = (index: number) => {
           :initialValue="
             activePointIndex !== null ? tripFormStore.tripPoints[activePointIndex].name : ''
           "
+          :index="activePointIndex"
           @close="closePointSelector"
-          @select="updateStop"
+          @selectPoint="updateStop"
           @toggle-expand="toggleExpand"
         />
       </div>
@@ -290,6 +302,7 @@ const onClickStopPoint = (index: number) => {
         <BottomSheetBottomBar
           v-if="
             !isPointSelectorOpen &&
+            !isStopTimePopupOpen &&
             !isDayMonthYearPopupOpen &&
             !isReminderPopupOpen &&
             !isTimePopupOpen
