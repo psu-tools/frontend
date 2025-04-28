@@ -101,7 +101,7 @@ const onClickStopPoint = (index: number) => {
 <template>
   <Teleport to="#modal-container">
     <div
-      class="absolute inset-0 z-40 flex justify-center items-end bg-black/20 transition-opacity duration-300"
+      class="absolute inset-0 z-10 flex justify-center items-end bg-black/20 transition-opacity duration-300"
       :class="{ 'opacity-100': isVisible, 'opacity-0': !isVisible }"
       @click="closeModal"
     >
@@ -123,9 +123,7 @@ const onClickStopPoint = (index: number) => {
           @submit.prevent
           class="w-full flex justify-center flex-col"
         >
-          <div
-            class="sticky left-0 top-0 z-40 bg-(--primary-white-bg) dark:bg-(--primary-black-bg)"
-          >
+          <div class="sticky left-0 top-0 bg-(--primary-white-bg) dark:bg-(--primary-black-bg)">
             <div
               @click="toggleExpand"
               class="mx-auto my-2 h-1 w-8 rounded-full bg-(--medium-gray) dark:opacity-30 cursor-pointer mb-[20px]"
@@ -212,26 +210,38 @@ const onClickStopPoint = (index: number) => {
             </div>
           </div>
 
-          <PickerSelectPopup
-            v-if="isStopTimePopupOpen"
-            type="stopTime"
-            :stop-time-index="currentStopPointIndex + 1"
-            @close="isStopTimePopupOpen = false"
-          />
+          <Transition name="fade">
+            <PickerSelectPopup
+              v-if="isStopTimePopupOpen"
+              type="stopTime"
+              :stop-time-index="currentStopPointIndex + 1"
+              @close="isStopTimePopupOpen = false"
+            />
+          </Transition>
 
-          <PickerSelectPopup v-if="isTimePopupOpen" @close="isTimePopupOpen = false" type="time" />
+          <Transition name="fade">
+            <PickerSelectPopup
+              v-if="isDayMonthYearPopupOpen"
+              @close="isDayMonthYearPopupOpen = false"
+              type="date"
+            />
+          </Transition>
 
-          <PickerSelectPopup
-            v-if="isReminderPopupOpen"
-            @close="isReminderPopupOpen = false"
-            type="reminder"
-          />
+          <Transition name="fade">
+            <PickerSelectPopup
+              v-if="isTimePopupOpen"
+              @close="isTimePopupOpen = false"
+              type="time"
+            />
+          </Transition>
 
-          <PickerSelectPopup
-            v-if="isDayMonthYearPopupOpen"
-            @close="isDayMonthYearPopupOpen = false"
-            type="date"
-          />
+          <Transition name="fade">
+            <PickerSelectPopup
+              v-if="isReminderPopupOpen"
+              @close="isReminderPopupOpen = false"
+              type="reminder"
+            />
+          </Transition>
         </form>
 
         <div v-if="partOfForm === 2" class="flex flex-col justify-center">
@@ -276,20 +286,22 @@ const onClickStopPoint = (index: number) => {
           @toggle-expand="toggleExpand"
         />
       </div>
-      <BottomSheetBottomBar
-        v-if="
-          !isPointSelectorOpen &&
-          !isDayMonthYearPopupOpen &&
-          !isReminderPopupOpen &&
-          !isTimePopupOpen
-        "
-      >
-        <PrimaryYellowButton
-          :disabled="!tripFormStore.isFirstStepValid"
-          @click.stop="partOfForm = 2"
-          >{{ partOfForm === 1 ? 'Продолжить' : 'Добавить поездку' }}</PrimaryYellowButton
+      <Transition name="fade">
+        <BottomSheetBottomBar
+          v-if="
+            !isPointSelectorOpen &&
+            !isDayMonthYearPopupOpen &&
+            !isReminderPopupOpen &&
+            !isTimePopupOpen
+          "
         >
-      </BottomSheetBottomBar>
+          <PrimaryYellowButton
+            :disabled="!tripFormStore.isFirstStepValid"
+            @click.stop="partOfForm = 2"
+            >{{ partOfForm === 1 ? 'Продолжить' : 'Добавить поездку' }}</PrimaryYellowButton
+          >
+        </BottomSheetBottomBar>
+      </Transition>
     </div>
   </Teleport>
 </template>
@@ -300,5 +312,20 @@ const onClickStopPoint = (index: number) => {
 }
 .scrollbar-hide {
   scrollbar-width: none;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+.fade-enter-to,
+.fade-leave-from {
+  opacity: 1;
 }
 </style>
