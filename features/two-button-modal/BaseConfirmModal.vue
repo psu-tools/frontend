@@ -44,13 +44,13 @@ defineProps<{
         <div class="flex items-center justify-center gap-[20px]">
           <button
             @click="onCancel"
-            class="font-semibold px-[30px] py-[11px] cursor-pointer rounded-[12px] bg-[#F6F6F6] dark:bg-(--third-black-bg) text-(--color-text) dark:text-white"
+            class="font-semibold px-[30px] py-[9px] cursor-pointer rounded-[12px] bg-[#F6F6F6] dark:bg-(--third-black-bg) text-(--color-text) dark:text-white"
           >
             {{ cancelText }}
           </button>
           <button
             @click="onConfirm"
-            class="font-semibold px-[30px] py-[11px] cursor-pointer rounded-[12px] bg-(--primary-red) text-white"
+            class="font-semibold px-[30px] py-[9px] cursor-pointer rounded-[12px] bg-(--primary-red) text-white"
           >
             {{ confirmText }}
           </button>
