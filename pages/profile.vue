@@ -33,6 +33,11 @@ const block3: object = [
       <ProfileBlock :items="block1" />
       <ProfileBlock :items="block2" />
       <ProfileBlock :items="block3" />
+      <button
+        class="w-full bg-(--primary-white-bg) dark:bg-(--secondary-black-bg) rounded-2xl py-[15px] text-(--primary-red) text-center font-semibold"
+      >
+        Выйти
+      </button>
     </div>
   </div>
 </template>
