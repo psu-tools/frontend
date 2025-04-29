@@ -19,7 +19,7 @@ defineProps<{
       </div>
       <div class="flex-1 relative">
         <div
-          class="text-(--color-text) dark:text-(--primary-white)"
+          class="text-(--color-text) dark:text-(--primary-white) text-sm"
           :class="
             !isLast
               ? 'after:block after:absolute after:h-px after:bg-[#8E8C8EB2] after:opacity-0.8 after:mt-[13px] after:w-full z-10'

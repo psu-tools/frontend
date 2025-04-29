@@ -8,8 +8,8 @@ import IcArrow from '~/icons/IcArrow.vue'
     <div class="flex items-center gap-[15px]">
       <div class="w-[60px] h-[60px] rounded-full bg-(--medium-gray)"></div>
       <div class="flex-1">
-        <div class="text-(--color-text) dark:text-(--primary-white)">name</div>
-        <div class="text-[#A3A5A8]">email</div>
+        <div class="text-(--color-text) dark:text-(--primary-white) text-sm">name</div>
+        <div class="text-[#A3A5A8] text-xs">email</div>
       </div>
       <button class="cursor-pointer">
         <IcArrow />
