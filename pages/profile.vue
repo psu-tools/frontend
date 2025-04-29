@@ -4,16 +4,16 @@ import ProfileBlock from '~/widgets/profileInfo/ProfileBlock.vue'
 
 import IcLocation from '~/icons/profile-widgets/IcLocation.vue'
 
-const block1 = [{ iconComponent: IcLocation, title: 'Мои адреса' }]
+const block1: object = [{ iconComponent: IcLocation, title: 'Мои адреса' }]
 
-const block2: any = [
+const block2: object = [
   { iconComponent: IcLocation, title: 'Уведомления' },
   { iconComponent: IcLocation, title: 'Язык' },
   { iconComponent: IcLocation, title: 'Тема оформления' },
   { iconComponent: IcLocation, title: 'Запас времени' },
 ]
 
-const block3: any = [
+const block3: object = [
   { iconComponent: IcLocation, title: 'О приложении' },
   { iconComponent: IcLocation, title: 'Поддержка и обратная' },
 ]
