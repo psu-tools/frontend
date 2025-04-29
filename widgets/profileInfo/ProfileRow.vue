@@ -11,27 +11,26 @@ defineProps<{
 
 <template>
   <div
-    class="bg-[--primary-white-bg] dark:bg-[--secondary-black-bg] rounded-[--radius-2xl] py-[10px] pl-[10px] pr-[20px]"
+    class="relative bg-[--primary-white-bg] dark:bg-[--secondary-black-bg] rounded-[--radius-2xl] py-[10px] pl-[10px] pr-[20px]"
   >
-    <div class="flex items-center gap-[10px]">
+    <div
+      class="flex items-center gap-[10px]"
+      :class="{
+        'after:content-[\'\'] after:absolute after:h-px after:bg-[#8E8C8EB2] after:opacity-80 after:bottom-0 after:left-[40px] after:right-0':
+          !isLast,
+      }"
+    >
       <div>
         <component :is="iconComponent" />
       </div>
-      <div class="flex-1 relative">
-        <div
-          class="text-(--color-text) dark:text-(--primary-white) text-sm"
-          :class="
-            !isLast
-              ? 'after:block after:absolute after:h-px after:bg-[#8E8C8EB2] after:opacity-0.8 after:mt-[13px] after:w-full z-10'
-              : ''
-          "
-        >
+      <div class="flex-1 flex justify-between">
+        <div class="text-(--color-text) dark:text-(--primary-white) text-sm">
           {{ title }}
         </div>
+        <button class="cursor-pointer">
+          <IcArrow />
+        </button>
       </div>
-      <button class="cursor-pointer">
-        <IcArrow />
-      </button>
     </div>
   </div>
 </template>
