@@ -10,7 +10,7 @@ import IcTheme from '~/icons/profile-widgets/IcTheme.vue'
 import IcTime from '~/icons/profile-widgets/IcTime.vue'
 import IcAbout from '~/icons/profile-widgets/IcAbout.vue'
 import IcSupport from '~/icons/profile-widgets/IcSupport.vue'
-import IcWarn from '~/icons/IcWarn.vue'
+import IcLogout from '~/icons/IcLogout.vue'
 
 const block1: object = [{ iconComponent: IcLocation, title: 'Мои адреса' }]
 
@@ -60,8 +60,8 @@ const confirmLogout = () => {
     <BaseConfirmModal
       :is-open="isLogoutConfirmOpen"
       title="Выйти из аккаунта"
-      description="Вы уверены, что хотите выйти из аккаунта?"
-      :icon="IcWarn"
+      description="Вы уверены, что хотите выйти?"
+      :icon="IcLogout"
       :confirmText="`Выйти`"
       :cancelText="`Отмена`"
       :onConfirm="confirmLogout"
