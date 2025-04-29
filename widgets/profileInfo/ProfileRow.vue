@@ -22,7 +22,7 @@ defineProps<{
           class="text-(--color-text) dark:text-(--primary-white)"
           :class="
             !isLast
-              ? 'after:block after:absolute after:h-px after:bg-[#A3A5A8] after:mt-[10px] after:w-full z-10'
+              ? 'after:block after:absolute after:h-px after:bg-[#8E8C8E] after:opacity-0.8 after:mt-[13px] after:w-full z-10'
               : ''
           "
         >
