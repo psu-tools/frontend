@@ -21,6 +21,7 @@ defineProps<{
           :key="index"
           :icon-component="item.iconComponent"
           :title="item.title"
+          :is-last="index === items.length - 1"
         />
       </div>
     </div>
