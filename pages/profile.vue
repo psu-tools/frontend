@@ -3,19 +3,25 @@ import ProfileGeneral from '~/widgets/profileInfo/ProfileGeneral.vue'
 import ProfileBlock from '~/widgets/profileInfo/ProfileBlock.vue'
 
 import IcLocation from '~/icons/profile-widgets/IcLocation.vue'
+import IcNotifications from '~/icons/profile-widgets/IcNotifications.vue'
+import IcLanguage from '~/icons/profile-widgets/IcLanguage.vue'
+import IcTheme from '~/icons/profile-widgets/IcTheme.vue'
+import IcTime from '~/icons/profile-widgets/IcTime.vue'
+import IcAbout from '~/icons/profile-widgets/IcAbout.vue'
+import IcSupport from '~/icons/profile-widgets/IcSupport.vue'
 
 const block1: object = [{ iconComponent: IcLocation, title: 'Мои адреса' }]
 
 const block2: object = [
-  { iconComponent: IcLocation, title: 'Уведомления' },
-  { iconComponent: IcLocation, title: 'Язык' },
-  { iconComponent: IcLocation, title: 'Тема оформления' },
-  { iconComponent: IcLocation, title: 'Запас времени' },
+  { iconComponent: IcNotifications, title: 'Уведомления' },
+  { iconComponent: IcLanguage, title: 'Язык' },
+  { iconComponent: IcTheme, title: 'Тема оформления' },
+  { iconComponent: IcTime, title: 'Запас времени' },
 ]
 
 const block3: object = [
-  { iconComponent: IcLocation, title: 'О приложении' },
-  { iconComponent: IcLocation, title: 'Поддержка и обратная' },
+  { iconComponent: IcAbout, title: 'О приложении' },
+  { iconComponent: IcSupport, title: 'Поддержка и обратная' },
 ]
 </script>
 
