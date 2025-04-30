@@ -4,7 +4,7 @@ import IcCompas from '~/icons/IcCompas.vue'
 import AddressItem from '~/shaared/ui/AddressItem.vue'
 import { useUserPointsStore } from '~/stores/userPoints'
 
-const { isLoading, favoritePoints, fetchUserPoints } = useUserPointsStore()
+const { isLoading, favoritePoints } = useUserPointsStore()
 const config = useRuntimeConfig()
 
 const apiKey = config.public.openCageApiKey
@@ -81,10 +81,6 @@ const selectPoint = (point: SuggestionPoint | Point, pointType: 'api' | 'user') 
 const closeSelector = () => emit('close')
 
 const toggleExpand = () => emit('toggleExpand')
-
-onMounted(() => {
-  fetchUserPoints()
-})
 </script>
 
 <template>
@@ -135,7 +131,7 @@ onMounted(() => {
       </p>
     </div>
 
-    <div class="mt-[25px]">
+    <div class="mt-[25px]" v-if="favoritePoints">
       <h2 class="font-semibold text-(--color-text) dark:text-(--primary-white) mb-1">Мои адреса</h2>
       <div
         v-for="(point, index) in favoritePoints"

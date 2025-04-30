@@ -11,6 +11,9 @@ import RoutesContainer from '~/entities/route/RoutesContainer.vue'
 import RouteDestination from '~/entities/route/RouteDestination.vue'
 import PrimaryYellowButton from '~/shaared/ui/buttons/PrimaryYellowButton.vue'
 import BottomSheetBottomBar from '~/shaared/ui/BottomSheetBottomBar.vue'
+import { useUserPointsStore } from '~/stores/userPoints'
+
+const { fetchUserPoints } = useUserPointsStore()
 
 const addTripModalStore = useAddTripModalStore()
 const tripFormStore = useTripFormStore()
@@ -64,6 +67,7 @@ onMounted(() => {
   setTimeout(() => {
     showModal()
   }, 10)
+  fetchUserPoints()
 })
 
 const isPointSelectorOpen = ref(false)
