@@ -51,7 +51,7 @@ const addStop = () => tripFormStore.addTripPoint({ name: 'Новая точка'
       <div
         v-if="
           tripFormStore.tripPoints.length >= 2 &&
-          tripFormStore.tripPoints[1].name !== 'Куда поедем?' &&
+          tripFormStore.tripPoints[1].name !== '' &&
           tripFormStore.tripPoints[tripFormStore.tripPoints.length - 1].name !== 'Новая точка'
         "
         class="relative flex items-center cursor-pointer py-[16px] pl-[15px] pr-[5px] hover:bg-(--primary-white-hover) transition-colors dark:hover:bg-(--secondary-black-bg-hover)"
