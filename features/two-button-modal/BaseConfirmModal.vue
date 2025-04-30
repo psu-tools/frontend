@@ -24,7 +24,7 @@ defineProps<{
   >
     <div
       v-if="isOpen"
-      class="absolute top-0 left-0 right-0 bottom-0 z-60 bg-black/50 flex items-center justify-center"
+      class="absolute inset-0 z-50 bg-black/50 flex items-center justify-center"
       @click.stop
     >
       <div

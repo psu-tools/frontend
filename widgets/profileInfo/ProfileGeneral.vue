@@ -11,7 +11,7 @@ import IcArrow from '~/icons/IcArrow.vue'
         <div class="text-(--color-text) dark:text-(--primary-white) text-sm font-semibold">
           name
         </div>
-        <div class="text-[#A3A5A8] text-xs font-semibold">email</div>
+        <div class="text-(--light-gray) text-xs font-semibold">email</div>
       </div>
       <button class="cursor-pointer">
         <IcArrow />

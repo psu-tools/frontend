@@ -16,7 +16,7 @@ defineProps<{
     <div
       class="flex items-center gap-[10px]"
       :class="{
-        'after:content-[\'\'] after:absolute after:h-px after:bg-[#8E8C8EB2] after:opacity-80 after:bottom-0 after:left-[48px] after:right-0':
+        'after:content-[\'\'] after:absolute after:h-px after:bg-(--arrow-gray) after:opacity-80 after:bottom-0 after:left-[48px] after:right-0':
           !isLast,
       }"
     >
