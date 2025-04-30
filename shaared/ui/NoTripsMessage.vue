@@ -14,7 +14,7 @@ const isModalOpen = ref<boolean>()
         <p class="text-(--primary-light-gray)">Добавьте новую поездку</p>
       </div>
       <button
-        class="py-2.5 px-[30px] rounded-xl bg-(--primary-orange) text-(--primary-white) cursor-pointer"
+        class="py-2.5 px-[30px] rounded-xl bg-(--primary-orange) hover:bg-(--primary-orange-hover) text-(--primary-white) cursor-pointer"
         @click="isModalOpen = true"
       >
         Добавить
