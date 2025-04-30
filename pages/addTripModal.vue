@@ -264,7 +264,7 @@ const onClickStopPoint = (index: number) => {
               class="mx-auto my-2 h-1 w-8 rounded-full bg-(--medium-gray) dark:opacity-30 cursor-pointer mb-[20px]"
             ></div>
 
-            <div class="mb-4">
+            <div>
               <div class="flex items-center gap-2.5">
                 <button @click.stop="partOfForm = 1" class="cursor-pointer">
                   <IcBack />
