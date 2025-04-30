@@ -4,6 +4,7 @@ import { useTripsStore } from '~/stores/trips'
 
 import RouteDestination from '~/entities/route/RouteDestination.vue'
 import RoutesContainer from '~/entities/route/RoutesContainer.vue'
+import BaseConfirmModal from '~/features/two-button-modal/BaseConfirmModal.vue'
 
 import IcTrash from '~/icons/IcTrash.vue'
 import IcClose from '~/icons/IcClose.vue'
@@ -159,52 +160,16 @@ onMounted(() => {
       >
         <PrimaryYellowButton> Редактировать поездку </PrimaryYellowButton>
       </div>
-      <transition
-        enter-active-class="transition-opacity duration-200"
-        enter-from-class="opacity-0"
-        enter-to-class="opacity-100"
-        leave-active-class="transition-opacity duration-200"
-        leave-from-class="opacity-100"
-        leave-to-class="opacity-0"
-      >
-        <div
-          v-if="isDeleteConfirmOpen"
-          class="absolute top-0 left-0 right-0 bottom-0 z-60 bg-black/50 flex items-center justify-center"
-          @click.stop
-        >
-          <div
-            class="bg-(--primary-white) dark:bg-(--secondary-black-bg) p-[20px] rounded-2xl w-[300px]"
-          >
-            <div class="w-full flex justify-center items-center mb-[15px]">
-              <IcWarn />
-            </div>
-            <h3
-              class="text-lg text-(--color-text) dark:text-(--primary-white) font-semibold text-center mb-[10px]"
-            >
-              Удалить поездку
-            </h3>
-            <p
-              class="text-sm text-center mb-[20px] text-(--primary-gray) dark:text-(--primary-gray)"
-            >
-              Вы уверены, что хотите удалить эту поездку?
-            </p>
-            <div class="flex items-center justify-center gap-[20px]">
-              <button
-                @click="closeDeleteConfirm"
-                class="px-[30px] py-[11px] rounded-[12px] bg-[#F6F6F6] dark:bg-(--third-black-bg) text-(--color-text) dark:text-white"
-              >
-                Отмена
-              </button>
-              <button
-                @click="confirmDelete"
-                class="px-[30px] py-[11px] rounded-[12px] bg-(--primary-red) text-white"
-              >
-                Удалить
-              </button>
-            </div>
-          </div>
-        </div>
-      </transition>
+      <BaseConfirmModal
+        :is-open="isDeleteConfirmOpen"
+        title="Удалить поездку"
+        description="Вы уверены, что хотите удалить эту поездку?"
+        :icon="IcWarn"
+        :confirmText="`Удалить`"
+        :cancelText="`Отмена`"
+        :onConfirm="confirmDelete"
+        :onCancel="closeDeleteConfirm"
+      />
     </div>
   </Teleport>
 </template>
