@@ -131,8 +131,20 @@ const toggleExpand = () => emit('toggleExpand')
           <div class="w-full">
             <AddressItem
               icon="point"
-              :name="suggestion.formatted.split(',')[0] || null"
-              :address="suggestion.formatted.split(',').slice(1, -1).join(',').trim()"
+              :name="
+                (() => {
+                  const parts = suggestion.formatted.split(',')
+                  return !isNaN(parseFloat(parts[1])) ? parts[0] + parts[1] : parts[0] || null
+                })()
+              "
+              :address="
+                (() => {
+                  const parts = suggestion.formatted.split(',')
+                  return !isNaN(parseFloat(parts[1]))
+                    ? suggestion.formatted.split(',').slice(2, -1).join(',').trim()
+                    : suggestion.formatted.split(',').slice(1, -1).join(',').trim()
+                })()
+              "
             />
             <div
               v-if="index < suggestions.length - 1"
