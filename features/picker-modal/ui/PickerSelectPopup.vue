@@ -29,7 +29,7 @@ const handleSelectedStopTime = (time: number) => {
 </script>
 
 <template>
-  <Teleport to="#modal-container">
+  <div>
     <div
       class="absolute inset-0 z-50 bg-black/40 flex items-end px-5 pb-11"
       @click.self="emit('close')"
@@ -73,5 +73,5 @@ const handleSelectedStopTime = (time: number) => {
         </button>
       </div>
     </div>
-  </Teleport>
+  </div>
 </template>

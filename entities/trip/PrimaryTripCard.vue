@@ -13,7 +13,7 @@ defineProps<Props>()
 
 <template>
   <div
-    class="relative overflow-hidden rounded-[32px] py-4 px-5 flex flex-col justify-between items-start text-xs bg-(--smoke-gray) dark:bg-(--secondary-black-bg) text-text dark:text-(--primary-white)"
+    class="relative overflow-hidden rounded-[32px] py-4 px-5 flex flex-col justify-between items-start text-xs bg-(--smoke-gray) hover:bg-(--primary-white-bg-hover) transition-colors dark:bg-(--secondary-black-bg) dark:hover:bg-(--secondary-black-bg-hover) text-text dark:text-(--primary-white) cursor-pointer"
     :class="{ 'h-24': hasDate, 'h-20': !hasDate }"
   >
     <div

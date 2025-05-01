@@ -9,6 +9,11 @@ import TransportSelect from '~/features/transport-select/ui/TransportSelect.vue'
 import IcBack from '~/icons/IcBack.vue'
 import RoutesContainer from '~/entities/route/RoutesContainer.vue'
 import RouteDestination from '~/entities/route/RouteDestination.vue'
+import PrimaryYellowButton from '~/shaared/ui/buttons/PrimaryYellowButton.vue'
+import BottomSheetBottomBar from '~/shaared/ui/BottomSheetBottomBar.vue'
+import { useUserPointsStore } from '~/stores/userPoints'
+
+const { fetchUserPoints } = useUserPointsStore()
 
 const addTripModalStore = useAddTripModalStore()
 const tripFormStore = useTripFormStore()
@@ -62,10 +67,12 @@ onMounted(() => {
   setTimeout(() => {
     showModal()
   }, 10)
+  fetchUserPoints()
 })
 
 const isPointSelectorOpen = ref(false)
 const activePointIndex = ref<number | null>(null)
+const currentStopPointIndex = ref(0)
 
 const openPointSelector = (index: number) => {
   activePointIndex.value = index
@@ -77,23 +84,37 @@ const closePointSelector = () => {
   activePointIndex.value = null
 }
 
-const updateStop = (newValue: SuggestionPoint) => {
+const updateStop = (newValue: SuggestionPoint, pointType: 'api' | 'user') => {
   if (activePointIndex.value !== null) {
-    tripFormStore.updateTripPoint(activePointIndex.value, {
-      name: newValue.formatted.split(',')[0],
-      latitude: newValue.geometry.lat,
-      longitude: newValue.geometry.lng,
-      address: newValue.formatted,
-    })
+    if (pointType === 'api') {
+      tripFormStore.updateTripPoint(activePointIndex.value, {
+        name: newValue.formatted.split(',')[0],
+        latitude: newValue.geometry.lat,
+        longitude: newValue.geometry.lng,
+        address: newValue.formatted,
+      })
+    } else if (pointType === 'user') {
+      tripFormStore.updateTripPoint(activePointIndex.value, {
+        name: newValue.name,
+        latitude: newValue.latitude,
+        longitude: newValue.longitude,
+        address: newValue.address,
+      })
+    }
   }
   closePointSelector()
+}
+
+const onClickStopPoint = (index: number) => {
+  currentStopPointIndex.value = index
+  isStopTimePopupOpen.value = true
 }
 </script>
 
 <template>
   <Teleport to="#modal-container">
     <div
-      class="absolute inset-0 z-40 flex justify-center items-end bg-black/20 transition-opacity duration-300"
+      class="absolute inset-0 z-20 flex justify-center items-end bg-black/20 transition-opacity duration-300"
       :class="{ 'opacity-100': isVisible, 'opacity-0': !isVisible }"
       @click="closeModal"
     >
@@ -116,7 +137,7 @@ const updateStop = (newValue: SuggestionPoint) => {
           class="w-full flex justify-center flex-col"
         >
           <div
-            class="sticky left-0 top-0 z-40 bg-(--primary-white-bg) dark:bg-(--primary-black-bg)"
+            class="sticky z-10 left-0 top-0 bg-(--primary-white-bg) dark:bg-(--primary-black-bg)"
           >
             <div
               @click="toggleExpand"
@@ -138,9 +159,7 @@ const updateStop = (newValue: SuggestionPoint) => {
             </div>
           </div>
 
-          <div
-            class="bg-(--primary-white) dark:bg-(--secondary-black-bg) rounded-2xl py-[16px] pl-[15px] pr-[5px]"
-          >
+          <div>
             <StopsInput @open-selector="openPointSelector" />
           </div>
 
@@ -150,34 +169,26 @@ const updateStop = (newValue: SuggestionPoint) => {
           >
             <div
               v-for="(_, i) in tripFormStore.tripPoints.length - 2"
-              class="bg-(--primary-white) dark:bg-(--secondary-black-bg) rounded-2xl flex justify-between items-center py-2.5 pl-[15px] pr-2.5"
+              class="transition-colors bg-(--primary-white) hover:bg-(--primary-white-hover) dark:bg-(--secondary-black-bg) dark:hover:bg-(--secondary-black-bg-hover) text-(--color-text) dark:text-(--primary-white) text-sm rounded-2xl flex justify-between items-center py-2.5 pl-[15px] pr-2.5 cursor-pointer"
+              @click="onClickStopPoint(i)"
             >
               <p>Остановка в точке {{ i + 1 }}</p>
               <p
-                class="bg-(--secondary-white-bg) dark:bg-(--third-black-bg) py-2 px-2.5 rounded-xl cursor-pointer"
-                @click="isStopTimePopupOpen = true"
+                class="bg-(--secondary-white-bg) dark:bg-(--third-black-bg) py-2 px-2.5 rounded-xl"
               >
-                {{ tripFormStore.tripPoints[i + 1].stopTime }} мин.
+                {{ tripFormStore.tripPoints[i + 1].stopTime }} мин
               </p>
-              <PickerSelectPopup
-                v-if="isStopTimePopupOpen"
-                type="stopTime"
-                :stop-time-index="i + 1"
-                @close="isStopTimePopupOpen = false"
-              />
             </div>
           </div>
 
-          <div
-            class="mt-[25px] space-y-[15px] text-(--color-text) dark:text-(--primary-white) text-sm"
-          >
+          <div class="mt-[25px] space-y-[15px]">
             <div
-              class="bg-(--primary-white) dark:bg-(--secondary-black-bg) rounded-2xl flex justify-between items-center py-2.5 pl-[15px] pr-2.5"
+              class="transition-colors bg-(--primary-white) hover:bg-(--primary-white-hover) dark:bg-(--secondary-black-bg) dark:hover:bg-(--secondary-black-bg-hover) text-(--color-text) dark:text-(--primary-white) text-sm rounded-2xl flex justify-between items-center py-2.5 pl-[15px] pr-2.5 cursor-pointer"
+              @click="isDayMonthYearPopupOpen = true"
             >
               <p>Дата</p>
               <p
-                class="bg-(--secondary-white-bg) dark:bg-(--third-black-bg) py-2 px-2.5 rounded-xl cursor-pointer"
-                @click="isDayMonthYearPopupOpen = true"
+                class="bg-(--secondary-white-bg) dark:bg-(--third-black-bg) py-2 px-2.5 rounded-xl"
               >
                 {{
                   tripFormStore.tripDate?.toLocaleDateString('ru-RU', {
@@ -190,43 +201,62 @@ const updateStop = (newValue: SuggestionPoint) => {
             </div>
 
             <div
-              class="bg-(--primary-white) dark:bg-(--secondary-black-bg) rounded-2xl flex justify-between items-center py-2.5 pl-[15px] pr-2.5"
+              class="transition-colors bg-(--primary-white) hover:bg-(--primary-white-hover) dark:bg-(--secondary-black-bg) dark:hover:bg-(--secondary-black-bg-hover) text-(--color-text) dark:text-(--primary-white) text-sm rounded-2xl flex justify-between items-center py-2.5 pl-[15px] pr-2.5 cursor-pointer"
+              @click="isTimePopupOpen = true"
             >
               <p>Время прибытия</p>
               <p
-                class="bg-(--secondary-white-bg) dark:bg-(--third-black-bg) py-2 px-2.5 rounded-xl cursor-pointer"
-                @click="isTimePopupOpen = true"
+                class="bg-(--secondary-white-bg) dark:bg-(--third-black-bg) py-2 px-2.5 rounded-xl"
               >
                 {{ tripFormStore?.arrivalTime }}
               </p>
             </div>
 
             <div
-              class="bg-(--primary-white) dark:bg-(--secondary-black-bg) rounded-2xl flex justify-between items-center py-2.5 pl-[15px] pr-2.5"
+              class="transition-colors bg-(--primary-white) hover:bg-(--primary-white-hover) dark:bg-(--secondary-black-bg) dark:hover:bg-(--secondary-black-bg-hover) text-(--color-text) dark:text-(--primary-white) text-sm rounded-2xl flex justify-between items-center py-2.5 pl-[15px] pr-2.5 cursor-pointer"
+              @click="isReminderPopupOpen = true"
             >
               <p>Напоминание</p>
               <p
-                class="bg-(--secondary-white-bg) dark:bg-(--third-black-bg) py-2 px-2.5 rounded-xl cursor-pointer"
-                @click="isReminderPopupOpen = true"
+                class="bg-(--secondary-white-bg) dark:bg-(--third-black-bg) py-2 px-2.5 rounded-xl"
               >
-                За {{ tripFormStore?.reminderTime }} минут
+                за {{ tripFormStore?.reminderTime }} минут
               </p>
             </div>
           </div>
 
-          <PickerSelectPopup v-if="isTimePopupOpen" @close="isTimePopupOpen = false" type="time" />
+          <Transition name="fade">
+            <PickerSelectPopup
+              v-if="isStopTimePopupOpen"
+              type="stopTime"
+              :stop-time-index="currentStopPointIndex + 1"
+              @close="isStopTimePopupOpen = false"
+            />
+          </Transition>
 
-          <PickerSelectPopup
-            v-if="isReminderPopupOpen"
-            @close="isReminderPopupOpen = false"
-            type="reminder"
-          />
+          <Transition name="fade">
+            <PickerSelectPopup
+              v-if="isDayMonthYearPopupOpen"
+              @close="isDayMonthYearPopupOpen = false"
+              type="date"
+            />
+          </Transition>
 
-          <PickerSelectPopup
-            v-if="isDayMonthYearPopupOpen"
-            @close="isDayMonthYearPopupOpen = false"
-            type="date"
-          />
+          <Transition name="fade">
+            <PickerSelectPopup
+              v-if="isTimePopupOpen"
+              @close="isTimePopupOpen = false"
+              type="time"
+            />
+          </Transition>
+
+          <Transition name="fade">
+            <PickerSelectPopup
+              v-if="isReminderPopupOpen"
+              @close="isReminderPopupOpen = false"
+              type="reminder"
+            />
+          </Transition>
         </form>
 
         <div v-if="partOfForm === 2" class="flex flex-col justify-center">
@@ -238,7 +268,7 @@ const updateStop = (newValue: SuggestionPoint) => {
               class="mx-auto my-2 h-1 w-8 rounded-full bg-(--medium-gray) dark:opacity-30 cursor-pointer mb-[20px]"
             ></div>
 
-            <div class="mb-4">
+            <div>
               <div class="flex items-center gap-2.5">
                 <button @click.stop="partOfForm = 1" class="cursor-pointer">
                   <IcBack />
@@ -266,29 +296,29 @@ const updateStop = (newValue: SuggestionPoint) => {
           :initialValue="
             activePointIndex !== null ? tripFormStore.tripPoints[activePointIndex].name : ''
           "
+          :index="activePointIndex"
           @close="closePointSelector"
-          @select="updateStop"
+          @selectPoint="updateStop"
           @toggle-expand="toggleExpand"
         />
       </div>
-
-      <div
-        v-if="
-          !isPointSelectorOpen &&
-          !isDayMonthYearPopupOpen &&
-          !isReminderPopupOpen &&
-          !isTimePopupOpen
-        "
-        class="absolute bottom-0 left-0 bg-(--primary-white-bg)/40 dark:bg-(--primary-black-bg)/40 backdrop-blur-2xl w-full border-t border-(--medium-gray) dark:border-(--third-black-bg) pt-2.5 pb-10 px-5 flex justify-center items-center"
-      >
-        <button
-          class="bg-(--primary-yellow) py-4 w-full rounded-2xl text-(--primary-white) disabled:opacity-60 cursor-pointer"
-          :disabled="!tripFormStore.isFirstStepValid"
-          @click.stop="partOfForm = 2"
+      <Transition name="fade">
+        <BottomSheetBottomBar
+          v-if="
+            !isPointSelectorOpen &&
+            !isStopTimePopupOpen &&
+            !isDayMonthYearPopupOpen &&
+            !isReminderPopupOpen &&
+            !isTimePopupOpen
+          "
         >
-          {{ partOfForm === 1 ? 'Продолжить' : 'Добавить поездку' }}
-        </button>
-      </div>
+          <PrimaryYellowButton
+            :disabled="!tripFormStore.isFirstStepValid"
+            @click.stop="partOfForm = 2"
+            >{{ partOfForm === 1 ? 'Продолжить' : 'Добавить поездку' }}</PrimaryYellowButton
+          >
+        </BottomSheetBottomBar>
+      </Transition>
     </div>
   </Teleport>
 </template>
@@ -299,5 +329,20 @@ const updateStop = (newValue: SuggestionPoint) => {
 }
 .scrollbar-hide {
   scrollbar-width: none;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+.fade-enter-to,
+.fade-leave-from {
+  opacity: 1;
 }
 </style>

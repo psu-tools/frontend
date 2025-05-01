@@ -2,21 +2,24 @@
 import IcClose from '~/icons/IcClose.vue'
 import IcCompas from '~/icons/IcCompas.vue'
 import AddressItem from '~/shaared/ui/AddressItem.vue'
+import { useUserPointsStore } from '~/stores/userPoints'
 
+const { isLoading, favoritePoints } = useUserPointsStore()
 const config = useRuntimeConfig()
 
 const apiKey = config.public.openCageApiKey
 const apiUrl = `https://api.opencagedata.com/geocode/v1/json?key=${apiKey}&q=`
 
-const props = defineProps({
-  initialValue: {
-    type: String,
-    default: '',
-  },
-})
+const props = defineProps<{
+  initialValue?: {
+    type: String
+    default: ''
+  }
+  index: number | null
+}>()
 
 const emit = defineEmits<{
-  (e: 'select', newValue: SuggestionPoint): void
+  (e: 'selectPoint', newValue: SuggestionPoint | Point, pointType: 'api' | 'user'): void
   (e: 'close'): void
   (e: 'toggleExpand'): void
 }>()
@@ -37,11 +40,6 @@ interface Address {
   name: string
   address: string
 }
-
-const userAddresses = <Address[]>[
-  { name: 'Дом', address: 'ул. Мира, 45' },
-  { name: 'Дом', address: 'ул. Мира, 45' },
-]
 
 const recentlyAddresses = <Address[]>[
   { name: 'Пермский Политех', address: 'Комсомольский проспект, 29' },
@@ -73,9 +71,10 @@ const fetchSuggestions = async (query: string) => {
 
 watch(inputValue, newValue => fetchSuggestions(newValue))
 
-const selectPoint = (point: SuggestionPoint) => {
-  inputValue.value = point.formatted
-  emit('select', point)
+const selectPoint = (point: SuggestionPoint | Point, pointType: 'api' | 'user') => {
+  console.log(point)
+  inputValue.value = pointType === 'api' ? point.formatted : point.name
+  emit('selectPoint', point, pointType)
   suggestions.value = []
 }
 
@@ -86,9 +85,9 @@ const toggleExpand = () => emit('toggleExpand')
 
 <template>
   <div
-    class="relative inset-0 z-50 flex flex-col bg-(--primary-white-bg) dark:bg-(--primary-black-bg)"
+    class="relative z-50 inset-0 flex flex-col bg-(--primary-white-bg) dark:bg-(--primary-black-bg)"
   >
-    <div class="sticky left-0 top-0 z-40 bg-(--primary-white-bg) dark:bg-(--primary-black-bg)">
+    <div class="sticky z-10 left-0 top-0 bg-(--primary-white-bg) dark:bg-(--primary-black-bg)">
       <div
         @click="toggleExpand"
         class="mx-auto my-2 h-1 w-8 rounded-full bg-(--medium-gray) cursor-pointer mb-[20px]"
@@ -98,32 +97,31 @@ const toggleExpand = () => emit('toggleExpand')
         <div class="flex justify-between items-center gap-2.5">
           <input
             type="text"
-            placeholder="Куда поедем?"
+            :placeholder="index === 0 ? 'Откуда поедем?' : 'Куда поедем?'"
             class="text-sm text-text dark:text-(--color-text-gray) outline-none caret-(--primary-orange) py-[18px] px-[15px] rounded-2xl bg-(--primary-white) dark:bg-(--secondary-black-bg) w-full"
             v-model="inputValue"
-            @keyup.enter="selectPoint(inputValue)"
           />
           <button @click="closeSelector" class="cursor-pointer">
             <IcClose />
           </button>
         </div>
-
-        <div
-          v-if="suggestions.length > 0"
-          class="absolute top-[100%] left-0 w-full bg-white shadow-lg mt-2"
-        >
-          <ul>
-            <li
-              v-for="(suggestion, index) in suggestions"
-              :key="index"
-              @click="selectPoint(suggestion)"
-              class="px-4 py-2 cursor-pointer hover:bg-gray-100"
-            >
-              {{ suggestion.formatted }}
-            </li>
-          </ul>
-        </div>
       </div>
+    </div>
+
+    <div
+      v-if="suggestions.length > 0"
+      class="absolute z-50 top-24 left-0 w-full bg-(--primary-white) mt-2"
+    >
+      <ul>
+        <li
+          v-for="(suggestion, index) in suggestions"
+          :key="index"
+          @click="selectPoint(suggestion, 'api')"
+          class="px-4 py-2 cursor-pointer hover:bg-gray-100"
+        >
+          {{ suggestion.formatted }}
+        </li>
+      </ul>
     </div>
 
     <div class="mt-2.5 flex items-center gap-[5px]">
@@ -133,16 +131,17 @@ const toggleExpand = () => emit('toggleExpand')
       </p>
     </div>
 
-    <div class="mt-[25px]">
+    <div class="mt-[25px]" v-if="favoritePoints">
       <h2 class="font-semibold text-(--color-text) dark:text-(--primary-white) mb-1">Мои адреса</h2>
       <div
-        v-for="(item, index) in userAddresses"
+        v-for="(point, index) in favoritePoints"
         :key="index"
-        class="relative py-2.5 flex items-center gap-2.5"
+        class="relative -mx-5 px-5 py-2.5 flex items-center gap-2.5 cursor-pointer hover:bg-(--primary-white-hover)"
+        @click="selectPoint(point, 'user')"
       >
-        <AddressItem icon="point" :name="item.name" :address="item.address" />
+        <AddressItem icon="point" :name="point.name || null" :address="point.address" />
         <div
-          v-if="index < userAddresses.length - 1"
+          v-if="index < favoritePoints.length - 1"
           class="absolute bottom-0 h-[1.5px] bg-[#eeeeee] dark:bg-(--third-black-bg) ml-[34px] w-[calc(100%-34px)]"
         ></div>
       </div>

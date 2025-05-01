@@ -4,12 +4,12 @@ import { useTripsStore } from '~/stores/trips'
 
 import RouteDestination from '~/entities/route/RouteDestination.vue'
 import RoutesContainer from '~/entities/route/RoutesContainer.vue'
-import RouteEdit from '~/entities/route/RouteEdit.vue'
 import BaseConfirmModal from '~/features/two-button-modal/BaseConfirmModal.vue'
 
 import IcTrash from '~/icons/IcTrash.vue'
 import IcClose from '~/icons/IcClose.vue'
 import IcWarn from '~/icons/IcWarn.vue'
+import PrimaryYellowButton from '~/shaared/ui/buttons/PrimaryYellowButton.vue'
 
 const modalStore = useModalStore()
 const tripsStore = useTripsStore()
@@ -156,9 +156,9 @@ onMounted(() => {
         </div>
       </div>
       <div
-        class="fixed b-0 l-0 z-20 sm:w-[384px] w-full h-[105px] bg-(--primary-white-bg) dark:bg-(--primary-black-bg)"
+        class="absolute bottom-0 left-0 bg-(--primary-white-bg)/40 dark:bg-(--primary-black-bg)/40 backdrop-blur-2xl w-full border-t border-(--medium-gray) dark:border-(--third-black-bg) pt-2.5 pb-10 px-5 flex justify-center items-center"
       >
-        <RouteEdit />
+        <PrimaryYellowButton> Редактировать поездку </PrimaryYellowButton>
       </div>
       <BaseConfirmModal
         :is-open="isDeleteConfirmOpen"

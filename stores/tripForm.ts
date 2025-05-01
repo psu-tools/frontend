@@ -15,14 +15,14 @@ export const useTripFormStore = defineStore('tripForm', () => {
 
   const tripPoints = ref<Point[]>([
     {
-      name: 'Моё местоположение',
+      name: '',
       latitude: Number.POSITIVE_INFINITY,
       longitude: Number.POSITIVE_INFINITY,
       stopTime: 0,
-      address: 'idfn',
+      address: '',
     },
     {
-      name: 'Куда поедем?',
+      name: '',
       latitude: Number.POSITIVE_INFINITY,
       longitude: Number.POSITIVE_INFINITY,
       stopTime: 0,
