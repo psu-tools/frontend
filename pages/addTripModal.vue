@@ -84,21 +84,23 @@ const closePointSelector = () => {
   activePointIndex.value = null
 }
 
-const updateStop = (newValue: SuggestionPoint, pointType: 'api' | 'user') => {
+const updateStop = (newValue: SuggestionPoint | Point, pointType: 'api' | 'user') => {
   if (activePointIndex.value !== null) {
     if (pointType === 'api') {
+      const suggestion = newValue as SuggestionPoint
       tripFormStore.updateTripPoint(activePointIndex.value, {
-        name: newValue.formatted.split(',')[0],
-        latitude: newValue.geometry.lat,
-        longitude: newValue.geometry.lng,
-        address: newValue.formatted,
+        name: suggestion.formatted.split(',')[0],
+        latitude: suggestion.geometry.lat,
+        longitude: suggestion.geometry.lng,
+        address: suggestion.formatted.split(',').slice(0, -1).join(',').trim(),
       })
     } else if (pointType === 'user') {
+      const point = newValue as Point
       tripFormStore.updateTripPoint(activePointIndex.value, {
-        name: newValue.name,
-        latitude: newValue.latitude,
-        longitude: newValue.longitude,
-        address: newValue.address,
+        name: point.name,
+        latitude: point.latitude,
+        longitude: point.longitude,
+        address: point.address,
       })
     }
   }
