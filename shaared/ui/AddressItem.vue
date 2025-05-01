@@ -6,6 +6,7 @@ defineProps<{
   icon: 'point' | 'clock'
   name: string | null
   address: string | null
+  isHtml?: boolean
 }>()
 </script>
 
@@ -17,15 +18,19 @@ defineProps<{
     </div>
     <div class="flex flex-col items-start gap-1 w-11/12 overflow-y-hidden">
       <p
+        v-if="!isHtml"
         class="text-sm text-(--color-text) dark:text-(--primary-white) max-w-full truncate whitespace-nowrap"
       >
         {{ name }}
       </p>
+      <p
+        class="text-sm text-(--color-text) dark:text-(--primary-white) max-w-full truncate whitespace-nowrap"
+        v-else
+        v-html="name"
+      ></p>
       <p class="text-xs max-w-full text-(--primary-gray) truncate whitespace-nowrap">
         {{ address }}
       </p>
     </div>
   </div>
 </template>
-
-<style scoped></style>

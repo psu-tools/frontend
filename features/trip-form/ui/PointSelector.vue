@@ -93,6 +93,17 @@ const selectPoint = (point: SuggestionPoint | Point, pointType: 'api' | 'user') 
 const closeSelector = () => emit('close')
 
 const toggleExpand = () => emit('toggleExpand')
+
+const highlightMatch = (text: string, query: string) => {
+  if (!query.trim()) return text
+
+  const regex = new RegExp(`(${escapeRegExp(query)})`, 'gi')
+  return text.replace(regex, '<span class="text-(--primary-orange)">$1</span>')
+}
+
+const escapeRegExp = (string: string) => {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+}
 </script>
 
 <template>
@@ -134,7 +145,8 @@ const toggleExpand = () => emit('toggleExpand')
               :name="
                 (() => {
                   const parts = suggestion.formatted.split(',')
-                  return !isNaN(parseFloat(parts[1])) ? parts[0] + parts[1] : parts[0] || null
+                  const addressName = !isNaN(parseFloat(parts[1])) ? parts[0] + parts[1] : parts[0]
+                  return highlightMatch(addressName, inputValue)
                 })()
               "
               :address="
@@ -145,6 +157,7 @@ const toggleExpand = () => emit('toggleExpand')
                     : suggestion.formatted.split(',').slice(1, -1).join(',').trim()
                 })()
               "
+              isHtml
             />
             <div
               v-if="index < suggestions.length - 1"
