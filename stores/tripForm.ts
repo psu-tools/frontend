@@ -60,9 +60,9 @@ export const useTripFormStore = defineStore('tripForm', () => {
 
   const isFirstStepValid = computed(() => {
     return (
+      tripPoints.value.every(point => point.name.trim() !== '' && point.address.trim() !== '') &&
       tripPoints.value.length >= 2 &&
-      tripPoints.value[1].name?.trim() !== '' &&
-      tripPoints.value[1].name !== 'Куда поедем?'
+      tripPoints.value[1].name?.trim() !== ''
     )
   })
 
