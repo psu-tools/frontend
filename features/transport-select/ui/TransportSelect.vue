@@ -15,26 +15,32 @@ const tripFormStore = useTripFormStore()
   <div>
     <div class="flex justify-between items-center gap-4">
       <IcCar
+        class="hover:opacity-70 transition-opacity"
         :selected="tripFormStore.transportType === 'CAR'"
         @click="tripFormStore.setTransportType('CAR')"
       />
       <IcPublic
+        class="hover:opacity-70 transition-opacity"
         :selected="tripFormStore.transportType === 'PUBLIC_TRANSPORT'"
         @click="tripFormStore.setTransportType('PUBLIC_TRANSPORT')"
       />
       <IcTaxi
+        class="hover:opacity-70 transition-opacity"
         :selected="tripFormStore.transportType === 'TAXI'"
         @click="tripFormStore.setTransportType('TAXI')"
       />
       <IcWalk
+        class="hover:opacity-70 transition-opacity"
         :selected="tripFormStore.transportType === 'WALK'"
         @click="tripFormStore.setTransportType('WALK')"
       />
       <IcBicycle
+        class="hover:opacity-70 transition-opacity"
         :selected="tripFormStore.transportType === 'BICYCLE'"
         @click="tripFormStore.setTransportType('BICYCLE')"
       />
       <IcScooter
+        class="hover:opacity-70 transition-opacity"
         :selected="tripFormStore.transportType === 'SCOOTER'"
         @click="tripFormStore.setTransportType('SCOOTER')"
       />
