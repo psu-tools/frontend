@@ -27,6 +27,7 @@ export default defineNuxtConfig({
       apiVersion: 'v1',
       yandexApiKey: '8cec5f84-dac6-4b09-ae85-de5fb8372081',
       openCageApiKey: 'f5b0ea03c1d946dca4128c2297e83360',
+      ymapsApiKey: '78f83394-77d7-4d0a-8c42-f0235b364b21',
     },
   },
   modules: ['@pinia/nuxt', '@nuxt/test-utils/module', '@vite-pwa/nuxt'],
@@ -66,4 +67,5 @@ export default defineNuxtConfig({
       navigateFallback: '/',
     },
   },
+  plugins: ['~/plugins/yandex-maps.client.ts'],
 })
