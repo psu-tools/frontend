@@ -59,8 +59,8 @@ const confirmLogout = () => {
     </div>
     <BaseConfirmModal
       :is-open="isLogoutConfirmOpen"
-      title="Выйти из аккаунта"
-      description="Вы уверены, что хотите выйти?"
+      title="Вы уверены, что хотите выйти?"
+      description=""
       :icon="IcLogout"
       :confirmText="`Выйти`"
       :cancelText="`Отмена`"
