@@ -25,7 +25,10 @@ defineProps<DestinationProps>()
           'bg-(--dark-gray) rounded-sm ': index !== 0 && index !== stopsList.length - 1,
         }"
       >
-        <span v-if="index !== 0 && index !== stopsList.length - 1">
+        <span
+          v-if="index !== 0 && index !== stopsList.length - 1"
+          class="text-[8px] text-(--primary-white) dark:text-(--secondary-black-bg)"
+        >
           {{ index }}
         </span>
       </span>

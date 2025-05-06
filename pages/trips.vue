@@ -12,7 +12,7 @@ const isModalOpen = ref(false)
 <template>
   <div>
     <h1 class="text-3xl font-bold text-text dark:text-(--primary-white)">Предстоящие</h1>
-    <Calendar class="mt-6" />
+    <Calendar class="mt-6 -mx-4" />
 
     <div v-if="tripsStore.selectedDate" class="mt-6 space-y-4">
       <h2 class="text-xs font-semibold dark:text-(--primary-white)">

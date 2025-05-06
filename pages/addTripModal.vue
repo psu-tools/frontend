@@ -84,21 +84,23 @@ const closePointSelector = () => {
   activePointIndex.value = null
 }
 
-const updateStop = (newValue: SuggestionPoint, pointType: 'api' | 'user') => {
+const updateStop = (newValue: SuggestionPoint | Point, pointType: 'api' | 'user') => {
   if (activePointIndex.value !== null) {
     if (pointType === 'api') {
+      const suggestion = newValue as SuggestionPoint
       tripFormStore.updateTripPoint(activePointIndex.value, {
-        name: newValue.formatted.split(',')[0],
-        latitude: newValue.geometry.lat,
-        longitude: newValue.geometry.lng,
-        address: newValue.formatted,
+        name: suggestion.formatted.split(',')[0],
+        latitude: suggestion.geometry.lat,
+        longitude: suggestion.geometry.lng,
+        address: suggestion.formatted.split(',').slice(0, -1).join(',').trim(),
       })
     } else if (pointType === 'user') {
+      const point = newValue as Point
       tripFormStore.updateTripPoint(activePointIndex.value, {
-        name: newValue.name,
-        latitude: newValue.latitude,
-        longitude: newValue.longitude,
-        address: newValue.address,
+        name: point.name,
+        latitude: point.latitude,
+        longitude: point.longitude,
+        address: point.address,
       })
     }
   }
@@ -116,7 +118,7 @@ const onClickStopPoint = (index: number) => {
     <div
       class="absolute inset-0 z-20 flex justify-center items-end bg-black/20 transition-opacity duration-300"
       :class="{ 'opacity-100': isVisible, 'opacity-0': !isVisible }"
-      @click="closeModal"
+      @click.self="closeModal"
     >
       <div
         class="w-full bg-(--primary-white-bg) dark:bg-(--primary-black-bg) items-end rounded-t-3xl px-5 transition-all duration-300 touch-none overflow-auto scrollbar-hide pb-[120px]"
@@ -224,39 +226,6 @@ const onClickStopPoint = (index: number) => {
               </p>
             </div>
           </div>
-
-          <Transition name="fade">
-            <PickerSelectPopup
-              v-if="isStopTimePopupOpen"
-              type="stopTime"
-              :stop-time-index="currentStopPointIndex + 1"
-              @close="isStopTimePopupOpen = false"
-            />
-          </Transition>
-
-          <Transition name="fade">
-            <PickerSelectPopup
-              v-if="isDayMonthYearPopupOpen"
-              @close="isDayMonthYearPopupOpen = false"
-              type="date"
-            />
-          </Transition>
-
-          <Transition name="fade">
-            <PickerSelectPopup
-              v-if="isTimePopupOpen"
-              @close="isTimePopupOpen = false"
-              type="time"
-            />
-          </Transition>
-
-          <Transition name="fade">
-            <PickerSelectPopup
-              v-if="isReminderPopupOpen"
-              @close="isReminderPopupOpen = false"
-              type="reminder"
-            />
-          </Transition>
         </form>
 
         <div v-if="partOfForm === 2" class="flex flex-col justify-center">
@@ -318,6 +287,35 @@ const onClickStopPoint = (index: number) => {
             >{{ partOfForm === 1 ? 'Продолжить' : 'Добавить поездку' }}</PrimaryYellowButton
           >
         </BottomSheetBottomBar>
+      </Transition>
+
+      <Transition name="fade">
+        <PickerSelectPopup
+          v-if="isStopTimePopupOpen"
+          type="stopTime"
+          :stop-time-index="currentStopPointIndex + 1"
+          @close="isStopTimePopupOpen = false"
+        />
+      </Transition>
+
+      <Transition name="fade">
+        <PickerSelectPopup
+          v-if="isDayMonthYearPopupOpen"
+          @close="isDayMonthYearPopupOpen = false"
+          type="date"
+        />
+      </Transition>
+
+      <Transition name="fade">
+        <PickerSelectPopup v-if="isTimePopupOpen" @close="isTimePopupOpen = false" type="time" />
+      </Transition>
+
+      <Transition name="fade">
+        <PickerSelectPopup
+          v-if="isReminderPopupOpen"
+          @close="isReminderPopupOpen = false"
+          type="reminder"
+        />
       </Transition>
     </div>
   </Teleport>
