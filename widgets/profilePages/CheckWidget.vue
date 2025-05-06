@@ -23,7 +23,6 @@ defineProps<Props>()
         {{ title }}
       </div>
 
-      <!-- Плавное появление галочки -->
       <transition name="fade">
         <div v-if="isActive">
           <IcCheckMark class="transition-opacity duration-300 opacity-100" />
