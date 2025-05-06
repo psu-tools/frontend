@@ -3,6 +3,7 @@ import IcClose from '~/icons/IcClose.vue'
 import IcCompas from '~/icons/IcCompas.vue'
 import AddressItem from '~/shaared/ui/AddressItem.vue'
 import { useUserPointsStore } from '~/stores/userPoints'
+import YandexMaps from '~/pages/yandexMaps.vue'
 
 const { favoritePoints } = useUserPointsStore()
 const config = useRuntimeConfig()
@@ -49,6 +50,8 @@ const recentlyAddresses = <Address[]>[
 
 const inputValue = ref(props.initialValue || '')
 const suggestions = ref<SuggestionPoint[]>([])
+
+const isYandexMapsOpen = ref(false)
 
 const fetchSuggestions = async (query: string, countryCode = 'ru') => {
   if (!query.trim()) {
@@ -169,14 +172,23 @@ const escapeRegExp = (string: string) => {
     </div>
 
     <div v-else>
-      <div class="mt-2.5 flex items-center gap-[5px]">
+      <div
+        class="mt-2.5 flex items-center gap-[5px] cursor-pointer"
+        @click="isYandexMapsOpen = !isYandexMapsOpen"
+      >
         <IcCompas class="h-[13px] w-[13px]" />
         <p class="text-sm font-semibold text-(--dark-gray) dark:text-(--secondary-gray)">
           Указать на карте
         </p>
       </div>
 
-      <div class="mt-[25px]" v-if="favoritePoints.length > 0">
+      <YandexMaps
+        v-if="isYandexMapsOpen"
+        @closeYandexMaps="isYandexMapsOpen = !isYandexMapsOpen"
+        @selectMapsPoint="selectPoint"
+      />
+
+      <div class="mt-[25px]" v-if="favoritePoints && favoritePoints.length > 0">
         <h2 class="font-semibold text-(--color-text) dark:text-(--primary-white) mb-1">
           Мои адреса
         </h2>
