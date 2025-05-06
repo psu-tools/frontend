@@ -5,10 +5,11 @@ import CheckWidget from '~/widgets/profilePages/CheckWidget.vue'
 
 <template>
   <div class="pb-24">
-    <PagesTitle title="Язык" />
+    <PagesTitle title="Тема оформления" />
     <div class="flex flex-col gap-[15px]">
-      <CheckWidget title="Русский" :is-active="true" />
-      <CheckWidget title="English" :is-active="false" />
+      <CheckWidget title="Светлая" :is-active="true" />
+      <CheckWidget title="Темная" :is-active="false" />
+      <CheckWidget title="Как в системе" :is-active="false" />
     </div>
   </div>
 </template>
