@@ -12,9 +12,7 @@ const headerDate = computed(() =>
   isExpanded.value ? currentDate.value : selectedDate.value || today
 )
 
-const toggleCalendar = () => {
-  isExpanded.value = !isExpanded.value
-}
+const toggleCalendar = () => (isExpanded.value = !isExpanded.value)
 
 const generateMonthDays = (date: Date) => {
   const year = date.getFullYear()
@@ -69,10 +67,6 @@ const handleTouchStart = (event: TouchEvent) => {
   event.stopPropagation()
 }
 
-const handleTouchMove = (event: TouchEvent) => {
-  event.preventDefault()
-}
-
 const handleTouchEnd = (event: TouchEvent) => {
   if (!isExpanded.value) return
   const touchEndX = event.changedTouches[0].clientX
@@ -85,11 +79,6 @@ const handleTouchEnd = (event: TouchEvent) => {
 const handleMouseDown = (event: MouseEvent) => {
   mouseStartX = event.clientX
   isMouseDown = true
-  event.preventDefault()
-}
-
-const handleMouseMove = (event: MouseEvent) => {
-  if (!isMouseDown) return
   event.preventDefault()
 }
 
@@ -106,17 +95,124 @@ const handleMouseUp = (event: MouseEvent) => {
   }
   isMouseDown = false
 }
+
+let startY = 0
+let dragging = false
+
+const onGlobalMouseMove = (e: MouseEvent) => {
+  if (!dragging) return
+  const dy = e.clientY - startY
+  const THRESHOLD = 30
+  if (Math.abs(dy) > THRESHOLD) {
+    isExpanded.value = dy > 0
+    dragging = false
+    removeGlobalListeners()
+  }
+}
+
+const onGlobalMouseUp = () => {
+  dragging = false
+  removeGlobalListeners()
+}
+
+const addGlobalListeners = () => {
+  window.addEventListener('mousemove', onGlobalMouseMove)
+  window.addEventListener('mouseup', onGlobalMouseUp)
+}
+
+const removeGlobalListeners = () => {
+  window.removeEventListener('mousemove', onGlobalMouseMove)
+  window.removeEventListener('mouseup', onGlobalMouseUp)
+}
+
+const handleVerticalStart = (e: MouseEvent | TouchEvent) => {
+  startY = e instanceof TouchEvent ? e.touches[0].clientY : e.clientY
+  dragging = true
+  addGlobalListeners()
+}
+
+const onGlobalTouchMove = (e: TouchEvent) => {
+  if (!dragging) return
+  const dy = e.touches[0].clientY - startY
+  const THRESHOLD = 30
+  if (Math.abs(dy) > THRESHOLD) {
+    isExpanded.value = dy > 0
+    dragging = false
+    removeGlobalTouchListeners()
+  }
+}
+
+const onGlobalTouchEnd = () => {
+  dragging = false
+  removeGlobalTouchListeners()
+}
+
+const addGlobalTouchListeners = () => {
+  window.addEventListener('touchmove', onGlobalTouchMove)
+  window.addEventListener('touchend', onGlobalTouchEnd)
+}
+
+const removeGlobalTouchListeners = () => {
+  window.removeEventListener('touchmove', onGlobalTouchMove)
+  window.removeEventListener('touchend', onGlobalTouchEnd)
+}
+
+const handleTouchVerticalStart = (e: TouchEvent) => {
+  startY = e.touches[0].clientY
+  dragging = true
+  addGlobalTouchListeners()
+}
+
+const calendarBodyRef = ref<HTMLElement | null>(null)
+const expandedHeight = ref(0)
+const collapsedHeight = ref(0)
+
+const updateHeights = async () => {
+  await nextTick()
+
+  const el = calendarBodyRef.value
+  if (!el) return
+
+  const clone = el.cloneNode(true) as HTMLElement
+  clone.style.position = 'absolute'
+  clone.style.visibility = 'hidden'
+  clone.style.pointerEvents = 'none'
+  clone.style.maxHeight = 'none'
+  clone.style.height = 'auto'
+
+  document.body.appendChild(clone)
+
+  const fullDays = generateMonthDays(currentDate.value)
+  clone.innerHTML = el.innerHTML.replace(/v-for=".*?"/, '')
+  expandedHeight.value = clone.scrollHeight + 20
+
+  const oneWeekDays = getCurrentWeekDays.value
+  const originalHTML = clone.innerHTML
+  clone.innerHTML = ''
+  oneWeekDays.forEach(date => {
+    const span = document.createElement('span')
+    span.className = 'text-xs py-2.5 text-center rounded-xl cursor-pointer'
+    span.innerText = date.getDate().toString()
+    clone.appendChild(span)
+  })
+
+  collapsedHeight.value = clone.scrollHeight + 10
+  document.body.removeChild(clone)
+}
+
+onMounted(updateHeights)
+watch([isExpanded, currentDate], updateHeights)
 </script>
 
 <template>
   <div
-    class="overflow-hidden select-none"
+    class="overflow-hidden select-none border-b rounded-b-[15px] px-4 border-b-(--medium-gray)"
     @touchstart="handleTouchStart"
     @touchend="handleTouchEnd"
-    @touchmove="handleTouchMove"
+    @touchmove.prevent
     @mousedown="handleMouseDown"
-    @mousemove="handleMouseMove"
     @mouseup="handleMouseUp"
+    @mousemove.prevent
   >
     <div class="flex items-center gap-3 cursor-pointer" @click="toggleCalendar">
       <span
@@ -161,39 +257,42 @@ const handleMouseUp = (event: MouseEvent) => {
     </div>
 
     <div
-      class="grid grid-cols-7 gap-3 transition-all"
-      :class="isExpanded ? 'grid-rows-6' : 'grid-rows-1'"
+      ref="calendarBodyRef"
+      class="overflow-hidden transition-[max-height] duration-300 ease-in-out"
+      :style="{ maxHeight: isExpanded ? expandedHeight + 'px' : collapsedHeight + 'px' }"
     >
-      <span
-        v-for="(date, index) in isExpanded ? generateMonthDays(currentDate) : getCurrentWeekDays"
-        :key="date?.toISOString() || index"
-        class="text-xs py-2.5 text-center rounded-xl cursor-pointer"
-        :class="{
-          'bg-(--primary-orange) text-(--primary-white) font-semibold':
-            date && selectedDate && date.toDateString() === selectedDate.toDateString(),
-          'text-(--primary-orange) font-semibold':
-            date && date.toDateString() === today.toDateString(),
-          'text-(--primary-gray) font-normal':
-            date &&
-            date.setHours(0, 0, 0, 0) < today.setHours(0, 0, 0, 0) &&
-            !(date.toDateString() === today.toDateString()),
-          'font-bold': !date,
-          'dark:text-(--primary-white)':
-            date &&
-            date.setHours(0, 0, 0, 0) > today.setHours(0, 0, 0, 0) &&
-            !(date.toDateString() === today.toDateString()),
-        }"
-        @click="date && selectDate(date)"
-      >
-        {{ date ? date.getDate() : '' }}
-      </span>
+      <div class="grid grid-cols-7 gap-3">
+        <span
+          v-for="(date, index) in isExpanded ? generateMonthDays(currentDate) : getCurrentWeekDays"
+          :key="date?.toISOString() || index"
+          class="text-xs py-2.5 text-center rounded-xl cursor-pointer"
+          :class="{
+            'bg-(--primary-orange) text-(--primary-white) font-semibold':
+              date && selectedDate && date.toDateString() === selectedDate.toDateString(),
+            'text-(--primary-orange) font-semibold':
+              date && date.toDateString() === today.toDateString(),
+            'text-(--primary-gray) font-normal':
+              date &&
+              date.setHours(0, 0, 0, 0) < today.setHours(0, 0, 0, 0) &&
+              !(date.toDateString() === today.toDateString()),
+            'font-bold': !date,
+            'dark:text-(--primary-white)':
+              date &&
+              date.setHours(0, 0, 0, 0) > today.setHours(0, 0, 0, 0) &&
+              !(date.toDateString() === today.toDateString()),
+          }"
+          @click="date && selectDate(date)"
+        >
+          {{ date ? date.getDate() : '' }}
+        </span>
+      </div>
     </div>
 
     <div
       class="mx-auto my-2 h-1 w-8 rounded-full bg-(--medium-gray) dark:opacity-30 cursor-pointer"
       @click="toggleCalendar"
+      @mousedown.stop="handleVerticalStart"
+      @touchstart.stop="handleTouchVerticalStart"
     ></div>
   </div>
 </template>
-
-<style scoped></style>
