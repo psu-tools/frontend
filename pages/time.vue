@@ -1,9 +1,18 @@
 <script setup lang="ts">
 import PagesTitle from '~/widgets/profilePages/PagesTitle.vue'
-import GeneralWidget from '~/widgets/profilePages/GeneralWidget.vue'
-import TimeReservePicker from '~/shaared/ui/TimeReservePicker.vue'
-
 import IcClock from '~/icons/IcClock.vue'
+import TimeReservePopup from '~/shaared/ui/TimeReservePopup.vue'
+
+const isPopupOpen = ref(false)
+const selectedPercentage = ref(5)
+
+const openPopup = () => {
+  isPopupOpen.value = true
+}
+
+const handleSelect = (value: number) => {
+  selectedPercentage.value = value
+}
 </script>
 
 <template>
@@ -24,9 +33,23 @@ import IcClock from '~/icons/IcClock.vue'
         Дополнительный процент времени, чтобы учесть пробки, задержки и другие непредвиденные
         ситуации
       </p>
-      <div>
-        <TimeReservePicker :initial-percentage="5" />
+      <div class="text-center">
+        <button
+          class="text-sm font-semibold px-5 py-2 bg-(--primary-orange) text-white rounded-xl"
+          @click="openPopup"
+        >
+          {{ selectedPercentage }}%
+        </button>
       </div>
     </div>
+
+    <Teleport to="#modal-container">
+      <TimeReservePopup
+        v-if="isPopupOpen"
+        :initial-percentage="selectedPercentage"
+        @select="handleSelect"
+        @close="isPopupOpen = false"
+      />
+    </Teleport>
   </div>
 </template>

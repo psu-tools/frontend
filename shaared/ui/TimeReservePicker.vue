@@ -3,17 +3,14 @@ const props = defineProps<{ initialPercentage?: number }>()
 
 const emit = defineEmits<{ (e: 'select', value: number): void }>()
 
-// 5% до 100% шагом по 5
 const percentages = Array.from({ length: 20 }, (_, i) => (i + 1) * 5)
-
-// Паддинговые значения
 const paddedPercentages = computed(() => [null, ...percentages, null])
 
 const selectedPercentageIndex = ref(0)
-
 const itemHeight = 48
 const visibleItems = 3
 const paddingOffset = Math.floor(visibleItems / 2) * itemHeight
+// const percentageCol = ref<HTMLElement | null>(null)
 
 const selectedPercentage = computed(() => percentages[selectedPercentageIndex.value])
 
@@ -32,16 +29,11 @@ const onScroll = (event: Event) => {
   selectedPercentageIndex.value = index
 }
 
-const percentageCol = ref<HTMLElement | null>(null)
-
 onMounted(() => {
   const initial = props.initialPercentage ?? 5
   const initialIndex = percentages.indexOf(initial)
   selectedPercentageIndex.value = initialIndex === -1 ? 0 : initialIndex
-
-  nextTick(() => {
-    scrollToIndex(percentageCol.value, selectedPercentageIndex.value)
-  })
+  nextTick(() => scrollToIndex(percentageCol.value, selectedPercentageIndex.value))
 })
 
 watch(selectedPercentageIndex, () => {
