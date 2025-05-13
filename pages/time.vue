@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import PagesTitle from '~/widgets/profilePages/PagesTitle.vue'
 import GeneralWidget from '~/widgets/profilePages/GeneralWidget.vue'
+import TimeReservePicker from '~/shaared/ui/TimeReservePicker.vue'
 
 import IcClock from '~/icons/IcClock.vue'
 </script>
@@ -23,7 +24,9 @@ import IcClock from '~/icons/IcClock.vue'
         Дополнительный процент времени, чтобы учесть пробки, задержки и другие непредвиденные
         ситуации
       </p>
-      <div class="flex items-center justify-center gap-[20px]"></div>
+      <div>
+        <TimeReservePicker :initial-percentage="5" />
+      </div>
     </div>
   </div>
 </template>
