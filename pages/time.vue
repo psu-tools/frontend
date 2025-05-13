@@ -21,25 +21,34 @@ const handleSelect = (value: number) => {
       <PagesTitle title="Запас времени" />
     </div>
     <div>
-      <div class="w-full flex justify-center items-center mb-[15px]">
-        <IcClock />
-      </div>
-      <h3
-        class="text-sm text-(--color-text) dark:text-(--primary-white) font-semibold text-center mb-[10px]"
+      <div
+        class="max-w-[280px] flex flex-col py-[20px] pb-[25px] px-[20px] rounded-2xl bg-(--primary-white) dark:bg-(--secondary-black-bg)"
       >
-        Запас времени
-      </h3>
-      <p class="text-xs text-center mb-[20px] text-(--primary-gray)">
-        Дополнительный процент времени, чтобы учесть пробки, задержки и другие непредвиденные
-        ситуации
-      </p>
-      <div class="text-center">
-        <button
-          class="text-sm font-semibold px-5 py-2 bg-(--primary-orange) text-white rounded-xl"
-          @click="openPopup"
+        <div class="flex justify-center items-center mb-[15px]">
+          <IcClock />
+        </div>
+        <h3
+          class="text-sm text-(--color-text) dark:text-(--primary-white) font-semibold text-center mb-[10px]"
         >
-          {{ selectedPercentage }}%
-        </button>
+          Запас времени
+        </h3>
+        <p class="text-xs text-center mb-[20px] text-(--primary-gray)">
+          Дополнительный процент времени, чтобы учесть пробки, задержки и другие непредвиденные
+          ситуации
+        </p>
+      </div>
+      <div
+        class="py-[18px] px-[15px] rounded-2xl bg-(--primary-white) dark:bg-(--secondary-black-bg)"
+      >
+        <div class="flex w-full justify-between items-center">
+          <div class="text-sm text-(--color-text) dark:text-(--primary-white)">Текущий запас</div>
+          <button
+            class="text-sm text-(--color-text) dark:text-(--primary-white) rounded-xl"
+            @click="openPopup"
+          >
+            {{ selectedPercentage }}%
+          </button>
+        </div>
       </div>
     </div>
 
