@@ -1,6 +1,4 @@
-<!-- TimeReservePopup.vue -->
 <script setup lang="ts">
-import { ref } from 'vue'
 import TimeReservePicker from '~/shaared/ui/TimeReservePicker.vue'
 
 const props = defineProps<{ initialPercentage?: number }>()

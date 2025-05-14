@@ -19,7 +19,7 @@ interface BlockItem {
 }
 
 const block1: BlockItem[] = [
-  { iconComponent: IcLocation, title: 'Мои адреса', path: '/profile/addresses' },
+  { iconComponent: IcLocation, title: 'Мои адреса', path: '/addresses' },
 ]
 
 const block2: BlockItem[] = [
