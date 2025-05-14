@@ -54,13 +54,25 @@ const handleSelect = (value: number) => {
     </div>
 
     <Teleport to="#modal-container">
-      <TimeReservePopup
-        v-if="isPopupOpen"
-        :initial-percentage="selectedPercentage"
-        @select="handleSelect"
-        @close="isPopupOpen = false"
-      />
-    </Teleport>
+  <transition
+    name="modal-fade"
+    appear
+    enter-active-class="transition-opacity duration-200"
+    enter-from-class="opacity-0"
+    enter-to-class="opacity-100"
+    leave-active-class="transition-opacity duration-200"
+    leave-from-class="opacity-100"
+    leave-to-class="opacity-0"
+  >
+    <TimeReservePopup
+      v-if="isPopupOpen"
+      :initial-percentage="selectedPercentage"
+      @select="handleSelect"
+      @close="isPopupOpen = false"
+    />
+  </transition>
+</Teleport>
+
   </div>
 </template>
  
