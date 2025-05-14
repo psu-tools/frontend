@@ -20,7 +20,7 @@ const handleCloseSelector = () => {
   <div class="pb-24">
     <div class="flex items-center justify-between">
       <PagesTitle title="Мои адреса" />
-      <button class="h-[46px] cursor-pointer" @click="isSelectorOpen = true">
+      <button class="pb-[18px] cursor-pointer" @click="isSelectorOpen = true">
         <IcAdd />
       </button>
     </div>
@@ -29,10 +29,14 @@ const handleCloseSelector = () => {
       <div
         v-for="(point, idx) in selectedPoints"
         :key="idx"
-        class="p-3 bg-gray-100 rounded-xl dark:bg-gray-800"
+        class="p-3 bg-(--primary-white) rounded-xl dark:bg-(--secondary-black-bg) flex flex-col"
       >
-        {{ point.formatted || point.name }} <br />
-        <small v-if="point.address">{{ point.address }}</small>
+        <div class="text-sm text-(--color-text) dark:text-(--primary-white) font-semibold">
+          {{ point.formatted || point.name }}
+        </div>
+        <div class="text-xs text-(--primary-gray)">
+          {{ point.address }}
+        </div>
       </div>
     </div>
 
