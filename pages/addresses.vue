@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import PagesTitle from '~/widgets/profilePages/PagesTitle.vue'
 import IcAdd from '~/icons/IcAdd.vue'
-import PointSelector, { type SuggestionPoint } from '~/features/trip-form/ui/PointSelector.vue'
+import SelectPointModal from '~/features/trip-form/ui/SelectPointModal.vue'
 
 const isSelectorOpen = ref(false)
 const selectedPoints = ref<any[]>([])
@@ -36,11 +36,10 @@ const handleCloseSelector = () => {
       </div>
     </div>
 
-    <PointSelector
+    <SelectPointModal
       v-if="isSelectorOpen"
       @close="handleCloseSelector"
-      @selectPoint="handleSelectPoint"
-      :index="null"
+      @select="handleSelectPoint"
     />
   </div>
 </template>
