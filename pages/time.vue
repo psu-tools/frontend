@@ -17,34 +17,35 @@ const handleSelect = (value: number) => {
 
 <template>
   <div class="pb-24">
-    <div class="mb-[50px]">
+    <div class="mb-[25px]">
       <PagesTitle title="Запас времени" />
     </div>
-    <div>
+    <div class="flex flex-col gap-[15px]">
       <div
-        class="max-w-[280px] flex flex-col py-[20px] pb-[25px] px-[20px] rounded-2xl bg-(--primary-white) dark:bg-(--secondary-black-bg)"
+        class="py-[20px] pb-[25px] px-[20px] rounded-2xl bg-(--primary-white) dark:bg-(--secondary-black-bg)"
       >
         <div class="flex justify-center items-center mb-[15px]">
           <IcClock />
         </div>
         <h3
-          class="text-sm text-(--color-text) dark:text-(--primary-white) font-semibold text-center mb-[10px]"
+          class="text-sm text-(--color-text) dark:text-(--primary-white) font-semibold text-center mb-[8px]"
         >
           Запас времени
         </h3>
-        <p class="text-xs text-center mb-[20px] text-(--primary-gray)">
+        <p class="px-[30px] flex irems-center justify-center text-xs text-center text-(--primary-gray)">
           Дополнительный процент времени, чтобы учесть пробки, задержки и другие непредвиденные
           ситуации
         </p>
       </div>
       <div
-        class="py-[18px] px-[15px] rounded-2xl bg-(--primary-white) dark:bg-(--secondary-black-bg)"
+        class="cursor-pointer py-[10px] px-[15px] rounded-2xl bg-(--primary-white) dark:bg-(--secondary-black-bg)"
+        @click="openPopup"
       >
         <div class="flex w-full justify-between items-center">
           <div class="text-sm text-(--color-text) dark:text-(--primary-white)">Текущий запас</div>
           <button
-            class="text-sm text-(--color-text) dark:text-(--primary-white) rounded-xl"
-            @click="openPopup"
+            class="text-sm text-(--color-text) dark:text-(--primary-white) rounded-[12px] bg-(--secondary-white-bg) py-[8px] px-[16px] dark:bg-(--third-black-bg)"
+           
           >
             {{ selectedPercentage }}%
           </button>
@@ -62,3 +63,4 @@ const handleSelect = (value: number) => {
     </Teleport>
   </div>
 </template>
+ 
