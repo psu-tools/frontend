@@ -5,6 +5,7 @@ import PrimaryOrangeButton from '~/shaared/ui/buttons/PrimaryOrangeButton.vue'
 defineProps<{
   isOpen: boolean
   message: string
+  description?: string
   buttonText: string
 }>()
 
@@ -21,10 +22,17 @@ const emit = defineEmits<{
         class="w-5/6 bg-(--primary-white) flex flex-col justify-between items-center p-5 rounded-(--radius-2xl)"
       >
         <IcWarning />
-        <p class="mt-[15px] text-(--color-text) font-semibold text-sm">{{ message }}</p>
-        <PrimaryOrangeButton class="mt-5 py-[10.5px]" @click="emit('onClick')">{{
-          buttonText
-        }}</PrimaryOrangeButton>
+        <p class="px-8 text-center mt-[15px] text-(--color-text) font-semibold text-sm">
+          {{ message }}
+        </p>
+        <p v-if="description" class="px-8 text-center text-xs text-(--primary-gray) mt-2">
+          {{ description }}
+        </p>
+        <PrimaryOrangeButton
+          class="mt-5 py-[10.5px] rounded-(--radius-xl)"
+          @click="emit('onClick')"
+          >{{ buttonText }}</PrimaryOrangeButton
+        >
       </div>
     </div>
   </Transition>
