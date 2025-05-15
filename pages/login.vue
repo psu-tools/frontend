@@ -33,11 +33,7 @@ const submitForm = () => {
   }
 }
 
-const onClickModal = () => {
-  isErrorModalOpen.value = false
-  authStore.setPassword('')
-  authStore.setEmail('')
-}
+const onClickModal = () => (isErrorModalOpen.value = false)
 
 onMounted(() => authStore.setAuthType('login'))
 </script>
