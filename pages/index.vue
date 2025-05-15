@@ -8,7 +8,7 @@ const tripsStore = useTripsStore()
 </script>
 
 <template>
-  <div class="relative" :class="{ 'h-full': tripsStore.isLoading }">
+  <div class="relative pb-24" :class="{ 'h-full': tripsStore.isLoading }">
     <NuxtLink class="absolute top-1 right-2" to="/notifications">
       <IcNotifications />
     </NuxtLink>
