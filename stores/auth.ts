@@ -8,7 +8,7 @@ export const useAuthStore = defineStore('auth', () => {
   const emailError = ref<string | null>(null)
   const passwordError = ref<string | null>(null)
 
-  const setAuthType = (type: 'registration' | 'login') => (authType.value = type)
+  const setAuthType = (type: 'registration' | 'login' | 'recovery') => (authType.value = type)
   const setEmail = (newEmail: string): void => (email.value = newEmail)
   const setPassword = (newPassword: string): void => (password.value = newPassword)
 
@@ -36,6 +36,12 @@ export const useAuthStore = defineStore('auth', () => {
     validateEmail()
     validatePassword()
     return !emailError.value && !passwordError.value && false
+    // привязка бэка
+  }
+
+  const validateRecoveryForm = () => {
+    return !emailError.value
+    // привязка бэка
   }
 
   return {
@@ -50,5 +56,6 @@ export const useAuthStore = defineStore('auth', () => {
     validateEmail,
     validatePassword,
     validateLoginForm,
+    validateRecoveryForm,
   }
 })
