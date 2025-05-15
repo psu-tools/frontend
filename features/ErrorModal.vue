@@ -14,9 +14,10 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <Transition class="absolute inset-0" name="fade">
+  <Transition class="absolute inset-0" name="fade" @click="emit('onClick')">
     <div v-if="isOpen" class="w-full h-full bg-black/20 flex justify-center items-center">
       <div
+        @click.stop
         class="w-5/6 bg-(--primary-white) flex flex-col justify-between items-center p-5 rounded-(--radius-2xl)"
       >
         <IcWarning />
