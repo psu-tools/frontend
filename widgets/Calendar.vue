@@ -205,94 +205,99 @@ watch([isExpanded, currentDate], updateHeights)
 </script>
 
 <template>
-  <div
-    class="overflow-hidden select-none border-b rounded-b-[15px] px-4 border-b-(--medium-gray)"
-    @touchstart="handleTouchStart"
-    @touchend="handleTouchEnd"
-    @touchmove.prevent
-    @mousedown="handleMouseDown"
-    @mouseup="handleMouseUp"
-    @mousemove.prevent
-  >
-    <div class="flex items-center gap-3 cursor-pointer" @click="toggleCalendar">
-      <span
-        class="font-semibold transition-colors text-xs"
-        :class="{
-          'text-text dark:text-(--primary-white)': !isExpanded,
-          'text-(--primary-orange)': isExpanded,
-        }"
-      >
-        {{ formatMonthYear(headerDate) }}
-      </span>
-      <span class="transition-transform" :class="{ 'rotate-90': isExpanded }">
-        <svg
-          width="6"
-          height="10"
-          viewBox="0 0 6 10"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            class="transition-colors"
-            :class="{
-              'fill-text dark:fill-(--primary-white)': !isExpanded,
-              'fill-(--primary-orange)': isExpanded,
-            }"
-            fill-rule="evenodd"
-            clip-rule="evenodd"
-            d="M5.808 4.5509L1.136 0.179641C0.864 -0.0598802 0.448 -0.0598802 0.192 0.179641C-0.064 0.419162 -0.064 0.808383 0.192 1.06287L4.4 5L0.192 8.93713C-0.064 9.17665 -0.064 9.58084 0.192 9.82036C0.448 10.0599 0.864 10.0599 1.136 9.82036L5.808 5.43413C6.064 5.19461 6.064 4.80539 5.808 4.5509Z"
-          />
-        </svg>
-      </span>
-    </div>
-
-    <div class="mt-2 py-2 grid grid-cols-7 gap-3 text-center">
-      <span
-        v-for="day in ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС']"
-        :key="day"
-        class="font-semibold text-(--primary-gray) dark:text-(--secondary-light-gray) text-[10px]"
-      >
-        {{ day }}
-      </span>
-    </div>
-
+  <div>
     <div
-      ref="calendarBodyRef"
-      class="overflow-hidden transition-[max-height] duration-300 ease-in-out"
-      :style="{ maxHeight: isExpanded ? expandedHeight + 'px' : collapsedHeight + 'px' }"
+      class="overflow-hidden select-none"
+      @touchstart="handleTouchStart"
+      @touchend="handleTouchEnd"
+      @touchmove.prevent
+      @mousedown="handleMouseDown"
+      @mouseup="handleMouseUp"
+      @mousemove.prevent
     >
-      <div class="grid grid-cols-7 gap-3">
+      <div class="flex items-center gap-3 cursor-pointer px-4" @click="toggleCalendar">
         <span
-          v-for="(date, index) in isExpanded ? generateMonthDays(currentDate) : getCurrentWeekDays"
-          :key="date?.toISOString() || index"
-          class="text-xs py-2.5 text-center rounded-xl cursor-pointer"
+          class="font-semibold transition-colors text-xs"
           :class="{
-            'bg-(--primary-orange) text-(--primary-white) font-semibold':
-              date && selectedDate && date.toDateString() === selectedDate.toDateString(),
-            'text-(--primary-orange) font-semibold':
-              date && date.toDateString() === today.toDateString(),
-            'text-(--primary-gray) font-normal':
-              date &&
-              date.setHours(0, 0, 0, 0) < today.setHours(0, 0, 0, 0) &&
-              !(date.toDateString() === today.toDateString()),
-            'font-bold': !date,
-            'dark:text-(--primary-white)':
-              date &&
-              date.setHours(0, 0, 0, 0) > today.setHours(0, 0, 0, 0) &&
-              !(date.toDateString() === today.toDateString()),
+            'text-text dark:text-(--primary-white)': !isExpanded,
+            'text-(--primary-orange)': isExpanded,
           }"
-          @click="date && selectDate(date)"
         >
-          {{ date ? date.getDate() : '' }}
+          {{ formatMonthYear(headerDate) }}
+        </span>
+        <span class="transition-transform" :class="{ 'rotate-90': isExpanded }">
+          <svg
+            width="6"
+            height="10"
+            viewBox="0 0 6 10"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              class="transition-colors"
+              :class="{
+                'fill-text dark:fill-(--primary-white)': !isExpanded,
+                'fill-(--primary-orange)': isExpanded,
+              }"
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M5.808 4.5509L1.136 0.179641C0.864 -0.0598802 0.448 -0.0598802 0.192 0.179641C-0.064 0.419162 -0.064 0.808383 0.192 1.06287L4.4 5L0.192 8.93713C-0.064 9.17665 -0.064 9.58084 0.192 9.82036C0.448 10.0599 0.864 10.0599 1.136 9.82036L5.808 5.43413C6.064 5.19461 6.064 4.80539 5.808 4.5509Z"
+            />
+          </svg>
         </span>
       </div>
-    </div>
 
-    <div
-      class="mx-auto my-2 h-1 w-8 rounded-full bg-(--medium-gray) dark:opacity-30 cursor-pointer"
-      @click="toggleCalendar"
-      @mousedown.stop="handleVerticalStart"
-      @touchstart.stop="handleTouchVerticalStart"
-    ></div>
+      <div class="mt-2 py-2 grid grid-cols-7 gap-3 text-center px-1">
+        <span
+          v-for="day in ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС']"
+          :key="day"
+          class="font-semibold text-(--primary-gray) dark:text-(--secondary-light-gray) text-[10px]"
+        >
+          {{ day }}
+        </span>
+      </div>
+
+      <div
+        ref="calendarBodyRef"
+        class="overflow-hidden transition-[max-height] duration-400 ease-in-out px-1"
+        :style="{ maxHeight: isExpanded ? expandedHeight + 'px' : collapsedHeight + 'px' }"
+      >
+        <div class="grid grid-cols-7 gap-3">
+          <span
+            v-for="(date, index) in isExpanded
+              ? generateMonthDays(currentDate)
+              : getCurrentWeekDays"
+            :key="date?.toISOString() || index"
+            class="text-xs py-2.5 text-center rounded-xl cursor-pointer"
+            :class="{
+              'bg-(--primary-orange) text-(--primary-white) font-semibold':
+                date && selectedDate && date.toDateString() === selectedDate.toDateString(),
+              'text-(--primary-orange) font-semibold':
+                date && date.toDateString() === today.toDateString(),
+              'text-(--primary-gray) font-normal':
+                date &&
+                date.setHours(0, 0, 0, 0) < today.setHours(0, 0, 0, 0) &&
+                !(date.toDateString() === today.toDateString()),
+              'font-bold': !date,
+              'dark:text-(--primary-white)':
+                date &&
+                date.setHours(0, 0, 0, 0) > today.setHours(0, 0, 0, 0) &&
+                !(date.toDateString() === today.toDateString()),
+            }"
+            @click="date && selectDate(date)"
+          >
+            {{ date ? date.getDate() : '' }}
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="border-b rounded-b-[15px] border-b-(--medium-gray)">
+      <div
+        class="mx-auto my-2.5 h-1 w-8 rounded-full bg-(--medium-gray) dark:opacity-30 cursor-pointer"
+        @click="toggleCalendar"
+        @mousedown.stop="handleVerticalStart"
+        @touchstart.stop="handleTouchVerticalStart"
+      ></div>
+    </div>
   </div>
 </template>
