@@ -28,7 +28,7 @@ definePageMeta({
         />
       </div>
 
-      <PrimaryOrangeButton class="w-full mt-6 cursor-pointer">Продолжить</PrimaryOrangeButton>
+      <PrimaryOrangeButton class="py-[15px] mt-6 cursor-pointer">Продолжить</PrimaryOrangeButton>
     </main>
 
     <footer>
