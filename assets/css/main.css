@@ -8,6 +8,7 @@ body {
   /* colors */
   --primary-orange: #ff724c;
   --primary-orange-hover: #eb6946;
+  --primary-orange-disabled: #ff9d83;
   --primary-white: #ffffff;
   --primary-white-hover: #f2f2f3;
   --primary-yellow: #fdbf50;
@@ -38,6 +39,10 @@ body {
   --primary-gray-icon: #a6a6a6;
   --dark-gray-icon: #484c52;
   --primary-white-icon: #e2e2e2;
+  --secondary-button-light: #ebebeb;
+  --light-input-bg: #f7f8f9;
+  --light-input-border: #e8ecf4;
+  --primary-input-gray: #8391a1;
 
   /* radius */
   --radius-2xl: 20px;
