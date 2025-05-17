@@ -19,10 +19,12 @@ const emit = defineEmits<{
     <div v-if="isOpen" class="w-full h-full bg-black/20 flex justify-center items-center">
       <div
         @click.stop
-        class="w-5/6 bg-(--primary-white) flex flex-col justify-between items-center p-5 rounded-(--radius-2xl)"
+        class="w-5/6 bg-(--primary-white) dark:bg-(--secondary-black-bg) flex flex-col justify-between items-center p-5 rounded-(--radius-2xl)"
       >
         <IcWarning />
-        <p class="px-8 text-center mt-[15px] text-(--color-text) font-semibold text-sm">
+        <p
+          class="px-8 text-center mt-[15px] text-(--color-text) dark:text-(--primary-white) font-semibold text-sm"
+        >
           {{ message }}
         </p>
         <p v-if="description" class="px-8 text-center text-xs text-(--primary-gray) mt-2">
