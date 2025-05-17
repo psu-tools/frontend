@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 
 export const useAuthStore = defineStore('auth', () => {
-  const authType = ref<'registration' | 'login'>()
+  const authType = ref<'registration' | 'login' | 'recovery'>()
   const email = ref<string>('')
   const password = ref<string>('')
 
@@ -9,8 +9,8 @@ export const useAuthStore = defineStore('auth', () => {
   const passwordError = ref<string | null>(null)
 
   const setAuthType = (type: 'registration' | 'login' | 'recovery') => (authType.value = type)
-  const setEmail = (newEmail: string): void => (email.value = newEmail)
-  const setPassword = (newPassword: string): void => (password.value = newPassword)
+  const setEmail = (newEmail: string) => (email.value = newEmail)
+  const setPassword = (newPassword: string) => (password.value = newPassword)
 
   const validateEmail = () => {
     if (!email.value) {
