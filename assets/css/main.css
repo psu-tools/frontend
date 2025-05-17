@@ -43,6 +43,7 @@ body {
   --light-input-bg: #f7f8f9;
   --light-input-border: #e8ecf4;
   --primary-input-gray: #8391a1;
+  --dark-input-border: #383b3e;
 
   /* radius */
   --radius-2xl: 20px;
