@@ -34,11 +34,11 @@ watch(repeatPassword, () => {
 </script>
 
 <template>
-  <div class="text-center h-full flex flex-col justify-between">
+  <div class="text-center h-full flex flex-col gap-[25px]">
     <header class="pt-[5px] pb-[15px] flex gap-2.5">
       <IcBack @click="emit('prevStep')" />
     </header>
-    <main class="pb-16">
+    <main>
       <div>
         <IcApp class="mx-auto" />
         <h1 class="mt-5 text-(--color-text) dark:text-(--primary-white) font-bold text-xl">
@@ -88,7 +88,5 @@ watch(repeatPassword, () => {
         >Продолжить</PrimaryOrangeButton
       >
     </main>
-
-    <footer></footer>
   </div>
 </template>
