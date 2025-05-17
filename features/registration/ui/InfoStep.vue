@@ -1,16 +1,31 @@
 <script setup lang="ts">
 import PrimaryOrangeButton from '~/shaared/ui/buttons/PrimaryOrangeButton.vue'
-import IcApp from '~/icons/IcApp.vue'
 import IcBack from '~/icons/IcBack.vue'
+import AvatarInput from '~/shaared/ui/inputs/avatarInput.vue'
+import TextInput from '~/shaared/ui/inputs/textInput.vue'
+import { useAuthStore } from '~/stores/auth'
 
 const emit = defineEmits<{
   (e: 'prevStep'): void
-  (e: 'nextStep'): void
+  (e: 'sendForm'): void
 }>()
+
+const authStore = useAuthStore()
+
+const avatar = ref<File | null>(null)
+const name = ref<string>('')
+const surname = ref<string>('')
+
+watch(name, () => {
+  authStore.setName(name.value)
+})
+watch(surname, () => {
+  authStore.setSurname(surname.value)
+})
 </script>
 
 <template>
-  <div class="text-center h-full flex flex-col justify-between">
+  <div class="text-center h-full flex flex-col gap-[25px]">
     <header class="pt-[5px] pb-[15px] flex gap-2.5">
       <IcBack @click="emit('prevStep')" />
       <h1 class="text-(--color-text) dark:text-(--primary-white) font-bold text-xl">
@@ -19,26 +34,18 @@ const emit = defineEmits<{
     </header>
     <main class="pb-16">
       <div>
-        <IcApp class="mx-auto" />
-        <h1 class="mt-5 text-(--color-text) dark:text-(--primary-white) font-bold text-xl">
-          Регистрация
-        </h1>
+        <AvatarInput class="mx-auto" v-model="avatar" />
+        <TextInput class="mt-5" v-model="name" placeholder="Имя" />
+        <TextInput class="mt-[15px]" v-model="surname" placeholder="Фамилия" />
       </div>
 
-      <div class="mt-5">
-        <input
-          type="email"
-          placeholder="Email"
-          class="w-full py-[15px] px-[18px] text-(--color-text) border border-(--light-input-border) bg-(--light-input-bg) rounded-(--radius-2xl) focus:border-(--primary-orange) focus:outline-none"
-        />
-      </div>
-
-      <PrimaryOrangeButton class="py-[15px] mt-6 cursor-pointer" @click="emit('nextStep')"
-        >Продолжить</PrimaryOrangeButton
+      <PrimaryOrangeButton
+        class="py-[15px] mt-[25px] cursor-pointer"
+        :disabled="!name || !surname"
+        @click="emit('sendForm')"
+        >Зарегистрироваться</PrimaryOrangeButton
       >
     </main>
-
-    <footer></footer>
   </div>
 </template>
 
