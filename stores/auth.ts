@@ -5,12 +5,17 @@ export const useAuthStore = defineStore('auth', () => {
   const email = ref<string>('')
   const password = ref<string>('')
 
+  const name = ref<string>('')
+  const surname = ref<string>('')
+
   const emailError = ref<string | null>(null)
   const passwordError = ref<string | null>(null)
 
   const setAuthType = (type: 'registration' | 'login' | 'recovery') => (authType.value = type)
   const setEmail = (newEmail: string) => (email.value = newEmail)
   const setPassword = (newPassword: string) => (password.value = newPassword)
+  const setName = (newName: string) => (name.value = newName)
+  const setSurname = (newSurname: string) => (surname.value = newSurname)
 
   const validateEmail = () => {
     if (!email.value) {
@@ -48,11 +53,15 @@ export const useAuthStore = defineStore('auth', () => {
     authType,
     email,
     password,
+    name,
+    surname,
     emailError,
     passwordError,
     setAuthType,
     setEmail,
     setPassword,
+    setName,
+    setSurname,
     validateEmail,
     validatePassword,
     validateLoginForm,
