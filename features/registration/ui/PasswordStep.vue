@@ -48,7 +48,7 @@ watch(repeatPassword, () => {
 
       <div class="mt-5 space-y-3.5">
         <div>
-          <PasswordInput v-model="password" :has-error="authStore.passwordError" />
+          <PasswordInput v-model="password" :has-error="!!authStore.passwordError" />
           <Transition name="fade-slide">
             <p
               class="text-left pl-[15px] text-sm mt-1 text-(--primary-red) leading-4"
@@ -61,7 +61,7 @@ watch(repeatPassword, () => {
         <div>
           <PasswordInput
             v-model="repeatPassword"
-            :has-error="authStore.passwordError"
+            :has-error="!!authStore.passwordError"
             placeholder="Повторите пароль"
           />
           <Transition name="fade-slide">
@@ -79,10 +79,9 @@ watch(repeatPassword, () => {
         class="py-[15px] mt-6 cursor-pointer"
         @click="emit('nextStep')"
         :disabled="
-          authStore.emailError ||
-          authStore.passwordError ||
-          passwordError ||
-          email === '' ||
+          !!authStore.emailError ||
+          !!authStore.passwordError ||
+          !!passwordError ||
           repeatPassword === '' ||
           password === ''
         "

@@ -56,7 +56,7 @@ onMounted(() => authStore.setAuthType('login'))
 
       <div class="mt-5 space-y-3.5">
         <div>
-          <EmailInput v-model="email" :has-error="authStore.emailError" />
+          <EmailInput v-model="email" :has-error="!!authStore.emailError" />
           <Transition name="fade-slide">
             <p
               class="text-left pl-[15px] text-sm mt-1 text-(--primary-red) leading-4"
@@ -67,7 +67,7 @@ onMounted(() => authStore.setAuthType('login'))
           </Transition>
         </div>
         <div>
-          <PasswordInput v-model="password" :has-error="authStore.passwordError" />
+          <PasswordInput v-model="password" :has-error="!!authStore.passwordError" />
           <Transition name="fade-slide">
             <p
               class="text-left pl-[15px] text-sm mt-1 text-(--primary-red) leading-4"
@@ -81,6 +81,9 @@ onMounted(() => authStore.setAuthType('login'))
 
       <PrimaryOrangeButton
         class="mt-6 p-[15px] cursor-pointer dark:text-(--primary-white)"
+        :disabled="
+          !!authStore.passwordError || !!authStore.emailError || email === '' || password === ''
+        "
         @click="submitForm"
         >Войти</PrimaryOrangeButton
       >

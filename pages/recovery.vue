@@ -53,7 +53,7 @@ onMounted(() => authStore.setAuthType('recovery'))
       <div class="mt-5">
         <EmailInput
           v-model="email"
-          :has-error="authStore.emailError"
+          :has-error="!!authStore.emailError"
           :initial-value="authStore.email"
         />
         <Transition name="fade-slide">
@@ -66,7 +66,10 @@ onMounted(() => authStore.setAuthType('recovery'))
         </Transition>
       </div>
 
-      <PrimaryOrangeButton class="py-[15px] mt-6 cursor-pointer" @click="onClickButton"
+      <PrimaryOrangeButton
+        class="py-[15px] mt-6 cursor-pointer"
+        :disabled="!!authStore.emailError || email === ''"
+        @click="onClickButton"
         >Продолжить</PrimaryOrangeButton
       >
     </main>

@@ -48,7 +48,7 @@ watch(email, () => {
       <PrimaryOrangeButton
         class="py-[15px] mt-6 cursor-pointer"
         @click="emit('nextStep')"
-        :disabled="authStore.emailError || email === ''"
+        :disabled="!!authStore.emailError || email === ''"
         >Продолжить</PrimaryOrangeButton
       >
     </main>
