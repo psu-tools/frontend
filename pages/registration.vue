@@ -1,45 +1,24 @@
 <script setup lang="ts">
-import IcBack from '~/icons/IcBack.vue'
-import IcApp from '~/icons/IcApp.vue'
-import PrimaryOrangeButton from '~/shaared/ui/buttons/PrimaryOrangeButton.vue'
-definePageMeta({
-  layout: 'empty',
-})
+import EmailStep from '~/features/registration/ui/EmailStep.vue'
+import PasswordStep from '~/features/registration/ui/PasswordStep.vue'
+import InfoStep from '~/features/registration/ui/InfoStep.vue'
+
+definePageMeta({ layout: 'empty' })
+
+const step = ref<1 | 2 | 3>(1)
+
+const nextStep = () => step.value++
+const prevStep = () => step.value--
 </script>
 
 <template>
-  <div class="text-center h-full flex flex-col justify-between">
-    <header class="pt-[5px] pb-[15px]">
-      <NuxtLink to="/welcome">
-        <IcBack />
-      </NuxtLink>
-    </header>
-    <main class="pb-16">
-      <div>
-        <IcApp class="mx-auto" />
-        <h1 class="mt-5 text-(--color-text) font-bold text-xl">Регистрация</h1>
-      </div>
-
-      <div class="mt-5">
-        <input
-          type="email"
-          placeholder="Email"
-          class="w-full py-[15px] px-[18px] text-(--color-text) border border-(--light-input-border) bg-(--light-input-bg) rounded-(--radius-2xl) focus:border-(--primary-orange) focus:outline-none"
-        />
-      </div>
-
-      <PrimaryOrangeButton class="py-[15px] mt-6 cursor-pointer">Продолжить</PrimaryOrangeButton>
-    </main>
-
-    <footer>
-      <p class="text-(--color-text)">
-        Уже есть аккаунт?
-        <NuxtLink to="/login" class="text-(--primary-orange) font-medium cursor-pointer"
-          >Войдите</NuxtLink
-        >
-      </p>
-    </footer>
+  <div v-if="step === 1" class="h-full">
+    <EmailStep @next-step="nextStep" />
+  </div>
+  <div v-if="step === 2" class="h-full">
+    <PasswordStep @next-step="nextStep" @prev-step="prevStep" />
+  </div>
+  <div v-if="step === 3" class="h-full">
+    <InfoStep @next-step="nextStep" @prev-step="prevStep" />
   </div>
 </template>
-
-<style scoped></style>
