@@ -12,13 +12,10 @@ definePageMeta({
   layout: 'empty',
 })
 
+const email = ref<string>('')
+
 const isNoUserError = ref<boolean>(false)
 const isEmailError = ref<boolean>(false)
-
-const setEmail = (value: string): void => {
-  authStore.setEmail(value)
-  authStore.validateEmail()
-}
 
 const onClickButton = () => {
   authStore.validateRecoveryForm()
@@ -29,6 +26,11 @@ const onClickModal = () => {
   isNoUserError.value = false
   isEmailError.value = false
 }
+
+watch(email, () => {
+  authStore.setEmail(email.value)
+  authStore.validateEmail()
+})
 
 onMounted(() => authStore.setAuthType('recovery'))
 </script>
@@ -43,12 +45,14 @@ onMounted(() => authStore.setAuthType('recovery'))
     <main>
       <div>
         <IcApp class="mx-auto" />
-        <h1 class="mt-5 text-(--color-text) font-bold text-xl">Восстановление пароля</h1>
+        <h1 class="mt-5 text-(--color-text) dark:text-(--primary-white) font-bold text-xl">
+          Восстановление пароля
+        </h1>
       </div>
 
       <div class="mt-5">
         <EmailInput
-          @set-email="setEmail"
+          v-model="email"
           :has-error="authStore.emailError"
           :initial-value="authStore.email"
         />
