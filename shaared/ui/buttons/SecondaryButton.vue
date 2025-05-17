@@ -2,7 +2,7 @@
 
 <template>
   <button
-    class="bg-(--secondary-button-light) text-(--color-text) rounded-(--radius-2xl) py-[15px] px-10"
+    class="bg-(--secondary-button-light) dark:bg-(--third-black-bg) text-(--color-text) dark:text-(--primary-white) rounded-(--radius-2xl) py-[15px] px-10"
   >
     <slot />
   </button>
