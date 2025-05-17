@@ -13,17 +13,20 @@ definePageMeta({
 
 const authStore = useAuthStore()
 
+const email = ref<string>('')
+const password = ref<string>('')
+
 const isErrorModalOpen = ref<boolean>(false)
 
-const setPassword = (value: string): void => {
-  authStore.setPassword(value)
-  authStore.validatePassword()
-}
-
-const setEmail = (value: string): void => {
-  authStore.setEmail(value)
+watch(email, () => {
+  authStore.setEmail(email.value)
   authStore.validateEmail()
-}
+})
+
+watch(password, () => {
+  authStore.setPassword(password.value)
+  authStore.validatePassword()
+})
 
 const submitForm = () => {
   if (authStore.validateLoginForm()) {
@@ -48,16 +51,12 @@ onMounted(() => authStore.setAuthType('login'))
     <main class="pb-16">
       <div>
         <IcApp class="mx-auto" />
-        <h1 class="mt-5 text-(--color-text) font-bold text-xl">Вход</h1>
+        <h1 class="mt-5 text-(--color-text) dark:text-(--primary-white) font-bold text-xl">Вход</h1>
       </div>
 
       <div class="mt-5 space-y-3.5">
         <div>
-          <EmailInput
-            @set-email="setEmail"
-            :has-error="authStore.emailError"
-            :initial-value="authStore.email"
-          />
+          <EmailInput v-model="email" :has-error="authStore.emailError" />
           <Transition name="fade-slide">
             <p
               class="text-left pl-[15px] text-sm mt-1 text-(--primary-red) leading-4"
@@ -68,7 +67,7 @@ onMounted(() => authStore.setAuthType('login'))
           </Transition>
         </div>
         <div>
-          <PasswordInput @set-password="setPassword" :has-error="authStore.passwordError" />
+          <PasswordInput v-model="password" :has-error="authStore.passwordError" />
           <Transition name="fade-slide">
             <p
               class="text-left pl-[15px] text-sm mt-1 text-(--primary-red) leading-4"
@@ -80,15 +79,22 @@ onMounted(() => authStore.setAuthType('login'))
         </div>
       </div>
 
-      <PrimaryOrangeButton class="mt-6 p-[15px] cursor-pointer" @click="submitForm"
+      <PrimaryOrangeButton
+        class="mt-6 p-[15px] cursor-pointer dark:text-(--primary-white)"
+        @click="submitForm"
         >Войти</PrimaryOrangeButton
       >
-
-      <button class="mt-5 text-(--dark-gray) font-medium cursor-pointer">Забыли пароль?</button>
+      <NuxtLink to="/recovery">
+        <button
+          class="mt-5 text-(--dark-gray) dark:text-(--secondary-gray) font-medium cursor-pointer"
+        >
+          Забыли пароль?
+        </button>
+      </NuxtLink>
     </main>
 
     <footer>
-      <p class="text-(--color-text)">
+      <p class="text-(--color-text) dark:text-(--primary-white)">
         Нет аккаунта?
         <NuxtLink to="/registration" class="text-(--primary-orange) font-medium cursor-pointer"
           >Зарегистрируйтесь</NuxtLink
