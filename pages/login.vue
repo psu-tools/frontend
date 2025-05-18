@@ -28,13 +28,7 @@ watch(password, () => {
   authStore.validatePassword()
 })
 
-const submitForm = () => {
-  if (authStore.validateLoginForm()) {
-    console.log('Всё валидно, отправляем:', authStore.email, authStore.password)
-  } else {
-    isErrorModalOpen.value = true
-  }
-}
+const submitForm = () => authStore.validateLoginForm()
 
 const onClickModal = () => (isErrorModalOpen.value = false)
 
@@ -89,7 +83,7 @@ onMounted(() => authStore.setAuthType('login'))
       >
       <NuxtLink to="/recovery">
         <button
-          class="mt-5 text-(--dark-gray) dark:text-(--secondary-gray) font-medium cursor-pointer"
+          class="mt-5 text-(--dark-gray) hover:text-(--color-text-gray-secondary) dark:text-(--secondary-gray) dark:hover:text-(--color-text-light-gray-hover) font-medium cursor-pointer transition-colors"
         >
           Забыли пароль?
         </button>
