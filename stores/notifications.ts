@@ -37,7 +37,7 @@ export const useNotificationsStore = defineStore('notifications', () => {
         `${config.public.apiHost}/${config.public.apiVersion}/notifications-service/notifications`,
         {
           method: 'GET',
-          query: { pageNumber: page, pageSize, receiverId: '4cef84ba-a98a-4089-b6d8-bf0416ad2208' },
+          query: { pageNumber: page, pageSize },
         }
       )
       if (response.success) {

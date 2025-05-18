@@ -54,10 +54,7 @@ export const useTripsStore = defineStore('trips', () => {
       const config = useRuntimeConfig()
       const response = await customFetch<GetTripsListResponse>(
         `${config.public.apiHost}/${config.public.apiVersion}/routes-service/trips`,
-        {
-          method: 'GET',
-          query: { userId: '4cef84ba-a98a-4089-b6d8-bf0416ad2208' },
-        }
+        { method: 'GET' }
       )
       trips.value = response?.data || []
     } catch (error) {
@@ -73,10 +70,7 @@ export const useTripsStore = defineStore('trips', () => {
       const config = useRuntimeConfig()
       const response = await customFetch<DeleteTripResponse>(
         `${config.public.apiHost}/${config.public.apiVersion}/routes-service/trips/${tripId}`,
-        {
-          method: 'DELETE',
-          query: { userId: '4cef84ba-a98a-4089-b6d8-bf0416ad2208' },
-        }
+        { method: 'DELETE' }
       )
       console.log(response)
     } catch (error) {
