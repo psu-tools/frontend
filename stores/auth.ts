@@ -1,3 +1,4 @@
+import { useAuth } from '~/composables/useAuth'
 import { defineStore } from 'pinia'
 
 export const useAuthStore = defineStore('auth', () => {
@@ -10,6 +11,8 @@ export const useAuthStore = defineStore('auth', () => {
 
   const emailError = ref<string | null>(null)
   const passwordError = ref<string | null>(null)
+
+  const isLoginFormValid = ref<boolean>(false)
 
   const setAuthType = (type: 'registration' | 'login' | 'recovery') => (authType.value = type)
   const setEmail = (newEmail: string) => (email.value = newEmail)
@@ -37,16 +40,17 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  const validateLoginForm = () => {
+  const validateLoginForm = async () => {
     validateEmail()
     validatePassword()
-    return !emailError.value && !passwordError.value && false
-    // привязка бэка
+    if (!emailError.value && !passwordError.value) {
+      const { login } = useAuth()
+      isLoginFormValid.value = await login(email.value, password.value)
+    }
   }
 
   const validateRecoveryForm = () => {
     return !emailError.value
-    // привязка бэка
   }
 
   return {
@@ -57,6 +61,7 @@ export const useAuthStore = defineStore('auth', () => {
     surname,
     emailError,
     passwordError,
+    isLoginFormValid,
     setAuthType,
     setEmail,
     setPassword,
