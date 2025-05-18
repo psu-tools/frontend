@@ -1,10 +1,5 @@
 <script setup lang="ts">
 import TripPopup from '~/pages/tripPopup.vue'
-import { useTripsStore } from '@/stores/trips'
-
-const tripsStore = useTripsStore()
-
-onMounted(async () => await tripsStore.fetchTrips())
 </script>
 
 <template>
