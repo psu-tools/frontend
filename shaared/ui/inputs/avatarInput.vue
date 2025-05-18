@@ -23,7 +23,7 @@ const onFileChange = (e: Event) => {
 
 <template>
   <label
-    class="w-20 h-20 rounded-full bg-(--light-input-bg) border border-(--light-input-border) flex items-center justify-center cursor-pointer relative overflow-hidden"
+    class="w-20 h-20 rounded-full border border-(--light-input-border) dark:border-(--dark-input-border) bg-(--light-input-bg) dark:bg-(--secondary-black-bg) flex items-center justify-center cursor-pointer relative overflow-hidden"
   >
     <input type="file" accept="image/*" class="hidden" @change="onFileChange" />
     <template v-if="previewUrl">
