@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { customFetch } from '~/utils/customFetch'
 
 export interface Notification {
   id: string
@@ -32,7 +33,7 @@ export const useNotificationsStore = defineStore('notifications', () => {
     loading.value = true
     try {
       const config = useRuntimeConfig()
-      const response = await $fetch<NotificationsResponse>(
+      const response = await customFetch<NotificationsResponse>(
         `${config.public.apiHost}/${config.public.apiVersion}/notifications-service/notifications`,
         {
           method: 'GET',

@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { customFetch } from '~/utils/customFetch'
 
 interface GetPointsListResponse {
   success: boolean
@@ -14,7 +15,7 @@ export const useUserPointsStore = defineStore('userPoints', () => {
     try {
       isLoading.value = true
       const config = useRuntimeConfig()
-      const response = await $fetch<GetPointsListResponse>(
+      const response = await customFetch<GetPointsListResponse>(
         `${config.public.apiHost}/${config.public.apiVersion}/routes-service/points/favorites`,
         {
           method: 'GET',
