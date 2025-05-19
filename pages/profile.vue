@@ -12,20 +12,27 @@ import IcAbout from '~/icons/profile-widgets/IcAbout.vue'
 import IcSupport from '~/icons/profile-widgets/IcSupport.vue'
 import IcLogout from '~/icons/IcLogout.vue'
 
-const block1: object = [{ iconComponent: IcLocation, title: 'Мои адреса' }]
+interface BlockItem {
+  iconComponent: Component
+  title: string
+  path: string
+}
 
-const block2: object = [
-  { iconComponent: IcNotifications, title: 'Уведомления' },
-  { iconComponent: IcLanguage, title: 'Язык' },
-  { iconComponent: IcTheme, title: 'Тема оформления' },
-  { iconComponent: IcTime, title: 'Запас времени' },
+const block1: BlockItem[] = [
+  { iconComponent: IcLocation, title: 'Мои адреса', path: '/addresses' },
 ]
 
-const block3: object = [
-  { iconComponent: IcAbout, title: 'О приложении' },
-  { iconComponent: IcSupport, title: 'Поддержка и обратная' },
+const block2: BlockItem[] = [
+  { iconComponent: IcNotifications, title: 'Уведомления', path: '/informing' },
+  { iconComponent: IcLanguage, title: 'Язык', path: '/language' },
+  { iconComponent: IcTheme, title: 'Тема оформления', path: '/theme' },
+  { iconComponent: IcTime, title: 'Запас времени', path: '/time' },
 ]
 
+const block3: BlockItem[] = [
+  { iconComponent: IcAbout, title: 'О приложении', path: '/about' },
+  { iconComponent: IcSupport, title: 'Поддержка и обратная', path: '/support' },
+]
 const isLogoutConfirmOpen = ref(false)
 
 const openLogoutConfirm = () => {
@@ -59,8 +66,8 @@ const confirmLogout = () => {
     </div>
     <BaseConfirmModal
       :is-open="isLogoutConfirmOpen"
-      title="Выйти из аккаунта"
-      description="Вы уверены, что хотите выйти?"
+      title="Вы уверены, что хотите выйти?"
+      description=""
       :icon="IcLogout"
       :confirmText="`Выйти`"
       :cancelText="`Отмена`"
