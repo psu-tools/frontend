@@ -1,8 +1,14 @@
 <script setup lang="ts">
 import PagesTitle from '~/widgets/profilePages/PagesTitle.vue'
-import IcAdd from '~/icons/IcAdd.vue'
 import SelectPointModal from '~/features/trip-form/ui/SelectPointModal.vue'
 import EditAddressPopup from '~/features/edit-address/EditAddressPopup.vue'
+
+import IcAdd from '~/icons/IcAdd.vue'
+
+import { useUserPointsStore } from '~/stores/userPoints'
+
+const userPointsStore = useUserPointsStore()
+const { fetchUserPoints, favoritePoints, isLoading } = userPointsStore
 
 const isSelectorOpen = ref(false)
 const selectedPoints = ref<any[]>([])
@@ -24,6 +30,11 @@ const handleSaveEditedPoint = (point: any) => {
 const handleCloseSelector = () => {
   isSelectorOpen.value = false
 }
+
+onMounted(async () => {
+  await fetchUserPoints()
+  selectedPoints.value = favoritePoints.value || []
+})
 </script>
 
 <template>
