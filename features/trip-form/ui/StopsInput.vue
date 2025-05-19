@@ -38,7 +38,7 @@ const addStop = () => tripFormStore.addTripPoint({ name: 'Новая точка'
         </span>
         <input
           type="text"
-          :placeholder="index === 0 ? 'От куда поедем?' : 'Куда поедем?'"
+          :placeholder="index === 0 ? 'Откуда поедем?' : 'Куда поедем?'"
           class="ml-3 text-sm cursor-pointer outline-none truncate w-5/6"
           readonly
           v-model="stop.name"
