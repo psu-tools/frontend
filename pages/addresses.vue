@@ -42,7 +42,7 @@ onMounted(() => {
   <div class="pb-24">
     <div class="flex items-center justify-between">
       <PagesTitle title="Мои адреса" />
-      <button class="pb-[18px] cursor-pointer" @click="isSelectorOpen = true">
+      <button class="py-[14px] mb-[10px] cursor-pointer" @click="isSelectorOpen = true">
         <IcAdd />
       </button>
     </div>
@@ -56,7 +56,7 @@ onMounted(() => {
       <div
         v-for="(point, idx) in selectedPoints"
         :key="idx"
-        class="p-3 bg-(--primary-white) rounded-xl dark:bg-(--secondary-black-bg) flex flex-col"
+        class="py-[13px] px-[20px] bg-(--primary-white) rounded-2xl dark:bg-(--secondary-black-bg) flex flex-col"
       >
         <div class="text-sm text-(--color-text) dark:text-(--primary-white) font-semibold">
           {{ point.formatted || point.name }}
