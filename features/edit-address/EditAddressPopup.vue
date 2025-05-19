@@ -73,15 +73,28 @@ const savePoint = () => {
         @touchmove="onTouchMove"
         @touchend="onTouchEnd"
       >
-        <div>
-          <div class="flex justify-between">
-            <input v-model="editedName" placeholder="Название точки" />
+        <div class="relative">
+          <div class="flex justify-between mt-[30px] mb-[25px] gap-[15px]">
+            <input
+              class="w-full outline-none text-xl text-(--medium-gray) dark:text-(--color-text-dark) font-bold"
+              v-model="editedName"
+              placeholder="Название"
+            />
             <button class="cursor-pointer relative z-10" @click="closeModal">
               <IcClose />
             </button>
           </div>
+          <div class="">
+            <div class="">Адрес</div>
+            <div class=""></div>
+          </div>
 
-          <button @click="savePoint">Добавить адрес</button>
+          <button
+            class="sticky w-full py-[15px] rounded-2xl text-(--primary-white) text-sm bg-(--primary-orange)"
+            @click="savePoint"
+          >
+            Добавить адрес
+          </button>
         </div>
         <!-- <PointSelector
           :initial-value="initialValue"

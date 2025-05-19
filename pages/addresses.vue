@@ -29,6 +29,8 @@ const handleSaveEditedPoint = (point: any) => {
 
 const handleCloseSelector = () => {
   isSelectorOpen.value = false
+  isEditMode.value = false
+  pointToEdit.value = null
 }
 
 onMounted(() => {
