@@ -6,7 +6,7 @@ defineProps<{
 
 <template>
   <div
-    class="h-10 w-10 flex justify-center items-center rounded-xl cursor-pointer"
+    class="h-10 w-10 flex justify-center items-center rounded-xl cursor-pointer hover:opacity-60"
     :class="{
       'bg-(--primary-white) dark:bg-(--secondary-black-bg)': !selected,
       'bg-(--primary-orange)': selected,
