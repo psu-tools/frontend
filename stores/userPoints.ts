@@ -29,9 +29,32 @@ export const useUserPointsStore = defineStore('userPoints', () => {
     }
   }
 
+  // const addUserPoint = async (point: any) => {
+  //   try {
+  //     const config = useRuntimeConfig()
+  //     const response = await customFetch(
+  //       `${config.public.apiHost}/${config.public.apiVersion}/routes-service/points/favorites`,
+  //       {
+  //         method: 'POST',
+  //         body: point,
+  //       }
+  //     )
+
+  //     if (response) {
+  //       favoritePoints.value?.push(response.data)
+  //     }
+
+  //     return response
+  //   } catch (error) {
+  //     console.error('Ошибка добавления точки:', error)
+  //     throw error
+  //   }
+  // }
+
   return {
     isLoading,
     favoritePoints,
     fetchUserPoints,
+    // addUserPoint,
   }
 })

@@ -52,10 +52,12 @@ onMounted(() => {
       @close="handleCloseSelector"
       @save="handleSaveEditedPoint"
     />
-    <div v-if="selectedPoints.length > 0" class="mt-4 space-y-2">
+    <div v-if="isLoading" class="text-center py-8 text-gray-500">Загрузка...</div>
+
+    <div v-else-if="favoritePoints?.length" class="mt-4 space-y-2">
       <div
-        v-for="(point, idx) in selectedPoints"
-        :key="idx"
+        v-for="(point, idx) in favoritePoints"
+        :key="point.id || idx"
         class="py-[13px] px-[20px] bg-(--primary-white) rounded-2xl dark:bg-(--secondary-black-bg) flex flex-col"
       >
         <div class="text-sm text-(--color-text) dark:text-(--primary-white) font-semibold">
@@ -66,6 +68,8 @@ onMounted(() => {
         </div>
       </div>
     </div>
+
+    <div v-else class="text-center py-8 text-gray-400">Нет добавленных адресов</div>
 
     <SelectPointModal
       v-if="isSelectorOpen"
