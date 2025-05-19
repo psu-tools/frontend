@@ -76,10 +76,10 @@ const savePoint = () => {
       >
         <div
           @click="toggleExpand"
-          class="mx-auto my-2 h-1 w-8 rounded-full bg-(--medium-gray) cursor-pointer mb-[20px]"
+          class="mx-auto my-2 h-1 w-8 rounded-full bg-(--medium-gray) cursor-pointer mb-[15px]"
         ></div>
         <div class="relative">
-          <div class="flex justify-between mt-[30px] mb-[25px] gap-[15px]">
+          <div class="flex justify-between mb-[25px] gap-[15px]">
             <input
               class="w-full outline-none text-xl text-(--medium-gray) dark:text-(--color-text-dark) font-bold"
               v-model="editedName"
@@ -108,12 +108,20 @@ const savePoint = () => {
               </div>
             </div>
           </div>
-          <button
-            class="sticky w-full py-[15px] rounded-2xl text-(--primary-white) text-sm bg-(--primary-orange)"
-            @click="savePoint"
+          <div class="h-[80px]"></div>
+          <div
+            class="fixed overflow-x-hidden bottom-0 left-0 w-full px-5 pb-[env(safe-area-inset-bottom)] pt-3 bg-(--primary-white-bg) dark:bg-(--primary-black-bg) z-50"
           >
-            Добавить адрес
-          </button>
+            <div
+              class="w-[200%] left-[-50%] h-[1px] bg-(--color-line-gray) dark:bg-(--third-black-bg) relative mb-[10px]"
+            ></div>
+            <button
+              class="w-full py-[15px] rounded-2xl text-(--primary-white) text-sm bg-(--primary-orange)"
+              @click="savePoint"
+            >
+              Добавить адрес
+            </button>
+          </div>
         </div>
       </div>
     </div>

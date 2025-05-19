@@ -17,7 +17,7 @@ export const useUserPointsStore = defineStore('userPoints', () => {
       const config = useRuntimeConfig()
       const response = await customFetch<GetPointsListResponse>(
         `${config.public.apiHost}/${config.public.apiVersion}/routes-service/points/favorites`,
-        { method: 'GET' }
+        { method: 'GET', query: { userId: '4cef84ba-a98a-4089-b6d8-bf0416ad2208' } }
       )
       favoritePoints.value = response?.data || []
       console.log('fetching fav points', favoritePoints.value)
