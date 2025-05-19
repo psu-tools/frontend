@@ -2,13 +2,20 @@
 import PagesTitle from '~/widgets/profilePages/PagesTitle.vue'
 import IcAdd from '~/icons/IcAdd.vue'
 import SelectPointModal from '~/features/trip-form/ui/SelectPointModal.vue'
+import EditAddressPopup from '~/features/edit-address/EditAddressPopup.vue'
 
 const isSelectorOpen = ref(false)
 const selectedPoints = ref<any[]>([])
+const isEditMode = ref(false)
+
+const handleOpenEditor = () => {
+  isEditMode.value = false
+}
 
 const handleSelectPoint = (point: any) => {
-  selectedPoints.value.push(point)
+  isEditMode.value = true
   isSelectorOpen.value = false
+  // selectedPoints.value.push(point)
 }
 
 const handleCloseSelector = () => {
@@ -24,7 +31,9 @@ const handleCloseSelector = () => {
         <IcAdd />
       </button>
     </div>
-
+    <div v-if="isEditMode">
+      <EditAddressPopup @close="handleCloseSelector" @select="handleSelectPoint" />
+    </div>
     <div v-if="selectedPoints.length > 0" class="mt-4 space-y-2">
       <div
         v-for="(point, idx) in selectedPoints"
