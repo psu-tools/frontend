@@ -1,9 +1,15 @@
 <script setup lang="ts">
+import { useTripFormStore } from '~/stores/tripForm'
+import TransportType from '~/features/trip-form/ui/TransportType.vue'
+
+const tripFormStore = useTripFormStore()
+
 interface Stop {
   name: String
   latitude: Number
   longitude: Number
   stopTime: Number
+  address: string
 }
 
 interface RoutesBlockProps {
@@ -27,23 +33,25 @@ defineProps<RoutesBlockProps>()
       <div class="w-full flex justify-between items-center">
         <div class="flex flex-col">
           <p
-            class="text-[14px] text-(--color-text) dark:text-(--primary-white) font-semibold w-[200px] break-all"
+            class="text-[14px] text-(--color-text) dark:text-(--primary-white) font-semibold max-w-[200px] break-all"
           >
             {{ startingPoint.name }}
           </p>
-          <p class="text-[12px] text-(--primary-gray)">Адрес</p>
+          <p class="text-[12px] text-(--primary-gray)">{{ startingPoint.address }}</p>
         </div>
         <p class="text-[12px] text-(--color-text) dark:text-(--primary-white)">18:00</p>
       </div>
-      <div class="text-[12px] text-(--color-text) dark:text-(--primary-white)">Тип транспорта</div>
+      <div class="text-[12px] text-(--color-text) dark:text-(--primary-white)">
+        <TransportType :type="tripFormStore.transportType" />
+      </div>
       <div class="w-full flex justify-between items-center">
         <div class="flex flex-col">
           <p
-            class="text-[14px] text-(--color-text) dark:text-(--primary-white) font-semibold w-[200px] break-all"
+            class="text-[14px] text-(--color-text) dark:text-(--primary-white) font-semibold max-w-[200px] break-all"
           >
             {{ arrivalPoint.name }}
           </p>
-          <p class="text-[12px] text-(--primary-gray)">Адрес</p>
+          <p class="text-[12px] text-(--primary-gray)">{{ arrivalPoint.address }}</p>
         </div>
         <p class="text-[12px] text-(--color-text) dark:text-(--primary-white)">18:00</p>
       </div>
