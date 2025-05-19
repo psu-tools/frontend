@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { customFetch } from '~/utils/customFetch'
 
 export const useTripFormStore = defineStore('tripForm', () => {
   const tripName = ref<string>('')
@@ -100,12 +101,11 @@ export const useTripFormStore = defineStore('tripForm', () => {
 
     try {
       const config = useRuntimeConfig()
-      const data = await $fetch(
+      const data = await customFetch(
         `${config.public.apiHost}/${config.public.apiVersion}/routes-service/trips`,
         {
           method: 'POST',
           body: payload,
-          params: { userId: '4cef84ba-a98a-4089-b6d8-bf0416ad2208' },
         }
       )
       console.log(data)
