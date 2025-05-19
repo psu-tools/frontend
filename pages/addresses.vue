@@ -34,14 +34,12 @@ const handleCloseSelector = () => {
         <IcAdd />
       </button>
     </div>
-    <div v-if="isEditMode">
-      <EditAddressPopup
-        v-if="isEditMode"
-        :point="pointToEdit"
-        @close="handleCloseSelector"
-        @save="handleSaveEditedPoint"
-      />
-    </div>
+    <EditAddressPopup
+      v-if="isEditMode && pointToEdit"
+      :point="pointToEdit"
+      @close="handleCloseSelector"
+      @save="handleSaveEditedPoint"
+    />
     <div v-if="selectedPoints.length > 0" class="mt-4 space-y-2">
       <div
         v-for="(point, idx) in selectedPoints"
