@@ -62,7 +62,7 @@ onMounted(() => {
           {{ point.formatted || point.name }}
         </div>
         <div class="text-xs text-(--primary-gray)">
-          {{ point.address }}
+          {{ point.formatted }}
         </div>
       </div>
     </div>

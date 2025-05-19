@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import IcClose from '~/icons/IcClose.vue'
+import IcArrow from '~/icons/IcArrow.vue'
 
 const props = defineProps<{
   point: any
@@ -84,11 +85,25 @@ const savePoint = () => {
               <IcClose />
             </button>
           </div>
-          <div class="">
-            <div class="">Адрес</div>
-            <div class=""></div>
+          <div class="flex flex-col gap-[10px]">
+            <div
+              class="text-(--color-text-glay) dark:text-(--secondary-gray) text-xs font-semibold"
+            >
+              Адрес
+            </div>
+            <div class="flex justify-between">
+              <div
+                class="text-sm text-(--color-text) dark:text-(--primary-white) py-[18px] px-[15px] rounded-3xl bg-(--primary-white) dark:bg-(--secondary-black-bg) mb-[20px] flex justify-between items-center gap-[15px]"
+              >
+                <p>
+                  {{ props.point.formatted }}
+                </p>
+                <div class="">
+                  <IcArrow />
+                </div>
+              </div>
+            </div>
           </div>
-
           <button
             class="sticky w-full py-[15px] rounded-2xl text-(--primary-white) text-sm bg-(--primary-orange)"
             @click="savePoint"
@@ -96,13 +111,6 @@ const savePoint = () => {
             Добавить адрес
           </button>
         </div>
-        <!-- <PointSelector
-          :initial-value="initialValue"
-          :index="null"
-          @close="closeModal"
-          @selectPoint="selectPoint"
-          @toggle-expand="toggleExpand"
-        /> -->
       </div>
     </div>
   </Teleport>
