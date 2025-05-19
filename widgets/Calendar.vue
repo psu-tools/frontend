@@ -247,7 +247,7 @@ watch([isExpanded, currentDate], updateHeights)
         </span>
       </div>
 
-      <div class="mt-2 py-2 grid grid-cols-7 gap-3 text-center px-1">
+      <div class="mt-2 py-2 grid grid-cols-7 gap-3 text-center px-4">
         <span
           v-for="day in ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС']"
           :key="day"
@@ -259,7 +259,7 @@ watch([isExpanded, currentDate], updateHeights)
 
       <div
         ref="calendarBodyRef"
-        class="overflow-hidden transition-[max-height] duration-400 ease-in-out px-1"
+        class="overflow-hidden transition-[max-height] duration-400 ease-in-out px-4"
         :style="{ maxHeight: isExpanded ? expandedHeight + 'px' : collapsedHeight + 'px' }"
       >
         <div class="grid grid-cols-7 gap-3">
