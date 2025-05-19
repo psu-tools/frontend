@@ -7,15 +7,18 @@ import EditAddressPopup from '~/features/edit-address/EditAddressPopup.vue'
 const isSelectorOpen = ref(false)
 const selectedPoints = ref<any[]>([])
 const isEditMode = ref(false)
-
-const handleOpenEditor = () => {
-  isEditMode.value = false
-}
+const pointToEdit = ref<any | null>(null)
 
 const handleSelectPoint = (point: any) => {
+  pointToEdit.value = point
   isEditMode.value = true
   isSelectorOpen.value = false
-  // selectedPoints.value.push(point)
+}
+
+const handleSaveEditedPoint = (point: any) => {
+  selectedPoints.value.push(point)
+  isEditMode.value = false
+  pointToEdit.value = null
 }
 
 const handleCloseSelector = () => {
@@ -32,7 +35,12 @@ const handleCloseSelector = () => {
       </button>
     </div>
     <div v-if="isEditMode">
-      <EditAddressPopup @close="handleCloseSelector" @select="handleSelectPoint" />
+      <EditAddressPopup
+        v-if="isEditMode"
+        :point="pointToEdit"
+        @close="handleCloseSelector"
+        @save="handleSaveEditedPoint"
+      />
     </div>
     <div v-if="selectedPoints.length > 0" class="mt-4 space-y-2">
       <div
