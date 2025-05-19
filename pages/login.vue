@@ -43,8 +43,8 @@ onMounted(() => authStore.setAuthType('login'))
       </NuxtLink>
     </header>
     <main class="pb-16">
-      <div>
-        <IcApp class="mx-auto" />
+      <div class="flex flex-col items-center">
+        <IcApp />
         <h1 class="mt-5 text-(--color-text) dark:text-(--primary-white) font-bold text-xl">Вход</h1>
       </div>
 

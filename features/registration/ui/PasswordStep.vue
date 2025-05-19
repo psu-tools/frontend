@@ -39,7 +39,7 @@ watch(repeatPassword, () => {
       <IcBack @click="emit('prevStep')" />
     </header>
     <main>
-      <div>
+      <div class="flex flex-col items-center">
         <IcApp class="mx-auto" />
         <h1 class="mt-5 text-(--color-text) dark:text-(--primary-white) font-bold text-xl">
           Придумайте пароль
