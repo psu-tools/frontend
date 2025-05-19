@@ -32,7 +32,7 @@ defineProps<DestinationProps>()
           {{ index }}
         </span>
       </span>
-      <p class="ml-3">{{ stop?.name }}</p>
+      <p class="ml-3 text-nowrap truncate w-11/12">{{ stop?.name }}</p>
       <div
         v-if="index !== stopsList.length - 1"
         class="absolute bottom-[-60%] h-[1.5px] bg-[#eeeeee] dark:bg-(--third-black-bg) ml-[30px] w-[calc(100%-40px)]"

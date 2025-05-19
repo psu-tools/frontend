@@ -1,9 +1,15 @@
 <script setup lang="ts">
+import { useTripFormStore } from '~/stores/tripForm'
+import TransportType from '~/features/trip-form/ui/TransportType.vue'
+
+const tripFormStore = useTripFormStore()
+
 interface Stop {
   name: String
   latitude: Number
   longitude: Number
   stopTime: Number
+  address: string
 }
 
 interface RoutesBlockProps {
@@ -23,27 +29,33 @@ defineProps<RoutesBlockProps>()
         class="absolute bottom-[4px] left-1/2 transform -translate-x-1/2 bg-(--primary-white) w-[12px] h-[12px] rounded-full z-20"
       ></span>
     </div>
-    <div class="flex flex-col flex-auto gap-1.5">
-      <div class="w-full flex justify-between items-center">
-        <div class="flex flex-col">
+    <div class="flex flex-col flex-auto gap-1.5 w-full">
+      <div class="flex justify-between gap-2 items-center">
+        <div class="flex flex-col w-full">
           <p
-            class="text-[14px] text-(--color-text) dark:text-(--primary-white) font-semibold w-[200px] break-all"
+            class="text-[14px] text-(--color-text) dark:text-(--primary-white) font-semibold max-w-full"
           >
             {{ startingPoint.name }}
           </p>
-          <p class="text-[12px] text-(--primary-gray)">Адрес</p>
+          <p class="text-[12px] text-(--primary-gray) max-w-full">
+            {{ startingPoint.address }}
+          </p>
         </div>
         <p class="text-[12px] text-(--color-text) dark:text-(--primary-white)">18:00</p>
       </div>
-      <div class="text-[12px] text-(--color-text) dark:text-(--primary-white)">Тип транспорта</div>
-      <div class="w-full flex justify-between items-center">
-        <div class="flex flex-col">
+      <div class="text-[12px] text-(--color-text) dark:text-(--primary-white)">
+        <TransportType :type="tripFormStore.transportType" />
+      </div>
+      <div class="flex justify-between gap-2 items-center">
+        <div class="flex flex-col w-full">
           <p
-            class="text-[14px] text-(--color-text) dark:text-(--primary-white) font-semibold w-[200px] break-all"
+            class="text-[14px] text-(--color-text) dark:text-(--primary-white) font-semibold max-w-full"
           >
             {{ arrivalPoint.name }}
           </p>
-          <p class="text-[12px] text-(--primary-gray)">Адрес</p>
+          <p class="text-[12px] text-(--primary-gray) max-w-full">
+            {{ arrivalPoint.address }}
+          </p>
         </div>
         <p class="text-[12px] text-(--color-text) dark:text-(--primary-white)">18:00</p>
       </div>

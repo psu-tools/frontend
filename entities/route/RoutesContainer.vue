@@ -10,7 +10,9 @@ interface Stop {
   latitude: Number
   longitude: Number
   stopTime: Number
+  address: string
 }
+
 defineProps<Routes>()
 </script>
 <template>

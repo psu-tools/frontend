@@ -5,10 +5,12 @@ import IcNotifications from '~/icons/IcNotifications.vue'
 import { useTripsStore } from '@/stores/trips'
 
 const tripsStore = useTripsStore()
+
+onMounted(async () => await tripsStore.fetchTrips())
 </script>
 
 <template>
-  <div class="relative" :class="{ 'h-full': tripsStore.isLoading }">
+  <div class="relative pb-24" :class="{ 'h-full': tripsStore.isLoading }">
     <NuxtLink class="absolute top-1 right-2" to="/notifications">
       <IcNotifications />
     </NuxtLink>

@@ -18,7 +18,7 @@ const isModalOpen = ref(false)
       <h2 class="text-xs font-semibold dark:text-(--primary-white)">
         {{ tripsStore.formatDate(tripsStore.selectedDate.toISOString()) }}
       </h2>
-      <div v-if="tripsStore.filteredTrips.length !== 0">
+      <div v-if="tripsStore.filteredTrips.length !== 0" class="space-y-4">
         <TripCard
           v-for="trip in tripsStore.filteredTrips"
           :key="trip.id"

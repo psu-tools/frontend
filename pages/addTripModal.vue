@@ -12,6 +12,7 @@ import RouteDestination from '~/entities/route/RouteDestination.vue'
 import PrimaryYellowButton from '~/shaared/ui/buttons/PrimaryYellowButton.vue'
 import BottomSheetBottomBar from '~/shaared/ui/BottomSheetBottomBar.vue'
 import { useUserPointsStore } from '~/stores/userPoints'
+import AddTripFirstStep from '~/pages/addTripFirstStep.vue'
 
 const { fetchUserPoints } = useUserPointsStore()
 
@@ -42,6 +43,12 @@ const isDayMonthYearPopupOpen = ref(false)
 const isTimePopupOpen = ref(false)
 const isReminderPopupOpen = ref(false)
 const isStopTimePopupOpen = ref(false)
+
+const toggleDayMonthYearPopup = () =>
+  (isDayMonthYearPopupOpen.value = !isDayMonthYearPopupOpen.value)
+const toggleTimePopup = () => (isTimePopupOpen.value = !isTimePopupOpen.value)
+const toggleReminderPopup = () => (isReminderPopupOpen.value = !isReminderPopupOpen.value)
+const toggleStopTimePopup = () => (isStopTimePopupOpen.value = !isStopTimePopupOpen.value)
 
 const toggleExpand = () => (isExpanded.value = !isExpanded.value)
 
@@ -133,100 +140,16 @@ const onClickStopPoint = (index: number) => {
         @touchmove="onTouchMove"
         @touchend="onTouchEnd"
       >
-        <form
+        <AddTripFirstStep
           v-if="!isPointSelectorOpen && partOfForm === 1"
-          @submit.prevent
-          class="w-full flex justify-center flex-col"
-        >
-          <div
-            class="sticky z-10 left-0 top-0 bg-(--primary-white-bg) dark:bg-(--primary-black-bg)"
-          >
-            <div
-              @click="toggleExpand"
-              class="mx-auto my-2 h-1 w-8 rounded-full bg-(--medium-gray) dark:opacity-30 cursor-pointer mb-[20px]"
-            ></div>
-
-            <div class="mb-4">
-              <div class="flex justify-between items-center">
-                <input
-                  type="text"
-                  placeholder="Название поездки"
-                  class="text-2xl font-bold text-text dark:text-(--color-text-dark) outline-none caret-(--primary-orange)"
-                  v-model="tripFormStore.tripName"
-                />
-                <button @click="closeModal" class="cursor-pointer">
-                  <IcClose />
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <StopsInput @open-selector="openPointSelector" />
-          </div>
-
-          <div
-            v-if="tripFormStore.tripPoints.length > 2"
-            class="mt-[25px] space-y-[15px] text-(--color-text) dark:text-(--primary-white) text-sm"
-          >
-            <div
-              v-for="(_, i) in tripFormStore.tripPoints.length - 2"
-              class="transition-colors bg-(--primary-white) hover:bg-(--primary-white-hover) dark:bg-(--secondary-black-bg) dark:hover:bg-(--secondary-black-bg-hover) text-(--color-text) dark:text-(--primary-white) text-sm rounded-2xl flex justify-between items-center py-2.5 pl-[15px] pr-2.5 cursor-pointer"
-              @click="onClickStopPoint(i)"
-            >
-              <p>Остановка в точке {{ i + 1 }}</p>
-              <p
-                class="bg-(--secondary-white-bg) dark:bg-(--third-black-bg) py-2 px-2.5 rounded-xl"
-              >
-                {{ tripFormStore.tripPoints[i + 1].stopTime }} мин
-              </p>
-            </div>
-          </div>
-
-          <div class="mt-[25px] space-y-[15px]">
-            <div
-              class="transition-colors bg-(--primary-white) hover:bg-(--primary-white-hover) dark:bg-(--secondary-black-bg) dark:hover:bg-(--secondary-black-bg-hover) text-(--color-text) dark:text-(--primary-white) text-sm rounded-2xl flex justify-between items-center py-2.5 pl-[15px] pr-2.5 cursor-pointer"
-              @click="isDayMonthYearPopupOpen = true"
-            >
-              <p>Дата</p>
-              <p
-                class="bg-(--secondary-white-bg) dark:bg-(--third-black-bg) py-2 px-2.5 rounded-xl"
-              >
-                {{
-                  tripFormStore.tripDate?.toLocaleDateString('ru-RU', {
-                    day: 'numeric',
-                    month: 'short',
-                    year: 'numeric',
-                  })
-                }}
-              </p>
-            </div>
-
-            <div
-              class="transition-colors bg-(--primary-white) hover:bg-(--primary-white-hover) dark:bg-(--secondary-black-bg) dark:hover:bg-(--secondary-black-bg-hover) text-(--color-text) dark:text-(--primary-white) text-sm rounded-2xl flex justify-between items-center py-2.5 pl-[15px] pr-2.5 cursor-pointer"
-              @click="isTimePopupOpen = true"
-            >
-              <p>Время прибытия</p>
-              <p
-                class="bg-(--secondary-white-bg) dark:bg-(--third-black-bg) py-2 px-2.5 rounded-xl"
-              >
-                {{ tripFormStore?.arrivalTime }}
-              </p>
-            </div>
-
-            <div
-              class="transition-colors bg-(--primary-white) hover:bg-(--primary-white-hover) dark:bg-(--secondary-black-bg) dark:hover:bg-(--secondary-black-bg-hover) text-(--color-text) dark:text-(--primary-white) text-sm rounded-2xl flex justify-between items-center py-2.5 pl-[15px] pr-2.5 cursor-pointer"
-              @click="isReminderPopupOpen = true"
-            >
-              <p>Напоминание</p>
-              <p
-                class="bg-(--secondary-white-bg) dark:bg-(--third-black-bg) py-2 px-2.5 rounded-xl"
-              >
-                за {{ tripFormStore?.reminderTime }} минут
-              </p>
-            </div>
-          </div>
-        </form>
+          @toggle-expand="toggleExpand"
+          @close-modal="closeModal"
+          @on-click-stop-point="onClickStopPoint"
+          @open-point-selector="openPointSelector"
+          @toggle-day-month-year-popup="toggleDayMonthYearPopup"
+          @toggle-time-popup="toggleTimePopup"
+          @toggle-reminder-popup="toggleReminderPopup"
+        />
 
         <div v-if="partOfForm === 2" class="flex flex-col justify-center">
           <div
@@ -283,7 +206,7 @@ const onClickStopPoint = (index: number) => {
         >
           <PrimaryYellowButton
             :disabled="!tripFormStore.isFirstStepValid"
-            @click.stop="partOfForm = 2"
+            @click.stop="partOfForm === 2 ? tripFormStore.sendForm() : (partOfForm = 2)"
             >{{ partOfForm === 1 ? 'Продолжить' : 'Добавить поездку' }}</PrimaryYellowButton
           >
         </BottomSheetBottomBar>

@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { customFetch } from '~/utils/customFetch'
 
 export const useTripFormStore = defineStore('tripForm', () => {
   const tripName = ref<string>('')
@@ -32,6 +33,8 @@ export const useTripFormStore = defineStore('tripForm', () => {
 
   const transportType = ref<TransportType>('WALK')
 
+  const mergedDateTime = ref<string>()
+
   const setTripName = (name: string) => (tripName.value = name)
 
   const setTripDate = (date: Date) => (tripDate.value = date)
@@ -60,11 +63,57 @@ export const useTripFormStore = defineStore('tripForm', () => {
 
   const isFirstStepValid = computed(() => {
     return (
-      tripPoints.value.every(point => point.name.trim() !== '' && point.address.trim() !== '') &&
+      tripPoints.value.every(point => point.name?.trim() !== '' && point.address.trim() !== '') &&
       tripPoints.value.length >= 2 &&
-      tripPoints.value[1].name?.trim() !== ''
+      tripPoints.value[1].name?.trim() !== '' &&
+      tripName.value !== ''
     )
   })
+
+  const isFormValid = computed(() => {
+    return transportType && isFirstStepValid
+  })
+
+  const mergeDateTime = () => {
+    const year = tripDate.value.getFullYear()
+    const month = String(tripDate.value.getMonth() + 1).padStart(2, '0')
+    const day = String(tripDate.value.getDate()).padStart(2, '0')
+
+    const dateTimeLocal = `${year}-${month}-${day}T${arrivalTime.value}:00`
+
+    mergedDateTime.value = new Date(dateTimeLocal).toISOString()
+  }
+
+  const sendForm = async () => {
+    mergeDateTime()
+
+    const payload = JSON.parse(
+      JSON.stringify({
+        route: tripPoints.value,
+        transportType: [transportType.value],
+        overtime: reminderTime.value,
+        arrivalDateTime: mergedDateTime.value,
+        name: tripName.value,
+      })
+    )
+
+    console.log('payload:', JSON.stringify(payload, null, 2))
+
+    try {
+      const config = useRuntimeConfig()
+      const data = await customFetch(
+        `${config.public.apiHost}/${config.public.apiVersion}/routes-service/trips`,
+        {
+          method: 'POST',
+          body: payload,
+        }
+      )
+      console.log(data)
+    } catch (e) {
+      console.error(e)
+    } finally {
+    }
+  }
 
   return {
     tripName,
@@ -82,5 +131,7 @@ export const useTripFormStore = defineStore('tripForm', () => {
     addTripPoint,
     updateTripPoint,
     isFirstStepValid,
+    isFormValid,
+    sendForm,
   }
 })

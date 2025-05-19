@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { customFetch } from '@/utils/customFetch'
 
 export interface Point {
   name?: string
@@ -51,12 +52,9 @@ export const useTripsStore = defineStore('trips', () => {
     try {
       isLoading.value = true
       const config = useRuntimeConfig()
-      const response = await $fetch<GetTripsListResponse>(
+      const response = await customFetch<GetTripsListResponse>(
         `${config.public.apiHost}/${config.public.apiVersion}/routes-service/trips`,
-        {
-          method: 'GET',
-          query: { userId: '4cef84ba-a98a-4089-b6d8-bf0416ad2208' },
-        }
+        { method: 'GET' }
       )
       trips.value = response?.data || []
     } catch (error) {
@@ -70,12 +68,9 @@ export const useTripsStore = defineStore('trips', () => {
   const deleteTrip = async (tripId: string) => {
     try {
       const config = useRuntimeConfig()
-      const response = await $fetch<DeleteTripResponse>(
+      const response = await customFetch<DeleteTripResponse>(
         `${config.public.apiHost}/${config.public.apiVersion}/routes-service/trips/${tripId}`,
-        {
-          method: 'DELETE',
-          query: { userId: '4cef84ba-a98a-4089-b6d8-bf0416ad2208' },
-        }
+        { method: 'DELETE' }
       )
       console.log(response)
     } catch (error) {
