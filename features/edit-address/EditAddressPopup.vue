@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import IcClose from '~/icons/IcClose.vue'
+
 const props = defineProps<{
   point: any
 }>()
@@ -72,9 +74,14 @@ const savePoint = () => {
         @touchend="onTouchEnd"
       >
         <div>
-          <input v-model="editedName" placeholder="Название точки" />
-          <button @click="savePoint">Сохранить</button>
-          <button @click="$emit('close')">Отмена</button>
+          <div class="flex justify-between">
+            <input v-model="editedName" placeholder="Название точки" />
+            <button class="cursor-pointer relative z-10" @click="closeModal">
+              <IcClose />
+            </button>
+          </div>
+
+          <button @click="savePoint">Добавить адрес</button>
         </div>
         <!-- <PointSelector
           :initial-value="initialValue"

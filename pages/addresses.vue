@@ -31,9 +31,8 @@ const handleCloseSelector = () => {
   isSelectorOpen.value = false
 }
 
-onMounted(async () => {
-  await fetchUserPoints()
-  selectedPoints.value = favoritePoints.value || []
+onMounted(() => {
+  fetchUserPoints()
 })
 </script>
 

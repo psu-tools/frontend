@@ -20,7 +20,7 @@ export const useUserPointsStore = defineStore('userPoints', () => {
         { method: 'GET' }
       )
       favoritePoints.value = response?.data || []
-      console.log(favoritePoints.value)
+      console.log('fetching fav points', favoritePoints.value)
     } catch (error) {
       console.error('Data fetch error:', error)
       favoritePoints.value = []
