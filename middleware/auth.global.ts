@@ -5,7 +5,8 @@ export default defineNuxtRouteMiddleware((to, from) => {
     !refreshToken.value &&
     to.path !== '/welcome' &&
     to.path !== '/login' &&
-    to.path !== '/registration'
+    to.path !== '/registration' &&
+    to.path !== '/recovery'
   ) {
     return navigateTo('/welcome')
   }
