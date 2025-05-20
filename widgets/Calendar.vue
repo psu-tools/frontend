@@ -291,7 +291,9 @@ watch([isExpanded, currentDate], updateHeights)
         </div>
       </div>
     </div>
-    <div class="border-b rounded-b-[15px] border-b-(--medium-gray)">
+    <div
+      class="border-b rounded-b-[15px] border-b-(--medium-gray) dark:border-b-(--third-black-bg)"
+    >
       <div
         class="mx-auto my-2.5 h-1 w-8 rounded-full bg-(--medium-gray) dark:opacity-30 cursor-pointer"
         @click="toggleCalendar"
