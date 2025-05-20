@@ -15,7 +15,7 @@ export interface RefreshResponse {
 export function useAuth() {
   const config = useRuntimeConfig()
   const accessToken = useCookie<string | null>('access_token', { maxAge: 300 })
-  const refreshToken = useCookie<string | null>('refresh_token', { maxAge: 1800 })
+  const refreshToken = useCookie<string | null>('refresh_token', { maxAge: 2592000 })
 
   const isAuthenticated = computed(() => !!accessToken.value)
 
