@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import IcClose from '~/icons/IcClose.vue'
-import IcArrow from '~/icons/IcArrow.vue'
 import IcTrash from '~/icons/IcTrash.vue'
 
 const props = defineProps<{
@@ -98,7 +97,6 @@ const onTouchEnd = () => {
               <p>
                 {{ point.address || '—' }}
               </p>
-              <IcArrow />
             </div>
           </div>
 
