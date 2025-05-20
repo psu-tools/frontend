@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import PrimaryOrangeButton from '~/shaared/ui/buttons/PrimaryOrangeButton.vue'
+
 import IcClose from '~/icons/IcClose.vue'
 import IcTrash from '~/icons/IcTrash.vue'
 
@@ -114,13 +116,12 @@ onMounted(() => {
             <div
               class="w-[200%] left-[-50%] h-[1px] bg-(--color-line-gray) dark:bg-(--third-black-bg) relative mb-[10px]"
             ></div>
-
-            <button
-              class="w-full py-[15px] mb-[10px] rounded-2xl text-(--primary-white) text-sm bg-(--primary-orange) cursor-pointer"
+            <PrimaryOrangeButton
+              class="py-[15px] rounded-(--radius-2xl) mb-[10px]"
               @click="$emit('edit')"
             >
               Редактировать
-            </button>
+            </PrimaryOrangeButton>
           </div>
         </div>
       </div>

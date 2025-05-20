@@ -1,8 +1,9 @@
 <script setup lang="ts">
+import PrimaryOrangeButton from '~/shaared/ui/buttons/PrimaryOrangeButton.vue'
+import SelectPointModal from '~/features/trip-form/ui/SelectPointModal.vue'
+
 import IcClose from '~/icons/IcClose.vue'
 import IcArrow from '~/icons/IcArrow.vue'
-
-import SelectPointModal from '../trip-form/ui/SelectPointModal.vue'
 
 const props = defineProps<{
   point: any
@@ -175,12 +176,12 @@ onMounted(() => {
             <div
               class="w-[200%] left-[-50%] h-[1px] bg-(--color-line-gray) dark:bg-(--third-black-bg) relative mb-[10px]"
             ></div>
-            <button
-              class="w-full py-[15px] mb-[10px] cursor-pointer rounded-2xl text-(--primary-white) text-sm bg-(--primary-orange)"
+            <PrimaryOrangeButton
+              class="py-[15px] rounded-(--radius-2xl) mb-[10px]"
               @click="savePoint"
             >
               {{ props.mode === 'edit' ? 'Сохранить изменения' : 'Добавить адрес' }}
-            </button>
+            </PrimaryOrangeButton>
           </div>
         </div>
       </div>
