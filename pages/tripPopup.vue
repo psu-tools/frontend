@@ -154,7 +154,15 @@ watch(
             <RouteDestination :stops-list="stopsList" />
           </div>
           <div>
-            <RoutesContainer :stops-list="stopsList" />
+            <RoutesContainer
+              v-if="modalStore.tripData"
+              :stops-list="modalStore.tripData?.route"
+              :transport-type="modalStore.tripData?.transportType"
+              :routes-time="modalStore.tripData?.routeTimes"
+              :departure-time="modalStore.tripData?.departureDateTime"
+              :arrival-time="modalStore.tripData?.arrivalDateTime"
+              :display-routes-time="modalStore.tripData?.displayRouteTimes"
+            />
           </div>
         </div>
       </div>
