@@ -60,10 +60,30 @@ export const useUserPointsStore = defineStore('userPoints', () => {
     }
   }
 
+  const deleteUserPoint = async (tripId: string) => {
+    try {
+      const config = useRuntimeConfig()
+      const response = await customFetch(
+        `${config.public.apiHost}/${config.public.apiVersion}/trips/${tripId}`,
+        {
+          method: 'DELETE',
+        }
+      )
+
+      console.log('Поездка удалена:', response)
+
+      await fetchUserPoints()
+    } catch (error) {
+      console.error('Ошибка при удалении точки:', error)
+      throw error
+    }
+  }
+
   return {
     isLoading,
     favoritePoints,
     fetchUserPoints,
     addUserPoint,
+    deleteUserPoint,
   }
 })

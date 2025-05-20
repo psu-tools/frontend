@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import IcClose from '~/icons/IcClose.vue'
 import IcArrow from '~/icons/IcArrow.vue'
+import IcTrash from '~/icons/IcTrash.vue'
 
 const props = defineProps<{
   point: any
@@ -71,13 +72,18 @@ const onTouchEnd = () => {
         ></div>
 
         <div class="relative">
-          <div class="flex justify-between mb-[25px] gap-[15px]">
+          <div class="flex justify-between mb-[25px] gap-[10px]">
             <div class="text-xl text-(--medium-gray) dark:text-(--color-text-dark) font-bold">
               {{ point.name || 'Нет названия' }}
             </div>
-            <button class="cursor-pointer relative z-10" @click="closeModal">
-              <IcClose />
-            </button>
+            <div class="flex items-center gap-[15px]">
+              <button class="cursor-pointer relative z-10" @click="$emit('delete')">
+                <IcTrash />
+              </button>
+              <button class="cursor-pointer relative z-10" @click="closeModal">
+                <IcClose />
+              </button>
+            </div>
           </div>
 
           <div class="flex flex-col gap-[10px]">
@@ -111,13 +117,6 @@ const onTouchEnd = () => {
             >
               Редактировать
             </button>
-            <!-- 
-            <button
-              class="w-full py-[15px] mb-2 rounded-2xl text-(--primary-white) text-sm bg-red-500"
-              @click="$emit('delete')"
-            >
-              Удалить
-            </button> -->
           </div>
         </div>
       </div>

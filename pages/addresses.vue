@@ -12,7 +12,7 @@ import IcAdd from '~/icons/IcAdd.vue'
 import { useUserPointsStore } from '~/stores/userPoints'
 
 const userPointsStore = useUserPointsStore()
-const { fetchUserPoints, addUserPoint, removeUserPoint } = userPointsStore
+const { fetchUserPoints, addUserPoint, deleteUserPoint } = userPointsStore
 const { favoritePoints, isLoading } = storeToRefs(userPointsStore)
 
 const isSelectorOpen = ref(false)
@@ -22,26 +22,28 @@ const selectedPointForActions = ref<any | null>(null)
 const isPointActionsOpen = ref(false)
 
 const handleSelectPoint = (point: any) => {
-  console.log('Selected point:', point)
   selectedPointForActions.value = point
   isPointActionsOpen.value = true
+  console.log(point)
 }
+
 const handleEditPoint = () => {
   pointToEdit.value = selectedPointForActions.value
   isEditMode.value = true
   isPointActionsOpen.value = false
 }
 
-const handleDeletePoint = async () => {
-  if (!selectedPointForActions.value?.id) return
+const handleDeletePoint = async (point: any) => {
+  if (!point?.id) {
+    console.warn('Нет ID точки для удаления')
+    return
+  }
+
   try {
-    await removeUserPoint(selectedPointForActions.value.id)
-    await fetchUserPoints()
-  } catch (e) {
-    console.error('Ошибка при удалении точки:', e)
-  } finally {
+    await deleteUserPoint(point.id)
     isPointActionsOpen.value = false
-    selectedPointForActions.value = null
+  } catch (error) {
+    console.error('Не удалось удалить точку', error)
   }
 }
 
@@ -77,6 +79,7 @@ onMounted(() => {
       </button>
     </div>
 
+    <!-- Popup редактирования -->
     <EditAddressPopup
       v-if="isEditMode && pointToEdit"
       :point="pointToEdit"
@@ -84,14 +87,16 @@ onMounted(() => {
       @save="handleSaveEditedPoint"
     />
 
+    <!-- Модалка действий с точкой -->
     <PointActionsModal
       v-if="isPointActionsOpen && selectedPointForActions"
       :point="selectedPointForActions"
       @close="isPointActionsOpen = false"
       @edit="handleEditPoint"
-      @delete="handleDeletePoint"
+      @delete="() => handleDeletePoint(selectedPointForActions)"
     />
 
+    <!-- Состояние загрузки -->
     <div v-if="isLoading" class="text-center py-8 text-gray-500">Загрузка...</div>
 
     <div v-else-if="favoritePoints?.length" class="mt-4 space-y-2">
@@ -102,10 +107,10 @@ onMounted(() => {
         class="cursor-pointer py-[13px] px-[20px] bg-(--primary-white) rounded-2xl dark:bg-(--secondary-black-bg) flex flex-col"
       >
         <div class="text-sm text-(--color-text) dark:text-(--primary-white) font-semibold">
-          {{ point.formatted || point.name }}
+          {{ point.formatted || point.name || 'Без названия' }}
         </div>
         <div class="text-xs text-(--primary-gray)">
-          {{ point.formatted }}
+          {{ point.address || point.formatted || '—' }}
         </div>
       </div>
     </div>
