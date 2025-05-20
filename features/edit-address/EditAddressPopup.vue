@@ -4,6 +4,7 @@ import IcArrow from '~/icons/IcArrow.vue'
 
 const props = defineProps<{
   point: any
+  mode: 'edit' | 'add'
 }>()
 
 const isExpanded = ref(false)
@@ -22,7 +23,7 @@ const closeModal = () => {
   }, 300)
 }
 
-const editedName = ref(props.point?.formatted || '')
+const editedName = ref(props.point?.formatted || props.point?.name || '')
 
 const toggleExpand = () => (isExpanded.value = !isExpanded.value)
 
@@ -54,6 +55,14 @@ const savePoint = () => {
     formatted: editedName.value,
   })
 }
+
+watch(
+  () => props.point,
+  newPoint => {
+    editedName.value = newPoint?.formatted || newPoint?.name || ''
+  },
+  { immediate: true }
+)
 </script>
 <template>
   <Teleport to="#modal-container">
@@ -119,7 +128,7 @@ const savePoint = () => {
               class="w-full py-[15px] rounded-2xl text-(--primary-white) text-sm bg-(--primary-orange)"
               @click="savePoint"
             >
-              Добавить адрес
+              {{ props.mode === 'edit' ? 'Сохранить изменения' : 'Добавить адрес' }}
             </button>
           </div>
         </div>

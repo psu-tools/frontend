@@ -65,6 +65,11 @@ const handleCloseSelector = () => {
   pointToEdit.value = null
 }
 
+const openNewPointSelector = () => {
+  isSelectorOpen.value = true
+  isEditMode.value = false
+  pointToEdit.value = null
+}
 onMounted(() => {
   fetchUserPoints()
 })
@@ -74,7 +79,7 @@ onMounted(() => {
   <div class="pb-24">
     <div class="flex items-center justify-between">
       <PagesTitle title="Мои адреса" />
-      <button class="py-[14px] mb-[10px] cursor-pointer" @click="isSelectorOpen = true">
+      <button class="py-[14px] mb-[10px] cursor-pointer" @click="openNewPointSelector">
         <IcAdd />
       </button>
     </div>
@@ -83,6 +88,7 @@ onMounted(() => {
     <EditAddressPopup
       v-if="isEditMode && pointToEdit"
       :point="pointToEdit"
+      mode="edit"
       @close="handleCloseSelector"
       @save="handleSaveEditedPoint"
     />
