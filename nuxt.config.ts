@@ -26,6 +26,7 @@ export default defineNuxtConfig({
       apiHost: 'https://api.psu-tools.ru',
       apiVersion: 'v1',
       authHost: 'https://id.psu-tools.ru',
+      apiType: 'users-service',
       yandexApiKey: '8cec5f84-dac6-4b09-ae85-de5fb8372081',
       openCageApiKey: 'f5b0ea03c1d946dca4128c2297e83360',
       ymapsApiKey: '78f83394-77d7-4d0a-8c42-f0235b364b21',
