@@ -1,5 +1,12 @@
 <script setup lang="ts">
 import TripPopup from '~/pages/tripPopup.vue'
+import AddTripModal from '~/pages/addTripModal.vue'
+import YandexMaps from '~/pages/yandexMaps.vue'
+import { useTripsStore } from '~/stores/trips'
+
+const tripsStore = useTripsStore()
+
+onMounted(async () => await tripsStore.fetchTrips())
 </script>
 
 <template>
@@ -24,6 +31,8 @@ import TripPopup from '~/pages/tripPopup.vue'
       <NuxtLayout class="sm:rounded-3xl sm:shadow-2xl sm:mx-auto overflow-hidden">
         <NuxtPage />
         <TripPopup />
+        <AddTripModal />
+        <YandexMaps />
       </NuxtLayout>
     </div>
   </div>
