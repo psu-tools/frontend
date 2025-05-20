@@ -15,16 +15,16 @@ defineProps<{
 
 <template>
   <div class="bg-(--primary-white-bg) dark:bg-(--secondary-black-bg) rounded-(--radius-2xl)">
-    <div class="flex flex-col items-start">
-      <div class="w-full">
-        <NuxtLink v-for="(item, index) in items" :key="index" :to="item.path ?? ''" class="w-full">
-          <ProfileRow
-            :icon-component="item.iconComponent"
-            :title="item.title"
-            :is-last="index === items.length - 1"
-          />
-        </NuxtLink>
-      </div>
+    <div class="flex flex-col items-start w-full">
+      <NuxtLink v-for="(item, index) in items" :key="index" :to="item.path ?? ''" class="w-full">
+        <ProfileRow
+          :icon-component="item.iconComponent"
+          :title="item.title"
+          :is-last="index === items.length - 1"
+          :is-first="index === 0"
+          :is-only="items.length === 1"
+        />
+      </NuxtLink>
     </div>
   </div>
 </template>
