@@ -1,27 +1,20 @@
 <script setup lang="ts">
-import { useTripFormStore } from '~/stores/tripForm'
 import TransportType from '~/features/trip-form/ui/TransportType.vue'
 
-const tripFormStore = useTripFormStore()
-
-interface Stop {
-  name: String
-  latitude: Number
-  longitude: Number
-  stopTime: Number
-  address: string
-}
-
 interface RoutesBlockProps {
-  startingPoint: Stop
-  arrivalPoint: Stop
+  startingPoint: Point
+  arrivalPoint: Point
+  transportType: TransportType[]
+  displayTime: string
+  departureStopTime: string
+  arrivalStopTime: string
 }
 
 defineProps<RoutesBlockProps>()
 </script>
 <template>
   <div class="w-full flex items-stretch gap-[15px]">
-    <div class="bg-(--primary-orange) w-[20px] rounded-full z-10 mt-[10px] relative">
+    <div class="left-0.25 bg-(--primary-orange) w-[20px] rounded-full z-10 mt-[10px] relative">
       <span
         class="absolute top-[4px] left-1/2 transform -translate-x-1/2 bg-(--primary-white) w-[12px] h-[12px] rounded-full z-20"
       ></span>
@@ -41,10 +34,15 @@ defineProps<RoutesBlockProps>()
             {{ startingPoint.address }}
           </p>
         </div>
-        <p class="text-[12px] text-(--color-text) dark:text-(--primary-white)">18:00</p>
+        <p class="text-[12px] text-(--color-text) dark:text-(--primary-white)">
+          {{ departureStopTime }}
+        </p>
       </div>
-      <div class="text-[12px] text-(--color-text) dark:text-(--primary-white)">
-        <TransportType :type="tripFormStore.transportType" />
+      <div
+        class="text-[12px] my-2.5 text-(--color-text) dark:text-(--primary-white) flex gap-[7px] items-center"
+      >
+        <TransportType v-for="transport in transportType" :type="transport" />
+        <span>{{ displayTime }}</span>
       </div>
       <div class="flex justify-between gap-2 items-center">
         <div class="flex flex-col w-full">
@@ -57,7 +55,9 @@ defineProps<RoutesBlockProps>()
             {{ arrivalPoint.address }}
           </p>
         </div>
-        <p class="text-[12px] text-(--color-text) dark:text-(--primary-white)">18:00</p>
+        <p class="text-[12px] text-(--color-text) dark:text-(--primary-white)">
+          {{ arrivalStopTime }}
+        </p>
       </div>
     </div>
   </div>
