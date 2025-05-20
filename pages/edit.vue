@@ -5,6 +5,8 @@ import EditProfileField from '~/features/edit-profile/EditProfileField.vue'
 
 import { useUserInfo } from '~/stores/userInfo'
 
+const { getUserInfo } = useUserInfo()
+
 import IcUser from '~/icons/IcUser.vue'
 
 interface UserInfo {
@@ -18,7 +20,6 @@ interface UserInfo {
   userPreferences: object
 }
 
-const { getUserInfo } = useUserInfo()
 const userInfo = reactive<Partial<UserInfo>>({})
 
 const isModalOpen = ref(false)
