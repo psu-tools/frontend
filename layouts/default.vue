@@ -6,6 +6,7 @@ const route = useRoute()
 
 <template>
   <div
+    id="modal-container"
     class="relative dark:bg-(--primary-black-bg) sm:w-96 h-dvh sm:h-[700px] flex flex-col overflow-hidden"
     :class="[route.meta.bodyClass || 'bg-(--primary-white)']"
   >
