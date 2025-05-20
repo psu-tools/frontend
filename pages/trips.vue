@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import Calendar from '~/widgets/Calendar.vue'
 import { useTripsStore } from '~/stores/trips'
+import { useAddTripModalStore } from '~/stores/addTripModal'
 import TripCard from '~/entities/trip/TripCard.vue'
 import IcPlus from '~/icons/IcPlus.vue'
-import AddTripModal from './addTripModal.vue'
 
 const tripsStore = useTripsStore()
-const isModalOpen = ref(false)
+const addTripModalStore = useAddTripModalStore()
+
+const openModal = () => addTripModalStore.openModal()
 </script>
 
 <template>
@@ -31,12 +33,10 @@ const isModalOpen = ref(false)
 
       <button
         class="bg-(--primary-yellow) p-4 rounded-[15px] shadow-lg absolute bottom-28 right-5 overflow-hidden group transition cursor-pointer"
-        @click="isModalOpen = true"
+        @click="openModal"
       >
         <IcPlus />
       </button>
-
-      <AddTripModal v-if="isModalOpen" @close="isModalOpen = false" />
     </div>
   </div>
 </template>
