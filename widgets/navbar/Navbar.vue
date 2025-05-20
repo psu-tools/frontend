@@ -7,6 +7,18 @@ import { useRoute } from 'vue-router'
 const route = useRoute()
 
 const isActive = path => route.path === path
+const isProfileActive = computed(() =>
+  [
+    '/profile',
+    '/addresses',
+    '/informing',
+    '/language',
+    '/theme',
+    '/time',
+    '/about',
+    '/support',
+  ].includes(route.path)
+)
 </script>
 <template>
   <div
@@ -19,7 +31,7 @@ const isActive = path => route.path === path
       <Routes :is-active="isActive('/trips')" />
     </NuxtLink>
     <NuxtLink to="/profile">
-      <Profile :is-active="isActive('/profile')" />
+      <Profile :is-active="isProfileActive" />
     </NuxtLink>
   </div>
 </template>
