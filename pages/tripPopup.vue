@@ -33,14 +33,6 @@ const closeModal = () => {
   }, 300)
 }
 
-watchEffect(() => {
-  if (modalStore.isOpen) {
-    setTimeout(() => {
-      isVisible.value = true
-    }, 10)
-  }
-})
-
 const onTouchStart = (event: TouchEvent) => {
   touchStartY.value = event.touches[0].clientY
 }
@@ -83,95 +75,102 @@ const confirmDelete = () => {
   closeModal()
 }
 
-onMounted(() => {
-  watch(
-    () => modalStore?.tripData,
-    newTripData => {
-      if (newTripData?.id) {
-        currentId.value = newTripData.id
-      }
-    },
-    { immediate: true }
-  )
-})
+watch(
+  () => modalStore.isOpen,
+  isOpen => {
+    if (isOpen) {
+      setTimeout(() => {
+        isVisible.value = true
+      }, 10)
+    } else {
+      isVisible.value = false
+    }
+  }
+)
+
+watch(
+  () => modalStore?.tripData,
+  newTripData => {
+    if (newTripData?.id) {
+      currentId.value = newTripData.id
+    }
+  },
+  { immediate: true }
+)
 </script>
 <template>
-  <Teleport to="#modal-container">
+  <div
+    v-if="modalStore.isOpen"
+    class="absolute inset-0 z-50 flex justify-center items-end bg-black/20 transition-opacity duration-300"
+    :class="{ 'opacity-100': isVisible, 'opacity-0': !isVisible }"
+    @click="closeModal"
+  >
     <div
-      v-if="modalStore.isOpen"
-      class="absolute inset-0 z-50 flex justify-center items-end bg-black/20 transition-opacity duration-300"
-      :class="{ 'opacity-100': isVisible, 'opacity-0': !isVisible }"
-      @click="closeModal"
+      class="w-full bg-(--primary-white-bg) dark:bg-(--primary-black-bg) items-end rounded-t-3xl px-5 transition-all duration-300 touch-none overflow-auto scrollbar-hide pb-[120px]"
+      :class="{
+        'h-6/10 translate-y-0': !isExpanded,
+        'h-9/10 translate-y-0': isExpanded,
+        'translate-y-full': !isVisible,
+      }"
+      @click.stop
+      ref="popup"
+      @touchstart="onTouchStart"
+      @touchmove="onTouchMove"
+      @touchend="onTouchEnd"
     >
-      <div
-        class="w-full bg-(--primary-white-bg) dark:bg-(--primary-black-bg) items-end rounded-t-3xl px-5 transition-all duration-300 touch-none overflow-auto scrollbar-hide pb-[120px]"
-        :class="{
-          'h-6/10 translate-y-0': !isExpanded,
-          'h-9/10 translate-y-0': isExpanded,
-          'translate-y-full': !isVisible,
-        }"
-        @click.stop
-        ref="popup"
-        @touchstart="onTouchStart"
-        @touchmove="onTouchMove"
-        @touchend="onTouchEnd"
-      >
-        <div class="w-full flex justify-center flex-col">
+      <div class="w-full flex justify-center flex-col">
+        <div class="sticky left-0 top-0 z-40 bg-(--primary-white-bg) dark:bg-(--primary-black-bg)">
           <div
-            class="sticky left-0 top-0 z-40 bg-(--primary-white-bg) dark:bg-(--primary-black-bg)"
-          >
-            <div
-              @click="toggleExpand"
-              class="mx-auto my-2 h-1 w-8 rounded-full bg-(--medium-gray) dark:opacity-30 cursor-pointer mb-[20px]"
-            ></div>
-            <div class="mb-[15px]">
-              <div class="flex justify-between items-center">
-                <h2 class="text-2xl font-bold text-text dark:text-(--primary-white)">
-                  {{ modalStore?.tripData?.name }}
-                </h2>
-                <div class="flex gap-3">
-                  <button @click="openDeleteConfirm" class="cursor-pointer">
-                    <IcTrash />
-                  </button>
-                  <button @click="closeModal" class="cursor-pointer">
-                    <IcClose />
-                  </button>
-                </div>
+            @click="toggleExpand"
+            class="mx-auto my-2 h-1 w-8 rounded-full bg-(--medium-gray) dark:opacity-30 cursor-pointer mb-[20px]"
+          ></div>
+          <div class="mb-[15px]">
+            <div class="flex justify-between items-center">
+              <h2 class="text-2xl font-bold text-text dark:text-(--primary-white)">
+                {{ modalStore?.tripData?.name }}
+              </h2>
+              <div class="flex gap-3">
+                <button @click="openDeleteConfirm" class="cursor-pointer">
+                  <IcTrash />
+                </button>
+                <button @click="closeModal" class="cursor-pointer">
+                  <IcClose />
+                </button>
               </div>
-              <p class="text-(--primary-gray) font-semibold">
-                {{ tripsStore.formatDate(modalStore?.tripData?.arrivalDateTime) }}
-              </p>
             </div>
+            <p class="text-(--primary-gray) font-semibold">
+              {{ tripsStore.formatDate(modalStore?.tripData?.arrivalDateTime) }}
+            </p>
           </div>
-          <div class="flex flex-col gap-[25px] mt-[25px]">
-            <div
-              class="bg-(--primary-white) dark:bg-(--secondary-black-bg) rounded-2xl pt-[16px] pl-[15px] pr-[5px] pb-[16px]"
-            >
-              <RouteDestination :stops-list="stopsList" />
-            </div>
-            <div>
-              <RoutesContainer :stops-list="stopsList" />
-            </div>
+        </div>
+        <div class="flex flex-col gap-[25px] mt-[25px]">
+          <div
+            class="bg-(--primary-white) dark:bg-(--secondary-black-bg) rounded-2xl pt-[16px] pl-[15px] pr-[5px] pb-[16px]"
+          >
+            <RouteDestination :stops-list="stopsList" />
+          </div>
+          <div>
+            <RoutesContainer :stops-list="stopsList" />
           </div>
         </div>
       </div>
-      <div
-        class="absolute bottom-0 left-0 bg-(--primary-white-bg)/40 dark:bg-(--primary-black-bg)/40 backdrop-blur-2xl w-full border-t border-(--medium-gray) dark:border-(--third-black-bg) pt-2.5 pb-10 px-5 flex justify-center items-center"
-      >
-        <PrimaryYellowButton> Редактировать поездку </PrimaryYellowButton>
-      </div>
-      <BaseConfirmModal
-        :is-open="isDeleteConfirmOpen"
-        title="Удалить поездку"
-        description="Вы уверены, что хотите удалить эту поездку?"
-        :icon="IcWarn"
-        :confirmText="`Удалить`"
-        :cancelText="`Отмена`"
-        :onConfirm="confirmDelete"
-        :onCancel="closeDeleteConfirm"
-      />
     </div>
-  </Teleport>
+    <div
+      class="absolute bottom-0 left-0 bg-(--primary-white-bg)/40 dark:bg-(--primary-black-bg)/40 backdrop-blur-2xl w-full border-t border-(--medium-gray) dark:border-(--third-black-bg) pt-2.5 pb-10 px-5 flex justify-center items-center"
+    >
+      <PrimaryYellowButton> Редактировать поездку </PrimaryYellowButton>
+    </div>
+    <BaseConfirmModal
+      :is-open="isDeleteConfirmOpen"
+      title="Удалить поездку"
+      description="Вы уверены, что хотите удалить эту поездку?"
+      :icon="IcWarn"
+      :confirmText="`Удалить`"
+      :cancelText="`Отмена`"
+      :onConfirm="confirmDelete"
+      :onCancel="closeDeleteConfirm"
+    />
+  </div>
 </template>
 <style scoped>
 .scrollbar-hide::-webkit-scrollbar {
