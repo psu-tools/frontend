@@ -111,7 +111,7 @@ onMounted(() => {
               class="w-[200%] left-[-50%] h-[1px] bg-(--color-line-gray) dark:bg-(--third-black-bg) relative mb-[10px]"
             ></div>
             <PrimaryOrangeButton
-              class="py-[15px] rounded-(--radius-2xl) mb-[10px]"
+              class="py-[15px] rounded-(--radius-2xl) mb-[20px]"
               @click="(emit('save', localValue), closeModal())"
             >
               Сохранить
