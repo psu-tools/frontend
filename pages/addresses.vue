@@ -5,10 +5,16 @@ import EditAddressPopup from '~/features/edit-address/EditAddressPopup.vue'
 
 import IcAdd from '~/icons/IcAdd.vue'
 
+// import { useUserPointsStore } from '~/stores/userPoints'
+
+// const userPointsStore = useUserPointsStore()
+// const { fetchUserPoints, favoritePoints, isLoading, addUserPoint } = userPointsStore
 import { useUserPointsStore } from '~/stores/userPoints'
+import { storeToRefs } from 'pinia'
 
 const userPointsStore = useUserPointsStore()
-const { fetchUserPoints, favoritePoints, isLoading, addUserPoint } = userPointsStore
+const { fetchUserPoints, addUserPoint } = userPointsStore
+const { favoritePoints, isLoading } = storeToRefs(userPointsStore)
 
 const isSelectorOpen = ref(false)
 const selectedPoints = ref<any[]>([])

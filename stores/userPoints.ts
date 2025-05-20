@@ -9,7 +9,7 @@ interface GetPointsListResponse {
 
 export const useUserPointsStore = defineStore('userPoints', () => {
   const isLoading = ref(false)
-  const favoritePoints = ref<Point[]>()
+  const favoritePoints = ref<Point[]>([])
 
   const fetchUserPoints = async () => {
     try {
