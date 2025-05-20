@@ -1,33 +1,48 @@
 <script setup lang="ts">
 import PagesTitle from '~/widgets/profilePages/PagesTitle.vue'
-import { useRoute, useRouter } from 'vue-router'
+import PrimaryOrangeButton from '~/shaared/ui/buttons/PrimaryOrangeButton.vue'
+
 import { useUserInfo } from '~/stores/userInfo'
 
+import IcEmailEdit from '~/icons/IcEmailEdit.vue'
+
 const route = useRoute()
-const router = useRouter()
 
 const { getUserInfo } = useUserInfo()
 
 const userInfo = reactive(await getUserInfo())
 
-// Определяем, что редактируем
 const field = computed(() => route.params.field as keyof typeof userInfo)
 const fieldLabelMap: Record<string, string> = {
   phoneNumber: 'Телефон',
   email: 'Email',
   telegramId: 'Telegram',
 }
-const editingLabel = computed(() => fieldLabelMap[field.value] || 'Редактирование')
-const editingValue = computed(() => String(userInfo[field.value] ?? ''))
 
-const handleSave = (newValue: string) => {
-  userInfo[field.value] = newValue
-  router.back()
-}
+const editingValue = computed(() => {
+  const value = userInfo[field.value]
+  return typeof value === 'undefined' || value === null ? 'Не указано' : String(value)
+})
+
+const editingLabel = computed(() => fieldLabelMap[field.value] || 'Редактирование')
 </script>
 
 <template>
   <div class="pb-24">
     <PagesTitle :link="'/edit'" :title="editingLabel" />
+    <IcEmailEdit />
+    <p
+      class="text-center mb-[10px] text-sm text-(--color-text) dark:text-(--primary-white) font-semibold"
+    >
+      {{ editingValue }}
+    </p>
+    <p class="text-center mb-[35px] text-[16px] text-(--primary-gray-icon)">
+      Ваш {{ editingLabel.toLocaleLowerCase() }}, привязанный к Flow
+    </p>
+    <div class="w-full flex items-center justify-center">
+      <PrimaryOrangeButton class="py-[10.5px] px=[30px] max-w-[200px] rounded-(--radius-xl)">
+        Изменить {{ editingLabel.toLocaleLowerCase() }}
+      </PrimaryOrangeButton>
+    </div>
   </div>
 </template>

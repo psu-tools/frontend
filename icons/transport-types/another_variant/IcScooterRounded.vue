@@ -10,7 +10,7 @@
       width="10"
       height="8"
     >
-      <path d="M5 6.5H15V13.5H5V6.5Z" fill="white" />
+      <path d="M5 6.5H15V13.5H5V6.5Z" class="fill-(--primary-white) dark:fill-(--third-black-bg)" />
     </mask>
     <g mask="url(#mask0_1619_14046)">
       <path

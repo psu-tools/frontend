@@ -31,5 +31,3 @@ defineProps({ isActive: Boolean })
     </p>
   </div>
 </template>
-
-<style scoped></style>
