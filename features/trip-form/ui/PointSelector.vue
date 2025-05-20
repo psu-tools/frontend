@@ -188,7 +188,10 @@ const escapeRegExp = (string: string) => {
         @selectMapsPoint="selectPoint"
       />
 
-      <div class="mt-[25px]" v-if="favoritePoints && favoritePoints.length > 0">
+      <div
+        class="mt-[25px]"
+        v-if="favoritePoints && favoritePoints.length > 0 && !props.showMyAddresses"
+      >
         <h2 class="font-semibold text-(--color-text) dark:text-(--primary-white) mb-1">
           Мои адреса
         </h2>

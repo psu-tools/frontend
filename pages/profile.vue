@@ -57,7 +57,7 @@ const confirmLogout = () => {
       <ProfileBlock :items="block3" />
       <button
         @click="openLogoutConfirm"
-        class="w-full bg-(--primary-white-bg) dark:bg-(--secondary-black-bg) rounded-2xl py-[15px] text-(--primary-red) text-center font-semibold cursor-pointer"
+        class="w-full bg-(--primary-white-bg) dark:bg-(--secondary-black-bg) hover:bg-(--primary-white-hover) dark:hover:bg-(--secondary-black-bg-hover) rounded-2xl py-[15px] text-(--primary-red) text-center font-semibold cursor-pointer"
       >
         Выйти
       </button>
