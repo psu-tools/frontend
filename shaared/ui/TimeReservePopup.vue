@@ -23,7 +23,7 @@ const handleDone = () => {
     @click.self="emit('close')"
   >
     <div
-      class="w-full max-w-md mx-auto bg-white dark:bg-(--secondary-black-bg) rounded-2xl px-[30px] py-5 shadow-xl"
+      class="w-full max-w-md mx-auto bg-(--primary-white) dark:bg-(--secondary-black-bg) rounded-2xl px-[30px] py-5 shadow-xl"
     >
       <h2 class="text-left text-sm font-semibold pb-8 dark:text-(--primary-white)">
         Запас времени
@@ -32,7 +32,7 @@ const handleDone = () => {
       <TimeReservePicker :initial-percentage="selected" @select="handleSelect" />
 
       <button
-        class="w-full mt-5 py-3 rounded-xl text-white text-sm font-semibold bg-(--primary-orange) cursor-pointer"
+        class="w-full mt-5 py-3 rounded-xl text-(--primary-white) text-sm font-semibold bg-(--primary-orange) cursor-pointer"
         @click="handleDone"
       >
         Готово

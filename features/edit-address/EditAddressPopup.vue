@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
 import IcClose from '~/icons/IcClose.vue'
 import IcArrow from '~/icons/IcArrow.vue'
 

@@ -103,7 +103,6 @@ onMounted(() => {
       </button>
     </div>
 
-    <!-- Popup редактирования -->
     <EditAddressPopup
       v-if="isEditPopupOpen && pointToEdit"
       :point="pointToEdit"
@@ -112,7 +111,6 @@ onMounted(() => {
       @save="handleSaveEditedPoint"
     />
 
-    <!-- Модалка действий с точкой -->
     <PointActionsModal
       v-if="isPointActionsOpen && selectedPointForActions"
       :point="selectedPointForActions"
@@ -121,8 +119,7 @@ onMounted(() => {
       @delete="() => handleDeletePoint(selectedPointForActions)"
     />
 
-    <!-- Состояние загрузки -->
-    <div v-if="isLoading" class="text-center py-8 text-gray-500">Загрузка...</div>
+    <div v-if="isLoading" class="text-center py-8 text-(--primary-gray)">Загрузка...</div>
 
     <div v-else-if="favoritePoints?.length" class="mt-4 space-y-2">
       <div
@@ -140,7 +137,7 @@ onMounted(() => {
       </div>
     </div>
 
-    <div v-else class="text-center py-8 text-gray-400">Нет добавленных адресов</div>
+    <div v-else class="text-center py-8 text-(--primary-gray)">Нет добавленных адресов</div>
 
     <SelectPointModal v-if="isSelectorOpen" @close="closeSelector" @select="handleSelectPoint" />
   </div>
