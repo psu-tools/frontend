@@ -1,36 +1,54 @@
 <script setup lang="ts">
+import { ref, onMounted } from 'vue'
+import { storeToRefs } from 'pinia'
+
 import PagesTitle from '~/widgets/profilePages/PagesTitle.vue'
 import SelectPointModal from '~/features/trip-form/ui/SelectPointModal.vue'
 import EditAddressPopup from '~/features/edit-address/EditAddressPopup.vue'
+import PointActionsModal from '~/features/edit-address/PointActionsModal.vue'
 
 import IcAdd from '~/icons/IcAdd.vue'
 
-// import { useUserPointsStore } from '~/stores/userPoints'
-
-// const userPointsStore = useUserPointsStore()
-// const { fetchUserPoints, favoritePoints, isLoading, addUserPoint } = userPointsStore
 import { useUserPointsStore } from '~/stores/userPoints'
-import { storeToRefs } from 'pinia'
 
 const userPointsStore = useUserPointsStore()
-const { fetchUserPoints, addUserPoint } = userPointsStore
+const { fetchUserPoints, addUserPoint, removeUserPoint } = userPointsStore
 const { favoritePoints, isLoading } = storeToRefs(userPointsStore)
 
 const isSelectorOpen = ref(false)
-const selectedPoints = ref<any[]>([])
 const isEditMode = ref(false)
 const pointToEdit = ref<any | null>(null)
+const selectedPointForActions = ref<any | null>(null)
+const isPointActionsOpen = ref(false)
 
 const handleSelectPoint = (point: any) => {
-  pointToEdit.value = point
+  console.log('Selected point:', point)
+  selectedPointForActions.value = point
+  isPointActionsOpen.value = true
+}
+const handleEditPoint = () => {
+  pointToEdit.value = selectedPointForActions.value
   isEditMode.value = true
-  isSelectorOpen.value = false
+  isPointActionsOpen.value = false
+}
+
+const handleDeletePoint = async () => {
+  if (!selectedPointForActions.value?.id) return
+  try {
+    await removeUserPoint(selectedPointForActions.value.id)
+    await fetchUserPoints()
+  } catch (e) {
+    console.error('Ошибка при удалении точки:', e)
+  } finally {
+    isPointActionsOpen.value = false
+    selectedPointForActions.value = null
+  }
 }
 
 const handleSaveEditedPoint = async (point: any) => {
   try {
     await addUserPoint(point)
-    selectedPoints.value.push(point)
+    await fetchUserPoints()
   } catch (error) {
     console.error('Не удалось сохранить точку', error)
   } finally {
@@ -58,12 +76,22 @@ onMounted(() => {
         <IcAdd />
       </button>
     </div>
+
     <EditAddressPopup
       v-if="isEditMode && pointToEdit"
       :point="pointToEdit"
       @close="handleCloseSelector"
       @save="handleSaveEditedPoint"
     />
+
+    <PointActionsModal
+      v-if="isPointActionsOpen && selectedPointForActions"
+      :point="selectedPointForActions"
+      @close="isPointActionsOpen = false"
+      @edit="handleEditPoint"
+      @delete="handleDeletePoint"
+    />
+
     <div v-if="isLoading" class="text-center py-8 text-gray-500">Загрузка...</div>
 
     <div v-else-if="favoritePoints?.length" class="mt-4 space-y-2">
