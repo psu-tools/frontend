@@ -18,9 +18,7 @@ interface BlockItem {
   path: string
 }
 
-const block1: BlockItem[] = [
-  { iconComponent: IcLocation, title: 'Мои адреса', path: '/addresses' },
-]
+const block1: BlockItem[] = [{ iconComponent: IcLocation, title: 'Мои адреса', path: '/addresses' }]
 
 const block2: BlockItem[] = [
   { iconComponent: IcNotifications, title: 'Уведомления', path: '/informing' },
@@ -31,7 +29,7 @@ const block2: BlockItem[] = [
 
 const block3: BlockItem[] = [
   { iconComponent: IcAbout, title: 'О приложении', path: '/about' },
-  { iconComponent: IcSupport, title: 'Поддержка и обратная', path: '/support' },
+  { iconComponent: IcSupport, title: 'Поддержка и обратная связь', path: '/support' },
 ]
 const isLogoutConfirmOpen = ref(false)
 

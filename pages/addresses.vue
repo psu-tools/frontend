@@ -126,7 +126,7 @@ onMounted(() => {
         v-for="(point, idx) in favoritePoints"
         :key="point.id || idx"
         @click="handleSelectPoint(point)"
-        class="cursor-pointer py-[13px] px-[20px] bg-(--primary-white) rounded-2xl dark:bg-(--secondary-black-bg) flex flex-col"
+        class="hover:bg-(--primary-white-hover) dark:hover:bg-(--secondary-black-bg-hover) cursor-pointer py-[13px] px-[20px] bg-(--primary-white) rounded-2xl dark:bg-(--secondary-black-bg) flex flex-col"
       >
         <div class="text-sm text-(--color-text) dark:text-(--primary-white) font-semibold">
           {{ point.formatted || point.name || 'Без названия' }}
