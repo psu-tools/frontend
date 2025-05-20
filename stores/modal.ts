@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 
 export const useModalStore = defineStore('modal', () => {
   const isOpen = ref(false)
-  const tripData = ref<Trip | null>(null)
+  const tripData = ref<Trip>()
 
   const openModal = (trip: Trip) => {
     tripData.value = trip
@@ -10,7 +10,6 @@ export const useModalStore = defineStore('modal', () => {
   }
 
   const closeModal = () => {
-    tripData.value = null
     isOpen.value = false
   }
 
