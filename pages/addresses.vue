@@ -70,9 +70,19 @@ const handleSaveEditedPoint = async (point: any) => {
   }
 }
 
-const handleCloseSelector = () => {
+const closeEditPopup = () => {
   isEditPopupOpen.value = false
   pointToEdit.value = null
+  popupMode.value = 'edit'
+}
+
+const closeSelector = () => {
+  isSelectorOpen.value = false
+}
+
+const closePointActions = () => {
+  isPointActionsOpen.value = false
+  selectedPointForActions.value = null
 }
 
 const openNewPointSelector = () => {
@@ -98,7 +108,7 @@ onMounted(() => {
       v-if="isEditPopupOpen && pointToEdit"
       :point="pointToEdit"
       :mode="popupMode"
-      @close="handleCloseSelector"
+      @close="closeEditPopup"
       @save="handleSaveEditedPoint"
     />
 
@@ -106,7 +116,7 @@ onMounted(() => {
     <PointActionsModal
       v-if="isPointActionsOpen && selectedPointForActions"
       :point="selectedPointForActions"
-      @close="isPointActionsOpen = false"
+      @close="closePointActions"
       @edit="handleEditPoint"
       @delete="() => handleDeletePoint(selectedPointForActions)"
     />
@@ -132,10 +142,6 @@ onMounted(() => {
 
     <div v-else class="text-center py-8 text-gray-400">Нет добавленных адресов</div>
 
-    <SelectPointModal
-      v-if="isSelectorOpen"
-      @close="handleCloseSelector"
-      @select="handleSelectPoint"
-    />
+    <SelectPointModal v-if="isSelectorOpen" @close="closeSelector" @select="handleSelectPoint" />
   </div>
 </template>
