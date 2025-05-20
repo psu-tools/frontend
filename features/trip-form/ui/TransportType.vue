@@ -5,7 +5,7 @@ import IcScooterRounded from '~/icons/transport-types/another_variant/IcScooterR
 import IcPublicRounded from '~/icons/transport-types/another_variant/IcPublicRounded.vue'
 import IcCarRounded from '~/icons/transport-types/another_variant/IcCarRounded.vue'
 import IcBicycleRounded from '~/icons/transport-types/another_variant/IcBicycleRounded.vue'
-defineProps<{ type: 'WALK' | 'TAXI' | 'SCOOTER' | 'PUBLIC_TRANSPORT' | 'CAR' | 'BICYCLE' }>()
+defineProps<{ type: TransportType }>()
 </script>
 
 <template>

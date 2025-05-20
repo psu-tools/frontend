@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import IcClose from '~/icons/IcClose.vue'
-import StopsInput from '~/features/trip-form/ui/StopsInput.vue'
 import PointSelector, { type SuggestionPoint } from '~/features/trip-form/ui/PointSelector.vue'
 import { useAddTripModalStore } from '~/stores/addTripModal'
 import { useTripFormStore } from '~/stores/tripForm'
@@ -21,21 +19,19 @@ const tripFormStore = useTripFormStore()
 
 const emit = defineEmits(['close'])
 
-const isExpanded = ref(addTripModalStore.isModalExpanded)
-const isVisible = ref(addTripModalStore.isModalOpen)
+const isExpanded = ref(true)
+const isVisible = ref(false)
 
 const partOfForm = ref<1 | 2>(1)
 
 const touchStartY = ref(0)
 const touchMoveY = ref(0)
 
-const showModal = () => (isVisible.value = true)
-
 const closeModal = () => {
-  isExpanded.value = false
+  isExpanded.value = true
   isVisible.value = false
   setTimeout(() => {
-    emit('close')
+    addTripModalStore.closeModal()
   }, 300)
 }
 
@@ -71,9 +67,6 @@ const onTouchEnd = () => {
 }
 
 onMounted(() => {
-  setTimeout(() => {
-    showModal()
-  }, 10)
   fetchUserPoints()
 })
 
@@ -118,130 +111,152 @@ const onClickStopPoint = (index: number) => {
   currentStopPointIndex.value = index
   isStopTimePopupOpen.value = true
 }
+
+watch(
+  () => addTripModalStore.isModalOpen,
+  async isOpen => {
+    if (isOpen) {
+      isVisible.value = false
+      await nextTick()
+      requestAnimationFrame(() => {
+        isVisible.value = true
+      })
+    } else {
+      isVisible.value = false
+    }
+  }
+)
 </script>
 
 <template>
-  <Teleport to="#modal-container">
+  <div
+    v-show="addTripModalStore.isModalOpen"
+    class="absolute inset-0 z-20 flex justify-center items-end bg-black/20 transition-opacity duration-300"
+    :class="{ 'opacity-100': isVisible, 'opacity-0': !isVisible }"
+    @click.self="closeModal"
+  >
     <div
-      class="absolute inset-0 z-20 flex justify-center items-end bg-black/20 transition-opacity duration-300"
-      :class="{ 'opacity-100': isVisible, 'opacity-0': !isVisible }"
-      @click.self="closeModal"
+      class="w-full bg-(--primary-white-bg) dark:bg-(--primary-black-bg) items-end rounded-t-3xl px-5 transition-all duration-300 touch-none overflow-auto scrollbar-hide pb-[120px]"
+      :class="{
+        'h-6/10 translate-y-0': !isExpanded,
+        'h-9/10 translate-y-0': isExpanded,
+        'translate-y-full': !isVisible,
+      }"
+      @click.stop
+      ref="popup"
+      @touchstart="onTouchStart"
+      @touchmove="onTouchMove"
+      @touchend="onTouchEnd"
     >
-      <div
-        class="w-full bg-(--primary-white-bg) dark:bg-(--primary-black-bg) items-end rounded-t-3xl px-5 transition-all duration-300 touch-none overflow-auto scrollbar-hide pb-[120px]"
-        :class="{
-          'h-6/10 translate-y-0': !isExpanded,
-          'h-9/10 translate-y-0': isExpanded,
-          'translate-y-full': !isVisible,
-        }"
-        @click.stop
-        ref="popup"
-        @touchstart="onTouchStart"
-        @touchmove="onTouchMove"
-        @touchend="onTouchEnd"
-      >
-        <AddTripFirstStep
-          v-if="!isPointSelectorOpen && partOfForm === 1"
-          @toggle-expand="toggleExpand"
-          @close-modal="closeModal"
-          @on-click-stop-point="onClickStopPoint"
-          @open-point-selector="openPointSelector"
-          @toggle-day-month-year-popup="toggleDayMonthYearPopup"
-          @toggle-time-popup="toggleTimePopup"
-          @toggle-reminder-popup="toggleReminderPopup"
-        />
+      <AddTripFirstStep
+        v-if="!isPointSelectorOpen && partOfForm === 1"
+        @toggle-expand="toggleExpand"
+        @close-modal="closeModal"
+        @on-click-stop-point="onClickStopPoint"
+        @open-point-selector="openPointSelector"
+        @toggle-day-month-year-popup="toggleDayMonthYearPopup"
+        @toggle-time-popup="toggleTimePopup"
+        @toggle-reminder-popup="toggleReminderPopup"
+      />
 
-        <div v-if="partOfForm === 2" class="flex flex-col justify-center">
+      <div v-if="partOfForm === 2" class="flex flex-col justify-center">
+        <div
+          class="sticky left-0 top-0 z-40 bg-(--primary-white-bg) dark:bg-(--primary-black-bg) pb-[15px]"
+        >
           <div
-            class="sticky left-0 top-0 z-40 bg-(--primary-white-bg) dark:bg-(--primary-black-bg) pb-[15px]"
-          >
-            <div
-              @click="toggleExpand"
-              class="mx-auto my-2 h-1 w-8 rounded-full bg-(--medium-gray) dark:opacity-30 cursor-pointer mb-[20px]"
-            ></div>
+            @click="toggleExpand"
+            class="mx-auto my-2 h-1 w-8 rounded-full bg-(--medium-gray) dark:opacity-30 cursor-pointer mb-[20px]"
+          ></div>
 
-            <div>
-              <div class="flex items-center gap-2.5">
-                <button @click.stop="partOfForm = 1" class="cursor-pointer">
-                  <IcBack />
-                </button>
-                <input
-                  type="text"
-                  placeholder="Название поездки"
-                  class="text-2xl font-bold text-text dark:text-(--color-text-dark) outline-none caret-(--primary-orange)"
-                  v-model="tripFormStore.tripName"
-                />
-              </div>
+          <div>
+            <div class="flex items-center gap-2.5">
+              <button @click.stop="partOfForm = 1" class="cursor-pointer">
+                <IcBack />
+              </button>
+              <input
+                type="text"
+                placeholder="Название поездки"
+                class="text-2xl font-bold text-(--color-text) dark:text-(--primary-white) outline-none caret-(--primary-orange)"
+                v-model="tripFormStore.tripName"
+              />
             </div>
           </div>
-          <TransportSelect class="mt-2.5" />
-          <div
-            class="bg-(--primary-white) dark:bg-(--secondary-black-bg) rounded-2xl mt-[25px] py-[16px] pl-[15px] pr-[5px]"
-          >
-            <RouteDestination :stops-list="tripFormStore.tripPoints" />
-          </div>
-          <RoutesContainer class="mt-[25px]" :stops-list="tripFormStore.tripPoints" />
         </div>
-
-        <PointSelector
-          v-if="isPointSelectorOpen"
-          :initialValue="
-            activePointIndex !== null ? tripFormStore.tripPoints[activePointIndex].name : ''
-          "
-          :index="activePointIndex"
-          @close="closePointSelector"
-          @selectPoint="updateStop"
-          @toggle-expand="toggleExpand"
+        <TransportSelect class="mt-2.5" />
+        <div
+          class="bg-(--primary-white) dark:bg-(--secondary-black-bg) rounded-2xl mt-[25px] py-[16px] pl-[15px] pr-[5px]"
+        >
+          <RouteDestination :stops-list="tripFormStore.tripPoints" />
+        </div>
+        <RoutesContainer
+          class="mt-[25px]"
+          :stops-list="tripFormStore.tripPoints"
+          :transport-type="[tripFormStore.transportType]"
+          :display-routes-time="[]"
+          :arrival-time="'2025-05-20T14:56:35Z'"
+          :departure-time="'2025-05-20T16:56:35Z'"
+          :routes-time="['X минут']"
         />
       </div>
-      <Transition name="fade">
-        <BottomSheetBottomBar
-          v-if="
-            !isPointSelectorOpen &&
-            !isStopTimePopupOpen &&
-            !isDayMonthYearPopupOpen &&
-            !isReminderPopupOpen &&
-            !isTimePopupOpen
-          "
-        >
-          <PrimaryYellowButton
-            :disabled="!tripFormStore.isFirstStepValid"
-            @click.stop="partOfForm === 2 ? tripFormStore.sendForm() : (partOfForm = 2)"
-            >{{ partOfForm === 1 ? 'Продолжить' : 'Добавить поездку' }}</PrimaryYellowButton
-          >
-        </BottomSheetBottomBar>
-      </Transition>
 
-      <Transition name="fade">
-        <PickerSelectPopup
-          v-if="isStopTimePopupOpen"
-          type="stopTime"
-          :stop-time-index="currentStopPointIndex + 1"
-          @close="isStopTimePopupOpen = false"
-        />
-      </Transition>
-
-      <Transition name="fade">
-        <PickerSelectPopup
-          v-if="isDayMonthYearPopupOpen"
-          @close="isDayMonthYearPopupOpen = false"
-          type="date"
-        />
-      </Transition>
-
-      <Transition name="fade">
-        <PickerSelectPopup v-if="isTimePopupOpen" @close="isTimePopupOpen = false" type="time" />
-      </Transition>
-
-      <Transition name="fade">
-        <PickerSelectPopup
-          v-if="isReminderPopupOpen"
-          @close="isReminderPopupOpen = false"
-          type="reminder"
-        />
-      </Transition>
+      <PointSelector
+        v-if="isPointSelectorOpen"
+        :initialValue="
+          activePointIndex !== null ? tripFormStore.tripPoints[activePointIndex].name : ''
+        "
+        :index="activePointIndex"
+        @close="closePointSelector"
+        @selectPoint="updateStop"
+        @toggle-expand="toggleExpand"
+      />
     </div>
-  </Teleport>
+    <Transition name="fade">
+      <BottomSheetBottomBar
+        v-if="
+          !isPointSelectorOpen &&
+          !isStopTimePopupOpen &&
+          !isDayMonthYearPopupOpen &&
+          !isReminderPopupOpen &&
+          !isTimePopupOpen
+        "
+      >
+        <PrimaryYellowButton
+          :disabled="!tripFormStore.isFirstStepValid"
+          @click.stop="partOfForm === 2 ? tripFormStore.sendForm() : (partOfForm = 2)"
+          >{{ partOfForm === 1 ? 'Продолжить' : 'Добавить поездку' }}</PrimaryYellowButton
+        >
+      </BottomSheetBottomBar>
+    </Transition>
+
+    <Transition name="fade">
+      <PickerSelectPopup
+        v-if="isStopTimePopupOpen"
+        type="stopTime"
+        :stop-time-index="currentStopPointIndex + 1"
+        @close="isStopTimePopupOpen = false"
+      />
+    </Transition>
+
+    <Transition name="fade">
+      <PickerSelectPopup
+        v-if="isDayMonthYearPopupOpen"
+        @close="isDayMonthYearPopupOpen = false"
+        type="date"
+      />
+    </Transition>
+
+    <Transition name="fade">
+      <PickerSelectPopup v-if="isTimePopupOpen" @close="isTimePopupOpen = false" type="time" />
+    </Transition>
+
+    <Transition name="fade">
+      <PickerSelectPopup
+        v-if="isReminderPopupOpen"
+        @close="isReminderPopupOpen = false"
+        type="reminder"
+      />
+    </Transition>
+  </div>
 </template>
 
 <style scoped>

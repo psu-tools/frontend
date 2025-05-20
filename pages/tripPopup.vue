@@ -77,11 +77,13 @@ const confirmDelete = () => {
 
 watch(
   () => modalStore.isOpen,
-  isOpen => {
+  async isOpen => {
     if (isOpen) {
-      setTimeout(() => {
+      isVisible.value = false
+      await nextTick()
+      requestAnimationFrame(() => {
         isVisible.value = true
-      }, 10)
+      })
     } else {
       isVisible.value = false
     }
@@ -100,26 +102,28 @@ watch(
 </script>
 <template>
   <div
-    v-if="modalStore.isOpen"
+    v-show="modalStore.isOpen"
     class="absolute inset-0 z-50 flex justify-center items-end bg-black/20 transition-opacity duration-300"
     :class="{ 'opacity-100': isVisible, 'opacity-0': !isVisible }"
     @click="closeModal"
   >
     <div
-      class="w-full bg-(--primary-white-bg) dark:bg-(--primary-black-bg) items-end rounded-t-3xl px-5 transition-all duration-300 touch-none overflow-auto scrollbar-hide pb-[120px]"
+      class="w-full bg-(--primary-white-bg) dark:bg-(--primary-black-bg) items-end rounded-t-3xl px-5 transition-all duration-300 overflow-auto scrollbar-hide pb-[120px]"
       :class="{
         'h-6/10 translate-y-0': !isExpanded,
         'h-9/10 translate-y-0': isExpanded,
         'translate-y-full': !isVisible,
       }"
-      @click.stop
-      ref="popup"
-      @touchstart="onTouchStart"
-      @touchmove="onTouchMove"
-      @touchend="onTouchEnd"
     >
       <div class="w-full flex justify-center flex-col">
-        <div class="sticky left-0 top-0 z-40 bg-(--primary-white-bg) dark:bg-(--primary-black-bg)">
+        <div
+          @click.stop
+          ref="popup"
+          @touchstart="onTouchStart"
+          @touchmove="onTouchMove"
+          @touchend="onTouchEnd"
+          class="sticky left-0 top-0 z-40 bg-(--primary-white-bg) dark:bg-(--primary-black-bg) touch-none"
+        >
           <div
             @click="toggleExpand"
             class="mx-auto my-2 h-1 w-8 rounded-full bg-(--medium-gray) dark:opacity-30 cursor-pointer mb-[20px]"
@@ -150,7 +154,15 @@ watch(
             <RouteDestination :stops-list="stopsList" />
           </div>
           <div>
-            <RoutesContainer :stops-list="stopsList" />
+            <RoutesContainer
+              v-if="modalStore.tripData"
+              :stops-list="modalStore.tripData?.route"
+              :transport-type="modalStore.tripData?.transportType"
+              :routes-time="modalStore.tripData?.routeTimes"
+              :departure-time="modalStore.tripData?.departureDateTime"
+              :arrival-time="modalStore.tripData?.arrivalDateTime"
+              :display-routes-time="modalStore.tripData?.displayRouteTimes"
+            />
           </div>
         </div>
       </div>

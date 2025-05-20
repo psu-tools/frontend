@@ -1,4 +1,5 @@
 import { useCookie } from '#app'
+import { useTripsStore } from '~/stores/trips'
 
 export interface LoginResponse {
   access_token: string
@@ -13,6 +14,7 @@ export interface RefreshResponse {
 }
 
 export function useAuth() {
+  const tripsStore = useTripsStore()
   const config = useRuntimeConfig()
   const accessToken = useCookie<string | null>('access_token', { maxAge: 300 })
   const refreshToken = useCookie<string | null>('refresh_token', { maxAge: 2592000 })
@@ -40,6 +42,7 @@ export function useAuth() {
       console.log('success login')
       console.log(response)
       navigateTo('/')
+      await tripsStore.fetchTrips()
       return true
     } catch (e) {
       console.error('Auth err:', e)

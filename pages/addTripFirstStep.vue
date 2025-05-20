@@ -36,7 +36,7 @@ const handlerPointSelector = (index: number): void => {
           <input
             type="text"
             placeholder="Название поездки"
-            class="text-2xl font-bold text-text dark:text-(--color-text-dark) outline-none caret-(--primary-orange)"
+            class="text-2xl font-bold text-(--color-text) dark:text-(--primary-white) outline-none caret-(--primary-orange)"
             v-model="tripFormStore.tripName"
           />
           <button @click="emit('closeModal')" class="cursor-pointer">

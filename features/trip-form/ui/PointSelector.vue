@@ -3,9 +3,10 @@ import IcClose from '~/icons/IcClose.vue'
 import IcCompas from '~/icons/IcCompas.vue'
 import AddressItem from '~/shaared/ui/AddressItem.vue'
 import { useUserPointsStore } from '~/stores/userPoints'
-import YandexMaps from '~/pages/yandexMaps.vue'
+import { useYandexMapsModalStore } from '~/stores/yandexMaps'
 
 const { favoritePoints } = useUserPointsStore()
+const yandexMapsModalStore = useYandexMapsModalStore()
 const config = useRuntimeConfig()
 
 const apiKey = config.public.openCageApiKey
@@ -107,6 +108,17 @@ const highlightMatch = (text: string, query: string) => {
 const escapeRegExp = (string: string) => {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 }
+
+const openYandexMaps = () => yandexMapsModalStore.openModal()
+
+watch(
+  () => yandexMapsModalStore.selectedPoint,
+  () => {
+    if (yandexMapsModalStore.selectedPoint) {
+      selectPoint(yandexMapsModalStore.selectedPoint, 'user')
+    }
+  }
+)
 </script>
 
 <template>
@@ -124,7 +136,7 @@ const escapeRegExp = (string: string) => {
           <input
             type="text"
             :placeholder="index === 0 ? 'Откуда поедем?' : 'Куда поедем?'"
-            class="text-sm text-text dark:text-(--color-text-gray) outline-none caret-(--primary-orange) py-[18px] px-[15px] rounded-2xl bg-(--primary-white) dark:bg-(--secondary-black-bg) w-full"
+            class="text-sm text-(--color-black) dark:text-(--primary-white) outline-none caret-(--primary-orange) py-[18px] px-[15px] rounded-2xl bg-(--primary-white) dark:bg-(--secondary-black-bg) w-full"
             v-model="inputValue"
           />
           <button @click="closeSelector" class="cursor-pointer">
@@ -140,7 +152,7 @@ const escapeRegExp = (string: string) => {
           v-for="(suggestion, index) in suggestions"
           :key="index"
           @click="selectPoint(suggestion, 'api')"
-          class="relative -mx-5 px-5 py-2.5 flex items-center gap-2.5 cursor-pointer hover:bg-(--primary-white-hover)"
+          class="relative -mx-5 px-5 py-2.5 flex items-center gap-2.5 cursor-pointer hover:bg-(--primary-white-hover) dark:hover:bg-(--secondary-black-bg)"
         >
           <div class="w-full">
             <AddressItem
@@ -177,16 +189,19 @@ const escapeRegExp = (string: string) => {
         @click="isYandexMapsOpen = !isYandexMapsOpen"
       >
         <IcCompas class="h-[13px] w-[13px]" />
-        <p class="text-sm font-semibold text-(--dark-gray) dark:text-(--secondary-gray)">
+        <p
+          class="text-sm font-semibold text-(--dark-gray) dark:text-(--secondary-gray)"
+          @click="openYandexMaps"
+        >
           Указать на карте
         </p>
       </div>
 
-      <YandexMaps
-        v-if="isYandexMapsOpen"
-        @closeYandexMaps="isYandexMapsOpen = !isYandexMapsOpen"
-        @selectMapsPoint="selectPoint"
-      />
+      <!--      <YandexMaps-->
+      <!--        v-if="isYandexMapsOpen"-->
+      <!--        @closeYandexMaps="isYandexMapsOpen = !isYandexMapsOpen"-->
+      <!--        @selectMapsPoint="selectPoint"-->
+      <!--      />-->
 
       <div class="mt-[25px]" v-if="favoritePoints && favoritePoints.length > 0">
         <h2 class="font-semibold text-(--color-text) dark:text-(--primary-white) mb-1">
@@ -195,7 +210,7 @@ const escapeRegExp = (string: string) => {
         <div
           v-for="(point, index) in favoritePoints"
           :key="index"
-          class="relative -mx-5 px-5 py-2.5 flex items-center gap-2.5 cursor-pointer hover:bg-(--primary-white-hover)"
+          class="relative -mx-5 px-5 py-2.5 flex items-center gap-2.5 cursor-pointer hover:bg-(--primary-white-hover) dark:hover:bg-(--secondary-black-bg)"
           @click="selectPoint(point, 'user')"
         >
           <div class="w-full">

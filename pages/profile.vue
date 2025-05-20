@@ -11,6 +11,7 @@ import IcTime from '~/icons/profile-widgets/IcTime.vue'
 import IcAbout from '~/icons/profile-widgets/IcAbout.vue'
 import IcSupport from '~/icons/profile-widgets/IcSupport.vue'
 import IcLogout from '~/icons/IcLogout.vue'
+import { useAuth } from '~/composables/useAuth'
 
 const block1: object = [{ iconComponent: IcLocation, title: 'Мои адреса' }]
 
@@ -38,6 +39,8 @@ const closeLogoutConfirm = () => {
 
 const confirmLogout = () => {
   closeLogoutConfirm()
+  const { logout } = useAuth()
+  logout()
   console.log('User logged out')
 }
 </script>
