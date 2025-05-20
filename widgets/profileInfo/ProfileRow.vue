@@ -5,13 +5,24 @@ import IcArrow from '~/icons/IcArrow.vue'
 defineProps<{
   iconComponent: Component
   title: string
+  isFirst: boolean
   isLast: boolean
+  isOnly: boolean
 }>()
 </script>
 
 <template>
   <div
-    class="relative bg-[--primary-white-bg] dark:bg-[--secondary-black-bg] rounded-[--radius-2xl] py-[10px] pl-[10px] pr-[20px]"
+    :class="[
+      'relative bg-(--primary-white-bg) dark:bg-(--secondary-black-bg) hover:bg-(--primary-white-hover) dark:hover:bg-(--secondary-black-bg-hover) py-[10px] pl-[10px] pr-[20px]',
+      isOnly
+        ? 'rounded-(--radius-2xl)'
+        : isFirst
+          ? 'rounded-t-(--radius-2xl)'
+          : isLast
+            ? 'rounded-b-(--radius-2xl)'
+            : 'rounded-none',
+    ]"
   >
     <div
       class="flex items-center gap-[10px]"

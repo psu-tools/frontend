@@ -123,7 +123,7 @@ watch(
 
 <template>
   <div
-    class="relative z-50 inset-0 flex flex-col bg-(--primary-white-bg) dark:bg-(--primary-black-bg)"
+    class="overflow-x-hidden relative z-50 inset-0 flex flex-col bg-(--primary-white-bg) dark:bg-(--primary-black-bg)"
   >
     <div class="sticky z-10 left-0 top-0 bg-(--primary-white-bg) dark:bg-(--primary-black-bg)">
       <div
@@ -203,7 +203,10 @@ watch(
       <!--        @selectMapsPoint="selectPoint"-->
       <!--      />-->
 
-      <div class="mt-[25px]" v-if="favoritePoints && favoritePoints.length > 0">
+      <div
+        class="mt-[25px]"
+        v-if="favoritePoints && favoritePoints.length > 0 && !props.showMyAddresses"
+      >
         <h2 class="font-semibold text-(--color-text) dark:text-(--primary-white) mb-1">
           Мои адреса
         </h2>

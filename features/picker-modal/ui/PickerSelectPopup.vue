@@ -35,7 +35,7 @@ const handleSelectedStopTime = (time: number) => {
       @click.self="emit('close')"
     >
       <div
-        class="w-full max-w-md mx-auto bg-white dark:bg-(--secondary-black-bg) rounded-2xl px-[30px] py-5 shadow-xl"
+        class="w-full max-w-md mx-auto bg-(--primary-white-bg) dark:bg-(--secondary-black-bg) rounded-2xl px-[30px] py-5"
       >
         <h2 class="text-left text-sm font-semibold pb-8 dark:text-(--primary-white)">
           Время прибытия
@@ -66,7 +66,7 @@ const handleSelectedStopTime = (time: number) => {
         />
 
         <button
-          class="w-full mt-5 py-3 rounded-xl text-white text-sm font-semibold bg-(--primary-orange) cursor-pointer"
+          class="w-full mt-5 py-3 rounded-xl text-(--primary-white) text-sm font-semibold bg-(--primary-orange) cursor-pointer"
           @click="emit('close')"
         >
           Готово
