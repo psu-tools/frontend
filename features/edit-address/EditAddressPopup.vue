@@ -56,6 +56,10 @@ const toggleExpand = () => {
   isExpanded.value = !isExpanded.value
 }
 
+const toggleShrink = () => {
+  isExpanded.value = false
+}
+
 const onTouchStart = (event: TouchEvent) => {
   touchStartY.value = event.touches[0].clientY
 }
@@ -143,7 +147,12 @@ const savePoint = () => {
             <div class="flex justify-between">
               <div
                 class="text-sm text-(--color-text) dark:text-(--primary-white) py-[18px] px-[15px] rounded-3xl w-full bg-(--primary-white) dark:bg-(--secondary-black-bg) mb-[20px] flex justify-between items-center gap-[15px]"
-                @click="openSelectPointModal"
+                @click="
+                  () => {
+                    toggleShrink()
+                    openSelectPointModal()
+                  }
+                "
               >
                 <p>
                   {{ localPoint.address || 'Адрес не указан' }}
