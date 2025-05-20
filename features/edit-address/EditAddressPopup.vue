@@ -1,19 +1,48 @@
 <script setup lang="ts">
+import { ref, watch } from 'vue'
 import IcClose from '~/icons/IcClose.vue'
 import IcArrow from '~/icons/IcArrow.vue'
+
+import SelectPointModal from '../trip-form/ui/SelectPointModal.vue'
 
 const props = defineProps<{
   point: any
   mode: 'edit' | 'add'
 }>()
 
+const emit = defineEmits(['close', 'save'])
+
 const isExpanded = ref(false)
 const isVisible = ref(true)
+
+const showSelectPointModal = ref(false)
 
 const touchStartY = ref(0)
 const touchMoveY = ref(0)
 
-const emit = defineEmits(['close', 'save'])
+const localPoint = ref({
+  ...props.point,
+  formatted: props.point?.formatted || props.point?.name || '',
+  name: props.point?.name || '',
+  latitude: props.point?.geometry?.lat || props.point?.latitude || 0,
+  longitude: props.point?.geometry?.lng || props.point?.longitude || 0,
+  address: props.point?.address || props.point?.formatted || '',
+})
+
+watch(
+  () => props.point,
+  newPoint => {
+    localPoint.value = {
+      ...newPoint,
+      formatted: newPoint?.formatted || newPoint?.name || '',
+      name: newPoint?.name || '',
+      latitude: newPoint?.geometry?.lat || newPoint?.latitude || 0,
+      longitude: newPoint?.geometry?.lng || newPoint?.longitude || 0,
+      address: newPoint?.address || newPoint?.formatted || '',
+    }
+  },
+  { immediate: true }
+)
 
 const closeModal = () => {
   isExpanded.value = false
@@ -23,9 +52,9 @@ const closeModal = () => {
   }, 300)
 }
 
-const editedName = ref(props.point?.formatted || props.point?.name || '')
-
-const toggleExpand = () => (isExpanded.value = !isExpanded.value)
+const toggleExpand = () => {
+  isExpanded.value = !isExpanded.value
+}
 
 const onTouchStart = (event: TouchEvent) => {
   touchStartY.value = event.touches[0].clientY
@@ -49,21 +78,28 @@ const onTouchEnd = () => {
   }
 }
 
-const savePoint = () => {
-  emit('save', {
-    ...props.point,
-    formatted: editedName.value,
-  })
+const openSelectPointModal = () => {
+  showSelectPointModal.value = true
 }
 
-watch(
-  () => props.point,
-  newPoint => {
-    editedName.value = newPoint?.formatted || newPoint?.name || ''
-  },
-  { immediate: true }
-)
+const onSelectPoint = (selectedPoint: any) => {
+  localPoint.value = {
+    ...localPoint.value,
+    ...selectedPoint,
+    formatted: selectedPoint.formatted || selectedPoint.address || '',
+    name: selectedPoint.name || localPoint.value.name || '',
+    latitude: selectedPoint.geometry?.lat || selectedPoint.latitude || 0,
+    longitude: selectedPoint.geometry?.lng || selectedPoint.longitude || 0,
+    address: selectedPoint.formatted || selectedPoint.address || '',
+  }
+  showSelectPointModal.value = false
+}
+
+const savePoint = () => {
+  emit('save', localPoint.value)
+}
 </script>
+
 <template>
   <Teleport to="#modal-container">
     <div
@@ -91,7 +127,7 @@ watch(
           <div class="flex justify-between mb-[25px] gap-[15px]">
             <input
               class="w-full outline-none text-xl text-(--medium-gray) dark:text-(--color-text-dark) font-bold"
-              v-model="editedName"
+              v-model="localPoint.name"
               placeholder="Название"
             />
             <button class="cursor-pointer relative z-10" @click="closeModal">
@@ -106,12 +142,13 @@ watch(
             </div>
             <div class="flex justify-between">
               <div
-                class="text-sm text-(--color-text) dark:text-(--primary-white) py-[18px] px-[15px] rounded-3xl bg-(--primary-white) dark:bg-(--secondary-black-bg) mb-[20px] flex justify-between items-center gap-[15px]"
+                class="text-sm text-(--color-text) dark:text-(--primary-white) py-[18px] px-[15px] rounded-3xl w-full bg-(--primary-white) dark:bg-(--secondary-black-bg) mb-[20px] flex justify-between items-center gap-[15px]"
+                @click="openSelectPointModal"
               >
                 <p>
-                  {{ props.point.formatted }}
+                  {{ localPoint.address || 'Адрес не указан' }}
                 </p>
-                <div class="">
+                <div>
                   <IcArrow />
                 </div>
               </div>
@@ -133,6 +170,13 @@ watch(
           </div>
         </div>
       </div>
+
+      <SelectPointModal
+        v-if="showSelectPointModal"
+        :initialPoint="localPoint"
+        @close="showSelectPointModal = false"
+        @select="onSelectPoint"
+      />
     </div>
   </Teleport>
 </template>
