@@ -110,7 +110,7 @@ const onTouchEnd = () => {
             ></div>
 
             <button
-              class="w-full py-[15px] mb-2 rounded-2xl text-(--primary-white) text-sm bg-(--primary-orange)"
+              class="w-full py-[15px] mb-[10px] rounded-2xl text-(--primary-white) text-sm bg-(--primary-orange) cursor-pointer"
               @click="$emit('edit')"
             >
               Редактировать

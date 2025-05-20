@@ -146,7 +146,7 @@ const savePoint = () => {
             </div>
             <div class="flex justify-between">
               <div
-                class="text-sm text-(--color-text) dark:text-(--primary-white) py-[18px] px-[15px] rounded-3xl w-full bg-(--primary-white) dark:bg-(--secondary-black-bg) mb-[20px] flex justify-between items-center gap-[15px]"
+                class="text-sm text-(--color-text) dark:text-(--primary-white) py-[18px] px-[15px] cursor-pointer rounded-3xl w-full bg-(--primary-white) dark:bg-(--secondary-black-bg) mb-[20px] flex justify-between items-center gap-[15px]"
                 @click="
                   () => {
                     toggleShrink()
@@ -171,7 +171,7 @@ const savePoint = () => {
               class="w-[200%] left-[-50%] h-[1px] bg-(--color-line-gray) dark:bg-(--third-black-bg) relative mb-[10px]"
             ></div>
             <button
-              class="w-full py-[15px] rounded-2xl text-(--primary-white) text-sm bg-(--primary-orange)"
+              class="w-full py-[15px] mb-[10px] cursor-pointer rounded-2xl text-(--primary-white) text-sm bg-(--primary-orange)"
               @click="savePoint"
             >
               {{ props.mode === 'edit' ? 'Сохранить изменения' : 'Добавить адрес' }}
