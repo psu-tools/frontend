@@ -11,7 +11,7 @@ const props = defineProps<{
 <template>
   <NuxtLink :to="props.link" class="w-full">
     <div
-      class="bg-(--primary-white-bg) dark:bg-(--secondary-black-bg) rounded-(--radius-2xl) hover:bg-(--primary-white-hover) dark:hover:bg-(--secondary-black-bg-hover) py-[18px] px-[15px] flex items-center justify-between"
+      class="bg-(--primary-white) dark:bg-(--secondary-black-bg) rounded-(--radius-2xl) hover:bg-(--primary-white-hover) dark:hover:bg-(--secondary-black-bg-hover) py-[18px] px-[15px] flex items-center justify-between"
     >
       <div class="flex items-center justify-between w-full text-sm">
         <div class="text-(--color-text) dark:text-(--primary-white)">{{ props.label }}</div>

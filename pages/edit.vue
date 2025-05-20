@@ -24,6 +24,10 @@ onMounted(async () => {
   const response = await getUserInfo()
   Object.assign(userInfo, response)
 })
+
+definePageMeta({
+  bodyClass: 'bg-(--primary-white-bg)',
+})
 </script>
 
 <template>
@@ -43,7 +47,9 @@ onMounted(async () => {
             <IcUser />
           </div>
         </div>
-        <div class="text-center text-sm text-(--primary-orange)">Выбрать фотографию</div>
+        <div class="cursor-pointer text-center text-sm text-(--primary-orange)">
+          Выбрать фотографию
+        </div>
       </div>
     </div>
     <div class="flex flex-col gap-[15px]">
