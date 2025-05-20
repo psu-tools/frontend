@@ -95,9 +95,17 @@ const handleModalSave = (newValue: string) => {
           Контактные данные
         </p>
         <div class="flex flex-col gap-[15px]">
-          <ProfileRow :label="`Телефон`" :value="`${userInfo.phoneNumber}`" to="editing" />
-          <ProfileRow :label="`Email`" :value="`${userInfo.email}`" to="editing" />
-          <ProfileRow :label="`Telegram`" :value="`${userInfo.telegramId}`" to="editing" />
+          <ProfileRow
+            :label="`Телефон`"
+            :value="`${userInfo.phoneNumber}`"
+            :to="`/editing/phoneNumber`"
+          />
+          <ProfileRow :label="`Email`" :value="`${userInfo.email}`" :to="`/editing/email`" />
+          <ProfileRow
+            :label="`Telegram`"
+            :value="`${userInfo.telegramId}`"
+            :to="`/editing/telegramId`"
+          />
         </div>
       </div>
     </div>
