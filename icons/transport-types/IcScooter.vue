@@ -22,7 +22,7 @@ defineProps<{
         width="22"
         height="16"
       >
-        <path d="M0 0H22V16H0V0Z" class="fill-(--primary-white) dark:fill-(--third-black-bg)" />
+        <path d="M0 0H22V16H0V0Z" fill="white" />
       </mask>
       <g mask="url(#mask0_1749_13684)">
         <path
