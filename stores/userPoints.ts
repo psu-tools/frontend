@@ -29,32 +29,41 @@ export const useUserPointsStore = defineStore('userPoints', () => {
     }
   }
 
-  // const addUserPoint = async (point: any) => {
-  //   try {
-  //     const config = useRuntimeConfig()
-  //     const response = await customFetch(
-  //       `${config.public.apiHost}/${config.public.apiVersion}/routes-service/points/favorites`,
-  //       {
-  //         method: 'POST',
-  //         body: point,
-  //       }
-  //     )
+  const addUserPoint = async (point: any) => {
+    try {
+      const config = useRuntimeConfig()
+      const body = {
+        userId: '4cef84ba-a98a-4089-b6d8-bf0416ad2208', // может быть из auth store
+        defaultName: point.formatted || point.name || 'Без названия',
+        customName: point.name || '',
+        latitude: point.geometry?.lat || point.latitude,
+        longitude: point.geometry?.lng || point.longitude,
+        address: point.formatted || point.address || '',
+      }
 
-  //     if (response) {
-  //       favoritePoints.value?.push(response.data)
-  //     }
+      const response = await customFetch(
+        `${config.public.apiHost}/${config.public.apiVersion}/routes-service/points/favorites`,
+        {
+          method: 'POST',
+          body,
+        }
+      )
 
-  //     return response
-  //   } catch (error) {
-  //     console.error('Ошибка добавления точки:', error)
-  //     throw error
-  //   }
-  // }
+      if (response) {
+        await fetchUserPoints()
+      }
+      console.error('Точка успешно добавлена:')
+      return response
+    } catch (error) {
+      console.error('Ошибка добавления точки:', error)
+      throw error
+    }
+  }
 
   return {
     isLoading,
     favoritePoints,
     fetchUserPoints,
-    // addUserPoint,
+    addUserPoint,
   }
 })

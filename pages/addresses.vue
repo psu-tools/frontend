@@ -8,7 +8,7 @@ import IcAdd from '~/icons/IcAdd.vue'
 import { useUserPointsStore } from '~/stores/userPoints'
 
 const userPointsStore = useUserPointsStore()
-const { fetchUserPoints, favoritePoints, isLoading } = userPointsStore
+const { fetchUserPoints, favoritePoints, isLoading, addUserPoint } = userPointsStore
 
 const isSelectorOpen = ref(false)
 const selectedPoints = ref<any[]>([])
@@ -21,10 +21,16 @@ const handleSelectPoint = (point: any) => {
   isSelectorOpen.value = false
 }
 
-const handleSaveEditedPoint = (point: any) => {
-  selectedPoints.value.push(point)
-  isEditMode.value = false
-  pointToEdit.value = null
+const handleSaveEditedPoint = async (point: any) => {
+  try {
+    await addUserPoint(point)
+    selectedPoints.value.push(point)
+  } catch (error) {
+    console.error('Не удалось сохранить точку', error)
+  } finally {
+    isEditMode.value = false
+    pointToEdit.value = null
+  }
 }
 
 const handleCloseSelector = () => {
@@ -58,7 +64,8 @@ onMounted(() => {
       <div
         v-for="(point, idx) in favoritePoints"
         :key="point.id || idx"
-        class="py-[13px] px-[20px] bg-(--primary-white) rounded-2xl dark:bg-(--secondary-black-bg) flex flex-col"
+        @click="handleSelectPoint(point)"
+        class="cursor-pointer py-[13px] px-[20px] bg-(--primary-white) rounded-2xl dark:bg-(--secondary-black-bg) flex flex-col"
       >
         <div class="text-sm text-(--color-text) dark:text-(--primary-white) font-semibold">
           {{ point.formatted || point.name }}
