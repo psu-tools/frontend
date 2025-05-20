@@ -28,9 +28,9 @@ const editingValue = computed(() => {
 const editingLabel = computed(() => fieldLabelMap[field.value] || 'Редактирование')
 
 const iconMap: Record<string, any> = {
-  phoneNumber: IcPhoneEdit,
+  phoneNumber: IcEmailEdit,
   email: IcEmailEdit,
-  telegramId: IcTelegramEdit,
+  telegramId: IcEmailEdit,
 }
 
 const CurrentIcon = computed(() => iconMap[field.value] || null)
