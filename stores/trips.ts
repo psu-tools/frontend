@@ -12,16 +12,21 @@ export interface Point {
 export type TransportType = 'CAR' | 'TAXI' | 'WALK' | 'BICYCLE' | 'SCOOTER' | 'PUBLIC_TRANSPORT'
 export type TripStatus = 'past' | 'active' | 'upcoming'
 
+export type DisplayRouteTime = string
+
 export interface Trip {
   id: string
   name: string
   userId: string
   route: Point[]
-  transportType: TransportType
+  transportType: TransportType[]
   overtime: number
   status: TripStatus
   arrivalDateTime: string
   departureDateTime: string
+  displayRouteTimes: DisplayRouteTime[]
+  routeTimes: number[]
+  stopTimes: number[]
 }
 
 export interface PagingResponse {
@@ -57,6 +62,7 @@ export const useTripsStore = defineStore('trips', () => {
         { method: 'GET' }
       )
       trips.value = response?.data || []
+      console.log(trips.value)
     } catch (error) {
       console.error('Data (trips) fetch error:', error)
       trips.value = []
