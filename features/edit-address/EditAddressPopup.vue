@@ -12,7 +12,7 @@ const props = defineProps<{
 const emit = defineEmits(['close', 'save'])
 
 const isExpanded = ref(false)
-const isVisible = ref(true)
+const isVisible = ref(false)
 
 const showSelectPointModal = ref(false)
 
@@ -101,6 +101,12 @@ const onSelectPoint = (selectedPoint: any) => {
 const savePoint = () => {
   emit('save', localPoint.value)
 }
+
+onMounted(() => {
+  setTimeout(() => {
+    isVisible.value = true
+  }, 50)
+})
 </script>
 
 <template>
@@ -145,7 +151,7 @@ const savePoint = () => {
             </div>
             <div class="flex justify-between">
               <div
-                class="text-sm text-(--color-text) dark:text-(--primary-white) py-[18px] px-[15px] cursor-pointer rounded-3xl w-full bg-(--primary-white) dark:bg-(--secondary-black-bg) mb-[20px] flex justify-between items-center gap-[15px]"
+                class="text-sm text-(--color-text) dark:text-(--primary-white) py-[18px] px-[15px] cursor-pointer rounded-3xl w-full bg-(--primary-white) dark:bg-(--secondary-black-bg) hover:bg-(--primary-white-hover) dark:hover:bg-(--secondary-black-bg-hover) mb-[20px] flex justify-between items-center gap-[15px]"
                 @click="
                   () => {
                     toggleShrink()

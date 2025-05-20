@@ -9,7 +9,7 @@ const props = defineProps<{
 const emit = defineEmits(['close', 'edit', 'delete'])
 
 const isExpanded = ref(false)
-const isVisible = ref(true)
+const isVisible = ref(false)
 
 const touchStartY = ref(0)
 const touchMoveY = ref(0)
@@ -44,6 +44,12 @@ const onTouchEnd = () => {
     }
   }
 }
+
+onMounted(() => {
+  setTimeout(() => {
+    isVisible.value = true
+  }, 50)
+})
 </script>
 
 <template>

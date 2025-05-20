@@ -8,7 +8,7 @@ const props = defineProps<{
 }>()
 
 const isExpanded = ref(false)
-const isVisible = ref(true)
+const isVisible = ref(false)
 
 const touchStartY = ref(0)
 const touchMoveY = ref(0)
@@ -51,6 +51,12 @@ const selectPoint = (point: SuggestionPoint | Point, pointType: 'api' | 'user') 
   emit('select', point, pointType)
   closeModal()
 }
+
+onMounted(() => {
+  setTimeout(() => {
+    isVisible.value = true
+  }, 50)
+})
 </script>
 
 <template>

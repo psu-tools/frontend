@@ -11,7 +11,7 @@ defineProps<Props>()
 </script>
 <template>
   <div
-    class="bg-(--primary-white) dark:bg-(--secondary-black-bg) rounded-2xl py-[18px] pl-[15px] pr-[18px]"
+    class="bg-(--primary-white-bg) dark:bg-(--secondary-black-bg) rounded-2xl py-[18px] pl-[15px] pr-[18px]"
   >
     <div class="flex justify-between items-center">
       <div class="text-sm flex flex-col gap-[4px]">
@@ -25,7 +25,7 @@ defineProps<Props>()
           :class="checked ? 'bg-(--primary-orange)' : 'bg-(--medium-gray)'"
         >
           <div
-            class="bg-(--primary-white) w-5 h-5 rounded-full shadow-md transform transition-transform duration-300"
+            class="bg-(--primary-white-bg) w-5 h-5 rounded-full transform transition-transform duration-300"
             :class="checked ? 'translate-x-5' : 'translate-x-0'"
           ></div>
         </div>

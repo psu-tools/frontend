@@ -23,7 +23,7 @@ const handleDone = () => {
     @click.self="emit('close')"
   >
     <div
-      class="w-full max-w-md mx-auto bg-(--primary-white) dark:bg-(--secondary-black-bg) rounded-2xl px-[30px] py-5 shadow-xl"
+      class="w-full max-w-md mx-auto bg-(--primary-white-bg) dark:bg-(--secondary-black-bg) rounded-2xl px-[30px] py-5"
     >
       <h2 class="text-left text-sm font-semibold pb-8 dark:text-(--primary-white)">
         Запас времени

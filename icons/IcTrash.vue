@@ -5,7 +5,7 @@
     viewBox="0 0 26 26"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    class="fill-(--secondary-light-gray) opacity-25 hover:opacity-15"
+    class="fill-(--secondary-light-gray) opacity-25 hover:opacity-15 transition-opacity"
   >
     <path
       d="M10.2917 11.7812C10.2917 11.558 10.466 11.375 10.6788 11.375C10.8917 11.375 11.0653 11.558 11.0653 11.7812V17.4688C11.0653 17.692 10.8917 17.875 10.6788 17.875C10.466 17.875 10.2917 17.692 10.2917 17.4688V11.7812Z"
