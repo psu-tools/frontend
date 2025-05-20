@@ -21,15 +21,26 @@ const pointToEdit = ref<any | null>(null)
 const selectedPointForActions = ref<any | null>(null)
 const isPointActionsOpen = ref(false)
 
-const handleSelectPoint = (point: any) => {
-  selectedPointForActions.value = point
-  isPointActionsOpen.value = true
-  console.log(point)
-}
+const isEditPopupOpen = ref(false)
+const popupMode = ref<'add' | 'edit'>('edit')
 
+const handleSelectPoint = (point: any) => {
+  if (isSelectorOpen.value) {
+    // Выбор точки из SelectPointModal — открываем редактор новой точки
+    pointToEdit.value = point
+    popupMode.value = 'add'
+    isEditPopupOpen.value = true
+    isSelectorOpen.value = false
+  } else {
+    // Выбор существующей точки — открываем PointActionsModal
+    selectedPointForActions.value = point
+    isPointActionsOpen.value = true
+  }
+}
 const handleEditPoint = () => {
   pointToEdit.value = selectedPointForActions.value
-  isEditMode.value = true
+  popupMode.value = 'edit'
+  isEditPopupOpen.value = true
   isPointActionsOpen.value = false
 }
 
@@ -60,16 +71,14 @@ const handleSaveEditedPoint = async (point: any) => {
 }
 
 const handleCloseSelector = () => {
-  isSelectorOpen.value = false
-  isEditMode.value = false
+  isEditPopupOpen.value = false
   pointToEdit.value = null
 }
 
 const openNewPointSelector = () => {
   isSelectorOpen.value = true
-  isEditMode.value = false
-  pointToEdit.value = null
 }
+
 onMounted(() => {
   fetchUserPoints()
 })
@@ -86,9 +95,9 @@ onMounted(() => {
 
     <!-- Popup редактирования -->
     <EditAddressPopup
-      v-if="isEditMode && pointToEdit"
+      v-if="isEditPopupOpen && pointToEdit"
       :point="pointToEdit"
-      mode="edit"
+      :mode="popupMode"
       @close="handleCloseSelector"
       @save="handleSaveEditedPoint"
     />
