@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import IcRedirect from '~/icons/IcRedirect.vue'
+import PrimaryOrangeButton from '~/shaared/ui/buttons/PrimaryOrangeButton.vue'
+import SecondaryButton from '~/shaared/ui/buttons/SecondaryButton.vue'
 </script>
 
 <template>
@@ -13,17 +15,9 @@ import IcRedirect from '~/icons/IcRedirect.vue'
       </h2>
     </div>
     <div class="flex flex-col gap-[15px]">
-      <button
-        class="cursor-pointer w-full font-semibold bg-(--primary-orange) rounded-2xl py-[15px] text-(--primary-white) text-sm"
-      >
-        Продолжить
-      </button>
+      <PrimaryOrangeButton class="py-[15px]">Продолжить</PrimaryOrangeButton>
       <NuxtLink to="/profile" class="w-full">
-        <button
-          class="cursor-pointer w-full font-semibold bg-(--primary-gray-button) dark:bg-(--third-black-bg) rounded-2xl py-[15px] text-(--primary-white) text-sm"
-        >
-          Вернуться назад
-        </button>
+        <SecondaryButton>Вернуться назад</SecondaryButton>
       </NuxtLink>
     </div>
   </div>
