@@ -14,7 +14,7 @@ defineProps<{
 <template>
   <div
     :class="[
-      'relative bg-(--primary-white-bg) dark:bg-(--secondary-black-bg) hover:bg-(--primary-white-hover) dark:hover:bg-(--secondary-black-bg-hover) py-[10px] pl-[10px] pr-[20px]',
+      'relative bg-(--primary-white-bg) dark:bg-(--secondary-black-bg) hover:bg-(--primary-white-hover) dark:hover:bg-(--secondary-black-bg-hover) transition-colors py-[10px] pl-[10px] pr-[20px]',
       isOnly
         ? 'rounded-(--radius-2xl)'
         : isFirst
