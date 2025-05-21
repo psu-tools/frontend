@@ -126,6 +126,16 @@ watch(
     }
   }
 )
+
+const sendForm = () => {
+  const isSuccess = tripFormStore.sendForm()
+  if (isSuccess) {
+    setTimeout(() => {
+      isVisible.value = false
+      addTripModalStore.closeModal()
+    }, 50)
+  }
+}
 </script>
 
 <template>
@@ -222,7 +232,7 @@ watch(
       >
         <PrimaryYellowButton
           :disabled="!tripFormStore.isFirstStepValid"
-          @click.stop="partOfForm === 2 ? tripFormStore.sendForm() : (partOfForm = 2)"
+          @click.stop="partOfForm === 2 ? sendForm() : (partOfForm = 2)"
           >{{ partOfForm === 1 ? 'Продолжить' : 'Добавить поездку' }}</PrimaryYellowButton
         >
       </BottomSheetBottomBar>

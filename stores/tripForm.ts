@@ -109,10 +109,41 @@ export const useTripFormStore = defineStore('tripForm', () => {
         }
       )
       console.log(data)
+      clearForm()
+      return true
     } catch (e) {
       console.error(e)
+      return false
     } finally {
     }
+  }
+
+  const clearForm = () => {
+    tripName.value = ''
+    tripDate.value = new Date()
+    arrivalTime.value =
+      String(new Date().getHours()).padStart(2, '0') +
+      ':' +
+      String(new Date().getMinutes()).padStart(2, '0')
+    reminderTime.value = 10
+    tripPoints.value = [
+      {
+        name: '',
+        latitude: Number.POSITIVE_INFINITY,
+        longitude: Number.POSITIVE_INFINITY,
+        stopTime: 0,
+        address: '',
+      },
+      {
+        name: '',
+        latitude: Number.POSITIVE_INFINITY,
+        longitude: Number.POSITIVE_INFINITY,
+        stopTime: 0,
+        address: '',
+      },
+    ]
+    transportType.value = 'WALK'
+    mergedDateTime.value = null
   }
 
   return {
