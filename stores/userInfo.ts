@@ -36,8 +36,31 @@ export const useUserInfo = defineStore('userInfo', () => {
     }
   }
 
+  const updateUserInfo = async (updatedData: Partial<UserInfo>) => {
+    try {
+      const config = useRuntimeConfig()
+      const response = await customFetch<UserInfo>(
+        `${config.public.apiHost}/${config.public.apiVersion}/${config.public.apiType}/users/${userId.value}`,
+        {
+          method: 'PATCH',
+          body: JSON.stringify(updatedData),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      console.log('Информация успешно обновлена:', response)
+      userInfo.value = response
+      return response
+    } catch (error) {
+      console.error('Ошибка обновления информации о пользователе:', error)
+      throw error
+    }
+  }
+
   return {
     userInfo,
     getUserInfo,
+    updateUserInfo,
   }
 })

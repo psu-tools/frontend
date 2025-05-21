@@ -1,11 +1,16 @@
 <script setup lang="ts">
 import PrimaryOrangeButton from '~/shaared/ui/buttons/PrimaryOrangeButton.vue'
 
+import { useUserInfo } from '~/stores/userInfo'
+
+const userInfoStore = useUserInfo()
+
 import IcClose from '~/icons/IcClose.vue'
 
 const props = defineProps<{
   label: string
   value: string
+  field: keyof Pick<UserInfo, 'firstName' | 'lastName' | 'email' | 'phoneNumber' | 'telegramId'>
 }>()
 
 const emit = defineEmits(['close', 'save'])
@@ -30,9 +35,20 @@ const toggleExpand = () => {
   isExpanded.value = !isExpanded.value
 }
 
-const savePoint = () => {
-  emit('save', localValue.value)
-  closeModal()
+const save = async () => {
+  try {
+    const updatedValue = props.field === 'telegramId' ? Number(localValue.value) : localValue.value
+
+    await userInfoStore.updateUserInfo({
+      [props.field]: updatedValue,
+    })
+
+    await userInfoStore.getUserInfo()
+
+    closeModal()
+  } catch (error) {
+    console.error('Ошибка при сохранении:', error)
+  }
 }
 
 const onTouchStart = (event: TouchEvent) => {
@@ -110,10 +126,7 @@ onMounted(() => {
             <div
               class="w-[200%] left-[-50%] h-[1px] bg-(--color-line-gray) dark:bg-(--third-black-bg) relative mb-[10px]"
             ></div>
-            <PrimaryOrangeButton
-              class="py-[15px] rounded-(--radius-2xl) mb-[20px]"
-              @click="(emit('save', localValue), closeModal())"
-            >
+            <PrimaryOrangeButton class="py-[15px] rounded-(--radius-2xl) mb-[20px]" @click="save">
               Сохранить
             </PrimaryOrangeButton>
           </div>

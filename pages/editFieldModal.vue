@@ -9,6 +9,10 @@ import BottomSheetBottomBar from '~/shaared/ui/BottomSheetBottomBar.vue'
 import PrimaryYellowButton from '~/shaared/ui/buttons/PrimaryYellowButton.vue'
 import ErrorModal from '~/features/ErrorModal.vue'
 
+import { useUserInfo } from '~/stores/userInfo'
+
+const userInfoStore = useUserInfo()
+
 const props = defineProps<{
   field: 'phoneNumber' | 'email' | 'telegramId'
   value?: string | number | null
@@ -49,15 +53,21 @@ const errorMessage = ref<string>('')
 const openErrorModal = () => (isErrorModalOpen.value = true)
 const closeErrorModal = () => (isErrorModalOpen.value = false)
 
-const submit = () => {
-  // отправка формы
+const submit = async () => {
+  try {
+    const updatedValue = inputText.value
 
-  // если не успешно:
-  errorMessage.value = 'Ошибка'
-  openErrorModal()
+    await userInfoStore.updateUserInfo({
+      [props.field]: updatedValue,
+    })
 
-  // иначе закрываем модалку
-  // emit('close')
+    await userInfoStore.getUserInfo()
+
+    emit('close')
+  } catch (error) {
+    errorMessage.value = 'Не удалось обновить данные. Попробуйте снова.'
+    openErrorModal()
+  }
 }
 </script>
 
