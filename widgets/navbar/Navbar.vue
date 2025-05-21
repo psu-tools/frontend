@@ -10,6 +10,7 @@ const isActive = path => route.path === path
 const isProfileActive = computed(() =>
   [
     '/profile',
+    '/edit',
     '/addresses',
     '/informing',
     '/language',
