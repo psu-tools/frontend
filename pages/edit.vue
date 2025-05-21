@@ -148,6 +148,7 @@ const handleModalSave = (newValue: string) => {
       v-if="isModalOpen"
       :label="editingLabel"
       :value="editingValue"
+      :field="editingField"
       @close="isModalOpen = false"
       @save="handleModalSave"
     />
