@@ -49,6 +49,38 @@ const handleModalSave = (newValue: string) => {
   }
   isModalOpen.value = false
 }
+
+const fileInput = ref<HTMLInputElement | null>(null)
+
+const triggerFileInput = () => {
+  fileInput.value?.click()
+}
+
+const uploadAvatar = async (file: File): Promise<string> => {
+  return new Promise(resolve => {
+    const tempUrl = URL.createObjectURL(file)
+    setTimeout(() => resolve(tempUrl), 500)
+  })
+}
+
+const handleFileChange = async (event: Event) => {
+  const input = event.target as HTMLInputElement
+  const file = input.files?.[0]
+  if (!file) return
+
+  try {
+    const avatarUrl = await uploadAvatar(file)
+
+    await userInfoStore.updateUserInfo({
+      avatarUri: avatarUrl,
+    })
+    await userInfoStore.getUserInfo()
+  } catch (err) {
+    console.error('Ошибка при обновлении аватара:', err)
+  } finally {
+    input.value = ''
+  }
+}
 </script>
 
 <template>
@@ -61,14 +93,24 @@ const handleModalSave = (newValue: string) => {
             <img
               :src="userInfoStore.userInfo.avatarUri"
               alt="Аватар"
-              class="w-32 h-32 rounded-full object-cover"
+              class="rounded-full object-cover"
             />
           </div>
           <div v-else>
             <IcUser />
           </div>
         </div>
-        <div class="cursor-pointer text-center text-sm text-(--primary-orange)">
+        <input
+          ref="fileInput"
+          type="file"
+          accept="image/*"
+          class="hidden"
+          @change="handleFileChange"
+        />
+        <div
+          class="cursor-pointer text-center text-sm text-(--primary-orange)"
+          @click="triggerFileInput"
+        >
           Выбрать фотографию
         </div>
       </div>

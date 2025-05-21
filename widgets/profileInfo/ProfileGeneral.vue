@@ -20,7 +20,7 @@ onMounted(async () => {
         <img
           :src="userInfoStore.userInfo.avatarUri"
           alt="Аватар"
-          class="w-32 h-32 rounded-full object-cover"
+          class="w-[64px] 2 h-[64px] rounded-full object-cover"
         />
       </div>
       <div v-else>
