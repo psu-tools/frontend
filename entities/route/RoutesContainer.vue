@@ -21,8 +21,18 @@ const formatTime = (time: string, minutesToAdd = 0) => {
   return `${hours}:${minutes}`
 }
 
-const getCumulativeMinutes = (upToIndex: number) => {
-  return prop.routesTime.slice(0, upToIndex).reduce((acc, val) => acc + val, 0)
+const getCumulativeTime = (upToIndex: number) => {
+  let total = 0
+
+  for (let i = 0; i < upToIndex; i++) {
+    total += prop.routesTime[i] || 0
+  }
+
+  for (let i = 1; i <= upToIndex && i < prop.stopsList.length - 1; i++) {
+    total += prop.stopsList[i].stopTime || 0
+  }
+
+  return total
 }
 </script>
 
@@ -35,8 +45,13 @@ const getCumulativeMinutes = (upToIndex: number) => {
         :arrival-point="stopsList[index + 1]"
         :transport-type="transportType"
         :display-time="displayRoutesTime[index]"
-        :departure-stop-time="formatTime(departureTime, getCumulativeMinutes(index))"
-        :arrival-stop-time="formatTime(departureTime, getCumulativeMinutes(index + 1))"
+        :departure-stop-time="formatTime(departureTime, getCumulativeTime(index))"
+        :arrival-stop-time="
+          formatTime(
+            departureTime,
+            getCumulativeTime(index + 1) - (stopsList[index + 1].stopTime || 0)
+          )
+        "
       />
     </div>
 

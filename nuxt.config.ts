@@ -13,6 +13,8 @@ export default defineNuxtConfig({
   },
   app: {
     head: {
+      title: 'Флоу — всегда вовремя',
+      meta: [{ name: 'description', content: 'Напоминания о поездках' }],
       link: [
         {
           rel: 'stylesheet',
