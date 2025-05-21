@@ -32,7 +32,9 @@ const handleSelect = (value: number) => {
         >
           Запас времени
         </h3>
-        <p class="px-[30px] flex irems-center justify-center text-xs text-center text-(--primary-gray)">
+        <p
+          class="px-[30px] flex irems-center justify-center text-xs text-center text-(--primary-gray)"
+        >
           Дополнительный процент времени, чтобы учесть пробки, задержки и другие непредвиденные
           ситуации
         </p>
@@ -45,7 +47,6 @@ const handleSelect = (value: number) => {
           <div class="text-sm text-(--color-text) dark:text-(--primary-white)">Текущий запас</div>
           <button
             class="text-sm text-(--color-text) dark:text-(--primary-white) rounded-[12px] bg-(--secondary-white-bg) py-[8px] px-[16px] dark:bg-(--third-black-bg)"
-           
           >
             {{ selectedPercentage }}%
           </button>
@@ -54,25 +55,23 @@ const handleSelect = (value: number) => {
     </div>
 
     <Teleport to="#modal-container">
-  <transition
-    name="modal-fade"
-    appear
-    enter-active-class="transition-opacity duration-200"
-    enter-from-class="opacity-0"
-    enter-to-class="opacity-100"
-    leave-active-class="transition-opacity duration-200"
-    leave-from-class="opacity-100"
-    leave-to-class="opacity-0"
-  >
-    <TimeReservePopup
-      v-if="isPopupOpen"
-      :initial-percentage="selectedPercentage"
-      @select="handleSelect"
-      @close="isPopupOpen = false"
-    />
-  </transition>
-</Teleport>
-
+      <transition
+        name="modal-fade"
+        appear
+        enter-active-class="transition-opacity duration-200"
+        enter-from-class="opacity-0"
+        enter-to-class="opacity-100"
+        leave-active-class="transition-opacity duration-200"
+        leave-from-class="opacity-100"
+        leave-to-class="opacity-0"
+      >
+        <TimeReservePopup
+          v-if="isPopupOpen"
+          :initial-percentage="selectedPercentage"
+          @select="handleSelect"
+          @close="isPopupOpen = false"
+        />
+      </transition>
+    </Teleport>
   </div>
 </template>
- 
