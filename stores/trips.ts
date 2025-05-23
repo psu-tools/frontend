@@ -79,6 +79,7 @@ export const useTripsStore = defineStore('trips', () => {
         { method: 'DELETE' }
       )
       console.log(response)
+      fetchTrips()
     } catch (error) {
       console.error("The trip wasn't deleted:", error)
     }

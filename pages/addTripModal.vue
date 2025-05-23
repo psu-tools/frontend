@@ -10,9 +10,11 @@ import RouteDestination from '~/entities/route/RouteDestination.vue'
 import PrimaryYellowButton from '~/shaared/ui/buttons/PrimaryYellowButton.vue'
 import BottomSheetBottomBar from '~/shaared/ui/BottomSheetBottomBar.vue'
 import { useUserPointsStore } from '~/stores/userPoints'
+import { useTripsStore } from '~/stores/trips'
 import AddTripFirstStep from '~/pages/addTripFirstStep.vue'
 
 const { fetchUserPoints } = useUserPointsStore()
+const { fetchTrips } = useTripsStore()
 
 const addTripModalStore = useAddTripModalStore()
 const tripFormStore = useTripFormStore()
@@ -133,7 +135,9 @@ const sendForm = () => {
     setTimeout(() => {
       isVisible.value = false
       addTripModalStore.closeModal()
+      partOfForm.value = 1
     }, 50)
+    fetchTrips()
   }
 }
 </script>
