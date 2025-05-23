@@ -4,10 +4,8 @@ export const useAddTripModalStore = defineStore('addTripModal', () => {
   const isModalOpen = ref(false)
 
   const closeModal = () => (isModalOpen.value = false)
-  const openModal = () => {
-    isModalOpen.value = true
-    console.log(isModalOpen.value, 'yup')
-  }
+  const openModal = () => (isModalOpen.value = true)
+
   return {
     isModalOpen,
     closeModal,

@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import Folder from '~/shaared/illustrations/Folder.vue'
-import AddTripModal from '~/pages/addTripModal.vue'
+import { useAddTripModalStore } from '~/stores/addTripModal'
 
-const isModalOpen = ref<boolean>()
+const store = useAddTripModalStore()
+
+const openBottomSheet = () => store.openModal()
 </script>
 
 <template>
@@ -15,11 +17,10 @@ const isModalOpen = ref<boolean>()
       </div>
       <button
         class="py-2.5 px-[30px] rounded-xl bg-(--primary-orange) hover:bg-(--primary-orange-hover) text-(--primary-white) cursor-pointer"
-        @click="isModalOpen = true"
+        @click="openBottomSheet"
       >
         Добавить
       </button>
     </div>
-    <AddTripModal v-if="isModalOpen" @close="isModalOpen = false" />
   </div>
 </template>
