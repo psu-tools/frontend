@@ -1,5 +1,8 @@
 import { useAuth } from '~/composables/useAuth'
 import { defineStore } from 'pinia'
+import { useUserInfo } from '~/stores/userInfo'
+
+const userInfoStore = useUserInfo()
 
 export const useAuthStore = defineStore('auth', () => {
   const authType = ref<'registration' | 'login' | 'recovery'>()
@@ -9,6 +12,8 @@ export const useAuthStore = defineStore('auth', () => {
   const name = ref<string>('')
   const surname = ref<string>('')
   const avatar = ref<File | null>(null)
+
+  const userId = ref<string | null>(null)
 
   const emailError = ref<string | null>(null)
   const passwordError = ref<string | null>(null)
@@ -43,12 +48,34 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
+  const decodeAccessToken = (token: string): any | null => {
+    try {
+      const base64Payload = token.split('.')[1]
+      const jsonPayload = atob(base64Payload)
+      return JSON.parse(jsonPayload)
+    } catch (e) {
+      console.error('Ошибка при декодировании access_token:', e)
+      return null
+    }
+  }
+
   const validateLoginForm = async () => {
     validateEmail()
     validatePassword()
     if (!emailError.value && !passwordError.value) {
-      const { login } = useAuth()
-      isLoginFormValid.value = await login(email.value, password.value)
+      const { login, accessToken } = useAuth()
+      const success = await login(email.value, password.value)
+      isLoginFormValid.value = success
+
+      if (success && accessToken.value) {
+        const decoded = decodeAccessToken(accessToken.value)
+        userId.value = decoded?.sub || null
+
+        if (userId.value) {
+          userInfoStore.setUserId(userId.value)
+          await userInfoStore.getUserInfo()
+        }
+      }
     }
   }
 

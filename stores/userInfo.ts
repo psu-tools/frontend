@@ -13,8 +13,21 @@ export interface UserInfo {
 }
 
 export const useUserInfo = defineStore('userInfo', () => {
-  const userId = ref<string>('4cef84ba-a98a-4089-b6d8-bf0416ad2208')
   const userInfo = ref<UserInfo | null>()
+  const userId = ref<string | null>(null)
+
+  onMounted(() => {
+    if (typeof window !== 'undefined') {
+      userId.value = localStorage.getItem('userId')
+    }
+  })
+
+  const setUserId = (newUserId: string) => {
+    userId.value = newUserId
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('userId', newUserId)
+    }
+  }
 
   const getUserInfo = async () => {
     try {
@@ -62,5 +75,6 @@ export const useUserInfo = defineStore('userInfo', () => {
     userInfo,
     getUserInfo,
     updateUserInfo,
+    setUserId,
   }
 })
