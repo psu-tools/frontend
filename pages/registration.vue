@@ -15,7 +15,10 @@ const isFormSent = ref<boolean>(false)
 const nextStep = () => step.value++
 const prevStep = () => step.value--
 
-const sendForm = () => (isFormSent.value = true)
+const sendForm = () => {
+  authStore.validateRegisterForm()
+  isFormSent.value = true
+}
 </script>
 
 <template>
@@ -28,10 +31,4 @@ const sendForm = () => (isFormSent.value = true)
   <div v-if="step === 3" class="h-full">
     <InfoStep @send-form="sendForm" @prev-step="prevStep" />
   </div>
-  <ErrorModal
-    :is-open="isFormSent"
-    :message="'Добро пожаловать, ' + authStore.name + ' ' + authStore.surname + '!'"
-    @on-click="isFormSent = false"
-    button-text="окак"
-  />
 </template>

@@ -13,6 +13,16 @@ export interface RefreshResponse {
   refresh_token: string
 }
 
+export interface Register {
+  email: string
+  password: string
+  firstName: string
+  lastName?: string
+  phoneNumber?: string
+  avatarUri?: string
+  telegramId?: string
+}
+
 export function useAuth() {
   const tripsStore = useTripsStore()
   const config = useRuntimeConfig()
@@ -85,10 +95,43 @@ export function useAuth() {
     return true
   }
 
+  const register = async (data: Register) => {
+    const payload = {
+      email: data.email,
+      password: data.password,
+      firstName: data.firstName,
+      lastName: data?.lastName,
+      phoneNumber: data?.phoneNumber,
+      avatarUri: data?.avatarUri,
+      telegramId: data?.telegramId,
+      userPreferences: {
+        overtimeMultiplier: 10,
+        interfaceLanguage: 'ru',
+        notificationMethods: ['EMAIL'],
+      },
+    }
+
+    console.log(payload)
+    try {
+      const response = await $fetch(`${config.public.apiHost}/v1/users-service/users`, {
+        method: 'POST',
+        body: payload,
+      })
+
+      console.log(response)
+      await login(data.email, data.password)
+      return true
+    } catch (e) {
+      console.log('Register error', e)
+      return false
+    }
+  }
+
   return {
     accessToken,
     refreshToken,
     isAuthenticated,
+    register,
     login,
     refresh,
     logout,
