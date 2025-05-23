@@ -11,15 +11,25 @@ function updateImageHeight() {
   }
 }
 
-onMounted(async () => {
-  await nextTick()
-  updateImageHeight()
-  window.addEventListener('resize', updateImageHeight)
+const screenIsXl = ref(false)
+
+function updateScreenSize() {
+  screenIsXl.value = window.innerWidth >= 1280
+}
+
+onMounted(() => {
+  updateScreenSize()
+  window.addEventListener('resize', () => {
+    updateScreenSize()
+    updateImageHeight()
+  })
 })
 
 onBeforeUnmount(() => {
+  window.removeEventListener('resize', updateScreenSize)
   window.removeEventListener('resize', updateImageHeight)
 })
+
 definePageMeta({
   layout: 'about',
 })
@@ -31,10 +41,14 @@ definePageMeta({
   >
     <div
       class="flex flex-col justify-between flex-1 xl:max-w-[600px] mb-10 lg:mb-0"
-      :style="{ height: imageHeight + 'px' }"
+      :style="screenIsXl ? { height: imageHeight + 'px' } : {}"
     >
       <div>
-        <div class="mb-[60px] text-5xl lg:text-6xl font-bold">Флоу</div>
+        <div
+          class="mb-[60px] text-5xl lg:text-6xl leading-[140%] font-bold bg-gradient-to-b from-[#FFA181] to-[#FF724C] bg-clip-text text-transparent"
+        >
+          Флоу
+        </div>
         <div class="text-2xl lg:text-4xl leading-[140%]">
           Твой удобный помощник для эффективного планирования поездок
         </div>
