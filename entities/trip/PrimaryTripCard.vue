@@ -28,8 +28,8 @@ defineProps<Props>()
         <p class="font-semibold text-sm truncate">{{ trip.name }}</p>
       </div>
       <div class="flex gap-1">
-        <div class="rounded-full w-6 h-6 bg-(--primary-orange)/10 flex items-center justify-center">
-          <TransportType v-for="type in trip.transportType" :type="type" />
+        <div class="rounded-full w-6 h-6 flex items-center justify-center">
+          <TransportType :size="25" :type="trip.transportType[0]" />
         </div>
         <div
           class="rounded-full h-6 w-14 bg-(--primary-orange)/10 flex justify-center items-center gap-0.5"
