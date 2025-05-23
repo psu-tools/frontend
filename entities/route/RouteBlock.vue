@@ -35,7 +35,7 @@ defineProps<RoutesBlockProps>()
           </p>
         </div>
         <p class="text-[12px] text-(--color-text) dark:text-(--primary-white)">
-          {{ departureStopTime }}
+          {{ departureStopTime === 'NaN:NaN' ? '' : departureStopTime }}
         </p>
       </div>
       <div
@@ -56,7 +56,7 @@ defineProps<RoutesBlockProps>()
           </p>
         </div>
         <p class="text-[12px] text-(--color-text) dark:text-(--primary-white)">
-          {{ arrivalStopTime }}
+          {{ arrivalStopTime === 'NaN:NaN' ? '' : arrivalStopTime }}
         </p>
       </div>
     </div>

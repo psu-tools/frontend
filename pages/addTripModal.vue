@@ -203,8 +203,7 @@ const sendForm = () => {
           :stops-list="tripFormStore.tripPoints"
           :transport-type="[tripFormStore.transportType]"
           :display-routes-time="[]"
-          :arrival-time="'2025-05-20T14:56:35Z'"
-          :departure-time="'2025-05-20T16:56:35Z'"
+          :arrival-time="tripFormStore.arrivalTime"
           :routes-time="['X минут']"
         />
       </div>
