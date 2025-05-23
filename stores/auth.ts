@@ -83,13 +83,14 @@ export const useAuthStore = defineStore('auth', () => {
     validatePassword()
     if (!emailError.value && !passwordError.value) {
       const { register } = useAuth()
-      isRegisterFormValid.value = await register({
+      return await register({
         email: email.value,
         password: password.value,
         firstName: name.value,
         lastName: surname.value,
       })
     }
+    return 400
   }
 
   const validateRecoveryForm = () => {

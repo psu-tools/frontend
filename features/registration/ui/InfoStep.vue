@@ -4,6 +4,7 @@ import IcBack from '~/icons/IcBack.vue'
 import AvatarInput from '~/shaared/ui/inputs/avatarInput.vue'
 import TextInput from '~/shaared/ui/inputs/textInput.vue'
 import { useAuthStore } from '~/stores/auth'
+import ErrorModal from '~/features/ErrorModal.vue'
 
 const emit = defineEmits<{
   (e: 'prevStep'): void

@@ -125,10 +125,14 @@ export function useAuth() {
 
       console.log(response)
       await login(data.email, data.password)
-      return true
+      return 200
     } catch (e) {
+      if (e?.response?.status === 409) {
+        console.warn('Пользователь уже существует')
+        return 409
+      }
       console.log('Register error', e)
-      return false
+      return 400
     }
   }
 

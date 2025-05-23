@@ -12,12 +12,26 @@ const authStore = useAuthStore()
 const step = ref<1 | 2 | 3>(1)
 const isFormSent = ref<boolean>(false)
 
+const hasError = ref<boolean>(false)
+const errorMessage = ref<string>('')
+const errorDescription = ref<string>('')
+
 const nextStep = () => step.value++
 const prevStep = () => step.value--
 
-const sendForm = () => {
-  authStore.validateRegisterForm()
-  isFormSent.value = true
+const sendForm = async () => {
+  const code = await authStore.validateRegisterForm()
+  if (code === 200) {
+    isFormSent.value = true
+  } else if (code === 409) {
+    errorMessage.value = 'Этот email уже используется'
+    errorDescription.value = 'Пожалуйста, введите другой email, чтобы продолжить'
+    hasError.value = true
+  } else {
+    errorMessage.value = 'Возникла ошибка'
+    errorDescription.value = 'Попробуйте позже'
+    hasError.value = true
+  }
 }
 </script>
 
@@ -31,4 +45,11 @@ const sendForm = () => {
   <div v-if="step === 3" class="h-full">
     <InfoStep @send-form="sendForm" @prev-step="prevStep" />
   </div>
+  <ErrorModal
+    @on-click="hasError.value = false"
+    :is-open="hasError"
+    :message="errorMessage"
+    :description="errorDescription"
+    button-text="OK"
+  />
 </template>
