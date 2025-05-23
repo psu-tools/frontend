@@ -2,11 +2,18 @@
 import TripPopup from '~/pages/tripPopup.vue'
 import AddTripModal from '~/pages/addTripModal.vue'
 import YandexMaps from '~/pages/yandexMaps.vue'
-import { useTripsStore } from '~/stores/trips'
 
+import { useTripsStore } from '~/stores/trips'
+import { NuxtLayout } from '#components'
+
+const route = useRoute()
 const tripsStore = useTripsStore()
 
-onMounted(async () => await tripsStore.fetchTrips())
+const isFullscreenRoute = computed(() => route.path === 'about')
+
+onMounted(async () => {
+  await tripsStore.fetchTrips()
+})
 </script>
 
 <template>
@@ -27,13 +34,17 @@ onMounted(async () => await tripsStore.fetchTrips())
         </h1>
       </div>
     </div>
+
     <div class="sm:w-1/2 sm:pr-10">
-      <NuxtLayout class="sm:rounded-3xl sm:shadow-2xl sm:mx-auto overflow-hidden">
+      <component
+        :is="isFullscreenRoute ? 'div' : NuxtLayout"
+        :class="isFullscreenRoute ? '' : 'sm:rounded-3xl sm:shadow-2xl sm:mx-auto overflow-hidden'"
+      >
         <NuxtPage />
-        <TripPopup />
-        <AddTripModal />
-        <YandexMaps />
-      </NuxtLayout>
+        <TripPopup v-if="!isFullscreenRoute" />
+        <AddTripModal v-if="!isFullscreenRoute" />
+        <YandexMaps v-if="!isFullscreenRoute" />
+      </component>
     </div>
   </div>
 </template>
