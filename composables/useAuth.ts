@@ -55,7 +55,12 @@ export function useAuth() {
       await tripsStore.fetchTrips()
       return true
     } catch (e) {
-      console.error('Auth err:', e)
+      if (e?.response?.status === 401) {
+        console.warn('Неверные данные авторизации')
+        return false
+      }
+
+      console.error('Auth error:', e)
       return false
     }
   }
