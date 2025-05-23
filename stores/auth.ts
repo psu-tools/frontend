@@ -2,8 +2,6 @@ import { useAuth } from '~/composables/useAuth'
 import { defineStore } from 'pinia'
 import { useUserInfo } from '~/stores/userInfo'
 
-const userInfoStore = useUserInfo()
-
 export const useAuthStore = defineStore('auth', () => {
   const authType = ref<'registration' | 'login' | 'recovery'>()
   const email = ref<string>('')
@@ -72,6 +70,7 @@ export const useAuthStore = defineStore('auth', () => {
         userId.value = decoded?.sub || null
 
         if (userId.value) {
+          const userInfoStore = useUserInfo()
           userInfoStore.setUserId(userId.value)
           await userInfoStore.getUserInfo()
         }
