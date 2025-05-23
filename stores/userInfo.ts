@@ -73,8 +73,8 @@ export const useUserInfo = defineStore('userInfo', () => {
           },
         }
       )
-      console.log('Информация успешно обновлена:', response)
-      userInfo.value = response
+      await getUserInfo()
+      console.log('Информация успешно обновлена')
       return response
     } catch (error) {
       console.error('Ошибка обновления информации о пользователе:', error)
