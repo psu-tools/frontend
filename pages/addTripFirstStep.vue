@@ -32,11 +32,11 @@ const handlerPointSelector = (index: number): void => {
       ></div>
 
       <div class="mb-4">
-        <div class="flex justify-between items-center">
+        <div class="flex justify-between items-center gap-2">
           <input
             type="text"
             placeholder="Название поездки"
-            class="text-2xl font-bold text-(--color-text) dark:text-(--primary-white) outline-none caret-(--primary-orange)"
+            class="text-2xl font-bold text-(--color-text) dark:text-(--primary-white) outline-none caret-(--primary-orange) min-w-4"
             v-model="tripFormStore.tripName"
           />
           <button @click="emit('closeModal')" class="cursor-pointer">
