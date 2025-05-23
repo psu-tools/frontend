@@ -184,7 +184,7 @@ const handleFileChange = async (event: Event) => {
         v-if="isTelegramModalOpen"
         @close="closeTelegramModal"
         field="telegramId"
-        :value="userInfoStore.userInfo?.telegramId"
+        :value="userInfoStore.userInfo?.telegramUsername"
         class="absolute inset-0 w-full h-full z-50"
       />
     </Transition>
