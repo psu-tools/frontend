@@ -7,6 +7,8 @@ interface GetPointsListResponse {
   paging: PagingResponse
 }
 
+const userId = ref<string>('4cef84ba-a98a-4089-b6d8-bf0416ad2208')
+
 export const useUserPointsStore = defineStore('userPoints', () => {
   const isLoading = ref(false)
   const favoritePoints = ref<Point[]>([])
@@ -52,29 +54,29 @@ export const useUserPointsStore = defineStore('userPoints', () => {
       if (response) {
         await fetchUserPoints()
       }
-      console.log('Точка успешно добавлена:')
+      // console.log('Точка успешно добавлена:')
       return response
     } catch (error) {
-      console.error('Ошибка добавления точки:', error)
+      // console.error('Ошибка добавления точки:', error)
       throw error
     }
   }
 
-  const deleteUserPoint = async (tripId: string) => {
+  const deleteUserPoint = async (pointId: string) => {
     try {
       const config = useRuntimeConfig()
       const response = await customFetch(
-        `${config.public.apiHost}/${config.public.apiVersion}/routes-service/trips/${tripId}`,
+        `${config.public.apiHost}/${config.public.apiVersion}/routes-service/points/favorites?userId=${userId.value}&pointId=${pointId}`,
         {
           method: 'DELETE',
         }
       )
 
-      console.log('Поездка удалена:', response)
+      // console.log('Поездка удалена:', response)
 
       await fetchUserPoints()
     } catch (error) {
-      console.error('Ошибка при удалении точки:', error)
+      // console.error('Ошибка при удалении точки:', error)
       throw error
     }
   }
