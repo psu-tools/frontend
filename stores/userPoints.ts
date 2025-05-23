@@ -64,7 +64,7 @@ export const useUserPointsStore = defineStore('userPoints', () => {
     try {
       const config = useRuntimeConfig()
       const response = await customFetch(
-        `${config.public.apiHost}/${config.public.apiVersion}/trips/${tripId}`,
+        `${config.public.apiHost}/${config.public.apiVersion}/routes-service/trips/${tripId}`,
         {
           method: 'DELETE',
         }

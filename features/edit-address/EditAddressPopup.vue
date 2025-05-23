@@ -185,7 +185,6 @@ onMounted(() => {
           </div>
         </div>
       </div>
-
       <SelectPointModal
         v-if="showSelectPointModal"
         :initialPoint="localPoint"

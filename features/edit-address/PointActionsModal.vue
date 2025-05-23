@@ -65,15 +65,14 @@ const onTouchEnd = () => {
   }
 }
 
-const handleDeletePoint = async (point: any) => {
-  console.log('Удаляем точку', point)
-  if (!point?.id) {
+const handleDeletePoint = async () => {
+  if (!props.point.pointId) {
     console.warn('Нет ID точки для удаления')
     return
   }
 
   try {
-    await deleteUserPoint(point.id)
+    await deleteUserPoint(props.point.pointId)
     closeModal()
   } catch (error) {
     console.error('Не удалось удалить точку', error)
@@ -158,16 +157,16 @@ onMounted(() => {
           </div>
         </div>
       </div>
+      <BaseConfirmModal
+        :is-open="isDeletePopupOpen"
+        title="Вы уверены, что хотите выйти?"
+        description=""
+        :icon="IcWarn"
+        :confirmText="`Удалить`"
+        :cancelText="`Отмена`"
+        :onConfirm="handleDeletePoint"
+        :onCancel="closeDeletePopup"
+      />
     </div>
-    <BaseConfirmModal
-      :is-open="isDeletePopupOpen"
-      title="Вы уверены, что хотите выйти?"
-      description=""
-      :icon="IcWarn"
-      :confirmText="`Удалить`"
-      :cancelText="`Отмена`"
-      :onConfirm="handleDeletePoint"
-      :onCancel="closeDeletePopup"
-    />
   </Teleport>
 </template>
