@@ -82,9 +82,9 @@ onMounted(() => {
 
 <template>
   <div class="pb-24">
-    <div class="flex items-center justify-between">
+    <div class="flex items-start justify-between">
       <PagesTitle title="Мои адреса" />
-      <button class="py-[14px] mb-[10px] cursor-pointer" @click="openNewPointSelector">
+      <button class="cursor-pointer" @click="openNewPointSelector">
         <IcAdd />
       </button>
     </div>
