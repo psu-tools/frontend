@@ -136,7 +136,8 @@ onMounted(() => {
         <div class="relative">
           <div class="flex justify-between mb-[25px] gap-[15px]">
             <input
-              class="w-full outline-none text-xl text-(--color-text) dark:text-(--primary-white) dark:bg-(--secondary-black-bg) hover:bg-(--primary-white-hover) dark:hover:bg-(--secondary-black-bg-hover) font-bold"
+              type="text"
+              class="text-sm text-(--color-black) dark:text-(--primary-white) outline-none caret-(--primary-orange) py-[18px] px-[15px] rounded-2xl bg-(--primary-white) dark:bg-(--secondary-black-bg) w-full"
               v-model="localPoint.name"
               placeholder="Название"
             />
