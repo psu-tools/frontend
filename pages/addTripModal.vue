@@ -68,9 +68,7 @@ const onTouchEnd = () => {
   }
 }
 
-onMounted(() => {
-  fetchUserPoints()
-})
+onMounted(() => {})
 
 const isPointSelectorOpen = ref(false)
 const activePointIndex = ref<number | null>(null)
@@ -123,6 +121,7 @@ watch(
       requestAnimationFrame(() => {
         isVisible.value = true
       })
+      await fetchUserPoints()
     } else {
       isVisible.value = false
     }
