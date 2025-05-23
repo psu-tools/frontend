@@ -45,17 +45,15 @@ definePageMeta({
     >
       <div>
         <div
-          class="mb-[60px] text-5xl lg:text-6xl leading-[140%] font-bold bg-gradient-to-b from-[#FFA181] to-[#FF724C] bg-clip-text text-transparent"
+          class="xl:mb-[60px] lg:mb-[40px] mb-[20px] text-5xl lg:text-6xl leading-[140%] xl:text-left lg:text-left text-center font-bold bg-gradient-to-b from-[#FFA181] to-[#FF724C] bg-clip-text text-transparent"
         >
           Флоу
         </div>
-        <div class="text-2xl lg:text-4xl leading-[140%]">
+        <div class="text-4xl lg:text-5xl xl:text-left lg:text-left text-center leading-[140%]">
           Твой удобный помощник для эффективного планирования поездок
         </div>
       </div>
-      <div class="mt-auto text-3xl xl:block hidden text-(--color-glay-about) mb-auto">
-        PSU Tools
-      </div>
+      <div class="mt-10 text-3xl xl:block hidden text-(--color-glay-about)">PSU Tools</div>
     </div>
 
     <div class="flex justify-end items-start xl:self-end lg:self-center" ref="imageWrapper">
