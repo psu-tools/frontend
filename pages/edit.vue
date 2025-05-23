@@ -86,9 +86,9 @@ const handleFileChange = async (event: Event) => {
 <template>
   <div class="pb-24">
     <PagesTitle title="Редактирование" />
-    <div class="w-full flex items-center justify-center mb-[35px]">
+    <div class="mt-2.5 w-full flex items-center justify-center mb-[35px]">
       <div class="flex flex-col items-center gap-[10px]">
-        <div class="w-[60px] h-[60px] rounded-full">
+        <div class="w-[80px] h-[80px] rounded-full">
           <div v-if="userInfoStore.userInfo?.avatarUri">
             <img
               :src="userInfoStore.userInfo.avatarUri"
@@ -139,17 +139,17 @@ const handleFileChange = async (event: Event) => {
         <div class="flex flex-col gap-[15px]">
           <ProfileRow
             label="Телефон"
-            :value="`${userInfoStore.userInfo?.phoneNumber}`"
+            :value="`${userInfoStore.userInfo?.phoneNumber || 'Добавить'}`"
             @click="openPhoneModal"
           />
           <ProfileRow
             label="Email"
-            :value="`${userInfoStore.userInfo?.email}`"
+            :value="`${userInfoStore.userInfo?.email || 'Добавить'}`"
             @click="openEmailModal"
           />
           <ProfileRow
             label="Telegram"
-            :value="`${userInfoStore.userInfo?.telegramId}`"
+            :value="`${userInfoStore.userInfo?.telegramId || 'Добавить'}`"
             @click="openTelegramModal"
           />
         </div>

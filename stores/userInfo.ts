@@ -1,6 +1,16 @@
 import { defineStore } from 'pinia'
 import { customFetch } from '~/utils/customFetch'
 
+export type InterfaceLanguage = 'ru' | 'en'
+
+export type NotificationMethod = 'EMAIL' | 'PHONE_NUMBER' | 'TELEGRAM'
+
+export interface UserPreferences {
+  interfaceLanguage: InterfaceLanguage
+  notificationMethods: NotificationMethod[]
+  overtimeMultiplier: number
+}
+
 export interface UserInfo {
   id: string
   firstName: string
@@ -8,8 +18,9 @@ export interface UserInfo {
   email: string
   phoneNumber: string
   telegramId: number
+  telegramUsername: string
   avatarUri: string
-  userPreferences: object
+  userPreferences: UserPreferences
 }
 
 export const useUserInfo = defineStore('userInfo', () => {
@@ -72,6 +83,7 @@ export const useUserInfo = defineStore('userInfo', () => {
   }
 
   return {
+    userId,
     userInfo,
     getUserInfo,
     updateUserInfo,

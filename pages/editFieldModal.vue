@@ -6,8 +6,9 @@ import IcEmailEdit from '~/icons/IcEmailEdit.vue'
 import IcPhoneEdit from '~/icons/IcPhoneEdit.vue'
 import IcTelegramEdit from '~/icons/IcTelegramEdit.vue'
 import BottomSheetBottomBar from '~/shaared/ui/BottomSheetBottomBar.vue'
-import PrimaryYellowButton from '~/shaared/ui/buttons/PrimaryYellowButton.vue'
 import ErrorModal from '~/features/ErrorModal.vue'
+
+import VueQrcode from 'vue-qrcode'
 
 import { useUserInfo } from '~/stores/userInfo'
 
@@ -21,6 +22,8 @@ const props = defineProps<{
 const emit = defineEmits<{
   (e: 'close'): void
 }>()
+
+const telegramLink = `https://t.me/FlowTripsBot?start=${localStorage.getItem('userId')}`
 
 const fieldLabelMap = {
   phoneNumber: 'Телефон',
@@ -72,10 +75,18 @@ const submit = async () => {
 </script>
 
 <template>
-  <div class="py-8 px-4 bg-(--primary-white-bg) dark:bg-(--primary-black-bg)">
+  <div
+    class="py-4 px-4 bg-(--primary-white-bg) dark:bg-(--primary-black-bg) flex flex-col h-full justify-between"
+  >
     <PagesTitle
       :link="'/edit'"
-      :title="part === 1 ? editingLabel : ''"
+      :title="
+        part === 1
+          ? editingLabel
+          : part === 2 && editingLabel.toLowerCase() === 'telegram'
+            ? 'Привязка telegram'
+            : ''
+      "
       @close="part === 1 ? emit('close') : (part = 1)"
     />
     <div v-show="part === 1">
@@ -94,7 +105,7 @@ const submit = async () => {
         </PrimaryOrangeButton>
       </div>
     </div>
-    <div v-show="part === 2">
+    <div v-show="part === 2 && editingLabel.toLowerCase() !== 'telegram'">
       <component :is="CurrentIcon" v-if="CurrentIcon" class="mx-auto mb-4 w-[70px] h-[144px]" />
       <p
         class="text-center mb-[10px] text-xl text-(--color-text) dark:text-(--primary-white) font-bold leading-6"
@@ -133,6 +144,24 @@ const submit = async () => {
         @on-click="closeErrorModal"
       />
     </div>
+    <div v-show="part === 2 && editingLabel.toLowerCase() === 'telegram'">
+      <div class="flex flex-col gap-[30px] items-center justify-center">
+        <vue-qrcode
+          :value="telegramLink"
+          :width="200"
+          :color="{ dark: '#353A40', light: '#00000000' }"
+        />
+        <div class="space-y-1.5">
+          <p class="text-center text-(--color-text) dark:text-(--primary-white) font-bold">
+            Отсканируйте QR код
+          </p>
+          <p class="text-center text-(--primary-light-gray) font-semibold">
+            или перейдите <a :href="telegramLink" class="text-(--primary-orange)">по ссылке</a>
+          </p>
+        </div>
+      </div>
+    </div>
+    <footer class="h-20" />
   </div>
 </template>
 
