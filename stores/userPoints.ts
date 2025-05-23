@@ -54,10 +54,8 @@ export const useUserPointsStore = defineStore('userPoints', () => {
       if (response) {
         await fetchUserPoints()
       }
-      // console.log('Точка успешно добавлена:')
       return response
     } catch (error) {
-      // console.error('Ошибка добавления точки:', error)
       throw error
     }
   }
@@ -72,11 +70,8 @@ export const useUserPointsStore = defineStore('userPoints', () => {
         }
       )
 
-      // console.log('Поездка удалена:', response)
-
       await fetchUserPoints()
     } catch (error) {
-      // console.error('Ошибка при удалении точки:', error)
       throw error
     }
   }

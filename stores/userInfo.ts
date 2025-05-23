@@ -25,13 +25,11 @@ export const useUserInfo = defineStore('userInfo', () => {
           method: 'GET',
         }
       )
-      console.log('Информация успешно получена:', response)
       if (userInfo.value !== response) {
         userInfo.value = response
       }
       return response
     } catch (error) {
-      console.error('Ошибка получения информации о пользователе:', error)
       throw error
     }
   }
@@ -49,11 +47,9 @@ export const useUserInfo = defineStore('userInfo', () => {
           },
         }
       )
-      console.log('Информация успешно обновлена:', response)
       userInfo.value = response
       return response
     } catch (error) {
-      console.error('Ошибка обновления информации о пользователе:', error)
       throw error
     }
   }
