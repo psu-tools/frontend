@@ -37,7 +37,7 @@ definePageMeta({
 
 <template>
   <div
-    class="w-full min-h-screen pt-[145px] px-5 sm:px-10 md:px-16 lg:px-[180px] xl:px-[240px] 2xl:px-[256px] flex flex-col xl:flex-row justify-between items-center xl:items-end"
+    class="w-full min-h-screen xl:pt-[145px] pt-[145px] px-5 sm:px-10 md:px-16 lg:px-[180px] xl:px-[240px] 2xl:px-[256px] flex flex-col xl:flex-row justify-between items-center xl:items-end"
   >
     <div
       class="flex flex-col justify-between flex-1 xl:max-w-[600px] mb-10 lg:mb-0"
