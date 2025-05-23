@@ -22,10 +22,10 @@ interface BlockItem {
 const block1: BlockItem[] = [{ iconComponent: IcLocation, title: 'Мои адреса', path: '/addresses' }]
 
 const block2: BlockItem[] = [
-  { iconComponent: IcNotifications, title: 'Уведомления', path: '/informing' },
+  { iconComponent: IcNotifications, title: 'Уведомления', path: '/notifications' },
   { iconComponent: IcLanguage, title: 'Язык', path: '/language' },
   { iconComponent: IcTheme, title: 'Тема оформления', path: '/theme' },
-  { iconComponent: IcTime, title: 'Запас времени', path: '/time' },
+  { iconComponent: IcTime, title: 'Запас времени', path: '/overtime' },
 ]
 
 const block3: BlockItem[] = [
