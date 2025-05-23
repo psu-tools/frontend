@@ -44,11 +44,14 @@ definePageMeta({
       :style="screenIsXl ? { height: imageHeight + 'px' } : {}"
     >
       <div>
-        <div
-          class="xl:mb-[60px] lg:mb-[40px] mb-[20px] text-5xl lg:text-6xl leading-[140%] xl:text-left lg:text-left text-center font-bold bg-gradient-to-b from-[#FFA181] to-[#FF724C] bg-clip-text text-transparent"
-        >
-          Флоу
-        </div>
+        <NuxtLink to="/">
+          <div
+            class="xl:mb-[60px] lg:mb-[40px] mb-[20px] text-5xl lg:text-6xl leading-[140%] xl:text-left lg:text-left text-center font-bold bg-gradient-to-b from-[#FFA181] to-[#FF724C] bg-clip-text text-transparent"
+          >
+            Флоу
+          </div>
+        </NuxtLink>
+
         <div class="text-4xl lg:text-5xl xl:text-left lg:text-left text-center leading-[140%]">
           Твой удобный помощник для эффективного планирования поездок
         </div>
