@@ -3,11 +3,10 @@ import PagesTitle from '~/widgets/profilePages/PagesTitle.vue'
 import ProfileRow from '~/widgets/ProfileEdit/ProfileRow.vue'
 import EditProfileField from '~/features/edit-profile/EditProfileField.vue'
 import { useUserInfo } from '~/stores/userInfo'
-
-const userInfoStore = useUserInfo()
-
 import IcUser from '~/icons/IcUser.vue'
 import EditFieldModal from '~/pages/editFieldModal.vue'
+
+const userInfoStore = useUserInfo()
 
 const isModalOpen = ref(false)
 const editingField = ref<'firstName' | 'lastName' | null>(null)
@@ -88,7 +87,7 @@ const handleFileChange = async (event: Event) => {
     <PagesTitle title="Редактирование" />
     <div class="mt-2.5 w-full flex items-center justify-center mb-[35px]">
       <div class="flex flex-col items-center gap-[10px]">
-        <div class="w-[80px] h-[80px] rounded-full">
+        <div class="w-[60px] h-[86px] rounded-full">
           <div v-if="userInfoStore.userInfo?.avatarUri">
             <img
               :src="userInfoStore.userInfo.avatarUri"
@@ -149,7 +148,11 @@ const handleFileChange = async (event: Event) => {
           />
           <ProfileRow
             label="Telegram"
-            :value="`${userInfoStore.userInfo?.telegramId || 'Добавить'}`"
+            :value="`${
+              userInfoStore.userInfo?.telegramUsername
+                ? '@' + userInfoStore.userInfo.telegramUsername
+                : 'Добавить'
+            }`"
             @click="openTelegramModal"
           />
         </div>

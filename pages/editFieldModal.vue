@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import PagesTitle from '~/widgets/profilePages/PagesTitle.vue'
 import PrimaryOrangeButton from '~/shaared/ui/buttons/PrimaryOrangeButton.vue'
 
 import IcEmailEdit from '~/icons/IcEmailEdit.vue'
@@ -11,16 +10,19 @@ import ErrorModal from '~/features/ErrorModal.vue'
 import VueQrcode from 'vue-qrcode'
 
 import { useUserInfo } from '~/stores/userInfo'
+import IcBack from '~/icons/IcBack.vue'
 
 const userInfoStore = useUserInfo()
 
 const props = defineProps<{
   field: 'phoneNumber' | 'email' | 'telegramId'
   value?: string | number | null
+  part?: 1 | 2
 }>()
 
 const emit = defineEmits<{
   (e: 'close'): void
+  (e: 'forcedClose'): void
 }>()
 
 const telegramLink = `https://t.me/FlowTripsBot?start=${localStorage.getItem('userId')}`
@@ -48,7 +50,7 @@ const CurrentIcon = computed(() => iconMap[props.field] || null)
 
 const inputText = ref<string>('')
 
-const part = ref<1 | 2>(1)
+const part = ref<1 | 2>(props.part || 1)
 
 const isErrorModalOpen = ref<boolean>(false)
 const errorMessage = ref<string>('')
@@ -76,19 +78,25 @@ const submit = async () => {
 
 <template>
   <div
-    class="py-4 px-4 bg-(--primary-white-bg) dark:bg-(--primary-black-bg) flex flex-col h-full justify-between"
+    class="py-6 px-4 bg-(--primary-white-bg) dark:bg-(--primary-black-bg) flex flex-col h-full justify-between"
   >
-    <PagesTitle
-      :link="'/edit'"
-      :title="
-        part === 1
-          ? editingLabel
-          : part === 2 && editingLabel.toLowerCase() === 'telegram'
-            ? 'Привязка telegram'
-            : ''
-      "
-      @close="part === 1 ? emit('close') : (part = 1)"
-    />
+    <div class="w-full">
+      <div class="flex gap-[10px] pb-[15px] items-center">
+        <IcBack
+          class="cursor-pointer"
+          @click="props.part === 2 ? emit('close') : part === 1 ? emit('close') : (part = 1)"
+        />
+        <h2 class="text-lg dark:text-(--primary-white) font-semibold">
+          {{
+            part === 1
+              ? editingLabel
+              : part === 2 && editingLabel.toLowerCase() === 'telegram'
+                ? 'Привязка telegram'
+                : ''
+          }}
+        </h2>
+      </div>
+    </div>
     <div v-show="part === 1">
       <component :is="CurrentIcon" v-if="CurrentIcon" class="mx-auto mb-4" />
       <p
@@ -147,6 +155,7 @@ const submit = async () => {
     <div v-show="part === 2 && editingLabel.toLowerCase() === 'telegram'">
       <div class="flex flex-col gap-[30px] items-center justify-center">
         <vue-qrcode
+          :type="'image/webp'"
           :value="telegramLink"
           :width="200"
           :color="{ dark: '#353A40', light: '#00000000' }"
