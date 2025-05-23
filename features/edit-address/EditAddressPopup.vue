@@ -136,7 +136,7 @@ onMounted(() => {
         <div class="relative">
           <div class="flex justify-between mb-[25px] gap-[15px]">
             <input
-              class="w-full outline-none text-xl text-(--medium-gray) dark:text-(--color-text-dark) font-bold"
+              class="w-full outline-none text-xl text-(--color-text) dark:text-(--color-text-dark) font-bold"
               v-model="localPoint.name"
               placeholder="Название"
             />
@@ -185,7 +185,6 @@ onMounted(() => {
           </div>
         </div>
       </div>
-
       <SelectPointModal
         v-if="showSelectPointModal"
         :initialPoint="localPoint"

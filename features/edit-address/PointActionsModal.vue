@@ -1,8 +1,15 @@
 <script setup lang="ts">
 import PrimaryOrangeButton from '~/shaared/ui/buttons/PrimaryOrangeButton.vue'
+import BaseConfirmModal from '~/features/two-button-modal/BaseConfirmModal.vue'
 
 import IcClose from '~/icons/IcClose.vue'
 import IcTrash from '~/icons/IcTrash.vue'
+import IcWarn from '~/icons/IcWarn.vue'
+
+import { useUserPointsStore } from '~/stores/userPoints'
+
+const userPointsStore = useUserPointsStore()
+const { deleteUserPoint } = userPointsStore
 
 const props = defineProps<{
   point: any
@@ -15,6 +22,17 @@ const isVisible = ref(false)
 
 const touchStartY = ref(0)
 const touchMoveY = ref(0)
+
+const isDeletePopupOpen = ref(false)
+
+const openDeletePopup = () => {
+  isDeletePopupOpen.value = true
+  isExpanded.value ? (isExpanded.value = true) : (isExpanded.value = false)
+}
+
+const closeDeletePopup = () => {
+  isDeletePopupOpen.value = false
+}
 
 const closeModal = () => {
   isExpanded.value = false
@@ -44,6 +62,20 @@ const onTouchEnd = () => {
     } else {
       closeModal()
     }
+  }
+}
+
+const handleDeletePoint = async () => {
+  if (!props.point.pointId) {
+    console.warn('Нет ID точки для удаления')
+    return
+  }
+
+  try {
+    await deleteUserPoint(props.point.pointId)
+    closeModal()
+  } catch (error) {
+    console.error('Не удалось удалить точку', error)
   }
 }
 
@@ -84,7 +116,7 @@ onMounted(() => {
               {{ point.name || 'Нет названия' }}
             </div>
             <div class="flex items-center gap-[15px]">
-              <button class="cursor-pointer relative z-10" @click="$emit('delete')">
+              <button class="cursor-pointer relative z-10" @click="openDeletePopup">
                 <IcTrash />
               </button>
               <button class="cursor-pointer relative z-10" @click="closeModal">
@@ -125,6 +157,16 @@ onMounted(() => {
           </div>
         </div>
       </div>
+      <BaseConfirmModal
+        :is-open="isDeletePopupOpen"
+        title="Вы уверены, что хотите выйти?"
+        description=""
+        :icon="IcWarn"
+        :confirmText="`Удалить`"
+        :cancelText="`Отмена`"
+        :onConfirm="handleDeletePoint"
+        :onCancel="closeDeletePopup"
+      />
     </div>
   </Teleport>
 </template>

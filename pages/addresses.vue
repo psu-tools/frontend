@@ -12,7 +12,7 @@ import IcAdd from '~/icons/IcAdd.vue'
 import { useUserPointsStore } from '~/stores/userPoints'
 
 const userPointsStore = useUserPointsStore()
-const { fetchUserPoints, addUserPoint, deleteUserPoint } = userPointsStore
+const { fetchUserPoints, addUserPoint } = userPointsStore
 const { favoritePoints, isLoading } = storeToRefs(userPointsStore)
 
 const isSelectorOpen = ref(false)
@@ -42,20 +42,6 @@ const handleEditPoint = () => {
   popupMode.value = 'edit'
   isEditPopupOpen.value = true
   isPointActionsOpen.value = false
-}
-
-const handleDeletePoint = async (point: any) => {
-  if (!point?.id) {
-    console.warn('Нет ID точки для удаления')
-    return
-  }
-
-  try {
-    await deleteUserPoint(point.id)
-    isPointActionsOpen.value = false
-  } catch (error) {
-    console.error('Не удалось удалить точку', error)
-  }
 }
 
 const handleSaveEditedPoint = async (point: any) => {
@@ -116,7 +102,6 @@ onMounted(() => {
       :point="selectedPointForActions"
       @close="closePointActions"
       @edit="handleEditPoint"
-      @delete="() => handleDeletePoint(selectedPointForActions)"
     />
 
     <div v-if="isLoading" class="text-center py-8 text-(--primary-gray)">Загрузка...</div>
