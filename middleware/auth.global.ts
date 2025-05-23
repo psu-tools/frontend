@@ -6,7 +6,8 @@ export default defineNuxtRouteMiddleware((to, from) => {
     to.path !== '/welcome' &&
     to.path !== '/login' &&
     to.path !== '/registration' &&
-    to.path !== '/recovery'
+    to.path !== '/recovery' &&
+    to.path !== '/about'
   ) {
     return navigateTo('/welcome')
   }
