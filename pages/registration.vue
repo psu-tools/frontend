@@ -12,10 +12,27 @@ const authStore = useAuthStore()
 const step = ref<1 | 2 | 3>(1)
 const isFormSent = ref<boolean>(false)
 
+const hasError = ref<boolean>(false)
+const errorMessage = ref<string>('')
+const errorDescription = ref<string>('')
+
 const nextStep = () => step.value++
 const prevStep = () => step.value--
 
-const sendForm = () => (isFormSent.value = true)
+const sendForm = async () => {
+  const code = await authStore.validateRegisterForm()
+  if (code === 200) {
+    isFormSent.value = true
+  } else if (code === 409) {
+    errorMessage.value = 'Этот email уже используется'
+    errorDescription.value = 'Пожалуйста, введите другой email, чтобы продолжить'
+    hasError.value = true
+  } else {
+    errorMessage.value = 'Возникла ошибка'
+    errorDescription.value = 'Попробуйте позже'
+    hasError.value = true
+  }
+}
 </script>
 
 <template>
@@ -29,9 +46,10 @@ const sendForm = () => (isFormSent.value = true)
     <InfoStep @send-form="sendForm" @prev-step="prevStep" />
   </div>
   <ErrorModal
-    :is-open="isFormSent"
-    :message="'Добро пожаловать, ' + authStore.name + ' ' + authStore.surname + '!'"
-    @on-click="isFormSent = false"
-    button-text="окак"
+    @on-click="hasError.value = false"
+    :is-open="hasError"
+    :message="errorMessage"
+    :description="errorDescription"
+    button-text="OK"
   />
 </template>

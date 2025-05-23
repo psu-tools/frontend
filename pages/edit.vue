@@ -3,11 +3,10 @@ import PagesTitle from '~/widgets/profilePages/PagesTitle.vue'
 import ProfileRow from '~/widgets/ProfileEdit/ProfileRow.vue'
 import EditProfileField from '~/features/edit-profile/EditProfileField.vue'
 import { useUserInfo } from '~/stores/userInfo'
-
-const userInfoStore = useUserInfo()
-
 import IcUser from '~/icons/IcUser.vue'
 import EditFieldModal from '~/pages/editFieldModal.vue'
+
+const userInfoStore = useUserInfo()
 
 const isModalOpen = ref(false)
 const editingField = ref<'firstName' | 'lastName' | null>(null)
@@ -86,9 +85,9 @@ const handleFileChange = async (event: Event) => {
 <template>
   <div class="pb-24">
     <PagesTitle title="Редактирование" />
-    <div class="w-full flex items-center justify-center mb-[35px]">
+    <div class="mt-2.5 w-full flex items-center justify-center mb-[35px]">
       <div class="flex flex-col items-center gap-[10px]">
-        <div class="w-[60px] h-[60px] rounded-full">
+        <div class="w-[60px] h-[86px] rounded-full">
           <div v-if="userInfoStore.userInfo?.avatarUri">
             <img
               :src="userInfoStore.userInfo.avatarUri"
@@ -139,17 +138,21 @@ const handleFileChange = async (event: Event) => {
         <div class="flex flex-col gap-[15px]">
           <ProfileRow
             label="Телефон"
-            :value="`${userInfoStore.userInfo?.phoneNumber}`"
+            :value="`${userInfoStore.userInfo?.phoneNumber || 'Добавить'}`"
             @click="openPhoneModal"
           />
           <ProfileRow
             label="Email"
-            :value="`${userInfoStore.userInfo?.email}`"
+            :value="`${userInfoStore.userInfo?.email || 'Добавить'}`"
             @click="openEmailModal"
           />
           <ProfileRow
             label="Telegram"
-            :value="`${userInfoStore.userInfo?.telegramId}`"
+            :value="`${
+              userInfoStore.userInfo?.telegramUsername
+                ? '@' + userInfoStore.userInfo.telegramUsername
+                : 'Добавить'
+            }`"
             @click="openTelegramModal"
           />
         </div>
@@ -181,7 +184,7 @@ const handleFileChange = async (event: Event) => {
         v-if="isTelegramModalOpen"
         @close="closeTelegramModal"
         field="telegramId"
-        :value="userInfoStore.userInfo?.telegramId"
+        :value="userInfoStore.userInfo?.telegramUsername"
         class="absolute inset-0 w-full h-full z-50"
       />
     </Transition>

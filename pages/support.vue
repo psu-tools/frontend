@@ -5,7 +5,7 @@ import SecondaryButton from '~/shaared/ui/buttons/SecondaryButton.vue'
 </script>
 
 <template>
-  <div class="relative min-h-[100%] flex flex-col justify-between pb-24">
+  <div class="relative min-h-[100%] flex flex-col justify-between pt-14 pb-24">
     <div class="mt-[40px] flex flex-col gap-[35px] justify-between items-center">
       <div class="">
         <IcRedirect />

@@ -13,6 +13,16 @@ export interface RefreshResponse {
   refresh_token: string
 }
 
+export interface Register {
+  email: string
+  password: string
+  firstName: string
+  lastName?: string
+  phoneNumber?: string
+  avatarUri?: string
+  telegramId?: string
+}
+
 export function useAuth() {
   const tripsStore = useTripsStore()
   const config = useRuntimeConfig()
@@ -45,7 +55,12 @@ export function useAuth() {
       await tripsStore.fetchTrips()
       return true
     } catch (e) {
-      console.error('Auth err:', e)
+      if (e?.response?.status === 401) {
+        console.warn('Неверные данные авторизации')
+        return false
+      }
+
+      console.error('Auth error:', e)
       return false
     }
   }
@@ -85,10 +100,46 @@ export function useAuth() {
     return true
   }
 
+  const register = async (data: Register) => {
+    const payload = {
+      email: data.email,
+      password: data.password,
+      firstName: data.firstName,
+      lastName: data?.lastName,
+      phoneNumber: data?.phoneNumber,
+      avatarUri: data?.avatarUri,
+      telegramId: data?.telegramId,
+      userPreferences: {
+        overtimeMultiplier: 10,
+        interfaceLanguage: 'ru',
+        notificationMethods: ['EMAIL'],
+      },
+    }
+
+    console.log(payload)
+    try {
+      const response = await $fetch(`${config.public.apiHost}/v1/users-service/users`, {
+        method: 'POST',
+        body: payload,
+      })
+
+      console.log(response)
+      return 200
+    } catch (e) {
+      if (e?.response?.status === 409) {
+        console.warn('Пользователь уже существует')
+        return 409
+      }
+      console.log('Register error', e)
+      return 400
+    }
+  }
+
   return {
     accessToken,
     refreshToken,
     isAuthenticated,
+    register,
     login,
     refresh,
     logout,

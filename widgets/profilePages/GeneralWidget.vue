@@ -3,11 +3,22 @@ interface Props {
   type: string
   id: string
   hasCheckbox?: boolean
+  checkboxStatus?: boolean
 }
 
-const checked = ref(false)
+const props = defineProps<Props>()
 
-defineProps<Props>()
+const emit = defineEmits<{
+  (e: 'checkboxToggle', value: boolean): void
+}>()
+
+const checked = ref(props.checkboxStatus || false)
+
+watch(checked, () => {
+  setTimeout(() => {
+    emit('checkboxToggle', checked)
+  }, 300)
+})
 </script>
 <template>
   <div

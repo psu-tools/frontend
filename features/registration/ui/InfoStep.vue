@@ -4,6 +4,7 @@ import IcBack from '~/icons/IcBack.vue'
 import AvatarInput from '~/shaared/ui/inputs/avatarInput.vue'
 import TextInput from '~/shaared/ui/inputs/textInput.vue'
 import { useAuthStore } from '~/stores/auth'
+import ErrorModal from '~/features/ErrorModal.vue'
 
 const emit = defineEmits<{
   (e: 'prevStep'): void
@@ -19,8 +20,17 @@ const surname = ref<string>('')
 watch(name, () => {
   authStore.setName(name.value)
 })
+
 watch(surname, () => {
   authStore.setSurname(surname.value)
+})
+
+watch(avatar, () => {
+  if (avatar.value) {
+    authStore.setAvatar(avatar.value)
+    console.log('avatar установлен')
+  }
+  console.log(avatar.value)
 })
 </script>
 
@@ -41,7 +51,7 @@ watch(surname, () => {
 
       <PrimaryOrangeButton
         class="py-[15px] mt-[25px] cursor-pointer"
-        :disabled="!name || !surname"
+        :disabled="!name"
         @click="emit('sendForm')"
         >Зарегистрироваться</PrimaryOrangeButton
       >

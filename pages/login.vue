@@ -28,9 +28,16 @@ watch(password, () => {
   authStore.validatePassword()
 })
 
-const submitForm = () => authStore.validateLoginForm()
+const submitForm = async () => {
+  await authStore.validateLoginForm()
+  if (!authStore.isLoginFormValid) {
+    isErrorModalOpen.value = true
+  }
+}
 
-const onClickModal = () => (isErrorModalOpen.value = false)
+const onClickModal = () => {
+  isErrorModalOpen.value = false
+}
 
 onMounted(() => authStore.setAuthType('login'))
 </script>

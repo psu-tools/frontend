@@ -10,9 +10,11 @@ import RouteDestination from '~/entities/route/RouteDestination.vue'
 import PrimaryYellowButton from '~/shaared/ui/buttons/PrimaryYellowButton.vue'
 import BottomSheetBottomBar from '~/shaared/ui/BottomSheetBottomBar.vue'
 import { useUserPointsStore } from '~/stores/userPoints'
+import { useTripsStore } from '~/stores/trips'
 import AddTripFirstStep from '~/pages/addTripFirstStep.vue'
 
 const { fetchUserPoints } = useUserPointsStore()
+const { fetchTrips } = useTripsStore()
 
 const addTripModalStore = useAddTripModalStore()
 const tripFormStore = useTripFormStore()
@@ -66,9 +68,7 @@ const onTouchEnd = () => {
   }
 }
 
-onMounted(() => {
-  fetchUserPoints()
-})
+onMounted(() => {})
 
 const isPointSelectorOpen = ref(false)
 const activePointIndex = ref<number | null>(null)
@@ -121,6 +121,7 @@ watch(
       requestAnimationFrame(() => {
         isVisible.value = true
       })
+      await fetchUserPoints()
     } else {
       isVisible.value = false
     }
@@ -133,7 +134,9 @@ const sendForm = () => {
     setTimeout(() => {
       isVisible.value = false
       addTripModalStore.closeModal()
+      partOfForm.value = 1
     }, 50)
+    fetchTrips()
   }
 }
 </script>
@@ -203,8 +206,7 @@ const sendForm = () => {
           :stops-list="tripFormStore.tripPoints"
           :transport-type="[tripFormStore.transportType]"
           :display-routes-time="[]"
-          :arrival-time="'2025-05-20T14:56:35Z'"
-          :departure-time="'2025-05-20T16:56:35Z'"
+          :arrival-time="tripFormStore.arrivalTime"
           :routes-time="['X минут']"
         />
       </div>

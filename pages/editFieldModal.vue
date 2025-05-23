@@ -1,26 +1,31 @@
 <script setup lang="ts">
-import PagesTitle from '~/widgets/profilePages/PagesTitle.vue'
 import PrimaryOrangeButton from '~/shaared/ui/buttons/PrimaryOrangeButton.vue'
 
 import IcEmailEdit from '~/icons/IcEmailEdit.vue'
 import IcPhoneEdit from '~/icons/IcPhoneEdit.vue'
 import IcTelegramEdit from '~/icons/IcTelegramEdit.vue'
 import BottomSheetBottomBar from '~/shaared/ui/BottomSheetBottomBar.vue'
-import PrimaryYellowButton from '~/shaared/ui/buttons/PrimaryYellowButton.vue'
 import ErrorModal from '~/features/ErrorModal.vue'
 
+import VueQrcode from 'vue-qrcode'
+
 import { useUserInfo } from '~/stores/userInfo'
+import IcBack from '~/icons/IcBack.vue'
 
 const userInfoStore = useUserInfo()
 
 const props = defineProps<{
   field: 'phoneNumber' | 'email' | 'telegramId'
   value?: string | number | null
+  part?: 1 | 2
 }>()
 
 const emit = defineEmits<{
   (e: 'close'): void
+  (e: 'forcedClose'): void
 }>()
+
+const telegramLink = `https://t.me/FlowTripsBot?start=${localStorage.getItem('userId')}`
 
 const fieldLabelMap = {
   phoneNumber: 'Телефон',
@@ -45,7 +50,7 @@ const CurrentIcon = computed(() => iconMap[props.field] || null)
 
 const inputText = ref<string>('')
 
-const part = ref<1 | 2>(1)
+const part = ref<1 | 2>(props.part || 1)
 
 const isErrorModalOpen = ref<boolean>(false)
 const errorMessage = ref<string>('')
@@ -72,12 +77,26 @@ const submit = async () => {
 </script>
 
 <template>
-  <div class="py-8 px-4 bg-(--primary-white-bg) dark:bg-(--primary-black-bg)">
-    <PagesTitle
-      :link="'/edit'"
-      :title="part === 1 ? editingLabel : ''"
-      @close="part === 1 ? emit('close') : (part = 1)"
-    />
+  <div
+    class="py-6 px-4 bg-(--primary-white-bg) dark:bg-(--primary-black-bg) flex flex-col h-full justify-between"
+  >
+    <div class="w-full">
+      <div class="flex gap-[10px] pb-[15px] items-center">
+        <IcBack
+          class="cursor-pointer"
+          @click="props.part === 2 ? emit('close') : part === 1 ? emit('close') : (part = 1)"
+        />
+        <h2 class="text-lg dark:text-(--primary-white) font-semibold">
+          {{
+            part === 1
+              ? editingLabel
+              : part === 2 && editingLabel.toLowerCase() === 'telegram'
+                ? 'Привязка telegram'
+                : ''
+          }}
+        </h2>
+      </div>
+    </div>
     <div v-show="part === 1">
       <component :is="CurrentIcon" v-if="CurrentIcon" class="mx-auto mb-4" />
       <p
@@ -94,7 +113,7 @@ const submit = async () => {
         </PrimaryOrangeButton>
       </div>
     </div>
-    <div v-show="part === 2">
+    <div v-show="part === 2 && editingLabel.toLowerCase() !== 'telegram'">
       <component :is="CurrentIcon" v-if="CurrentIcon" class="mx-auto mb-4 w-[70px] h-[144px]" />
       <p
         class="text-center mb-[10px] text-xl text-(--color-text) dark:text-(--primary-white) font-bold leading-6"
@@ -133,6 +152,25 @@ const submit = async () => {
         @on-click="closeErrorModal"
       />
     </div>
+    <div v-show="part === 2 && editingLabel.toLowerCase() === 'telegram'">
+      <div class="flex flex-col gap-[30px] items-center justify-center">
+        <vue-qrcode
+          :type="'image/webp'"
+          :value="telegramLink"
+          :width="200"
+          :color="{ dark: '#353A40', light: '#00000000' }"
+        />
+        <div class="space-y-1.5">
+          <p class="text-center text-(--color-text) dark:text-(--primary-white) font-bold">
+            Отсканируйте QR код
+          </p>
+          <p class="text-center text-(--primary-light-gray) font-semibold">
+            или перейдите <a :href="telegramLink" class="text-(--primary-orange)">по ссылке</a>
+          </p>
+        </div>
+      </div>
+    </div>
+    <footer class="h-20" />
   </div>
 </template>
 

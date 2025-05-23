@@ -1,6 +1,16 @@
 import { defineStore } from 'pinia'
 import { customFetch } from '~/utils/customFetch'
 
+export type InterfaceLanguage = 'ru' | 'en'
+
+export type NotificationMethod = 'EMAIL' | 'PHONE_NUMBER' | 'TELEGRAM'
+
+export interface UserPreferences {
+  interfaceLanguage: InterfaceLanguage
+  notificationMethods: NotificationMethod[]
+  overtimeMultiplier: number
+}
+
 export interface UserInfo {
   id: string
   firstName: string
@@ -8,13 +18,27 @@ export interface UserInfo {
   email: string
   phoneNumber: string
   telegramId: number
+  telegramUsername: string
   avatarUri: string
-  userPreferences: object
+  userPreferences: UserPreferences
 }
 
 export const useUserInfo = defineStore('userInfo', () => {
-  const userId = ref<string>('4cef84ba-a98a-4089-b6d8-bf0416ad2208')
   const userInfo = ref<UserInfo | null>()
+  const userId = ref<string | null>(null)
+
+  onMounted(() => {
+    if (typeof window !== 'undefined') {
+      userId.value = localStorage.getItem('userId')
+    }
+  })
+
+  const setUserId = (newUserId: string) => {
+    userId.value = newUserId
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('userId', newUserId)
+    }
+  }
 
   const getUserInfo = async () => {
     try {
@@ -47,6 +71,8 @@ export const useUserInfo = defineStore('userInfo', () => {
           },
         }
       )
+      await getUserInfo()
+      console.log('Информация успешно обновлена')
       userInfo.value = response
       return response
     } catch (error) {
@@ -55,8 +81,10 @@ export const useUserInfo = defineStore('userInfo', () => {
   }
 
   return {
+    userId,
     userInfo,
     getUserInfo,
     updateUserInfo,
+    setUserId,
   }
 })

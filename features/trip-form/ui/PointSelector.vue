@@ -43,11 +43,7 @@ interface Address {
   address: string
 }
 
-const recentlyAddresses = <Address[]>[
-  { name: 'Пермский Политех', address: 'Комсомольский проспект, 29' },
-  { name: 'Aura City Hotel', address: 'ул. Монастырская, 23Б' },
-  { name: 'Аэропорт Пермь, Терминал А', address: 'ш. Космонавтов, 455, д. Большое Савино' },
-]
+const recentlyAddresses = <Address[]>[]
 
 const inputValue = ref(props.initialValue || '')
 const suggestions = ref<SuggestionPoint[]>([])
@@ -197,12 +193,6 @@ watch(
         </p>
       </div>
 
-      <!--      <YandexMaps-->
-      <!--        v-if="isYandexMapsOpen"-->
-      <!--        @closeYandexMaps="isYandexMapsOpen = !isYandexMapsOpen"-->
-      <!--        @selectMapsPoint="selectPoint"-->
-      <!--      />-->
-
       <div
         class="mt-[25px]"
         v-if="favoritePoints && favoritePoints.length > 0 && !props.showMyAddresses"
@@ -226,7 +216,7 @@ watch(
         </div>
       </div>
 
-      <div class="mt-5">
+      <div class="mt-5" v-if="recentlyAddresses.length > 0">
         <h2 class="font-semibold text-(--color-text) dark:text-(--primary-white) mb-1">Недавние</h2>
         <div
           v-for="(item, index) in recentlyAddresses"

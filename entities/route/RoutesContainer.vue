@@ -47,10 +47,14 @@ const getCumulativeTime = (upToIndex: number) => {
         :display-time="displayRoutesTime[index]"
         :departure-stop-time="formatTime(departureTime, getCumulativeTime(index))"
         :arrival-stop-time="
-          formatTime(
-            departureTime,
-            getCumulativeTime(index + 1) - (stopsList[index + 1].stopTime || 0)
-          )
+          index !== stopsList.length - 2
+            ? formatTime(
+                departureTime,
+                getCumulativeTime(index + 1) - (stopsList[index + 1].stopTime || 0)
+              )
+            : arrivalTime.length === 5
+              ? arrivalTime
+              : formatTime(arrivalTime)
         "
       />
     </div>

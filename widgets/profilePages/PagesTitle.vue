@@ -21,7 +21,7 @@ if (props.link) {
 </script>
 <template>
   <NuxtLink :to="`${setLink}`" class="w-full">
-    <div class="py-[14px] mb-[10px] flex gap-[10px] items-center">
+    <div class="flex gap-[10px] pb-[15px] items-center">
       <IcBack class="cursor-pointer" @click="emit('close')" />
       <h2 class="text-lg dark:text-(--primary-white) font-semibold">{{ title }}</h2>
     </div>

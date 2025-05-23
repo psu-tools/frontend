@@ -1,23 +1,22 @@
 <script setup lang="ts">
 import IcPlus from '~/icons/IcPlus.vue'
 
-const emit = defineEmits<{ (e: 'update:file', file: File | null): void }>()
+const modelValue = defineModel<File | null>()
 
-const selectedFile = ref<File | null>(null)
 const previewUrl = ref<string | null>(null)
+
+watch(modelValue, val => {
+  if (val) {
+    previewUrl.value = URL.createObjectURL(val)
+  } else {
+    previewUrl.value = null
+  }
+})
 
 const onFileChange = (e: Event) => {
   const target = e.target as HTMLInputElement
-  const file = target.files?.[0]
-  selectedFile.value = file || null
-
-  if (file) {
-    previewUrl.value = URL.createObjectURL(file)
-    emit('update:file', file)
-  } else {
-    previewUrl.value = null
-    emit('update:file', null)
-  }
+  const file = target.files?.[0] || null
+  modelValue.value = file
 }
 </script>
 

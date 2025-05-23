@@ -1,7 +1,10 @@
 import { defineStore } from 'pinia'
 import { customFetch } from '~/utils/customFetch'
+import { useTripsStore } from '~/stores/trips'
 
 export const useTripFormStore = defineStore('tripForm', () => {
+  const tripsStore = useTripsStore()
+
   const tripName = ref<string>('')
 
   const tripDate = ref<Date>(new Date())
@@ -110,6 +113,7 @@ export const useTripFormStore = defineStore('tripForm', () => {
       )
       console.log(data)
       clearForm()
+      await tripsStore.fetchTrips()
       return true
     } catch (e) {
       console.error(e)

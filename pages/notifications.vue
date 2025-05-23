@@ -1,64 +1,95 @@
 <script setup lang="ts">
-import { useNotificationsStore } from '@/stores/notifications'
-import { storeToRefs } from 'pinia'
-import IcBack from '~/icons/IcBack.vue'
-import { getHumanDate } from '~/utils/getHumanDate'
+import PagesTitle from '~/widgets/profilePages/PagesTitle.vue'
+import GeneralWidget from '~/widgets/profilePages/GeneralWidget.vue'
 
-const notificationsStore = useNotificationsStore()
-const { notifications, loading, error, paging } = storeToRefs(notificationsStore)
+import { useUserInfo } from '~/stores/userInfo'
+import EditFieldModal from '~/pages/editFieldModal.vue'
 
-onMounted(async () => {
-  await notificationsStore.fetchNotifications(0, 50)
-})
+const userInfoStore = useUserInfo()
 
-const sentinel = ref<HTMLElement | null>(null)
+const isTelegramModalOpen = ref<boolean>(false)
 
-const handleIntersection = (entries: IntersectionObserverEntry[]) => {
-  if (entries[0].isIntersecting && !loading.value && !paging.value.last) {
-    notificationsStore.loadNextPage()
+const updateNotificationMethod = async (method: NotificationMethod): Promise<void> => {
+  const user = userInfoStore.userInfo
+
+  if (!user) return
+
+  const currentMethods = [...user.userPreferences.notificationMethods]
+
+  const methodIndex = currentMethods.indexOf(method)
+
+  if (methodIndex === -1) {
+    currentMethods.push(method)
+  } else {
+    currentMethods.splice(methodIndex, 1)
   }
+
+  const updatedPreferences = {
+    ...user.userPreferences,
+    notificationMethods: currentMethods,
+  }
+
+  await userInfoStore.updateUserInfo({
+    userPreferences: updatedPreferences,
+  })
 }
 
-onMounted(() => {
-  if (sentinel.value) {
-    const observer = new IntersectionObserver(handleIntersection, {
-      root: null,
-      threshold: 0.1,
-    })
-    observer.observe(sentinel.value)
+const toggleModal = () => {
+  console.log('yup')
+  isTelegramModalOpen.value = !isTelegramModalOpen.value
+}
+onMounted(async () => {
+  if (!userInfoStore.userInfo) {
+    await userInfoStore.getUserInfo()
   }
 })
 </script>
 
 <template>
-  <div>
-    <div
-      class="flex gap-2.5 items-center absolute top-0 pt-8 w-full pb-[15px] bg-(--primary-white) dark:bg-(--primary-black-bg) z-10"
-    >
-      <NuxtLink to="/">
-        <IcBack />
-      </NuxtLink>
-      <h2 class="text-xl font-bold text-text dark:text-(--primary-white)">Уведомления</h2>
-    </div>
-    <div class="mt-11 space-y-4">
-      <div
-        v-for="notification in notifications"
-        :key="notification.id"
-        class="py-[17px] px-5 rounded-(--radius-4xl) bg-(--smoke-gray) dark:bg-(--secondary-black-bg)"
-      >
-        <p class="text-xs text-(--secondary-light-gray) opacity-80 font-semibold">
-          {{ getHumanDate(notification.createdAt) }}
-        </p>
-        <h2 class="text-sm text-(--color-text) dark:text-(--primary-white) font-semibold mt-1.5">
-          {{ notification.headerText }}
-        </h2>
-        <p class="text-xs text-(--color-text) dark:text-(--primary-white) mt-[3px]">
-          {{ notification.bodyText }}
-        </p>
+  <div class="pb-24">
+    <PagesTitle title="Уведомления" />
+    <div class="flex flex-col gap-[15px]">
+      <div class="">
+        <GeneralWidget
+          type="Telegram"
+          :id="
+            userInfoStore.userInfo?.telegramUsername
+              ? '@' + userInfoStore.userInfo.telegramUsername
+              : 'Не привязан'
+          "
+          :has-checkbox="true"
+          :checkbox-status="
+            !!userInfoStore.userInfo?.userPreferences?.notificationMethods.includes('TELEGRAM')
+          "
+          @checkbox-toggle="
+            !!userInfoStore.userInfo.telegramUsername
+              ? updateNotificationMethod('TELEGRAM')
+              : toggleModal()
+          "
+        />
+      </div>
+      <div class="">
+        <GeneralWidget
+          type="Email"
+          :id="userInfoStore.userInfo?.email || 'Не привязан'"
+          :has-checkbox="true"
+          :checkbox-status="
+            !!userInfoStore.userInfo?.userPreferences?.notificationMethods.includes('EMAIL')
+          "
+          @checkbox-toggle="updateNotificationMethod('EMAIL')"
+        />
+      </div>
+      <div class="">
+        <GeneralWidget type="Телефон" id="Функция находится в разработке" :has-checkbox="false" />
       </div>
     </div>
-    <div ref="sentinel" class="h-1"></div>
-    <div v-if="loading" class="mt-4 text-center">Загрузка...</div>
-    <div v-if="error" class="mt-4 text-center text-red-500">{{ error }}</div>
+    <EditFieldModal
+      v-if="isTelegramModalOpen"
+      @close="toggleModal"
+      field="telegramId"
+      :value="userInfoStore.userInfo?.telegramId"
+      class="absolute inset-0 w-full h-full z-50"
+      :part="2"
+    />
   </div>
 </template>
