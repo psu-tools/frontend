@@ -124,7 +124,6 @@ export function useAuth() {
       })
 
       console.log(response)
-      await login(data.email, data.password)
       return 200
     } catch (e) {
       if (e?.response?.status === 409) {

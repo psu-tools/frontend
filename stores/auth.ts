@@ -83,12 +83,28 @@ export const useAuthStore = defineStore('auth', () => {
     validatePassword()
     if (!emailError.value && !passwordError.value) {
       const { register } = useAuth()
-      return await register({
+      const successRegister = await register({
         email: email.value,
         password: password.value,
         firstName: name.value,
         lastName: surname.value,
       })
+
+      const { login, accessToken } = useAuth()
+      const success = await login(email.value, password.value)
+
+      if (success && accessToken.value) {
+        const decoded = decodeAccessToken(accessToken.value)
+        userId.value = decoded?.sub || null
+
+        if (userId.value) {
+          const userInfoStore = useUserInfo()
+          userInfoStore.setUserId(userId.value)
+          await userInfoStore.getUserInfo()
+        }
+      }
+
+      return success
     }
     return 400
   }
