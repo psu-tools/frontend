@@ -59,7 +59,7 @@ export const useTripsStore = defineStore('trips', () => {
       const config = useRuntimeConfig()
       const response = await customFetch<GetTripsListResponse>(
         `${config.public.apiHost}/${config.public.apiVersion}/routes-service/trips`,
-        { method: 'GET' }
+        { method: 'GET', query: { showPast: true } }
       )
       trips.value = response?.data || []
       console.log(trips.value)
