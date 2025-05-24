@@ -4,7 +4,7 @@ import IcBack from '~/icons/IcBack.vue'
 import AvatarInput from '~/shaared/ui/inputs/avatarInput.vue'
 import TextInput from '~/shaared/ui/inputs/textInput.vue'
 import { useAuthStore } from '~/stores/auth'
-import ErrorModal from '~/features/ErrorModal.vue'
+import { useUploadImage } from '~/composables/useUploadImage'
 
 const emit = defineEmits<{
   (e: 'prevStep'): void
@@ -17,6 +17,8 @@ const avatar = ref<File | null>(null)
 const name = ref<string>('')
 const surname = ref<string>('')
 
+const { uploadImage, imageUrl, isLoading, error } = useUploadImage()
+
 watch(name, () => {
   authStore.setName(name.value)
 })
@@ -25,12 +27,16 @@ watch(surname, () => {
   authStore.setSurname(surname.value)
 })
 
-watch(avatar, () => {
+watch(avatar, async () => {
   if (avatar.value) {
-    authStore.setAvatar(avatar.value)
-    console.log('avatar установлен')
+    const uploadedUrl = await uploadImage(avatar.value)
+    if (uploadedUrl) {
+      authStore.setAvatar?.(uploadedUrl)
+      console.log('URL загруженного аватара:', uploadedUrl)
+    } else {
+      console.error('Ошибка загрузки аватара:', error.value)
+    }
   }
-  console.log(avatar.value)
 })
 </script>
 
@@ -51,7 +57,7 @@ watch(avatar, () => {
 
       <PrimaryOrangeButton
         class="py-[15px] mt-[25px] cursor-pointer"
-        :disabled="!name"
+        :disabled="!name || isLoading"
         @click="emit('sendForm')"
         >Зарегистрироваться</PrimaryOrangeButton
       >

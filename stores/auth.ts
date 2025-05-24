@@ -9,7 +9,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   const name = ref<string>('')
   const surname = ref<string>('')
-  const avatar = ref<File | null>(null)
+  const avatar = ref<string | null>(null)
 
   const userId = ref<string | null>(null)
 
@@ -24,7 +24,7 @@ export const useAuthStore = defineStore('auth', () => {
   const setPassword = (newPassword: string) => (password.value = newPassword)
   const setName = (newName: string) => (name.value = newName)
   const setSurname = (newSurname: string) => (surname.value = newSurname)
-  const setAvatar = (newAvatar: File) => (avatar.value = newAvatar)
+  const setAvatar = (newAvatar: string) => (avatar.value = newAvatar)
 
   const validateEmail = () => {
     if (!email.value) {
@@ -81,6 +81,7 @@ export const useAuthStore = defineStore('auth', () => {
   const validateRegisterForm = async () => {
     validateEmail()
     validatePassword()
+    console.log(avatar.value)
     if (!emailError.value && !passwordError.value) {
       const { register } = useAuth()
       const successRegister = await register({
@@ -88,6 +89,7 @@ export const useAuthStore = defineStore('auth', () => {
         password: password.value,
         firstName: name.value,
         lastName: surname.value,
+        avatarUri: avatar.value || '',
       })
 
       const { login, accessToken } = useAuth()
@@ -104,7 +106,7 @@ export const useAuthStore = defineStore('auth', () => {
         }
       }
 
-      return success
+      return successRegister
     }
     return 400
   }

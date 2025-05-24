@@ -5,8 +5,10 @@ import EditProfileField from '~/features/edit-profile/EditProfileField.vue'
 import { useUserInfo } from '~/stores/userInfo'
 import IcUser from '~/icons/IcUser.vue'
 import EditFieldModal from '~/pages/editFieldModal.vue'
-
+import { useUploadImage } from '~/composables/useUploadImage'
 const userInfoStore = useUserInfo()
+
+const { uploadImage, imageUrl, isLoading, error } = useUploadImage()
 
 const isModalOpen = ref(false)
 const editingField = ref<'firstName' | 'lastName' | null>(null)
@@ -68,14 +70,16 @@ const handleFileChange = async (event: Event) => {
   if (!file) return
 
   try {
-    const avatarUrl = await uploadAvatar(file)
+    await uploadImage(file)
 
-    await userInfoStore.updateUserInfo({
-      avatarUri: avatarUrl,
-    })
-    await userInfoStore.getUserInfo()
+    if (imageUrl.value) {
+      await userInfoStore.updateUserInfo({
+        avatarUri: imageUrl.value,
+      })
+      await userInfoStore.getUserInfo()
+    }
   } catch (err) {
-    console.error('Ошибка при обновлении аватара:', err)
+    console.error('Ошибка при загрузке изображения:', err)
   } finally {
     input.value = ''
   }
@@ -87,7 +91,7 @@ const handleFileChange = async (event: Event) => {
     <PagesTitle title="Редактирование" />
     <div class="mt-2.5 w-full flex items-center justify-center mb-[35px]">
       <div class="flex flex-col items-center gap-[10px]">
-        <div class="w-[60px] h-[86px] rounded-full">
+        <div class="w-[80px] h-[80px] rounded-full">
           <div v-if="userInfoStore.userInfo?.avatarUri">
             <img
               :src="userInfoStore.userInfo.avatarUri"
