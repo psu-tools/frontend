@@ -13,7 +13,7 @@ definePageMeta({
 
 <template>
   <div
-    class="bg-(--primary-white) w-full min-h-screen xl:pt-[70px] lg:pt-[70px] pt-[40px] px-5 sm:px-10 md:px-16 lg:px-[180px] xl:px-[220px] 2xl:px-[240px] gap-[70px] flex flex-col justify-between items-center"
+    class="here bg-(--primary-white) w-full min-h-screen xl:pt-[70px] lg:pt-[70px] pt-[40px] px-5 sm:px-10 md:px-16 lg:px-[180px] xl:px-[220px] 2xl:px-[240px] gap-[70px] flex flex-col justify-between items-center"
   >
     <div class="xl:w-[80px] lg:w-[80px] w-[40px]">
       <NuxtLink to="/">
