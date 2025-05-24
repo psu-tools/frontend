@@ -42,7 +42,7 @@ definePageMeta({
           </div>
           <NuxtLink to="/">
             <PrimaryOrangeButton
-              class="w-full cursor-pointer text-lg py-[20px] xl:max-w-[450px] lg:max-w-[450px] xl:rounded-2xl lg:rounded-2xl rounded-full"
+              class="w-full cursor-pointer xl:text-lg lg:text-lg text-sm xl:py-[20px] lg:py-[15px] py-[15px] xl:max-w-[450px] lg:max-w-[450px] xl:rounded-2xl lg:rounded-2xl rounded-full"
             >
               Регистрация
             </PrimaryOrangeButton>
