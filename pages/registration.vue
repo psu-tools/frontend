@@ -20,18 +20,21 @@ const nextStep = () => step.value++
 const prevStep = () => step.value--
 
 const sendForm = async () => {
-  const code = await authStore.validateRegisterForm()
-  if (code === 200) {
-    isFormSent.value = true
-  } else if (code === 409) {
-    errorMessage.value = 'Этот email уже используется'
-    errorDescription.value = 'Пожалуйста, введите другой email, чтобы продолжить'
-    hasError.value = true
-  } else {
-    errorMessage.value = 'Возникла ошибка'
-    errorDescription.value = 'Попробуйте позже'
-    hasError.value = true
-  }
+  // const code = await authStore.validateRegisterForm()
+  // if (code === 200) {
+  //   isFormSent.value = true
+  // } else if (code === 409) {
+  //   errorMessage.value = 'Этот email уже используется'
+  //   errorDescription.value = 'Пожалуйста, введите другой email, чтобы продолжить'
+  //   hasError.value = true
+  // } else {
+  //   errorMessage.value = 'Возникла ошибка'
+  //   errorDescription.value = 'Попробуйте позже'
+  //   hasError.value = true
+  // }
+  errorMessage.value = 'Регистрация недоступна'
+  errorDescription.value = 'Зарегистрируйтесь после демо'
+  hasError.value = true
 }
 </script>
 
