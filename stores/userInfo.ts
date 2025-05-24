@@ -6,9 +6,9 @@ export type InterfaceLanguage = 'ru' | 'en'
 export type NotificationMethod = 'EMAIL' | 'PHONE_NUMBER' | 'TELEGRAM'
 
 export interface UserPreferences {
-  interfaceLanguage: InterfaceLanguage
-  notificationMethods: NotificationMethod[]
-  overtimeMultiplier: number
+  interfaceLanguage?: InterfaceLanguage
+  notificationMethods?: NotificationMethod[]
+  overtimeMultiplier?: number
 }
 
 export interface UserInfo {
@@ -52,6 +52,7 @@ export const useUserInfo = defineStore('userInfo', () => {
       if (userInfo.value !== response) {
         userInfo.value = response
       }
+      console.log(userInfo.value)
       return response
     } catch (error) {
       throw error
@@ -73,7 +74,6 @@ export const useUserInfo = defineStore('userInfo', () => {
       )
       await getUserInfo()
       console.log('Информация успешно обновлена')
-      userInfo.value = response
       return response
     } catch (error) {
       throw error

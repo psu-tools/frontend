@@ -2,9 +2,12 @@
 import PagesTitle from '~/widgets/profilePages/PagesTitle.vue'
 import IcClock from '~/icons/IcClock.vue'
 import TimeReservePopup from '~/shaared/ui/TimeReservePopup.vue'
+import { useUserInfo } from '~/stores/userInfo'
+
+const userInfoStore = useUserInfo()
 
 const isPopupOpen = ref(false)
-const selectedPercentage = ref(5)
+const selectedPercentage = ref(userInfoStore.userInfo?.userPreferences.overtimeMultiplier || 5)
 
 const openPopup = () => {
   isPopupOpen.value = true
@@ -13,6 +16,23 @@ const openPopup = () => {
 const handleSelect = (value: number) => {
   selectedPercentage.value = value
 }
+
+watch(selectedPercentage, () => {
+  setTimeout(() => {
+    userInfoStore.updateUserInfo({
+      userPreferences: {
+        overtimeMultiplier: selectedPercentage.value,
+      },
+    })
+  }, 300)
+  console.log(selectedPercentage.value)
+})
+
+onMounted(async () => {
+  if (!userInfoStore.userInfo) {
+    await userInfoStore.getUserInfo()
+  }
+})
 </script>
 
 <template>
