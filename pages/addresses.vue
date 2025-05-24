@@ -26,13 +26,11 @@ const popupMode = ref<'add' | 'edit'>('edit')
 
 const handleSelectPoint = (point: any) => {
   if (isSelectorOpen.value) {
-    // Выбор точки из SelectPointModal — открываем редактор новой точки
     pointToEdit.value = point
     popupMode.value = 'add'
     isEditPopupOpen.value = true
     isSelectorOpen.value = false
   } else {
-    // Выбор существующей точки — открываем PointActionsModal
     selectedPointForActions.value = point
     isPointActionsOpen.value = true
   }

@@ -91,32 +91,37 @@ const submit = async () => {
             part === 1
               ? editingLabel
               : part === 2 && editingLabel.toLowerCase() === 'telegram'
-                ? 'Привязка telegram'
+                ? 'Привязка Telegram'
                 : ''
           }}
         </h2>
       </div>
     </div>
-    <div v-show="part === 1">
+    <div v-show="part === 1" class="flex flex-col items-center gap-[35px]">
       <component :is="CurrentIcon" v-if="CurrentIcon" class="mx-auto mb-4" />
-      <p
-        class="text-center mb-[10px] text-sm text-(--color-text) dark:text-(--primary-white) font-semibold"
-      >
-        {{ editingValue }}
-      </p>
-      <p class="text-center mb-[35px] text-[16px] text-(--primary-gray-icon)">
-        Ваш {{ editingLabel.toLowerCase() }}, привязанный к Flow
-      </p>
+      <div>
+        <p
+          class="text-center mb-[10px] text-sm text-(--color-text) dark:text-(--primary-white) font-semibold"
+        >
+          {{ editingValue }}
+        </p>
+        <p class="text-center text-[16px] text-(--primary-gray-icon)">
+          Ваш {{ editingLabel.toLowerCase() }}, привязанный к Flow
+        </p>
+      </div>
       <div class="flex items-center justify-center w-fit max-w-full mx-auto">
         <PrimaryOrangeButton class="py-[10.5px] px-[30px] rounded-(--radius-xl)" @click="part = 2">
           Изменить {{ editingLabel.toLowerCase() }}
         </PrimaryOrangeButton>
       </div>
     </div>
-    <div v-show="part === 2 && editingLabel.toLowerCase() !== 'telegram'">
+    <div
+      v-show="part === 2 && editingLabel.toLowerCase() !== 'telegram'"
+      class="flex flex-col items-center gap-[30px]"
+    >
       <component :is="CurrentIcon" v-if="CurrentIcon" class="mx-auto mb-4 w-[70px] h-[144px]" />
       <p
-        class="text-center mb-[10px] text-xl text-(--color-text) dark:text-(--primary-white) font-bold leading-6"
+        class="text-center text-xl text-(--color-text) dark:text-(--primary-white) font-bold leading-6"
       >
         Введите ваш новый {{ editingLabel.toLowerCase() }}
       </p>
@@ -138,7 +143,7 @@ const submit = async () => {
                 ? 'username'
                 : ''
         "
-        class="no-spinner mt-[30px] text-sm text-center text-(--color-black) dark:text-(--primary-white) outline-none caret-(--primary-orange) py-[18px] px-[15px] rounded-2xl bg-(--primary-white) dark:bg-(--secondary-black-bg) w-full"
+        class="no-spinner text-sm text-center text-(--color-black) dark:text-(--primary-white) outline-none caret-(--primary-orange) py-[18px] px-[15px] rounded-2xl bg-(--primary-white) dark:bg-(--secondary-black-bg) w-full"
       />
       <BottomSheetBottomBar>
         <PrimaryOrangeButton class="px-[15px] py-3" :disabled="inputText === ''" @click="submit">

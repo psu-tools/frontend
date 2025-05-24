@@ -62,7 +62,7 @@ onMounted(() => {
 <template>
   <Teleport to="#modal-container">
     <div
-      class="absolute inset-0 z-50 flex justify-center items-end bg-black/20 transition-opacity duration-300"
+      class="absolute inset-0 z-10 flex justify-center items-end bg-black/20 transition-opacity duration-300"
       :class="{ 'opacity-100': isVisible, 'opacity-0': !isVisible }"
       @click.self="closeModal"
     >

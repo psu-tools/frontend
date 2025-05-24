@@ -8,11 +8,10 @@ interface GetPointsListResponse {
   paging: PagingResponse
 }
 
-const userId = ref<string>('4cef84ba-a98a-4089-b6d8-bf0416ad2208')
-
 export const useUserPointsStore = defineStore('userPoints', () => {
   const isLoading = ref(false)
   const favoritePoints = ref<Point[]>([])
+  const userId = ref<string | null>(null)
 
   const fetchUserPoints = async () => {
     try {
@@ -36,14 +35,17 @@ export const useUserPointsStore = defineStore('userPoints', () => {
   const addUserPoint = async (point: any) => {
     try {
       const config = useRuntimeConfig()
+      const userInfoStore = useUserInfo()
       const body = {
-        userId: '4cef84ba-a98a-4089-b6d8-bf0416ad2208', // может быть из auth store
+        userId: userInfoStore.userId || localStorage.getItem('userId'),
         defaultName: point.formatted || point.name || 'Без названия',
         customName: point.name || '',
         latitude: point.geometry?.lat || point.latitude,
         longitude: point.geometry?.lng || point.longitude,
         address: point.formatted || point.address || '',
       }
+
+      console.log(body)
 
       const response = await customFetch(
         `${config.public.apiHost}/${config.public.apiVersion}/routes-service/points/favorites`,

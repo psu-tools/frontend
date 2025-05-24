@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { useUserInfo } from '~/stores/userInfo'
+
+const userInfoStore = useUserInfo()
+
 const props = defineProps<{ initialPercentage?: number }>()
 
 const emit = defineEmits<{ (e: 'select', value: number): void }>()
@@ -10,7 +14,7 @@ const selectedPercentageIndex = ref(0)
 const itemHeight = 48
 const visibleItems = 3
 const paddingOffset = Math.floor(visibleItems / 2) * itemHeight
-// const percentageCol = ref<HTMLElement | null>(null)
+const percentageCol = ref<HTMLElement | null>(null)
 
 const selectedPercentage = computed(() => percentages[selectedPercentageIndex.value])
 
