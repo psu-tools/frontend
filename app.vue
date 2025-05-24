@@ -9,7 +9,7 @@ import { NuxtLayout } from '#components'
 const route = useRoute()
 const tripsStore = useTripsStore()
 
-const isFullscreenRoute = computed(() => route.path === 'about')
+const isFullscreenRoute = computed(() => route.path === '/about')
 
 onMounted(async () => {
   await tripsStore.fetchTrips()
@@ -35,7 +35,7 @@ onMounted(async () => {
       </div>
     </div>
 
-    <div class="sm:w-1/2 sm:pr-10">
+    <div :class="isFullscreenRoute ? 'absolute inset-0 h-screen w-screen ' : 'sm:w-1/2 sm:pr-10'">
       <component
         :is="isFullscreenRoute ? 'div' : NuxtLayout"
         :class="isFullscreenRoute ? '' : 'sm:rounded-3xl sm:shadow-2xl sm:mx-auto overflow-hidden'"

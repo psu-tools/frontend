@@ -1,6 +1,6 @@
 <script setup lang="ts"></script>
 <template>
-  <div class="absolute inset-0 bg-(--primary-white) w-full">
+  <div>
     <NuxtPage />
   </div>
 </template>
