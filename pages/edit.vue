@@ -91,7 +91,7 @@ const handleFileChange = async (event: Event) => {
     <PagesTitle title="Редактирование" />
     <div class="mt-2.5 w-full flex items-center justify-center mb-[35px]">
       <div class="flex flex-col items-center gap-[10px]">
-        <div class="w-[80px] h-[80px] rounded-full">
+        <div class="rounded-full">
           <div v-if="userInfoStore.userInfo?.avatarUri">
             <img
               :src="userInfoStore.userInfo.avatarUri"
