@@ -46,7 +46,7 @@ const sendForm = async () => {
     <InfoStep @send-form="sendForm" @prev-step="prevStep" />
   </div>
   <ErrorModal
-    @on-click="hasError.value = false"
+    @on-click="hasError = false"
     :is-open="hasError"
     :message="errorMessage"
     :description="errorDescription"
