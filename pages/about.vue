@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import PrimaryOrangeButton from '~/shaared/ui/buttons/PrimaryOrangeButton.vue'
+
 import Phone from '~/assets/img/phone.png'
 
 const image = ref<HTMLImageElement | null>(null)
@@ -39,10 +41,7 @@ definePageMeta({
   <div
     class="w-full min-h-screen xl:pt-[145px] pt-[145px] px-5 sm:px-10 md:px-16 lg:px-[180px] xl:px-[240px] 2xl:px-[256px] flex flex-col xl:flex-row justify-between items-center xl:items-end"
   >
-    <div
-      class="flex flex-col justify-between flex-1 xl:max-w-[600px] mb-10 lg:mb-0"
-      :style="screenIsXl ? { height: imageHeight + 'px' } : {}"
-    >
+    <div class="flex flex-col justify-between flex-1 xl:max-w-[600px] mb-10 lg:mb-0">
       <div>
         <NuxtLink to="/">
           <div
@@ -52,11 +51,13 @@ definePageMeta({
           </div>
         </NuxtLink>
 
-        <div class="text-4xl lg:text-5xl xl:text-left lg:text-left text-center leading-[140%]">
+        <div class="text-4xl lg:text-4xl xl:text-left lg:text-left text-center leading-[140%]">
           Твой удобный помощник для эффективного планирования поездок
         </div>
       </div>
-      <div class="mt-10 text-3xl xl:block hidden text-(--color-glay-about)">PSU Tools</div>
+      <PrimaryOrangeButton class="w-full cursor-pointer py-[15px]">
+        Регистрация
+      </PrimaryOrangeButton>
     </div>
 
     <div class="flex justify-end items-start xl:self-end lg:self-center" ref="imageWrapper">
