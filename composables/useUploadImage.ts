@@ -1,5 +1,3 @@
-import { ref } from 'vue'
-
 export function useUploadImage() {
   const imageUrl = ref<string | null>(null)
   const isLoading = ref(false)
@@ -7,7 +5,7 @@ export function useUploadImage() {
   const config = useRuntimeConfig()
   const API_KEY = config.public.imgbbApiKey || ''
 
-  async function uploadImage(file: File) {
+  const uploadImage = async (file: File) => {
     if (!file) {
       error.value = 'Файл не выбран'
       return null
