@@ -34,9 +34,9 @@ const fieldLabelMap = {
 }
 
 const iconMap = {
-  phoneNumber: IcPhoneEdit,
+  phoneNumber: IcEmailEdit,
   email: IcEmailEdit,
-  telegramId: IcTelegramEdit,
+  telegramId: IcEmailEdit,
 }
 
 const editingLabel = computed(() => fieldLabelMap[props.field])

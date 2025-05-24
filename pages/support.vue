@@ -15,7 +15,9 @@ import SecondaryButton from '~/shaared/ui/buttons/SecondaryButton.vue'
       </h2>
     </div>
     <div class="flex flex-col gap-[15px]">
-      <PrimaryOrangeButton class="py-[15px]">Продолжить</PrimaryOrangeButton>
+      <a href="https://t.me/renatskosarev">
+        <PrimaryOrangeButton class="py-[15px]">Продолжить</PrimaryOrangeButton>
+      </a>
       <NuxtLink to="/profile" class="w-full">
         <SecondaryButton>Вернуться назад</SecondaryButton>
       </NuxtLink>
