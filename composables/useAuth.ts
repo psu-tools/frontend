@@ -96,6 +96,7 @@ export function useAuth() {
     accessToken.value = null
     refreshToken.value = null
     navigateTo('/welcome')
+    localStorage.removeItem('userId')
     console.log('success logout')
     return true
   }
