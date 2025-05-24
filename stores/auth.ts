@@ -48,8 +48,11 @@ export const useAuthStore = defineStore('auth', () => {
 
   const decodeAccessToken = (token: string): any | null => {
     try {
-      const base64Payload = token.split('.')[1]
-      const jsonPayload = atob(base64Payload)
+      const base64Url = token.split('.')[1]
+      if (!base64Url) throw new Error('Неверный формат токена')
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
+      const padded = base64.padEnd(base64.length + ((4 - (base64.length % 4)) % 4), '=')
+      const jsonPayload = atob(padded)
       return JSON.parse(jsonPayload)
     } catch (e) {
       console.error('Ошибка при декодировании access_token:', e)
