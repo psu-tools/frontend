@@ -16,7 +16,7 @@ onMounted(async () => {
     class="bg-(--primary-white-bg) dark:bg-(--secondary-black-bg) hover:bg-(--primary-white-hover) dark:hover:bg-(--secondary-black-bg-hover) rounded-(--radius-4xl) py-[15px] pl-[15px] pr-[22px]"
   >
     <div class="flex items-center gap-[15px]">
-      <div v-if="userInfoStore.userInfo?.avatarUri">
+      <div v-if="userInfoStore.userInfo?.avatarUri" class="w-[64px] h-[64px]">
         <img
           :src="userInfoStore.userInfo.avatarUri"
           alt="Аватар"
