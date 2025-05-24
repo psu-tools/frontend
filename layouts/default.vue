@@ -10,7 +10,7 @@ const route = useRoute()
     class="relative dark:bg-(--primary-black-bg) sm:w-96 h-dvh sm:h-[700px] flex flex-col overflow-hidden"
     :class="[route.meta.bodyClass || 'bg-(--primary-white)']"
   >
-    <div class="mt-2.5 w-full flex items-center justify-center mb-[35px]">
+    <div class="flex-1 overflow-y-auto pt-[25px] px-4 scrollbar-hide">
       <slot />
     </div>
     <Navbar />
