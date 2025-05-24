@@ -39,13 +39,13 @@ definePageMeta({
 
 <template>
   <div
-    class="w-full min-h-screen xl:pt-[145px] pt-[145px] px-5 sm:px-10 md:px-16 lg:px-[180px] xl:px-[240px] 2xl:px-[256px] flex flex-col xl:flex-row justify-between items-center xl:items-end"
+    class="w-full min-h-screen xl:pt-[145px] pt-[145px] px-5 sm:px-10 md:px-16 lg:px-[180px] xl:px-[240px] 2xl:px-[256px] flex flex-col xl:flex-row justify-between items-center"
   >
-    <div class="flex flex-col justify-between flex-1 xl:max-w-[600px] mb-10 lg:mb-0">
-      <div>
+    <div class="flex flex-col justify-between flex-1 xl:max-w-[600px] lg:mb-0">
+      <div class="flex flex-col gap-[75px]">
         <NuxtLink to="/">
           <div
-            class="xl:mb-[60px] lg:mb-[40px] mb-[20px] text-5xl lg:text-6xl leading-[140%] xl:text-left lg:text-left text-center font-bold bg-gradient-to-b from-[#FFA181] to-[#FF724C] bg-clip-text text-transparent"
+            class="text-5xl lg:text-6xl leading-[140%] xl:text-left lg:text-left text-center font-bold bg-gradient-to-b from-[#FFA181] to-[#FF724C] bg-clip-text text-transparent"
           >
             Флоу
           </div>
@@ -54,10 +54,14 @@ definePageMeta({
         <div class="text-4xl lg:text-4xl xl:text-left lg:text-left text-center leading-[140%]">
           Твой удобный помощник для эффективного планирования поездок
         </div>
+        <NuxtLink to="/">
+          <PrimaryOrangeButton
+            class="w-full cursor-pointer text-lg py-[20px] xl:max-w-[450px] lg:max-w-[450px]"
+          >
+            Регистрация
+          </PrimaryOrangeButton>
+        </NuxtLink>
       </div>
-      <PrimaryOrangeButton class="w-full cursor-pointer py-[15px]">
-        Регистрация
-      </PrimaryOrangeButton>
     </div>
 
     <div class="flex justify-end items-start xl:self-end lg:self-center" ref="imageWrapper">
