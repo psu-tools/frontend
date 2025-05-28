@@ -57,9 +57,7 @@ watch([selectedReminderTimeIndex], () => emit('select', selectedTime.value))
           v-for="(time, i) in paddedReminderTime"
           :key="'month-' + i"
           class="h-12 flex justify-center items-center text-center snap-center text-sm"
-          :class="{
-            'opacity-50': time !== 0 && i !== selectedReminderTimeIndex,
-          }"
+          :class="{ 'opacity-50': i !== selectedReminderTimeIndex }"
         >
           За {{ time || '' }} минут
         </div>
