@@ -43,8 +43,8 @@ export default defineNuxtConfig({
       name: 'Flow',
       short_name: 'Flow',
       description: 'Напоминание о поездках',
-      theme_color: '#ffffff',
-      background_color: '#ffffff',
+      theme_color: '#000000',
+      background_color: '#000000',
       display: 'standalone',
       start_url: '/',
       icons: [
@@ -72,5 +72,6 @@ export default defineNuxtConfig({
       navigateFallback: '/',
     },
   },
+
   plugins: ['~/plugins/yandex-maps.client.ts'],
 })
