@@ -8,7 +8,7 @@ const props = defineProps<{ initialPercentage?: number }>()
 const emit = defineEmits<{ (e: 'select', value: number): void }>()
 
 const percentages = Array.from({ length: 20 }, (_, i) => (i + 1) * 5)
-const paddedPercentages = computed(() => [null, ...percentages, null])
+const paddedPercentages = computed(() => [...percentages])
 
 const selectedPercentageIndex = ref(0)
 const itemHeight = 48
@@ -53,14 +53,16 @@ watch(selectedPercentageIndex, () => {
         ref="percentageCol"
         @scroll.passive="onScroll"
       >
+        <div class="h-12"></div>
         <div
           v-for="(percent, i) in paddedPercentages"
           :key="'percent-' + i"
           class="h-12 flex items-center justify-center snap-center text-sm"
-          :class="{ 'opacity-50': percent !== null && i - 1 !== selectedPercentageIndex }"
+          :class="{ 'opacity-50': i !== selectedPercentageIndex }"
         >
           {{ percent !== null ? percent + '%' : '' }}
         </div>
+        <div class="h-12"></div>
       </div>
     </div>
     <div
