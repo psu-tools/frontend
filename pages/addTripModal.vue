@@ -104,7 +104,6 @@ const updateStop = (newValue: SuggestionPoint | Point, pointType: 'api' | 'user'
       })
     }
   }
-  closePointSelector()
 }
 
 const onClickStopPoint = (index: number) => {
