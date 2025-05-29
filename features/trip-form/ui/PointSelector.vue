@@ -113,6 +113,17 @@ watch(
     if (yandexMapsModalStore.selectedPoint) {
       selectPoint(yandexMapsModalStore.selectedPoint, 'user')
     }
+  },
+  { deep: true }
+)
+
+watch(
+  () => yandexMapsModalStore.isOpen,
+  () => {
+    if (!yandexMapsModalStore.isOpen && !!yandexMapsModalStore.selectedPoint) {
+      closeSelector()
+      yandexMapsModalStore.clearPoint()
+    }
   }
 )
 </script>
@@ -134,6 +145,7 @@ watch(
             :placeholder="index === 0 ? 'Откуда поедем?' : 'Куда поедем?'"
             class="text-sm text-(--color-black) dark:text-(--primary-white) outline-none caret-(--primary-orange) py-[18px] px-[15px] rounded-2xl bg-(--primary-white) dark:bg-(--secondary-black-bg) w-full"
             v-model="inputValue"
+            @keyup.enter="closeSelector"
           />
           <button @click="closeSelector" class="cursor-pointer">
             <IcClose />
