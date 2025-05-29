@@ -73,5 +73,5 @@ export default defineNuxtConfig({
     },
   },
 
-  plugins: ['~/plugins/yandex-maps.client.ts'],
+  // plugins: ['~/plugins/yandex-maps.client.ts'],
 })
