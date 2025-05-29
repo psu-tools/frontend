@@ -147,7 +147,7 @@ export const useTripFormStore = defineStore('tripForm', () => {
       },
     ]
     transportType.value = 'WALK'
-    mergedDateTime.value = null
+    mergedDateTime.value = ''
   }
 
   return {

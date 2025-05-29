@@ -82,7 +82,7 @@ onMounted(() => {
           :initial-value="initialValue"
           :index="null"
           @close="closeModal"
-          @selectPoint="selectPoint"
+          @select-point="selectPoint"
           @toggle-expand="toggleExpand"
         />
       </div>
