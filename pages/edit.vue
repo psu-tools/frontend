@@ -93,13 +93,13 @@ const handleFileChange = async (event: Event) => {
       <div class="flex flex-col items-center gap-[10px]">
         <div class="rounded-full">
           <div v-if="userInfoStore.userInfo?.avatarUri">
-            <img
+            <NuxtImg
               :src="userInfoStore.userInfo.avatarUri"
               alt="Аватар"
               class="rounded-full object-cover w-20 h-20"
             />
           </div>
-          <div v-else>
+          <div v-else class="w-20 h-20">
             <IcUser />
           </div>
         </div>

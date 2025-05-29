@@ -28,10 +28,10 @@ useTheme()
   >
     <div class="hidden sm:block w-1/2">
       <div class="flex gap-3 items-start sm:pb-32">
-        <img
+        <NuxtImg
           src="/web-app-manifest-192x192.png"
           class="bg-gradient-to-b from-(--smoke-gray) to-[#EBEBEB] dark:from-[#3a3a3a] dark:to-[#2f2f2f] h-20 w-20 rounded-(--radius-2xl) mt-1.5"
-          alt=""
+          alt="Flow logo"
         />
         <h1 class="text-text dark:text-(--primary-orange) sm:text-4xl lg:text-6xl 2xl:pl-20">
           <span class="font-bold">Flow</span> — <br />
