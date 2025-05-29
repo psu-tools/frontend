@@ -10,6 +10,9 @@ import PointActionsModal from '~/features/edit-address/PointActionsModal.vue'
 import IcAdd from '~/icons/IcAdd.vue'
 
 import { useUserPointsStore } from '~/stores/userPoints'
+import { useYandexMapsModalStore } from '~/stores/yandexMaps'
+
+const ymapsStore = useYandexMapsModalStore()
 
 const userPointsStore = useUserPointsStore()
 const { fetchUserPoints, addUserPoint } = userPointsStore
@@ -25,6 +28,7 @@ const isEditPopupOpen = ref(false)
 const popupMode = ref<'add' | 'edit'>('edit')
 
 const handleSelectPoint = (point: any) => {
+  ymapsStore.closeModal()
   if (isSelectorOpen.value) {
     pointToEdit.value = point
     popupMode.value = 'add'
