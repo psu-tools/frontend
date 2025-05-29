@@ -1,8 +1,14 @@
 <script setup lang="ts">
 import PrimaryOrangeButton from '~/shaared/ui/buttons/PrimaryOrangeButton.vue'
 
-import Phone from '~/assets/img/phone.png'
-import LightLogo from '~/assets/img/logo-light.png'
+useSeoMeta({
+  title: 'Flow – всегда вовремя',
+  description: 'Планируйте путешествия с Flow: поиск мест, маршрутов и напоминания о поездках',
+  ogTitle: 'Flow – всегда вовремя',
+  ogDescription: 'Flow поможет спланировать ваши маршруты и не забыть важные дела в путешествии',
+  ogImage: 'https://ibb.co/PZzQLvxg',
+  twitterCard: 'summary_large_image',
+})
 
 const image = ref<HTMLImageElement | null>(null)
 
@@ -17,7 +23,11 @@ definePageMeta({
   >
     <div class="xl:w-[80px] lg:w-[80px] w-[40px]">
       <NuxtLink to="/">
-        <img :src="LightLogo" alt="" />
+        <NuxtImg
+          src="/web-app-manifest-192x192.png"
+          class="bg-gradient-to-b from-(--smoke-gray) to-[#EBEBEB] h-20 w-20 rounded-(--radius-2xl) mt-1.5"
+          alt="Flow logo"
+        />
       </NuxtLink>
     </div>
     <div
@@ -51,7 +61,12 @@ definePageMeta({
       </div>
 
       <div class="flex justify-end items-start xl:self-end lg:self-center" ref="imageWrapper">
-        <img :src="Phone" alt="Phone" class="max-w-full h-auto object-contain" ref="image" />
+        <NuxtImg
+          src="/phone.png"
+          alt="Phone"
+          class="max-w-full h-auto object-contain"
+          ref="image"
+        />
       </div>
     </div>
   </div>
