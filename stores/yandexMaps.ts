@@ -2,20 +2,15 @@ import { defineStore } from 'pinia'
 
 export const useYandexMapsModalStore = defineStore('yandexMapsModal', () => {
   const isOpen = ref(false)
-  const selectedPoint = ref<Point>()
+  const selectedPoint = ref<Point | null>(null)
 
-  const openModal = () => {
-    isOpen.value = true
-  }
+  const openModal = () => (isOpen.value = true)
 
-  const closeModal = () => {
-    isOpen.value = false
-  }
+  const closeModal = () => (isOpen.value = false)
 
-  const selectPoint = (point: Point) => {
-    selectedPoint.value = point
-    closeModal()
-  }
+  const clearPoint = () => (selectedPoint.value = null)
+
+  const selectPoint = (point: Point) => (selectedPoint.value = point)
 
   return {
     isOpen,
@@ -23,5 +18,6 @@ export const useYandexMapsModalStore = defineStore('yandexMapsModal', () => {
     openModal,
     closeModal,
     selectPoint,
+    clearPoint,
   }
 })
