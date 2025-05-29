@@ -8,6 +8,7 @@ export function useTheme() {
   let mediaQuery: MediaQueryList | null = null
   const onSystemThemeChange = (e: MediaQueryListEvent) => {
     if (theme.value === 'system') {
+      localStorage.setItem('theme', e.matches ? 'dark' : 'light')
       applyTheme(e.matches ? 'dark' : 'light')
     }
   }

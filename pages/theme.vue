@@ -11,7 +11,7 @@ const activeTheme = ref(
       : 'Как в системе'
 )
 
-const { theme, setTheme: applyTheme } = useTheme()
+const { setTheme: applyTheme } = useTheme()
 
 const setTheme = (value: string) => {
   activeTheme.value = value

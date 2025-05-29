@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import IcBack from '~/icons/IcBack.vue'
 import { useYandexMapsModalStore } from '~/stores/yandexMaps'
+import { loadYandexMaps } from '@/utils/loadYandexMaps'
 
 const isVisible = ref(false)
+const mapTheme = ref(localStorage.getItem('theme'))
+const isYandexMapsLoaded = ref(false)
 
 const store = useYandexMapsModalStore()
 
@@ -25,7 +28,6 @@ watch(
     }
   }
 )
-import { loadYandexMaps } from '@/utils/loadYandexMaps'
 
 onMounted(async () => {
   try {
@@ -39,6 +41,7 @@ onMounted(async () => {
         center: [56.227, 58.0092],
         zoom: 12,
       },
+      theme: mapTheme.value,
     })
 
     map.addChild(new YMapDefaultSchemeLayer())
@@ -61,7 +64,7 @@ onMounted(async () => {
     markerEl.style.position = 'absolute'
     markerEl.style.cursor = 'pointer'
 
-    let marker = new YMapMarker({ coordinates: [56.227, 58.0092] }, markerEl)
+    let marker = new YMapMarker({ coordinates: [0, 0] }, markerEl)
     map.addChild(marker)
 
     const geoBtn = document.createElement('button')
@@ -192,6 +195,7 @@ onMounted(async () => {
       },
     })
     map.addChild(mapListener)
+    isYandexMapsLoaded.value = true
   } catch (e) {
     console.error('Ошибка загрузки Yandex Maps:', e)
   }
@@ -199,7 +203,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div v-show="store.isOpen" class="absolute inset-0 z-50">
+  <div v-show="isYandexMapsLoaded" class="absolute inset-0 z-50">
     <div
       class="bg-(--primary-white) dark:bg-(--secondary-black-bg) text-(--color-text) dark:text-(--primary-white) p-4 flex gap-2 items-center"
     >
