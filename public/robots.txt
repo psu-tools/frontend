@@ -1,1 +1,3 @@
-
+User-agent: *
+Allow: /
+Sitemap: https://flow.psu-tools.ru/sitemap.xml
