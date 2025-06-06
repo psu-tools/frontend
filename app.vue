@@ -5,7 +5,6 @@ import YandexMaps from '~/pages/yandexMaps.vue'
 
 import { useTripsStore } from '~/stores/trips'
 import { NuxtLayout } from '#components'
-import YandexMapsV3 from '~/pages/yandexMapsV3.vue'
 import { useYandexMapsModalStore } from '~/stores/yandexMaps'
 
 const route = useRoute()
@@ -15,10 +14,9 @@ const yandexMapsModalStore = useYandexMapsModalStore()
 const isFullscreenRoute = computed(() => route.path === '/about')
 
 onMounted(async () => {
+  useTheme()
   await tripsStore.fetchTrips()
 })
-
-useTheme()
 </script>
 
 <template>
@@ -54,8 +52,7 @@ useTheme()
         <NuxtPage />
         <TripPopup v-if="!isFullscreenRoute" />
         <AddTripModal v-if="!isFullscreenRoute" />
-        <!--        <YandexMaps v-if="!isFullscreenRoute" />-->
-        <YandexMapsV3 v-if="!isFullscreenRoute && yandexMapsModalStore.isOpen" />
+        <YandexMaps v-if="!isFullscreenRoute && yandexMapsModalStore.isOpen" />
       </component>
     </div>
   </div>
