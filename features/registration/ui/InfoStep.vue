@@ -17,7 +17,7 @@ const avatar = ref<File | null>(null)
 const name = ref<string>('')
 const surname = ref<string>('')
 
-const { uploadImage, imageUrl, isLoading, error } = useUploadImage()
+const { uploadImage, isLoading, error } = useUploadImage()
 
 watch(name, () => {
   authStore.setName(name.value)

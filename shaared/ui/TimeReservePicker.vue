@@ -1,8 +1,4 @@
 <script setup lang="ts">
-import { useUserInfo } from '~/stores/userInfo'
-
-const userInfoStore = useUserInfo()
-
 const props = defineProps<{ initialPercentage?: number }>()
 
 const emit = defineEmits<{ (e: 'select', value: number): void }>()

@@ -103,7 +103,7 @@ export const useTripFormStore = defineStore('tripForm', () => {
 
     try {
       const config = useRuntimeConfig()
-      const data = await customFetch(
+      await customFetch(
         `${config.public.apiHost}/${config.public.apiVersion}/routes-service/trips`,
         {
           method: 'POST',

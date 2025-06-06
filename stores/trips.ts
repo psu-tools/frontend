@@ -73,11 +73,11 @@ export const useTripsStore = defineStore('trips', () => {
   const deleteTrip = async (tripId: string) => {
     try {
       const config = useRuntimeConfig()
-      const response = await customFetch<DeleteTripResponse>(
+      await customFetch<DeleteTripResponse>(
         `${config.public.apiHost}/${config.public.apiVersion}/routes-service/trips/${tripId}`,
         { method: 'DELETE' }
       )
-      fetchTrips()
+      await fetchTrips()
     } catch (error) {
       console.error('Поездка не была удалена:', error)
     }

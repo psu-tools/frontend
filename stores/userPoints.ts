@@ -64,7 +64,7 @@ export const useUserPointsStore = defineStore('userPoints', () => {
   const deleteUserPoint = async (pointId: string) => {
     try {
       const config = useRuntimeConfig()
-      const response = await customFetch(
+      await customFetch(
         `${config.public.apiHost}/${config.public.apiVersion}/routes-service/points/favorites?userId=${userId.value}&pointId=${pointId}`,
         {
           method: 'DELETE',

@@ -8,7 +8,7 @@ import EditFieldModal from '~/pages/editFieldModal.vue'
 import { useUploadImage } from '~/composables/useUploadImage'
 const userInfoStore = useUserInfo()
 
-const { uploadImage, imageUrl, isLoading, error } = useUploadImage()
+const { uploadImage, imageUrl, error } = useUploadImage()
 
 const isModalOpen = ref(false)
 const editingField = ref<'firstName' | 'lastName' | null>(null)
@@ -55,13 +55,6 @@ const fileInput = ref<HTMLInputElement | null>(null)
 
 const triggerFileInput = () => {
   fileInput.value?.click()
-}
-
-const uploadAvatar = async (file: File): Promise<string> => {
-  return new Promise(resolve => {
-    const tempUrl = URL.createObjectURL(file)
-    setTimeout(() => resolve(tempUrl), 500)
-  })
 }
 
 const handleFileChange = async (event: Event) => {

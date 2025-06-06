@@ -15,8 +15,7 @@ watch(modelValue, val => {
 
 const onFileChange = (e: Event) => {
   const target = e.target as HTMLInputElement
-  const file = target.files?.[0] || null
-  modelValue.value = file
+  modelValue.value = target.files?.[0] || null
 }
 </script>
 
