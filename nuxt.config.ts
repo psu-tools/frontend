@@ -57,6 +57,7 @@ export default defineNuxtConfig({
       openCageApiKey: 'f5b0ea03c1d946dca4128c2297e83360',
       ymapsApiKey: '78f83394-77d7-4d0a-8c42-f0235b364b21',
       imgbbApiKey: 'fd33d6799235eadc70d898bc6eecb817',
+      siteUrl: 'https://flow.psu-tools.ru',
     },
   },
 
@@ -99,23 +100,15 @@ export default defineNuxtConfig({
 
   yandexMetrika: {
     id: '102264650',
-    debug: process.env.NODE_ENV !== 'production',
+    debug: false,
   },
 
   schemaOrg: {
-    host: 'https://flow.psu-tools.ru',
-    defaults: {
-      WebApplication: {
-        name: 'Flow',
-        url: 'https://flow.psu-tools.ru',
-        logo: 'https://flow.psu-tools.ru/favicon.png',
-        applicationCategory: 'Travel',
-        operatingSystem: 'All',
-      },
-      Organization: {
-        name: 'PSU Tools',
-        url: 'https://psu-tools.ru',
-      },
+    defaults: true,
+    identity: {
+      '@type': 'Organization',
+      name: 'PSU Tools',
+      url: 'https://psu-tools.ru',
     },
   },
 
