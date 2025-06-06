@@ -60,9 +60,10 @@ export const useTripFormStore = defineStore('tripForm', () => {
       tripPoints.value[index].longitude = point.longitude
       tripPoints.value[index].stopTime = 0
       tripPoints.value[index].address = point.address
-      console.log('point index: ', index, 'point: ', tripPoints.value[index])
     }
   }
+
+  const deletePoint = (index: number) => tripPoints.value.splice(index, 1)
 
   const isFirstStepValid = computed(() => {
     return (
@@ -100,8 +101,6 @@ export const useTripFormStore = defineStore('tripForm', () => {
       })
     )
 
-    console.log('payload:', JSON.stringify(payload, null, 2))
-
     try {
       const config = useRuntimeConfig()
       const data = await customFetch(
@@ -111,12 +110,10 @@ export const useTripFormStore = defineStore('tripForm', () => {
           body: payload,
         }
       )
-      console.log(data)
-      clearForm()
       await tripsStore.fetchTrips()
       return true
     } catch (e) {
-      console.error(e)
+      console.error('Ошибка при отправке формы:', e)
       return false
     } finally {
     }
@@ -168,5 +165,7 @@ export const useTripFormStore = defineStore('tripForm', () => {
     isFirstStepValid,
     isFormValid,
     sendForm,
+    deletePoint,
+    clearForm,
   }
 })
