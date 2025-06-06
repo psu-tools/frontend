@@ -84,7 +84,6 @@ export const useAuthStore = defineStore('auth', () => {
   const validateRegisterForm = async () => {
     validateEmail()
     validatePassword()
-    console.log(avatar.value)
     if (!emailError.value && !passwordError.value) {
       const { register } = useAuth()
       const successRegister = await register({

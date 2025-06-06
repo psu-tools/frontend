@@ -80,7 +80,6 @@ const fetchSuggestions = async (query: string, countryCode = 'ru') => {
 watch([inputValue, () => props.countryCode], ([query, country]) => fetchSuggestions(query, country))
 
 const selectPoint = (point: SuggestionPoint | Point, pointType: 'api' | 'user') => {
-  console.log(point)
   if (pointType === 'api' && 'formatted' in point) {
     inputValue.value = point.formatted
   } else if ('name' in point && point.name) {
@@ -135,7 +134,7 @@ watch(
     <div class="sticky z-10 left-0 top-0 bg-(--primary-white-bg) dark:bg-(--primary-black-bg)">
       <div
         @click="toggleExpand"
-        class="mx-auto my-2 h-1 w-8 rounded-full bg-(--medium-gray) cursor-pointer mb-[20px]"
+        class="mx-auto my-2 h-1 w-8 rounded-full bg-(--medium-gray) dark:bg-(--toggler-color-dark) cursor-pointer mb-[20px]"
       ></div>
 
       <div class="mb-2.5">

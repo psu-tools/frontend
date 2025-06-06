@@ -27,7 +27,7 @@ export const customFetch = async <T>(url: string, options: any = {}): Promise<T>
           throw new Error('Session expired')
         }
       } catch (refreshError) {
-        console.error('Refresh token error', refreshError)
+        console.error('Ошибка обновления токена:', refreshError)
       }
     }
     throw error

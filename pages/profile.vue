@@ -46,7 +46,6 @@ const confirmLogout = () => {
   closeLogoutConfirm()
   const { logout } = useAuth()
   logout()
-  console.log('User logged out')
 }
 </script>
 

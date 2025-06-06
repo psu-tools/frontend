@@ -32,7 +32,6 @@ watch(avatar, async () => {
     const uploadedUrl = await uploadImage(avatar.value)
     if (uploadedUrl) {
       authStore.setAvatar?.(uploadedUrl)
-      console.log('URL загруженного аватара:', uploadedUrl)
     } else {
       console.error('Ошибка загрузки аватара:', error.value)
     }

@@ -17,10 +17,7 @@ const emit = defineEmits<{
   (e: 'toggleReminderPopup'): void
 }>()
 
-const handlerPointSelector = (index: number): void => {
-  console.log(index)
-  emit('openPointSelector', index)
-}
+const handlerPointSelector = (index: number): void => emit('openPointSelector', index)
 </script>
 
 <template>
@@ -28,7 +25,7 @@ const handlerPointSelector = (index: number): void => {
     <div class="sticky z-10 left-0 top-0 bg-(--primary-white-bg) dark:bg-(--primary-black-bg)">
       <div
         @click="emit('toggleExpand')"
-        class="mx-auto my-2 h-1 w-8 rounded-full bg-(--medium-gray) dark:opacity-30 cursor-pointer mb-[20px]"
+        class="mx-auto my-2 h-1 w-8 rounded-full bg-(--medium-gray) dark:bg-(--toggler-color-dark) dark:opacity-30 cursor-pointer mb-[20px]"
       ></div>
 
       <div class="mb-4">

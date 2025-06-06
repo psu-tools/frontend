@@ -62,9 +62,8 @@ export const useTripsStore = defineStore('trips', () => {
         { method: 'GET', query: { showPast: true } }
       )
       trips.value = response?.data || []
-      console.log(trips.value)
     } catch (error) {
-      console.error('Data (trips) fetch error:', error)
+      console.error('Ошибка при получении поездок:', error)
       trips.value = []
     } finally {
       isLoading.value = false
@@ -78,10 +77,9 @@ export const useTripsStore = defineStore('trips', () => {
         `${config.public.apiHost}/${config.public.apiVersion}/routes-service/trips/${tripId}`,
         { method: 'DELETE' }
       )
-      console.log(response)
       fetchTrips()
     } catch (error) {
-      console.error("The trip wasn't deleted:", error)
+      console.error('Поездка не была удалена:', error)
     }
   }
 

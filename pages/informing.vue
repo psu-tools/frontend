@@ -34,10 +34,8 @@ const updateNotificationMethod = async (method: NotificationMethod): Promise<voi
   })
 }
 
-const toggleModal = () => {
-  console.log('yup')
-  isTelegramModalOpen.value = !isTelegramModalOpen.value
-}
+const toggleModal = () => (isTelegramModalOpen.value = !isTelegramModalOpen.value)
+
 onMounted(async () => {
   if (!userInfoStore.userInfo) {
     await userInfoStore.getUserInfo()
