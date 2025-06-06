@@ -4,23 +4,23 @@ import CheckWidget from '~/widgets/profilePages/CheckWidget.vue'
 
 const themes = ['Светлая', 'Темная', 'Как в системе']
 const activeTheme = ref(
-  localStorage.getItem('theme') === 'dark'
-    ? 'Темная'
-    : localStorage.getItem('theme') === 'light'
-      ? 'Светлая'
-      : 'Как в системе'
+  localStorage.getItem('isSystemTheme') === 'true'
+    ? 'Как в системе'
+    : localStorage.getItem('theme') === 'dark'
+      ? 'Темная'
+      : 'Светлая'
 )
 
-const { setTheme: applyTheme } = useTheme()
+const { setTheme } = useTheme()
 
-const setTheme = (value: string) => {
+const changeTheme = (value: string) => {
   activeTheme.value = value
   if (value === 'Светлая') {
-    applyTheme('light')
+    setTheme('light')
   } else if (value === 'Темная') {
-    applyTheme('dark')
+    setTheme('dark')
   } else {
-    applyTheme('system')
+    setTheme('system')
   }
 }
 </script>
@@ -34,7 +34,7 @@ const setTheme = (value: string) => {
         :key="theme"
         :title="theme"
         :is-active="activeTheme === theme"
-        @click="setTheme(theme)"
+        @click="changeTheme(theme)"
       />
     </div>
   </div>
