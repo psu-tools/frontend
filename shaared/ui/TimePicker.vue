@@ -9,8 +9,8 @@ const minutes = Array.from({ length: 60 }, (_, i) => String(i).padStart(2, '0'))
 const selectedHourIndex = ref(0)
 const selectedMinuteIndex = ref(0)
 
-const paddedHours = computed(() => [0, ...hours, 0])
-const paddedMinutes = computed(() => [0, ...minutes, 0])
+const paddedHours = computed(() => [...hours])
+const paddedMinutes = computed(() => [...minutes])
 
 const itemHeight = 48
 const visibleItems = 3
@@ -73,14 +73,16 @@ watch([selectedHourIndex, selectedMinuteIndex], () => {
         ref="hourCol"
         @scroll.passive="onScrollHour"
       >
+        <div class="h-12"></div>
         <div
           v-for="(hour, i) in paddedHours"
           :key="'hour-' + i"
           class="h-12 leading-12 text-center snap-center text-sm"
-          :class="{ 'opacity-50': hour !== 0 && i - 1 !== selectedHourIndex }"
+          :class="{ 'opacity-50': i !== selectedHourIndex }"
         >
           {{ hour || '' }}
         </div>
+        <div class="h-12"></div>
       </div>
 
       <div
@@ -88,14 +90,16 @@ watch([selectedHourIndex, selectedMinuteIndex], () => {
         ref="minuteCol"
         @scroll.passive="onScrollMinute"
       >
+        <div class="h-12"></div>
         <div
           v-for="(minute, i) in paddedMinutes"
           :key="'month-' + i"
           class="h-12 leading-12 text-center snap-center text-sm"
-          :class="{ 'opacity-50': minute !== 0 && i - 1 !== selectedMinuteIndex }"
+          :class="{ 'opacity-50': i !== selectedMinuteIndex }"
         >
           {{ minute || '' }}
         </div>
+        <div class="h-12"></div>
       </div>
     </div>
     <div

@@ -14,7 +14,7 @@ defineProps<Props>()
   <div>
     <div
       @click="emit('click')"
-      class="cursor-pointer py-[18px] pl-[15px] pr-[18px] rounded-2xl flex items-center justify-between transition-all duration-300 ease-in-out bg-(--primary-white-bg) dark:bg-(--secondary-black-bg) hover:bg-gray-100 dark:hover:bg-gray-800"
+      class="cursor-pointer py-[18px] pl-[15px] pr-[18px] rounded-2xl flex items-center justify-between transition-all duration-300 ease-in-out bg-(--primary-white-bg) dark:bg-(--secondary-black-bg) hover:bg-gray-100 dark:hover:bg-(--secondary-black-bg-hover)"
     >
       <div
         class="text-sm text-(--color-text) dark:text-(--primary-white) font-normal transition-colors duration-300 'text-(--color-text) dark:text-(--primary-white)'"

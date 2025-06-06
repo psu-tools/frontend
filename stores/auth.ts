@@ -17,7 +17,6 @@ export const useAuthStore = defineStore('auth', () => {
   const passwordError = ref<string | null>(null)
 
   const isLoginFormValid = ref<boolean>(false)
-  const isRegisterFormValid = ref<boolean>(false)
 
   const setAuthType = (type: 'registration' | 'login' | 'recovery') => (authType.value = type)
   const setEmail = (newEmail: string) => (email.value = newEmail)
@@ -49,7 +48,7 @@ export const useAuthStore = defineStore('auth', () => {
   const decodeAccessToken = (token: string): any | null => {
     try {
       const base64Url = token.split('.')[1]
-      if (!base64Url) throw new Error('Неверный формат токена')
+      if (!base64Url) console.error('Неверный формат токена')
       const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
       const padded = base64.padEnd(base64.length + ((4 - (base64.length % 4)) % 4), '=')
       const jsonPayload = atob(padded)
@@ -84,7 +83,6 @@ export const useAuthStore = defineStore('auth', () => {
   const validateRegisterForm = async () => {
     validateEmail()
     validatePassword()
-    console.log(avatar.value)
     if (!emailError.value && !passwordError.value) {
       const { register } = useAuth()
       const successRegister = await register({

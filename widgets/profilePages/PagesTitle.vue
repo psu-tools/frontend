@@ -12,7 +12,7 @@ const emit = defineEmits<{
   (e: 'close'): void
 }>()
 
-let setLink = ''
+let setLink: string
 if (props.link) {
   setLink = props.link
 } else {

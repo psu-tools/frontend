@@ -80,7 +80,6 @@ const fetchSuggestions = async (query: string, countryCode = 'ru') => {
 watch([inputValue, () => props.countryCode], ([query, country]) => fetchSuggestions(query, country))
 
 const selectPoint = (point: SuggestionPoint | Point, pointType: 'api' | 'user') => {
-  console.log(point)
   if (pointType === 'api' && 'formatted' in point) {
     inputValue.value = point.formatted
   } else if ('name' in point && point.name) {
@@ -113,6 +112,17 @@ watch(
     if (yandexMapsModalStore.selectedPoint) {
       selectPoint(yandexMapsModalStore.selectedPoint, 'user')
     }
+  },
+  { deep: true }
+)
+
+watch(
+  () => yandexMapsModalStore.isOpen,
+  () => {
+    if (!yandexMapsModalStore.isOpen && !!yandexMapsModalStore.selectedPoint) {
+      closeSelector()
+      yandexMapsModalStore.clearPoint()
+    }
   }
 )
 </script>
@@ -124,7 +134,7 @@ watch(
     <div class="sticky z-10 left-0 top-0 bg-(--primary-white-bg) dark:bg-(--primary-black-bg)">
       <div
         @click="toggleExpand"
-        class="mx-auto my-2 h-1 w-8 rounded-full bg-(--medium-gray) cursor-pointer mb-[20px]"
+        class="mx-auto my-2 h-1 w-8 rounded-full bg-(--medium-gray) dark:bg-(--toggler-color-dark) cursor-pointer mb-[20px]"
       ></div>
 
       <div class="mb-2.5">
@@ -134,6 +144,7 @@ watch(
             :placeholder="index === 0 ? 'Откуда поедем?' : 'Куда поедем?'"
             class="text-sm text-(--color-black) dark:text-(--primary-white) outline-none caret-(--primary-orange) py-[18px] px-[15px] rounded-2xl bg-(--primary-white) dark:bg-(--secondary-black-bg) w-full"
             v-model="inputValue"
+            @keyup.enter="closeSelector"
           />
           <button @click="closeSelector" class="cursor-pointer">
             <IcClose />

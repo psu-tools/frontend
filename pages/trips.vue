@@ -12,7 +12,7 @@ const openModal = () => addTripModalStore.openModal()
 </script>
 
 <template>
-  <div>
+  <div class="pb-24">
     <h1 class="text-3xl font-bold text-text dark:text-(--primary-white)">Предстоящие</h1>
     <Calendar class="mt-6 -mx-4" />
 

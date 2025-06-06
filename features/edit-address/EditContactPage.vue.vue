@@ -58,7 +58,7 @@ const handleModalSave = (newValue: string) => {
       <div class="flex flex-col items-center gap-[10px]">
         <div class="w-[60px] h-[60px] rounded-full">
           <div v-if="userInfo.avatarUri">
-            <img
+            <NuxtImg
               :src="userInfo.avatarUri"
               alt="Аватар"
               class="w-32 h-32 rounded-full object-cover"

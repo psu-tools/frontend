@@ -17,10 +17,7 @@ const emit = defineEmits<{
   (e: 'toggleReminderPopup'): void
 }>()
 
-const handlerPointSelector = (index: number): void => {
-  console.log(index)
-  emit('openPointSelector', index)
-}
+const handlerPointSelector = (index: number): void => emit('openPointSelector', index)
 </script>
 
 <template>
@@ -28,7 +25,7 @@ const handlerPointSelector = (index: number): void => {
     <div class="sticky z-10 left-0 top-0 bg-(--primary-white-bg) dark:bg-(--primary-black-bg)">
       <div
         @click="emit('toggleExpand')"
-        class="mx-auto my-2 h-1 w-8 rounded-full bg-(--medium-gray) dark:opacity-30 cursor-pointer mb-[20px]"
+        class="mx-auto my-2 h-1 w-8 rounded-full bg-(--medium-gray) dark:bg-(--toggler-color-dark) dark:opacity-30 cursor-pointer mb-[20px]"
       ></div>
 
       <div class="mb-4">
@@ -55,7 +52,7 @@ const handlerPointSelector = (index: number): void => {
       class="mt-[25px] space-y-[15px] text-(--color-text) dark:text-(--primary-white) text-sm"
     >
       <div
-        v-for="(_, i) in tripFormStore.tripPoints.length - 2"
+        v-for="i in tripFormStore.tripPoints.length - 2"
         class="transition-colors bg-(--primary-white) hover:bg-(--primary-white-hover) dark:bg-(--secondary-black-bg) dark:hover:bg-(--secondary-black-bg-hover) text-(--color-text) dark:text-(--primary-white) text-sm rounded-2xl flex justify-between items-center py-2.5 pl-[15px] pr-2.5 cursor-pointer"
         @click="emit('onClickStopPoint', i)"
       >

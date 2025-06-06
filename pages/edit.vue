@@ -8,7 +8,7 @@ import EditFieldModal from '~/pages/editFieldModal.vue'
 import { useUploadImage } from '~/composables/useUploadImage'
 const userInfoStore = useUserInfo()
 
-const { uploadImage, imageUrl, isLoading, error } = useUploadImage()
+const { uploadImage, imageUrl, error } = useUploadImage()
 
 const isModalOpen = ref(false)
 const editingField = ref<'firstName' | 'lastName' | null>(null)
@@ -57,13 +57,6 @@ const triggerFileInput = () => {
   fileInput.value?.click()
 }
 
-const uploadAvatar = async (file: File): Promise<string> => {
-  return new Promise(resolve => {
-    const tempUrl = URL.createObjectURL(file)
-    setTimeout(() => resolve(tempUrl), 500)
-  })
-}
-
 const handleFileChange = async (event: Event) => {
   const input = event.target as HTMLInputElement
   const file = input.files?.[0]
@@ -93,13 +86,13 @@ const handleFileChange = async (event: Event) => {
       <div class="flex flex-col items-center gap-[10px]">
         <div class="rounded-full">
           <div v-if="userInfoStore.userInfo?.avatarUri">
-            <img
+            <NuxtImg
               :src="userInfoStore.userInfo.avatarUri"
               alt="Аватар"
-              class="rounded-full object-cover"
+              class="rounded-full object-cover w-20 h-20"
             />
           </div>
-          <div v-else>
+          <div v-else class="w-20 h-20">
             <IcUser />
           </div>
         </div>

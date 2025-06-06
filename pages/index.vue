@@ -4,6 +4,15 @@ import UpcomingTrips from '~/widgets/UpcomingTrips/UpcomingTrips.vue'
 import IcNotifications from '~/icons/IcNotifications.vue'
 import { useTripsStore } from '@/stores/trips'
 
+useSeoMeta({
+  title: 'Flow – всегда вовремя',
+  description: 'Планируйте путешествия с Flow: поиск мест, маршрутов и напоминания о поездках',
+  ogTitle: 'Flow – всегда вовремя',
+  ogDescription: 'Flow поможет спланировать ваши маршруты и не забыть важные дела в путешествии',
+  ogImage: 'https://ibb.co/PZzQLvxg',
+  twitterCard: 'summary_large_image',
+})
+
 const tripsStore = useTripsStore()
 </script>
 

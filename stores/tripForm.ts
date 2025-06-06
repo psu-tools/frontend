@@ -60,9 +60,10 @@ export const useTripFormStore = defineStore('tripForm', () => {
       tripPoints.value[index].longitude = point.longitude
       tripPoints.value[index].stopTime = 0
       tripPoints.value[index].address = point.address
-      console.log('point index: ', index, 'point: ', tripPoints.value[index])
     }
   }
+
+  const deletePoint = (index: number) => tripPoints.value.splice(index, 1)
 
   const isFirstStepValid = computed(() => {
     return (
@@ -100,23 +101,19 @@ export const useTripFormStore = defineStore('tripForm', () => {
       })
     )
 
-    console.log('payload:', JSON.stringify(payload, null, 2))
-
     try {
       const config = useRuntimeConfig()
-      const data = await customFetch(
+      await customFetch(
         `${config.public.apiHost}/${config.public.apiVersion}/routes-service/trips`,
         {
           method: 'POST',
           body: payload,
         }
       )
-      console.log(data)
-      clearForm()
       await tripsStore.fetchTrips()
       return true
     } catch (e) {
-      console.error(e)
+      console.error('Ошибка при отправке формы:', e)
       return false
     } finally {
     }
@@ -147,7 +144,7 @@ export const useTripFormStore = defineStore('tripForm', () => {
       },
     ]
     transportType.value = 'WALK'
-    mergedDateTime.value = null
+    mergedDateTime.value = ''
   }
 
   return {
@@ -168,5 +165,7 @@ export const useTripFormStore = defineStore('tripForm', () => {
     isFirstStepValid,
     isFormValid,
     sendForm,
+    deletePoint,
+    clearForm,
   }
 })

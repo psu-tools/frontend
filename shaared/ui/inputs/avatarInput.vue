@@ -15,8 +15,7 @@ watch(modelValue, val => {
 
 const onFileChange = (e: Event) => {
   const target = e.target as HTMLInputElement
-  const file = target.files?.[0] || null
-  modelValue.value = file
+  modelValue.value = target.files?.[0] || null
 }
 </script>
 
@@ -26,7 +25,7 @@ const onFileChange = (e: Event) => {
   >
     <input type="file" accept="image/*" class="hidden" @change="onFileChange" />
     <template v-if="previewUrl">
-      <img :src="previewUrl" alt="avatar" class="absolute inset-0 object-cover w-full h-full" />
+      <NuxtImg :src="previewUrl" alt="avatar" class="absolute inset-0 object-cover w-full h-full" />
     </template>
     <template v-else>
       <IcPlus color="#FF724C" />

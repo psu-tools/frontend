@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useTripFormStore } from '~/stores/tripForm'
+import IcMinus from '~/icons/IcMinus.vue'
 
 const tripFormStore = useTripFormStore()
 
@@ -7,7 +8,9 @@ const emit = defineEmits<{ (e: 'open-selector', index: number): void }>()
 
 const onInputClick = (index: number) => emit('open-selector', index)
 
-const addStop = () => tripFormStore.addTripPoint({ name: 'Новая точка' })
+const addStop = () => tripFormStore.addTripPoint({ name: '' })
+
+const deletePoint = (index: number) => tripFormStore.deletePoint(index)
 </script>
 
 <template>
@@ -17,7 +20,7 @@ const addStop = () => tripFormStore.addTripPoint({ name: 'Новая точка'
         v-for="(stop, index) in tripFormStore.tripPoints"
         :key="index"
         @click="onInputClick(index)"
-        class="relative flex items-center py-[16px] pl-[15px] pr-[5px] cursor-pointer hover:bg-(--primary-white-hover) transition-colors dark:hover:bg-(--secondary-black-bg-hover)"
+        class="relative flex items-center py-[16px] px-[15px] cursor-pointer hover:bg-(--primary-white-hover) transition-colors dark:hover:bg-(--secondary-black-bg-hover)"
       >
         <span
           class="flex items-center justify-center w-3.5 h-3.5 text-(--primary-white) text-xs font-bold"
@@ -42,6 +45,10 @@ const addStop = () => tripFormStore.addTripPoint({ name: 'Новая точка'
           class="ml-3 text-sm cursor-pointer outline-none truncate w-5/6"
           readonly
           v-model="stop.name"
+        />
+        <IcMinus
+          v-if="index !== 0 && index !== tripFormStore.tripPoints.length - 1"
+          @click.stop="deletePoint(index)"
         />
         <div
           v-if="index !== tripFormStore.tripPoints.length - 1"

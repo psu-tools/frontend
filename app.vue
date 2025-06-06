@@ -5,13 +5,16 @@ import YandexMaps from '~/pages/yandexMaps.vue'
 
 import { useTripsStore } from '~/stores/trips'
 import { NuxtLayout } from '#components'
+import { useYandexMapsModalStore } from '~/stores/yandexMaps'
 
 const route = useRoute()
 const tripsStore = useTripsStore()
+const yandexMapsModalStore = useYandexMapsModalStore()
 
 const isFullscreenRoute = computed(() => route.path === '/about')
 
 onMounted(async () => {
+  useTheme()
   await tripsStore.fetchTrips()
 })
 </script>
@@ -23,10 +26,10 @@ onMounted(async () => {
   >
     <div class="hidden sm:block w-1/2">
       <div class="flex gap-3 items-start sm:pb-32">
-        <img
+        <NuxtImg
           src="/web-app-manifest-192x192.png"
           class="bg-gradient-to-b from-(--smoke-gray) to-[#EBEBEB] dark:from-[#3a3a3a] dark:to-[#2f2f2f] h-20 w-20 rounded-(--radius-2xl) mt-1.5"
-          alt=""
+          alt="Flow logo"
         />
         <h1 class="text-text dark:text-(--primary-orange) sm:text-4xl lg:text-6xl 2xl:pl-20">
           <span class="font-bold">Flow</span> — <br />
@@ -49,7 +52,7 @@ onMounted(async () => {
         <NuxtPage />
         <TripPopup v-if="!isFullscreenRoute" />
         <AddTripModal v-if="!isFullscreenRoute" />
-        <YandexMaps v-if="!isFullscreenRoute" />
+        <YandexMaps v-if="!isFullscreenRoute && yandexMapsModalStore.isOpen" />
       </component>
     </div>
   </div>

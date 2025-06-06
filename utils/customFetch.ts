@@ -1,5 +1,5 @@
 export const customFetch = async <T>(url: string, options: any = {}): Promise<T> => {
-  const { accessToken, refreshToken, refresh, logout } = useAuth()
+  const { accessToken, refresh, logout } = useAuth()
 
   try {
     return await $fetch<T>(url, {
@@ -24,10 +24,9 @@ export const customFetch = async <T>(url: string, options: any = {}): Promise<T>
           })
         } else {
           logout()
-          throw new Error('Session expired')
         }
       } catch (refreshError) {
-        console.error('Refresh token error', refreshError)
+        console.error('Ошибка обновления токена:', refreshError)
       }
     }
     throw error

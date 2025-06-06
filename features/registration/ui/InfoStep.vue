@@ -17,7 +17,7 @@ const avatar = ref<File | null>(null)
 const name = ref<string>('')
 const surname = ref<string>('')
 
-const { uploadImage, imageUrl, isLoading, error } = useUploadImage()
+const { uploadImage, isLoading, error } = useUploadImage()
 
 watch(name, () => {
   authStore.setName(name.value)
@@ -32,7 +32,6 @@ watch(avatar, async () => {
     const uploadedUrl = await uploadImage(avatar.value)
     if (uploadedUrl) {
       authStore.setAvatar?.(uploadedUrl)
-      console.log('URL загруженного аватара:', uploadedUrl)
     } else {
       console.error('Ошибка загрузки аватара:', error.value)
     }

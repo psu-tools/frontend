@@ -3,9 +3,25 @@ import PagesTitle from '~/widgets/profilePages/PagesTitle.vue'
 import CheckWidget from '~/widgets/profilePages/CheckWidget.vue'
 
 const themes = ['Светлая', 'Темная', 'Как в системе']
-const activeTheme = ref('Светлая')
-const setTheme = (theme: string) => {
-  activeTheme.value = theme
+const activeTheme = ref(
+  localStorage.getItem('isSystemTheme') === 'true'
+    ? 'Как в системе'
+    : localStorage.getItem('theme') === 'dark'
+      ? 'Темная'
+      : 'Светлая'
+)
+
+const { setTheme } = useTheme()
+
+const changeTheme = (value: string) => {
+  activeTheme.value = value
+  if (value === 'Светлая') {
+    setTheme('light')
+  } else if (value === 'Темная') {
+    setTheme('dark')
+  } else {
+    setTheme('system')
+  }
 }
 </script>
 
@@ -18,7 +34,7 @@ const setTheme = (theme: string) => {
         :key="theme"
         :title="theme"
         :is-active="activeTheme === theme"
-        @click="setTheme(theme)"
+        @click="changeTheme(theme)"
       />
     </div>
   </div>

@@ -142,13 +142,17 @@ watch(
                 </button>
               </div>
             </div>
-            <p class="text-(--primary-gray) font-semibold">
-              {{ tripsStore.formatDate(modalStore?.tripData?.arrivalDateTime) }}
+            <p
+              v-if="modalStore.tripData?.arrivalDateTime"
+              class="text-(--primary-gray) font-semibold"
+            >
+              {{ tripsStore.formatDate(modalStore.tripData.arrivalDateTime) }}
             </p>
           </div>
         </div>
         <div class="flex flex-col gap-[25px] mt-[25px]">
           <div
+            v-if="stopsList"
             class="bg-(--primary-white) dark:bg-(--secondary-black-bg) rounded-2xl pt-[16px] pl-[15px] pr-[5px] pb-[16px]"
           >
             <RouteDestination :stops-list="stopsList" />

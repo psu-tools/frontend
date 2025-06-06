@@ -2,8 +2,6 @@
 import PrimaryOrangeButton from '~/shaared/ui/buttons/PrimaryOrangeButton.vue'
 
 import IcEmailEdit from '~/icons/IcEmailEdit.vue'
-import IcPhoneEdit from '~/icons/IcPhoneEdit.vue'
-import IcTelegramEdit from '~/icons/IcTelegramEdit.vue'
 import BottomSheetBottomBar from '~/shaared/ui/BottomSheetBottomBar.vue'
 import ErrorModal from '~/features/ErrorModal.vue'
 

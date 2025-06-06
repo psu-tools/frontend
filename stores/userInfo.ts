@@ -27,11 +27,9 @@ export const useUserInfo = defineStore('userInfo', () => {
   const userInfo = ref<UserInfo | null>()
   const userId = ref<string | null>(null)
 
-  onMounted(() => {
-    if (typeof window !== 'undefined') {
-      userId.value = localStorage.getItem('userId')
-    }
-  })
+  if (typeof window !== 'undefined') {
+    userId.value = localStorage.getItem('userId')
+  }
 
   const setUserId = (newUserId: string) => {
     userId.value = newUserId
@@ -52,7 +50,6 @@ export const useUserInfo = defineStore('userInfo', () => {
       if (userInfo.value !== response) {
         userInfo.value = response
       }
-      console.log(userInfo.value)
       return response
     } catch (error) {
       throw error
@@ -73,7 +70,6 @@ export const useUserInfo = defineStore('userInfo', () => {
         }
       )
       await getUserInfo()
-      console.log('Информация успешно обновлена')
       return response
     } catch (error) {
       throw error

@@ -23,9 +23,8 @@ export const useUserPointsStore = defineStore('userPoints', () => {
         { method: 'GET', query: { userId: userInfoStore.userId || localStorage.getItem('userId') } }
       )
       favoritePoints.value = response?.data || []
-      console.log('fetching fav points', favoritePoints.value)
     } catch (error) {
-      console.error('Data fetch error:', error)
+      console.error('Ошибка при получении избранных точек:', error)
       favoritePoints.value = []
     } finally {
       isLoading.value = false
@@ -44,8 +43,6 @@ export const useUserPointsStore = defineStore('userPoints', () => {
         longitude: point.geometry?.lng || point.longitude,
         address: point.formatted || point.address || '',
       }
-
-      console.log(body)
 
       const response = await customFetch(
         `${config.public.apiHost}/${config.public.apiVersion}/routes-service/points/favorites`,
@@ -67,7 +64,7 @@ export const useUserPointsStore = defineStore('userPoints', () => {
   const deleteUserPoint = async (pointId: string) => {
     try {
       const config = useRuntimeConfig()
-      const response = await customFetch(
+      await customFetch(
         `${config.public.apiHost}/${config.public.apiVersion}/routes-service/points/favorites?userId=${userId.value}&pointId=${pointId}`,
         {
           method: 'DELETE',

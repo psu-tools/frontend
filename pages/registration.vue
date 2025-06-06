@@ -2,15 +2,11 @@
 import EmailStep from '~/features/registration/ui/EmailStep.vue'
 import PasswordStep from '~/features/registration/ui/PasswordStep.vue'
 import InfoStep from '~/features/registration/ui/InfoStep.vue'
-import { useAuthStore } from '~/stores/auth'
 import ErrorModal from '~/features/ErrorModal.vue'
 
 definePageMeta({ layout: 'empty' })
 
-const authStore = useAuthStore()
-
 const step = ref<1 | 2 | 3>(1)
-const isFormSent = ref<boolean>(false)
 
 const hasError = ref<boolean>(false)
 const errorMessage = ref<string>('')

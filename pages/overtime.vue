@@ -25,7 +25,6 @@ watch(selectedPercentage, () => {
       },
     })
   }, 300)
-  console.log(selectedPercentage.value)
 })
 
 onMounted(async () => {

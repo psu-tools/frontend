@@ -16,15 +16,17 @@ onMounted(async () => {
     class="bg-(--primary-white-bg) dark:bg-(--secondary-black-bg) hover:bg-(--primary-white-hover) dark:hover:bg-(--secondary-black-bg-hover) rounded-(--radius-4xl) py-[15px] pl-[15px] pr-[22px]"
   >
     <div class="flex items-center gap-[15px]">
-      <div v-if="userInfoStore.userInfo?.avatarUri">
-        <img
-          :src="userInfoStore.userInfo.avatarUri"
-          alt="Аватар"
-          class="w-[64px] 2 h-[64px] rounded-full object-cover"
-        />
-      </div>
-      <div v-else>
-        <IcUser />
+      <div class="w-16 h-16">
+        <div v-if="userInfoStore.userInfo?.avatarUri">
+          <NuxtImg
+            :src="userInfoStore.userInfo.avatarUri"
+            alt="Аватар"
+            class="rounded-full object-cover"
+          />
+        </div>
+        <div v-else>
+          <IcUser />
+        </div>
       </div>
       <div class="flex-1">
         <div class="text-(--color-text) dark:text-(--primary-white) text-sm font-semibold">

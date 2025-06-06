@@ -7,7 +7,7 @@ const reminderTimeOptions = Array.from({ length: 20 }, (_, i) => (i + 1) * 5)
 
 const selectedReminderTimeIndex = ref(0)
 
-const paddedReminderTime = computed(() => [0, ...reminderTimeOptions, 0])
+const paddedReminderTime = computed(() => [...reminderTimeOptions])
 
 const itemHeight = 48
 const visibleItems = 3
@@ -52,17 +52,16 @@ watch([selectedReminderTimeIndex], () => emit('select', selectedTime.value))
         ref="reminderTimeCol"
         @scroll.passive="onScroll"
       >
+        <div class="h-12"></div>
         <div
           v-for="(time, i) in paddedReminderTime"
           :key="'month-' + i"
-          class="h-12 leading-12 text-center snap-center text-sm"
-          :class="{
-            'opacity-50': time !== 0 && i - 1 !== selectedReminderTimeIndex,
-            invisible: i === 0 || i === paddedReminderTime.length - 1,
-          }"
+          class="h-12 flex justify-center items-center text-center snap-center text-sm"
+          :class="{ 'opacity-50': i !== selectedReminderTimeIndex }"
         >
           За {{ time || '' }} минут
         </div>
+        <div class="h-12"></div>
       </div>
     </div>
     <div

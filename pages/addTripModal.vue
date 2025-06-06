@@ -10,12 +10,9 @@ import RouteDestination from '~/entities/route/RouteDestination.vue'
 import PrimaryYellowButton from '~/shaared/ui/buttons/PrimaryYellowButton.vue'
 import BottomSheetBottomBar from '~/shaared/ui/BottomSheetBottomBar.vue'
 import { useUserPointsStore } from '~/stores/userPoints'
-import { useTripsStore } from '~/stores/trips'
 import AddTripFirstStep from '~/pages/addTripFirstStep.vue'
 
 const { fetchUserPoints } = useUserPointsStore()
-const { fetchTrips } = useTripsStore()
-
 const addTripModalStore = useAddTripModalStore()
 const tripFormStore = useTripFormStore()
 
@@ -34,7 +31,7 @@ const closeModal = () => {
   isVisible.value = false
   setTimeout(() => {
     addTripModalStore.closeModal()
-  }, 300)
+  }, 1000)
 }
 
 const isDayMonthYearPopupOpen = ref(false)
@@ -46,7 +43,6 @@ const toggleDayMonthYearPopup = () =>
   (isDayMonthYearPopupOpen.value = !isDayMonthYearPopupOpen.value)
 const toggleTimePopup = () => (isTimePopupOpen.value = !isTimePopupOpen.value)
 const toggleReminderPopup = () => (isReminderPopupOpen.value = !isReminderPopupOpen.value)
-const toggleStopTimePopup = () => (isStopTimePopupOpen.value = !isStopTimePopupOpen.value)
 
 const toggleExpand = () => (isExpanded.value = !isExpanded.value)
 
@@ -67,8 +63,6 @@ const onTouchEnd = () => {
     }
   }
 }
-
-onMounted(() => {})
 
 const isPointSelectorOpen = ref(false)
 const activePointIndex = ref<number | null>(null)
@@ -129,15 +123,12 @@ watch(
 )
 
 const sendForm = () => {
-  const isSuccess = tripFormStore.sendForm()
-  if (isSuccess) {
-    setTimeout(() => {
-      isVisible.value = false
-      addTripModalStore.closeModal()
-      partOfForm.value = 1
-    }, 50)
-    fetchTrips()
-  }
+  tripFormStore.sendForm().then(() => {
+    closeModal()
+    addTripModalStore.closeModal()
+    tripFormStore.clearForm()
+    partOfForm.value = 1
+  })
 }
 </script>
 
@@ -205,9 +196,7 @@ const sendForm = () => {
           class="mt-[25px]"
           :stops-list="tripFormStore.tripPoints"
           :transport-type="[tripFormStore.transportType]"
-          :display-routes-time="[]"
           :arrival-time="tripFormStore.arrivalTime"
-          :routes-time="['X минут']"
         />
       </div>
 

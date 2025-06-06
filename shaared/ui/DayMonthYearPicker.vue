@@ -25,9 +25,9 @@ const selectedDayIndex = ref(0)
 const selectedMonthIndex = ref(0)
 const selectedYearIndex = ref(0)
 
-const paddedDays = computed(() => [0, ...days.value, 0])
-const paddedMonths = computed(() => [0, ...months, 0])
-const paddedYears = computed(() => [0, ...years, 0])
+const paddedDays = computed(() => [...days.value])
+const paddedMonths = computed(() => [...months])
+const paddedYears = computed(() => [...years])
 
 const itemHeight = 48
 const visibleItems = 3
@@ -111,14 +111,16 @@ watch([selectedDayIndex, selectedMonthIndex, selectedYearIndex], () =>
         ref="dayCol"
         @scroll.passive="e => onScroll(e, 'day')"
       >
+        <div class="h-12"></div>
         <div
           v-for="(day, i) in paddedDays"
           :key="'day-' + i"
           class="h-12 leading-12 text-center snap-center text-sm"
-          :class="{ 'opacity-50': day !== 0 && i - 1 !== selectedDayIndex }"
+          :class="{ 'opacity-50': i !== selectedDayIndex }"
         >
           {{ day || '' }}
         </div>
+        <div class="h-12"></div>
       </div>
 
       <div
@@ -126,14 +128,17 @@ watch([selectedDayIndex, selectedMonthIndex, selectedYearIndex], () =>
         ref="monthCol"
         @scroll.passive="e => onScroll(e, 'month')"
       >
+        <div class="h-12"></div>
+
         <div
           v-for="(month, i) in paddedMonths"
           :key="'month-' + i"
           class="h-12 leading-12 text-center snap-center text-sm"
-          :class="{ 'opacity-50': month !== 0 && i - 1 !== selectedMonthIndex }"
+          :class="{ 'opacity-50': i !== selectedMonthIndex }"
         >
           {{ month || '' }}
         </div>
+        <div class="h-12"></div>
       </div>
 
       <div
@@ -141,14 +146,16 @@ watch([selectedDayIndex, selectedMonthIndex, selectedYearIndex], () =>
         ref="yearCol"
         @scroll.passive="e => onScroll(e, 'year')"
       >
+        <div class="h-12"></div>
         <div
           v-for="(year, i) in paddedYears"
           :key="'year-' + i"
           class="h-12 leading-12 text-center snap-center text-sm"
-          :class="{ 'opacity-50': year !== 0 && i - 1 !== selectedYearIndex }"
+          :class="{ 'opacity-50': i !== selectedYearIndex }"
         >
           {{ year || '' }}
         </div>
+        <div class="h-12"></div>
       </div>
     </div>
     <div
