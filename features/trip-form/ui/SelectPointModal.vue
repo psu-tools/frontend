@@ -13,8 +13,6 @@ const isVisible = ref(false)
 const touchStartY = ref(0)
 const touchMoveY = ref(0)
 
-const showModal = () => (isVisible.value = true)
-
 const closeModal = () => {
   isExpanded.value = false
   isVisible.value = false

@@ -4,9 +4,9 @@ import RouteBlock from '~/entities/route/RouteBlock.vue'
 interface Routes {
   stopsList: Point[]
   transportType: TransportType[]
-  departureTime: string
-  routesTime: number[]
-  displayRoutesTime: string[]
+  departureTime?: string
+  routesTime?: number[]
+  displayRoutesTime?: string[]
   arrivalTime: string
 }
 
@@ -22,17 +22,21 @@ const formatTime = (time: string, minutesToAdd = 0) => {
 }
 
 const getCumulativeTime = (upToIndex: number) => {
-  let total = 0
+  if (prop.routesTime) {
+    let total = 0
 
-  for (let i = 0; i < upToIndex; i++) {
-    total += prop.routesTime[i] || 0
+    for (let i = 0; i < upToIndex; i++) {
+      total += prop.routesTime[i] || 0
+    }
+
+    for (let i = 1; i <= upToIndex && i < prop.stopsList.length - 1; i++) {
+      total += prop.stopsList[i].stopTime || 0
+    }
+
+    return total
   }
 
-  for (let i = 1; i <= upToIndex && i < prop.stopsList.length - 1; i++) {
-    total += prop.stopsList[i].stopTime || 0
-  }
-
-  return total
+  return -1
 }
 </script>
 
@@ -44,10 +48,12 @@ const getCumulativeTime = (upToIndex: number) => {
         :starting-point="stopsList[index]"
         :arrival-point="stopsList[index + 1]"
         :transport-type="transportType"
-        :display-time="displayRoutesTime[index]"
-        :departure-stop-time="formatTime(departureTime, getCumulativeTime(index))"
+        :display-time="displayRoutesTime ? displayRoutesTime[index] : ''"
+        :departure-stop-time="
+          departureTime ? formatTime(departureTime, getCumulativeTime(index)) : ''
+        "
         :arrival-stop-time="
-          index !== stopsList.length - 2
+          index !== stopsList.length - 2 && departureTime
             ? formatTime(
                 departureTime,
                 getCumulativeTime(index + 1) - (stopsList[index + 1].stopTime || 0)

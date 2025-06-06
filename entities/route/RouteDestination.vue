@@ -1,13 +1,6 @@
 <script setup lang="ts">
 interface DestinationProps {
-  stopsList: Array<Stop>
-}
-
-interface Stop {
-  name: String
-  latitude: Number
-  longitude: Number
-  stopTime: Number
+  stopsList: Array<Point>
 }
 
 defineProps<DestinationProps>()
