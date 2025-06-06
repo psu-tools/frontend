@@ -52,7 +52,7 @@ const handlerPointSelector = (index: number): void => emit('openPointSelector', 
       class="mt-[25px] space-y-[15px] text-(--color-text) dark:text-(--primary-white) text-sm"
     >
       <div
-        v-for="(_, i) in tripFormStore.tripPoints.length - 2"
+        v-for="i in tripFormStore.tripPoints.length - 2"
         class="transition-colors bg-(--primary-white) hover:bg-(--primary-white-hover) dark:bg-(--secondary-black-bg) dark:hover:bg-(--secondary-black-bg-hover) text-(--color-text) dark:text-(--primary-white) text-sm rounded-2xl flex justify-between items-center py-2.5 pl-[15px] pr-2.5 cursor-pointer"
         @click="emit('onClickStopPoint', i)"
       >
