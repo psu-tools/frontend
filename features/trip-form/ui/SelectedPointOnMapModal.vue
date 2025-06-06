@@ -71,7 +71,7 @@ onMounted(() => {
   >
     <div
       @click="toggleExpand"
-      class="mx-auto my-2 h-1 w-8 rounded-full bg-(--medium-gray) cursor-pointer mb-[15px]"
+      class="mx-auto my-2 h-1 w-8 rounded-full bg-(--medium-gray) dark:bg-(--toggler-color-dark) cursor-pointer mb-[15px]"
     ></div>
     <div class="relative">
       <div class="flex justify-between mb-[25px] gap-[15px]">
@@ -84,7 +84,7 @@ onMounted(() => {
       </div>
       <div>
         <p
-          class="w-full outline-none text-(--color-text) dark:text-(--primary-white) font-normal py-[18px] px-[15px] rounded-3xl mb-[20px] bg-(--primary-white) border-1 border-(--light-input-border) dark:bg-(--secondary-black-bg) hover:bg-(--primary-white-hover) dark:hover:bg-(--secondary-black-bg-hover) text-sm text-nowrap truncate"
+          class="w-full outline-none text-(--color-text) dark:text-(--primary-white) font-normal py-[18px] px-[15px] rounded-3xl mb-[20px] bg-(--primary-white) dark:bg-(--secondary-black-bg) hover:bg-(--primary-white-hover) dark:hover:bg-(--secondary-black-bg-hover) text-sm text-nowrap truncate"
         >
           {{ value }}
         </p>
