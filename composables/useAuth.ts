@@ -49,18 +49,18 @@ export function useAuth() {
 
       accessToken.value = response.access_token
       refreshToken.value = response.refresh_token
-      console.log('success login')
-      console.log(response)
+
       navigateTo('/')
       await tripsStore.fetchTrips()
+
       return true
-    } catch (e) {
-      if (e?.response?.status === 401) {
+    } catch (e: any) {
+      if (e?.statusCode === 401) {
         console.warn('Неверные данные авторизации')
         return false
       }
 
-      console.error('Auth error:', e)
+      console.error('Ошибка авторизации:', e)
       return false
     }
   }
@@ -84,10 +84,9 @@ export function useAuth() {
 
       accessToken.value = response.access_token
       refreshToken.value = response.refresh_token
-      console.log('success refresh')
       return true
     } catch (e) {
-      console.error('Token refresh err:', e)
+      console.error('Ошибка обновления токена:', e)
       return false
     }
   }
@@ -97,7 +96,6 @@ export function useAuth() {
     refreshToken.value = null
     navigateTo('/welcome')
     localStorage.removeItem('userId')
-    console.log('success logout')
     return true
   }
 
@@ -117,21 +115,22 @@ export function useAuth() {
       },
     }
 
-    console.log(payload)
     try {
-      const response = await $fetch(`${config.public.apiHost}/v1/users-service/users`, {
+      await $fetch(`${config.public.apiHost}/v1/users-service/users`, {
         method: 'POST',
-        body: payload,
+        body: JSON.stringify(payload),
+        headers: {
+          'Content-Type': 'application/json',
+        },
       })
-
-      console.log(response)
       return 200
-    } catch (e) {
-      if (e?.response?.status === 409) {
+    } catch (e: any) {
+      if (e?.statusCode === 409) {
         console.warn('Пользователь уже существует')
         return 409
       }
-      console.log('Register error', e)
+
+      console.error('Ошибка при регистрации:', e)
       return 400
     }
   }
