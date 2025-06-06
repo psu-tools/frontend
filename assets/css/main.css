@@ -1,6 +1,5 @@
 @import 'tailwindcss';
 
-
 @custom-variant dark (&:where(.dark, .dark *));
 
 body {
@@ -54,6 +53,10 @@ body {
   --color-text-glay: #6d7885;
   --color-line-gray: #e6e6e6;
   --color-glay-about: #ababab;
+  --color-user-icon-main: #bfc5ca;
+  --color-user-icon-secondary: #909090;
+  --color-user-icon-third: #434343;
+  --toggler-color-dark: #575757;
 
   /* radius */
   --radius-2xl: 20px;
