@@ -118,7 +118,9 @@ const handleFileChange = async (event: Event) => {
         </p>
         <ProfileRow
           :label="`${userInfoStore.userInfo?.firstName}`"
-          @click="openModal('firstName', 'Ваше имя', userInfoStore.userInfo?.firstName || '')"
+          @click="
+            openModal('firstName', $t('yourFirstName'), userInfoStore.userInfo?.firstName || '')
+          "
         />
       </div>
       <div>
@@ -127,7 +129,7 @@ const handleFileChange = async (event: Event) => {
         </p>
         <ProfileRow
           :label="`${userInfoStore.userInfo?.lastName}`"
-          @click="openModal('lastName', 'Ваша фамилия', userInfoStore.userInfo?.lastName || '')"
+          @click="openModal('lastName', $t('yourLastName'), userInfoStore.userInfo?.lastName || '')"
         />
       </div>
       <div>

@@ -61,5 +61,8 @@
   "telegramBinding": "Telegram Binding",
   "scanTheQrCode": "Scan the QR code",
   "orFollow": "or follow",
-  "theLink": "the link"
+  "theLink": "the link",
+  "yourFirstName": "Your first name",
+  "yourLastName": "Your last name",
+  "save": "Save"
 }

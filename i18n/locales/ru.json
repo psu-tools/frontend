@@ -61,5 +61,8 @@
   "telegramBinding": "Привязка Telegram",
   "scanTheQrCode": "Отсканируйте QR код",
   "orFollow": "или перейдите",
-  "theLink": "по ссылке"
+  "theLink": "по ссылке",
+  "yourFirstName": "Ваше имя",
+  "yourLastName": "Ваша фамилия",
+  "save": "Сохранить"
 }
