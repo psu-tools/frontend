@@ -13,7 +13,9 @@ const openModal = () => addTripModalStore.openModal()
 
 <template>
   <div class="pb-24">
-    <h1 class="text-3xl font-bold text-text dark:text-(--primary-white)">Предстоящие</h1>
+    <h1 class="text-3xl font-bold text-text dark:text-(--primary-white)">
+      {{ $t('tripsPageTitle') }}
+    </h1>
     <Calendar class="mt-6 -mx-4" />
 
     <div v-if="tripsStore.selectedDate" class="mt-6 space-y-4">
@@ -29,7 +31,9 @@ const openModal = () => addTripModalStore.openModal()
           :has-date="false"
         />
       </div>
-      <div v-else class="text-center opacity-40 py-5 dark:text-(--primary-white)">Нет поездок</div>
+      <div v-else class="text-center opacity-40 py-5 dark:text-(--primary-white)">
+        {{ $t('noTripsMessageTitle') }}
+      </div>
 
       <button
         class="bg-(--primary-yellow) p-4 rounded-[15px] shadow-lg absolute bottom-28 right-5 overflow-hidden group transition cursor-pointer"

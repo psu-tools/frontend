@@ -18,7 +18,7 @@ const tripsStore = useTripsStore()
 
 <template>
   <div class="relative pb-24" :class="{ 'h-full': tripsStore.isLoading }">
-    <NuxtLink class="absolute top-1 right-2" to="/notifications">
+    <NuxtLink class="absolute top-1 right-2" :to="$localePath('/notifications')">
       <IcNotifications />
     </NuxtLink>
 

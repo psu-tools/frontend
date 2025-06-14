@@ -35,10 +35,12 @@ onMounted(() => {
     <div
       class="flex gap-2.5 items-center absolute top-0 pt-8 w-full pb-[15px] bg-(--primary-white) dark:bg-(--primary-black-bg) z-10"
     >
-      <NuxtLink to="/">
+      <NuxtLink :to="$localePath('/')">
         <IcBack />
       </NuxtLink>
-      <h2 class="text-xl font-bold text-text dark:text-(--primary-white)">Уведомления</h2>
+      <h2 class="text-xl font-bold text-text dark:text-(--primary-white)">
+        {{ $t('notificationsTitle') }}
+      </h2>
     </div>
     <div class="mt-13 mb-24 space-y-4">
       <div

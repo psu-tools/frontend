@@ -3,5 +3,18 @@
   "appDescriptionLayout": "Trip reminders",
   "navbarHome": "Home",
   "navbarTrips": "Trips",
-  "navbarProfile": "Profile"
+  "navbarProfile": "Profile",
+  "noTripsMessageTitle": "No trips",
+  "noTripsMessageDescription": "Add new trip",
+  "noTripsMessageButton": "Add",
+  "activeTripsTitle": "Active",
+  "upcomingTripsTitle": "This week",
+  "notificationsTitle": "Notifications",
+  "humanDateNow": "Now",
+  "humanDateMinutes": "minutes ago",
+  "humanDateHour": "hours ago",
+  "humanDateYesterday": "Yesterday",
+  "humanDateDay": "days ago",
+  "tripsPageTitle": "Upcoming"
+
 }

@@ -1,12 +1,20 @@
 <script setup lang="ts">
 import { useTripsStore } from '@/stores/trips'
 
+const { locale } = useI18n()
+
 const tripsStore = useTripsStore()
 
 const isExpanded = ref(false)
 const selectedDate = ref(tripsStore.selectedDate || new Date())
 const currentDate = ref(new Date())
 const today = new Date()
+
+const weekDays = ref(
+  locale.value === 'ru'
+    ? ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС']
+    : ['M', 'T', 'W', 'T', 'F', 'S', 'S']
+)
 
 const headerDate = computed(() =>
   isExpanded.value ? currentDate.value : selectedDate.value || today
@@ -41,7 +49,7 @@ const getCurrentWeekDays = computed(() => {
 
 const formatMonthYear = (date: Date) =>
   date
-    .toLocaleDateString('ru-RU', { month: 'long', year: 'numeric' })
+    .toLocaleDateString(locale.value.toUpperCase(), { month: 'long', year: 'numeric' })
     .replace(' г.', '')
     .replace(/^./, char => char.toUpperCase())
 
@@ -249,7 +257,7 @@ watch([isExpanded, currentDate], updateHeights)
 
       <div class="mt-2 py-2 grid grid-cols-7 gap-3 text-center px-4">
         <span
-          v-for="day in ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС']"
+          v-for="day in weekDays"
           :key="day"
           class="font-semibold text-(--primary-gray) dark:text-(--secondary-light-gray) text-[10px]"
         >

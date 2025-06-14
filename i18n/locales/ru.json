@@ -3,5 +3,17 @@
   "appDescriptionLayout": "Напоминания о поездках",
   "navbarHome": "Главная",
   "navbarTrips": "Поездки",
-  "navbarProfile": "Профиль"
+  "navbarProfile": "Профиль",
+  "noTripsMessageTitle": "Нет поездок",
+  "noTripsMessageDescription": "Добавьте новую поездку",
+  "noTripsMessageButton": "Добавить",
+  "activeTripsTitle": "Активные",
+  "upcomingTripsTitle": "На этой неделе",
+  "notificationsTitle": "Уведомления",
+  "humanDateNow": "Сейчас",
+  "humanDateMinutes": "мин. назад",
+  "humanDateHour": "ч. назад",
+  "humanDateYesterday": "Вчера",
+  "humanDateDay": "дн. назад",
+  "tripsPageTitle": "Предстоящие"
 }

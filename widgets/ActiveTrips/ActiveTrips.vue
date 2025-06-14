@@ -9,7 +9,9 @@ defineProps<{ trips: Trip[] }>()
 
 <template>
   <div v-if="tripsStore.activeTrips.length !== 0">
-    <h2 class="text-3xl font-bold text-text dark:text-(--primary-white)">Активные</h2>
+    <h2 class="text-3xl font-bold text-text dark:text-(--primary-white)">
+      {{ $t('activeTripsTitle') }}
+    </h2>
     <div class="mt-6 space-y-4">
       <TripCard
         v-for="trip in trips"
