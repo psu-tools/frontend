@@ -20,7 +20,7 @@
   "myAddresses": "My addresses",
   "language": "Language",
   "appTheme": "Theme",
-  "reserveTime": "Reserve time",
+  "reserveTime": "Time reserve",
   "aboutApp": "About",
   "support": "Support and feedback",
   "logoutButton": "Logout",
@@ -39,7 +39,7 @@
   "reminderIn": "in",
   "reminderMinutes": "minutes",
   "continueButton": "Continue",
-  "pickerModalButton": "Ok",
+  "pickerModalButton": "Done",
   "addTripButton": "Add trip",
   "editTripButton": "Edit trip",
   "deleteTripMessage": "Delete trip",
@@ -71,5 +71,7 @@
   "featureUnderDev": "The feature is under development",
   "bright": "Bright",
   "dark": "Dark",
-  "system": "System"
+  "system": "System",
+  "timeReserveMessage": "An additional percentage of time to account for traffic jams, delays and other unforeseen situations",
+  "currentTimeReserve": "Current reserve"
 }
