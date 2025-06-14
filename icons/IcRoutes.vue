@@ -30,7 +30,7 @@ defineProps({ isActive: Boolean })
           !isActive,
       }"
     >
-      Поездки
+      {{ $t('navbarTrips') }}
     </p>
   </div>
 </template>

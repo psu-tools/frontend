@@ -29,7 +29,7 @@ defineProps({ isActive: Boolean })
           !isActive,
       }"
     >
-      Профиль
+      {{ $t('navbarProfile') }}
     </p>
   </div>
 </template>

@@ -1,3 +1,7 @@
 {
-  "appName": "Флоу — Напоминания о поездках"
+  "appName": "Флоу",
+  "appDescriptionLayout": "Напоминания о поездках",
+  "navbarHome": "Главная",
+  "navbarTrips": "Поездки",
+  "navbarProfile": "Профиль"
 }

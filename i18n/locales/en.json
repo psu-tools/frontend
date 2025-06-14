@@ -1,3 +1,7 @@
 {
-  "appName": "Flow — Напоминания о поездках"
+  "appName": "Flow",
+  "appDescriptionLayout": "Trip reminders",
+  "navbarHome": "Home",
+  "navbarTrips": "Trips",
+  "navbarProfile": "Profile"
 }

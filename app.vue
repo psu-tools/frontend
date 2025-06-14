@@ -32,7 +32,8 @@ onMounted(async () => {
           alt="Flow logo"
         />
         <h1 class="text-text dark:text-(--primary-orange) sm:text-4xl lg:text-6xl 2xl:pl-20">
-          <span>{{ $t('appName') }}</span>
+          <span class="font-bold">{{ $t('appName') }}</span> — <br />
+          {{ $t('appDescriptionLayout') }}
         </h1>
       </div>
     </div>
