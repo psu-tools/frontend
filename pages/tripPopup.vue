@@ -178,11 +178,11 @@ watch(
     </div>
     <BaseConfirmModal
       :is-open="isDeleteConfirmOpen"
-      title="Удалить поездку"
-      description="Вы уверены, что хотите удалить эту поездку?"
+      :title="$t('deleteTripMessage')"
+      :description="$t('deleteTripConfirmationMessage')"
       :icon="IcWarn"
-      :confirmText="`Удалить`"
-      :cancelText="`Отмена`"
+      :confirmText="$t('deleteButton')"
+      :cancelText="$t('cancelButton')"
       :onConfirm="confirmDelete"
       :onCancel="closeDeleteConfirm"
     />

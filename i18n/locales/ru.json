@@ -41,5 +41,8 @@
   "continueButton": "Продолжить",
   "pickerModalButton": "Готово",
   "addTripButton": "Добавить поездку",
-  "editTripButton": "Редактировать поездку"
+  "editTripButton": "Редактировать поездку",
+  "deleteTripMessage": "Удалить поездку",
+  "deleteTripConfirmationMessage": "Вы уверены, что хотите удалить эту поездку?",
+  "deleteButton": "Удалить"
 }
