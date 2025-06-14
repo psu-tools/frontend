@@ -32,8 +32,7 @@ onMounted(async () => {
           alt="Flow logo"
         />
         <h1 class="text-text dark:text-(--primary-orange) sm:text-4xl lg:text-6xl 2xl:pl-20">
-          <span class="font-bold">Flow</span> — <br />
-          Напоминания о поездках
+          <span>{{ $t('appName') }}</span>
         </h1>
       </div>
     </div>
