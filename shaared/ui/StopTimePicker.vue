@@ -61,7 +61,7 @@ watch([selectedReminderTimeIndex], () => emit('select', selectedTime.value))
             invisible: time === -1,
           }"
         >
-          {{ time }} минут
+          {{ time }} {{ $t('reminderMinutes') }}
         </div>
       </div>
     </div>

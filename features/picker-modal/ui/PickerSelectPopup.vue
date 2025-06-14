@@ -37,7 +37,17 @@ const handleSelectedStopTime = (time: number) => {
         class="w-full max-w-md mx-auto bg-(--primary-white-bg) dark:bg-(--secondary-black-bg) rounded-2xl px-[30px] py-5"
       >
         <h2 class="text-left text-sm font-semibold pb-8 dark:text-(--primary-white)">
-          Время прибытия
+          {{
+            props.type === 'time'
+              ? $t('arrivalTime')
+              : props.type === 'date'
+                ? $t('date')
+                : props.type === 'reminder'
+                  ? $t('reminder')
+                  : props.type === 'stopTime'
+                    ? $t('stopAtPoint')
+                    : ''
+          }}
         </h2>
 
         <TimePicker
@@ -68,7 +78,7 @@ const handleSelectedStopTime = (time: number) => {
           class="w-full mt-5 py-3 rounded-xl text-(--primary-white) text-sm font-semibold bg-(--primary-orange) cursor-pointer"
           @click="emit('close')"
         >
-          Готово
+          {{ $t('pickerModalButton') }}
         </button>
       </div>
     </div>

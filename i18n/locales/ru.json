@@ -38,5 +38,8 @@
   "stopAtPointMinutes": "мин.",
   "reminderIn": "за",
   "reminderMinutes": "минут",
-  "continueButton": "Продолжить"
+  "continueButton": "Продолжить",
+  "pickerModalButton": "Готово",
+  "addTripButton": "Добавить поездку",
+  "editTripButton": "Редактировать поездку"
 }

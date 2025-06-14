@@ -59,7 +59,7 @@ watch([selectedReminderTimeIndex], () => emit('select', selectedTime.value))
           class="h-12 flex justify-center items-center text-center snap-center text-sm"
           :class="{ 'opacity-50': i !== selectedReminderTimeIndex }"
         >
-          За {{ time || '' }} минут
+          {{ $t('reminderIn') }} {{ time || '' }} {{ $t('reminderMinutes') }}
         </div>
         <div class="h-12"></div>
       </div>

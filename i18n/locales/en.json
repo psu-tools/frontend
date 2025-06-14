@@ -38,5 +38,8 @@
   "stopAtPointMinutes": "min.",
   "reminderIn": "in",
   "reminderMinutes": "minutes",
-  "continueButton": "Continue"
+  "continueButton": "Continue",
+  "pickerModalButton": "Ok",
+  "addTripButton": "Add trip",
+  "editTripButton": "Edit trip"
 }
