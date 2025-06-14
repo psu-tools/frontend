@@ -64,5 +64,9 @@
   "theLink": "the link",
   "yourFirstName": "Your first name",
   "yourLastName": "Your last name",
-  "save": "Save"
+  "save": "Save",
+  "myAddressesTitle": "My addresses",
+  "noAddressesAdded": "No addresses added",
+  "notAttached": "Not attached",
+  "featureUnderDev": "The feature is under development"
 }

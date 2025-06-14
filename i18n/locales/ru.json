@@ -64,5 +64,9 @@
   "theLink": "по ссылке",
   "yourFirstName": "Ваше имя",
   "yourLastName": "Ваша фамилия",
-  "save": "Сохранить"
+  "save": "Сохранить",
+  "myAddressesTitle": "Мои адреса",
+  "noAddressesAdded": "Нет добавленных адресов",
+  "notAttached": "Не привязан",
+  "featureUnderDev": "Функция находится в разработке"
 }

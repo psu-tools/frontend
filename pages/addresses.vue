@@ -85,7 +85,7 @@ onMounted(() => {
 <template>
   <div class="pb-24">
     <div class="flex items-start justify-between">
-      <PagesTitle title="Мои адреса" />
+      <PagesTitle :title="$t('myAddressesTitle')" />
       <button class="cursor-pointer" @click="openNewPointSelector">
         <IcAdd />
       </button>
@@ -106,7 +106,9 @@ onMounted(() => {
       @edit="handleEditPoint"
     />
 
-    <div v-if="isLoading" class="text-center py-8 text-(--primary-gray)">Загрузка...</div>
+    <div v-if="isLoading" class="text-center py-8 text-(--primary-gray)">
+      {{ $t('loadingMessage') }}
+    </div>
 
     <div v-else-if="favoritePoints?.length" class="mt-4 space-y-2">
       <div
@@ -124,7 +126,7 @@ onMounted(() => {
       </div>
     </div>
 
-    <div v-else class="text-center py-8 text-(--primary-gray)">Нет добавленных адресов</div>
+    <div v-else class="text-center py-8 text-(--primary-gray)">{{ $t('noAddressesAdded') }}</div>
 
     <SelectPointModal v-if="isSelectorOpen" @close="closeSelector" @select="handleSelectPoint" />
   </div>

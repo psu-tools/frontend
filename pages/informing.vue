@@ -45,7 +45,7 @@ onMounted(async () => {
 
 <template>
   <div class="pb-24">
-    <PagesTitle title="Уведомления" />
+    <PagesTitle :title="$t('notificationsTitle')" />
     <div class="flex flex-col gap-[15px]">
       <div class="">
         <GeneralWidget
@@ -53,7 +53,7 @@ onMounted(async () => {
           :id="
             userInfoStore.userInfo?.telegramUsername
               ? '@' + userInfoStore.userInfo.telegramUsername
-              : 'Не привязан'
+              : $t('notAttached')
           "
           :has-checkbox="true"
           :checkbox-status="
@@ -69,7 +69,7 @@ onMounted(async () => {
       <div class="">
         <GeneralWidget
           type="Email"
-          :id="userInfoStore.userInfo?.email || 'Не привязан'"
+          :id="userInfoStore.userInfo?.email || $t('notAttached')"
           :has-checkbox="true"
           :checkbox-status="
             !!userInfoStore.userInfo?.userPreferences?.notificationMethods.includes('EMAIL')
@@ -78,7 +78,7 @@ onMounted(async () => {
         />
       </div>
       <div class="">
-        <GeneralWidget type="Телефон" id="Функция находится в разработке" :has-checkbox="false" />
+        <GeneralWidget :type="$t('phone')" :id="$t('featureUnderDev')" :has-checkbox="false" />
       </div>
     </div>
     <EditFieldModal
