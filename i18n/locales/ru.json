@@ -68,5 +68,8 @@
   "myAddressesTitle": "Мои адреса",
   "noAddressesAdded": "Нет добавленных адресов",
   "notAttached": "Не привязан",
-  "featureUnderDev": "Функция находится в разработке"
+  "featureUnderDev": "Функция находится в разработке",
+  "bright": "Светлая",
+  "dark": "Темная",
+  "system": "Как в системе"
 }

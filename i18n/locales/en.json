@@ -68,5 +68,8 @@
   "myAddressesTitle": "My addresses",
   "noAddressesAdded": "No addresses added",
   "notAttached": "Not attached",
-  "featureUnderDev": "The feature is under development"
+  "featureUnderDev": "The feature is under development",
+  "bright": "Bright",
+  "dark": "Dark",
+  "system": "System"
 }
