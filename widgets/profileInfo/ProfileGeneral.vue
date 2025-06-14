@@ -21,7 +21,8 @@ onMounted(async () => {
           <NuxtImg
             :src="userInfoStore.userInfo.avatarUri"
             alt="Аватар"
-            class="rounded-full object-cover"
+            class="rounded-full object-cover h-16 w-16"
+            :quality="10"
           />
         </div>
         <div v-else>
