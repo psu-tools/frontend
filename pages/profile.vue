@@ -19,18 +19,22 @@ interface BlockItem {
   path: string
 }
 
-const block1: BlockItem[] = [{ iconComponent: IcLocation, title: 'Мои адреса', path: '/addresses' }]
+const { t } = useI18n()
+
+const block1: BlockItem[] = [
+  { iconComponent: IcLocation, title: t('myAddresses'), path: '/addresses' },
+]
 
 const block2: BlockItem[] = [
-  { iconComponent: IcNotifications, title: 'Уведомления', path: '/informing' },
-  { iconComponent: IcLanguage, title: 'Язык', path: '/language' },
-  { iconComponent: IcTheme, title: 'Тема оформления', path: '/theme' },
-  { iconComponent: IcTime, title: 'Запас времени', path: '/overtime' },
+  { iconComponent: IcNotifications, title: t('notificationsTitle'), path: '/informing' },
+  { iconComponent: IcLanguage, title: t('language'), path: '/language' },
+  { iconComponent: IcTheme, title: t('appTheme'), path: '/theme' },
+  { iconComponent: IcTime, title: t('reserveTime'), path: '/overtime' },
 ]
 
 const block3: BlockItem[] = [
-  { iconComponent: IcAbout, title: 'О приложении', path: '/about' },
-  { iconComponent: IcSupport, title: 'Поддержка и обратная связь', path: '/support' },
+  { iconComponent: IcAbout, title: t('aboutApp'), path: '/about' },
+  { iconComponent: IcSupport, title: t('support'), path: '/support' },
 ]
 const isLogoutConfirmOpen = ref(false)
 
@@ -51,7 +55,9 @@ const confirmLogout = () => {
 
 <template>
   <div class="pb-24">
-    <h1 class="text-3xl font-bold text-text dark:text-(--primary-white) mb-[25px]">Профиль</h1>
+    <h1 class="text-3xl font-bold text-text dark:text-(--primary-white) mb-[25px]">
+      {{ t('profilePageTitle') }}
+    </h1>
     <div class="flex flex-col gap-[25px]">
       <NuxtLink to="/edit">
         <ProfileGeneral />
@@ -63,16 +69,16 @@ const confirmLogout = () => {
         @click="openLogoutConfirm"
         class="w-full transition-colors bg-(--primary-white-bg) dark:bg-(--secondary-black-bg) hover:bg-(--primary-white-hover) dark:hover:bg-(--secondary-black-bg-hover) rounded-2xl py-[15px] text-(--primary-red) text-center font-semibold cursor-pointer"
       >
-        Выйти
+        {{ t('logoutButton') }}
       </button>
     </div>
     <BaseConfirmModal
       :is-open="isLogoutConfirmOpen"
-      title="Вы уверены, что хотите выйти?"
+      :title="t('logoutConfirmationMessage')"
       description=""
       :icon="IcLogout"
-      :confirmText="`Выйти`"
-      :cancelText="`Отмена`"
+      :confirmText="t('logoutButton')"
+      :cancelText="t('cancelButton')"
       :onConfirm="confirmLogout"
       :onCancel="closeLogoutConfirm"
     />

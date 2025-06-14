@@ -5,7 +5,7 @@ import { useTripFormStore } from '~/stores/tripForm'
 
 const tripFormStore = useTripFormStore()
 
-const prop = defineProps<{}>()
+const { locale } = useI18n()
 
 const emit = defineEmits<{
   (e: 'toggleExpand'): void
@@ -32,7 +32,7 @@ const handlerPointSelector = (index: number): void => emit('openPointSelector', 
         <div class="flex justify-between items-center gap-2">
           <input
             type="text"
-            placeholder="Название поездки"
+            :placeholder="$t('tripNamePlaceholder')"
             class="text-2xl font-bold text-(--color-text) dark:text-(--primary-white) outline-none caret-(--primary-orange) min-w-4"
             v-model="tripFormStore.tripName"
           />
@@ -56,9 +56,9 @@ const handlerPointSelector = (index: number): void => emit('openPointSelector', 
         class="transition-colors bg-(--primary-white) hover:bg-(--primary-white-hover) dark:bg-(--secondary-black-bg) dark:hover:bg-(--secondary-black-bg-hover) text-(--color-text) dark:text-(--primary-white) text-sm rounded-2xl flex justify-between items-center py-2.5 pl-[15px] pr-2.5 cursor-pointer"
         @click="emit('onClickStopPoint', i)"
       >
-        <p>Остановка в точке {{ i + 1 }}</p>
+        <p>{{ $t('stopAtPoint') }} {{ i }}</p>
         <p class="bg-(--secondary-white-bg) dark:bg-(--third-black-bg) py-2 px-2.5 rounded-xl">
-          {{ tripFormStore.tripPoints[i + 1].stopTime }} мин
+          {{ tripFormStore.tripPoints[i + 1].stopTime }} {{ $t('stopAtPointMinutes') }}
         </p>
       </div>
     </div>
@@ -68,10 +68,10 @@ const handlerPointSelector = (index: number): void => emit('openPointSelector', 
         class="transition-colors bg-(--primary-white) hover:bg-(--primary-white-hover) dark:bg-(--secondary-black-bg) dark:hover:bg-(--secondary-black-bg-hover) text-(--color-text) dark:text-(--primary-white) text-sm rounded-2xl flex justify-between items-center py-2.5 pl-[15px] pr-2.5 cursor-pointer"
         @click="emit('toggleDayMonthYearPopup')"
       >
-        <p>Дата</p>
+        <p>{{ $t('date') }}</p>
         <p class="bg-(--secondary-white-bg) dark:bg-(--third-black-bg) py-2 px-2.5 rounded-xl">
           {{
-            tripFormStore.tripDate?.toLocaleDateString('ru-RU', {
+            tripFormStore.tripDate?.toLocaleDateString(locale.toUpperCase(), {
               day: 'numeric',
               month: 'short',
               year: 'numeric',
@@ -84,7 +84,7 @@ const handlerPointSelector = (index: number): void => emit('openPointSelector', 
         class="transition-colors bg-(--primary-white) hover:bg-(--primary-white-hover) dark:bg-(--secondary-black-bg) dark:hover:bg-(--secondary-black-bg-hover) text-(--color-text) dark:text-(--primary-white) text-sm rounded-2xl flex justify-between items-center py-2.5 pl-[15px] pr-2.5 cursor-pointer"
         @click="emit('toggleTimePopup')"
       >
-        <p>Время прибытия</p>
+        <p>{{ $t('arrivalTime') }}</p>
         <p class="bg-(--secondary-white-bg) dark:bg-(--third-black-bg) py-2 px-2.5 rounded-xl">
           {{ tripFormStore?.arrivalTime }}
         </p>
@@ -94,9 +94,9 @@ const handlerPointSelector = (index: number): void => emit('openPointSelector', 
         class="transition-colors bg-(--primary-white) hover:bg-(--primary-white-hover) dark:bg-(--secondary-black-bg) dark:hover:bg-(--secondary-black-bg-hover) text-(--color-text) dark:text-(--primary-white) text-sm rounded-2xl flex justify-between items-center py-2.5 pl-[15px] pr-2.5 cursor-pointer"
         @click="emit('toggleReminderPopup')"
       >
-        <p>Напоминание</p>
+        <p>{{ $t('reminder') }}</p>
         <p class="bg-(--secondary-white-bg) dark:bg-(--third-black-bg) py-2 px-2.5 rounded-xl">
-          за {{ tripFormStore?.reminderTime }} минут
+          {{ $t('reminderIn') }} {{ tripFormStore?.reminderTime }} {{ $t('reminderMinutes') }}
         </p>
       </div>
     </div>
