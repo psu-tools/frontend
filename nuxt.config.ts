@@ -17,7 +17,7 @@ export default defineNuxtConfig({
     'nuxt-schema-org',
     'nuxt-gtag',
     'nuxt-yandex-metrika',
-    // 'nuxt-security',
+    'nuxt-security',
   ],
 
   devServer: {
