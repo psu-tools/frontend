@@ -18,6 +18,7 @@ export default defineNuxtConfig({
     'nuxt-gtag',
     'nuxt-yandex-metrika',
     'nuxt-security',
+    '@nuxtjs/i18n',
   ],
 
   devServer: {
@@ -211,5 +212,14 @@ export default defineNuxtConfig({
       hashStyles: true,
     },
     sri: !isDev,
+  },
+
+  i18n: {
+    defaultLocale: 'ru',
+    langDir: 'locales/',
+    locales: [
+      { code: 'ru', name: 'Russian', file: 'ru.json' },
+      { code: 'en', name: 'English', file: 'en.json' },
+    ],
   },
 })
