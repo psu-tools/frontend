@@ -52,5 +52,14 @@
   "lastName": "Фамилия",
   "contactData": "Контактные данные",
   "add": "Добавить",
-  "phone": "Телефон"
+  "phone": "Телефон",
+  "notSpecified": "Не указано",
+  "your": "Ваш",
+  "tiedToFlow": "привязанный к Flow",
+  "edit": "Изменить",
+  "enterYourNew": "Введите ваш новый",
+  "telegramBinding": "Привязка Telegram",
+  "scanTheQrCode": "Отсканируйте QR код",
+  "orFollow": "или перейдите",
+  "theLink": "по ссылке"
 }

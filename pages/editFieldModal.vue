@@ -23,10 +23,12 @@ const emit = defineEmits<{
   (e: 'forcedClose'): void
 }>()
 
+const { t } = useI18n()
+
 const telegramLink = `https://t.me/FlowTripsBot?start=${localStorage.getItem('userId')}`
 
 const fieldLabelMap = {
-  phoneNumber: 'Телефон',
+  phoneNumber: t('phone'),
   email: 'Email',
   telegramId: 'Telegram',
 }
@@ -40,7 +42,7 @@ const iconMap = {
 const editingLabel = computed(() => fieldLabelMap[props.field])
 const editingValue = computed(() => {
   return props.value === null || props.value === undefined || props.value === ''
-    ? 'Не указано'
+    ? t('notSpecified')
     : String(props.value)
 })
 
@@ -89,7 +91,7 @@ const submit = async () => {
             part === 1
               ? editingLabel
               : part === 2 && editingLabel.toLowerCase() === 'telegram'
-                ? 'Привязка Telegram'
+                ? $t('telegramBinding')
                 : ''
           }}
         </h2>
@@ -104,12 +106,12 @@ const submit = async () => {
           {{ editingValue }}
         </p>
         <p class="text-center text-[16px] text-(--primary-gray-icon)">
-          Ваш {{ editingLabel.toLowerCase() }}, привязанный к Flow
+          {{ $t('your') }} {{ editingLabel.toLowerCase() }}, {{ $t('tiedToFlow') }}
         </p>
       </div>
       <div class="flex items-center justify-center w-fit max-w-full mx-auto">
         <PrimaryOrangeButton class="py-[10.5px] px-[30px] rounded-(--radius-xl)" @click="part = 2">
-          Изменить {{ editingLabel.toLowerCase() }}
+          {{ $t('edit') }} {{ editingLabel.toLowerCase() }}
         </PrimaryOrangeButton>
       </div>
     </div>
@@ -121,7 +123,7 @@ const submit = async () => {
       <p
         class="text-center text-xl text-(--color-text) dark:text-(--primary-white) font-bold leading-6"
       >
-        Введите ваш новый {{ editingLabel.toLowerCase() }}
+        {{ $t('enterYourNew') }} {{ editingLabel.toLowerCase() }}
       </p>
       <input
         v-model="inputText"
@@ -145,7 +147,7 @@ const submit = async () => {
       />
       <BottomSheetBottomBar>
         <PrimaryOrangeButton class="px-[15px] py-3" :disabled="inputText === ''" @click="submit">
-          Продолжить
+          {{ $t('continueButton') }}
         </PrimaryOrangeButton>
       </BottomSheetBottomBar>
       <ErrorModal
@@ -165,10 +167,11 @@ const submit = async () => {
         />
         <div class="space-y-1.5">
           <p class="text-center text-(--color-text) dark:text-(--primary-white) font-bold">
-            Отсканируйте QR код
+            {{ $t('scanTheQrCode') }}
           </p>
           <p class="text-center text-(--primary-light-gray) font-semibold">
-            или перейдите <a :href="telegramLink" class="text-(--primary-orange)">по ссылке</a>
+            {{ $t('orFollow') }}
+            <a :href="telegramLink" class="text-(--primary-orange)">{{ $t('theLink') }}</a>
           </p>
         </div>
       </div>

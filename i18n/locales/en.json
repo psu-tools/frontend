@@ -52,5 +52,14 @@
   "lastName": "Last Name",
   "contactData": "Contact details",
   "add": "Add",
-  "phone": "Phone"
+  "phone": "Phone",
+  "notSpecified": "Not specified",
+  "your": "Your",
+  "tiedToFlow": "tied to Flow",
+  "edit": "Edit",
+  "enterYourNew": "Enter your new",
+  "telegramBinding": "Telegram Binding",
+  "scanTheQrCode": "Scan the QR code",
+  "orFollow": "or follow",
+  "theLink": "the link"
 }
