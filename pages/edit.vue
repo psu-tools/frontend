@@ -81,14 +81,14 @@ const handleFileChange = async (event: Event) => {
 
 <template>
   <div class="pb-24">
-    <PagesTitle title="Редактирование" />
+    <PagesTitle :title="$t('editing')" />
     <div class="mt-2.5 w-full flex items-center justify-center mb-[35px]">
       <div class="flex flex-col items-center gap-[10px]">
         <div class="rounded-full">
           <div v-if="userInfoStore.userInfo?.avatarUri">
             <NuxtImg
               :src="userInfoStore.userInfo.avatarUri"
-              alt="Аватар"
+              alt="Avatar"
               class="rounded-full object-cover w-20 h-20"
             />
           </div>
@@ -107,13 +107,15 @@ const handleFileChange = async (event: Event) => {
           class="cursor-pointer text-center text-sm text-(--primary-orange)"
           @click="triggerFileInput"
         >
-          Выбрать фотографию
+          {{ $t('choosePhoto') }}
         </div>
       </div>
     </div>
     <div class="flex flex-col gap-[15px]">
       <div>
-        <p class="text-xs text-(--color-text-glay) dark:text-(--secondary-gray) mb-[15px]">Имя</p>
+        <p class="text-xs text-(--color-text-glay) dark:text-(--secondary-gray) mb-[15px]">
+          {{ $t('firstName') }}
+        </p>
         <ProfileRow
           :label="`${userInfoStore.userInfo?.firstName}`"
           @click="openModal('firstName', 'Ваше имя', userInfoStore.userInfo?.firstName || '')"
@@ -121,7 +123,7 @@ const handleFileChange = async (event: Event) => {
       </div>
       <div>
         <p class="text-xs text-(--color-text-glay) dark:text-(--secondary-gray) mb-[15px]">
-          Фамилия
+          {{ $t('lastName') }}
         </p>
         <ProfileRow
           :label="`${userInfoStore.userInfo?.lastName}`"
@@ -130,17 +132,17 @@ const handleFileChange = async (event: Event) => {
       </div>
       <div>
         <p class="text-xs text-(--color-text-glay) dark:text-(--secondary-gray) mb-[15px]">
-          Контактные данные
+          {{ $t('contactData') }}
         </p>
         <div class="flex flex-col gap-[15px]">
           <ProfileRow
-            label="Телефон"
-            :value="`${userInfoStore.userInfo?.phoneNumber || 'Добавить'}`"
+            :label="$t('phone')"
+            :value="`${userInfoStore.userInfo?.phoneNumber || $t('add')}`"
             @click="openPhoneModal"
           />
           <ProfileRow
             label="Email"
-            :value="`${userInfoStore.userInfo?.email || 'Добавить'}`"
+            :value="`${userInfoStore.userInfo?.email || $t('add')}`"
             @click="openEmailModal"
           />
           <ProfileRow
@@ -148,7 +150,7 @@ const handleFileChange = async (event: Event) => {
             :value="`${
               userInfoStore.userInfo?.telegramUsername
                 ? '@' + userInfoStore.userInfo.telegramUsername
-                : 'Добавить'
+                : $t('add')
             }`"
             @click="openTelegramModal"
           />

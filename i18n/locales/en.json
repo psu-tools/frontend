@@ -44,5 +44,13 @@
   "editTripButton": "Edit trip",
   "deleteTripMessage": "Delete trip",
   "deleteTripConfirmationMessage": "Are you sure you want to delete this trip?",
-  "deleteButton": "Delete"
+  "deleteButton": "Delete",
+  "loadingMessage": "Loading...",
+  "editing": "Editing",
+  "choosePhoto": "Choose a photo",
+  "firstName": "First Name",
+  "lastName": "Last Name",
+  "contactData": "Contact details",
+  "add": "Add",
+  "phone": "Phone"
 }

@@ -44,5 +44,13 @@
   "editTripButton": "Редактировать поездку",
   "deleteTripMessage": "Удалить поездку",
   "deleteTripConfirmationMessage": "Вы уверены, что хотите удалить эту поездку?",
-  "deleteButton": "Удалить"
+  "deleteButton": "Удалить",
+  "loadingMessage": "Загрузка...",
+  "editing": "Редактирование",
+  "choosePhoto": "Выбрать фотографию",
+  "firstName": "Имя",
+  "lastName": "Фамилия",
+  "contactData": "Контактные данные",
+  "add": "Добавить",
+  "phone": "Телефон"
 }

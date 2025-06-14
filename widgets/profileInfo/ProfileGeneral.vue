@@ -20,7 +20,7 @@ onMounted(async () => {
         <div v-if="userInfoStore.userInfo?.avatarUri">
           <NuxtImg
             :src="userInfoStore.userInfo.avatarUri"
-            alt="Аватар"
+            alt="Avatar"
             class="rounded-full object-cover h-16 w-16"
             :quality="10"
           />
@@ -34,13 +34,13 @@ onMounted(async () => {
           <p v-if="userInfoStore.userInfo?.firstName">
             {{ userInfoStore.userInfo.firstName }}
           </p>
-          <p v-else>Загрузка...</p>
+          <p v-else>{{ $t('loadingMessage') }}</p>
         </div>
         <div class="text-(--light-gray) text-xs font-semibold">
           <p v-if="userInfoStore.userInfo?.email">
             {{ userInfoStore.userInfo.email }}
           </p>
-          <p v-else>Загрузка...</p>
+          <p v-else>{{ $t('loadingMessage') }}</p>
         </div>
       </div>
       <button class="cursor-pointer">
