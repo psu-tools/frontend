@@ -16,7 +16,7 @@ defineProps<Props>()
   >
     <div class="flex flex-col gap-2 justify-between items-start w-2/3">
       <div class="space-y-1 w-full">
-        <p class="text-xs opacity-70">Сейчас</p>
+        <p class="text-xs opacity-70">{{ $t('humanDateNow') }}</p>
         <p class="text-sm font-semibold truncate whitespace-nowrap">{{ trip.name }}</p>
       </div>
       <div class="flex items-center gap-1 text-xs w-full">

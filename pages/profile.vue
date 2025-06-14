@@ -20,22 +20,28 @@ interface BlockItem {
 }
 
 const { t } = useI18n()
+const localePath = useLocalePath()
 
 const block1: BlockItem[] = [
-  { iconComponent: IcLocation, title: t('myAddresses'), path: '/addresses' },
+  { iconComponent: IcLocation, title: t('myAddresses'), path: localePath('/addresses') },
 ]
 
 const block2: BlockItem[] = [
-  { iconComponent: IcNotifications, title: t('notificationsTitle'), path: '/informing' },
-  { iconComponent: IcLanguage, title: t('language'), path: '/language' },
-  { iconComponent: IcTheme, title: t('appTheme'), path: '/theme' },
-  { iconComponent: IcTime, title: t('reserveTime'), path: '/overtime' },
+  {
+    iconComponent: IcNotifications,
+    title: t('notificationsTitle'),
+    path: localePath('/informing'),
+  },
+  { iconComponent: IcLanguage, title: t('language'), path: localePath('/language') },
+  { iconComponent: IcTheme, title: t('appTheme'), path: localePath('/theme') },
+  { iconComponent: IcTime, title: t('reserveTime'), path: localePath('/overtime') },
 ]
 
 const block3: BlockItem[] = [
-  { iconComponent: IcAbout, title: t('aboutApp'), path: '/about' },
-  { iconComponent: IcSupport, title: t('support'), path: '/support' },
+  { iconComponent: IcAbout, title: t('aboutApp'), path: localePath('/about') },
+  { iconComponent: IcSupport, title: t('support'), path: localePath('/support') },
 ]
+
 const isLogoutConfirmOpen = ref(false)
 
 const openLogoutConfirm = () => {
@@ -59,7 +65,7 @@ const confirmLogout = () => {
       {{ t('profilePageTitle') }}
     </h1>
     <div class="flex flex-col gap-[25px]">
-      <NuxtLink to="/edit">
+      <NuxtLink :to="$localePath('/edit')">
         <ProfileGeneral />
       </NuxtLink>
       <ProfileBlock :items="block1" />
