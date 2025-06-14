@@ -73,5 +73,7 @@
   "dark": "Dark",
   "system": "System",
   "timeReserveMessage": "An additional percentage of time to account for traffic jams, delays and other unforeseen situations",
-  "currentTimeReserve": "Current reserve"
+  "currentTimeReserve": "Current reserve",
+  "redirectMessage": "You will be redirected to another page"
+
 }
