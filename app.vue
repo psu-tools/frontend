@@ -49,6 +49,8 @@ onMounted(async () => {
         :is="isFullscreenRoute ? 'div' : NuxtLayout"
         :class="isFullscreenRoute ? '' : 'sm:rounded-3xl sm:shadow-2xl sm:mx-auto overflow-hidden'"
       >
+        <NuxtLink :to="$switchLocalePath('en')">English</NuxtLink>
+        <NuxtLink :to="$switchLocalePath('ru')">Русский</NuxtLink>
         <NuxtPage />
         <TripPopup v-if="!isFullscreenRoute" />
         <AddTripModal v-if="!isFullscreenRoute" />
