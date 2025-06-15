@@ -11,7 +11,7 @@ export const useAuthStore = defineStore('auth', () => {
   const surname = ref<string>('')
   const avatar = ref<string | null>(null)
 
-  const userId = ref<string | null>(localStorage.getItem('userId') || null)
+  const userId = ref<string | null>(null)
 
   const emailError = ref<string | null>(null)
   const passwordError = ref<string | null>(null)

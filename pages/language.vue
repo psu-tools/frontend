@@ -17,7 +17,7 @@ const setLanguage = (theme: 'Русский' | 'English') => {
 
 <template>
   <div class="pb-24">
-    <PagesTitle title="Язык" />
+    <PagesTitle :title="$t('language')" />
     <div class="flex flex-col gap-[15px]">
       <CheckWidget
         v-for="lang in languages"
