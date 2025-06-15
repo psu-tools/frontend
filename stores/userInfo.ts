@@ -27,15 +27,18 @@ export const useUserInfo = defineStore('userInfo', () => {
   const userInfo = ref<UserInfo | null>()
   const userId = ref<string | null>(null)
 
-  if (typeof window !== 'undefined') {
-    userId.value = localStorage.getItem('userId')
+  const loadUserIdFromStorage = () => {
+    if (process.client) {
+      const savedId = localStorage.getItem('userId')
+      if (savedId) {
+        userId.value = savedId
+      }
+    }
   }
 
   const setUserId = (newUserId: string) => {
     userId.value = newUserId
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('userId', newUserId)
-    }
+    localStorage.setItem('userId', newUserId)
   }
 
   const getUserInfo = async () => {
@@ -82,5 +85,6 @@ export const useUserInfo = defineStore('userInfo', () => {
     getUserInfo,
     updateUserInfo,
     setUserId,
+    loadUserIdFromStorage,
   }
 })

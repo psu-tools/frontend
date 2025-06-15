@@ -7,6 +7,7 @@ const userInfoStore = useUserInfo()
 
 onMounted(async () => {
   if (!userInfoStore.userInfo) {
+    userInfoStore.loadUserIdFromStorage()
     await userInfoStore.getUserInfo()
   }
 })
