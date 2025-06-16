@@ -16,7 +16,19 @@ const userInfoStore = useUserInfo()
 const isFullscreenRoute = computed(() => route.path === '/about')
 
 onMounted(async () => {
-  useTheme()
+  const { setTheme } = useTheme()
+
+  const isSystem = localStorage.getItem('isSystemTheme') === 'true'
+  const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null
+
+  if (isSystem) {
+    setTheme('system')
+  } else if (savedTheme) {
+    setTheme(savedTheme)
+  } else {
+    setTheme('light')
+  }
+
   await tripsStore.fetchTrips()
   userInfoStore.loadUserIdFromStorage()
   await userInfoStore.getUserInfo()
