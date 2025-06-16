@@ -38,7 +38,21 @@ export default defineNuxtConfig({
       ],
       htmlAttrs: { lang: 'ru' },
       title: 'Flow — всегда вовремя',
-      meta: [{ name: 'description', content: 'Напоминания о поездках' }],
+      meta: [
+        { name: 'description', content: 'Напоминания о поездках' },
+        {
+          name: 'viewport',
+          content: 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no',
+        },
+        {
+          name: 'apple-mobile-web-app-capable',
+          content: 'yes',
+        },
+        {
+          name: 'apple-mobile-web-app-status-bar-style',
+          content: 'black-translucent',
+        },
+      ],
       link: [
         {
           rel: 'stylesheet',
@@ -69,8 +83,8 @@ export default defineNuxtConfig({
       name: 'Flow',
       short_name: 'Flow',
       description: 'Напоминание о поездках',
-      theme_color: '#ff724c',
-      background_color: '#ff724c',
+      theme_color: '#000000',
+      background_color: '#000000',
       display: 'standalone',
       start_url: '/',
       icons: [

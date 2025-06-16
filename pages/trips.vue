@@ -16,7 +16,7 @@ const calendarExpandToggle = (value: boolean) => (isCalendarExpanded.value = val
 </script>
 
 <template>
-  <div class="h-full">
+  <div class="h-full" :class="{ 'pt-48': !isCalendarExpanded, 'pt-[430px]': isCalendarExpanded }">
     <header
       class="absolute z-10 top-0 left-0 right-0 pt-4 px-4 bg-(--primary-white) dark:bg-(--primary-black-bg)"
     >
@@ -26,11 +26,7 @@ const calendarExpandToggle = (value: boolean) => (isCalendarExpanded.value = val
       <Calendar class="mt-6 -mx-4" @toggle-expand="calendarExpandToggle" />
     </header>
 
-    <div
-      v-if="tripsStore.selectedDate"
-      class="space-y-4 transition-all"
-      :class="{ 'mt-48': !isCalendarExpanded, 'mt-[430px]': isCalendarExpanded }"
-    >
+    <div v-if="tripsStore.selectedDate" class="space-y-4 transition-all">
       <h2 class="text-xs font-semibold dark:text-(--primary-white)">
         {{ tripsStore.formatDate(tripsStore.selectedDate.toISOString()) }}
       </h2>
