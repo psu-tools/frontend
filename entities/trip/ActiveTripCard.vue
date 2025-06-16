@@ -1,8 +1,4 @@
 <script setup lang="ts">
-import { useTripsStore } from '~/stores/trips'
-
-const tripsStore = useTripsStore()
-
 interface Props {
   trip: Trip
 }
