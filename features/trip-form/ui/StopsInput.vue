@@ -41,7 +41,13 @@ const deletePoint = (index: number) => tripFormStore.deletePoint(index)
         </span>
         <input
           type="text"
-          :placeholder="index === 0 ? 'Откуда поедем?' : 'Куда поедем?'"
+          :placeholder="
+            index === 0
+              ? $t('fromWhere')
+              : index === tripFormStore.tripPoints.length - 1
+                ? $t('toWhere')
+                : $t('through')
+          "
           class="ml-3 text-sm cursor-pointer outline-none truncate w-5/6"
           readonly
           v-model="stop.name"
@@ -72,7 +78,7 @@ const deletePoint = (index: number) => tripFormStore.deletePoint(index)
         >
           +
         </span>
-        <p class="ml-3 text-sm font-semibold text-(--primary-gray)">Добавить точку</p>
+        <p class="ml-3 text-sm font-semibold text-(--primary-gray)">{{ $t('addPoint') }}</p>
       </div>
     </div>
   </div>

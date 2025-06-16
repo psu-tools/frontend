@@ -12,11 +12,14 @@ const emit = defineEmits<{
   (e: 'close'): void
 }>()
 
-let setLink: string
+const localePath = useLocalePath()
+
+const setLink = ref<string | null>()
+
 if (props.link) {
-  setLink = props.link
+  setLink.value = props.link
 } else {
-  setLink = '/profile'
+  setLink.value = localePath('/profile')
 }
 </script>
 <template>

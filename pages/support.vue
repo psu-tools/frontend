@@ -7,19 +7,17 @@ import SecondaryButton from '~/shaared/ui/buttons/SecondaryButton.vue'
 <template>
   <div class="relative min-h-[100%] flex flex-col justify-between pt-14 pb-24">
     <div class="mt-[40px] flex flex-col gap-[35px] justify-between items-center">
-      <div class="">
-        <IcRedirect />
-      </div>
+      <IcRedirect />
       <h2 class="w-[220px] mx-auto text-lg text-center dark:text-(--primary-white) font-semibold">
-        Вас перенаправит на другую страницу
+        {{ $t('redirectMessage') }}
       </h2>
     </div>
     <div class="flex flex-col gap-[15px]">
       <a href="https://t.me/renatskosarev">
-        <PrimaryOrangeButton class="py-[15px]">Продолжить</PrimaryOrangeButton>
+        <PrimaryOrangeButton class="py-[15px]">{{ $t('continueButton') }}</PrimaryOrangeButton>
       </a>
-      <NuxtLink to="/profile" class="w-full">
-        <SecondaryButton>Вернуться назад</SecondaryButton>
+      <NuxtLink :to="$localePath('/profile')" class="w-full">
+        <SecondaryButton>{{ $t('cancelButton') }}</SecondaryButton>
       </NuxtLink>
     </div>
   </div>

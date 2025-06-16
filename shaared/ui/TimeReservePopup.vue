@@ -26,7 +26,7 @@ const handleDone = () => {
       class="w-full max-w-md mx-auto bg-(--primary-white-bg) dark:bg-(--secondary-black-bg) rounded-2xl px-[30px] py-5"
     >
       <h2 class="text-left text-sm font-semibold pb-8 dark:text-(--primary-white)">
-        Запас времени
+        {{ $t('reserveTime') }}
       </h2>
 
       <TimeReservePicker :initial-percentage="selected" @select="handleSelect" />
@@ -35,7 +35,7 @@ const handleDone = () => {
         class="w-full mt-5 py-3 rounded-xl text-(--primary-white) text-sm font-semibold bg-(--primary-orange) cursor-pointer"
         @click="handleDone"
       >
-        Готово
+        {{ $t('pickerModalButton') }}
       </button>
     </div>
   </div>

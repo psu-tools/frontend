@@ -87,8 +87,9 @@ export const useTripsStore = defineStore('trips', () => {
   const upcomingTrips = computed(() => trips.value.filter(trip => trip.status === 'upcoming'))
 
   const formatDate = (dateString: string): string => {
+    const { locale } = useI18n()
     const date = new Date(dateString)
-    const formattedDate = date.toLocaleDateString('ru-RU', {
+    const formattedDate = date.toLocaleDateString(locale.value.toUpperCase(), {
       weekday: 'long',
       day: 'numeric',
       month: 'long',

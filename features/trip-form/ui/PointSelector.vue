@@ -141,7 +141,7 @@ watch(
         <div class="flex justify-between items-center gap-2.5">
           <input
             type="text"
-            :placeholder="index === 0 ? 'Откуда поедем?' : 'Куда поедем?'"
+            :placeholder="index === 0 ? $t('fromWhere') : $t('toWhere')"
             class="text-sm text-(--color-black) dark:text-(--primary-white) outline-none caret-(--primary-orange) py-[18px] px-[15px] rounded-2xl bg-(--primary-white) dark:bg-(--secondary-black-bg) w-full"
             v-model="inputValue"
             @keyup.enter="closeSelector"
@@ -200,7 +200,7 @@ watch(
           class="text-sm font-semibold text-(--dark-gray) dark:text-(--secondary-gray)"
           @click="openYandexMaps"
         >
-          Указать на карте
+          {{ $t('selectOnMap') }}
         </p>
       </div>
 

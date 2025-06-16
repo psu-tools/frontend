@@ -15,11 +15,12 @@ export function getHumanDate(dateStr: string): string {
   const diffInHours = now.diff(date, 'hour')
   const diffInDays = now.diff(date, 'day')
 
-  if (diffInMinutes < 1) return 'Сейчас'
-  if (diffInHours < 1) return `${diffInMinutes} мин. назад`
-  if (diffInDays < 1) return `${diffInHours} ч. назад`
-  if (diffInDays === 1) return 'Вчера'
-  if (diffInDays <= 7) return `${diffInDays} дн. назад`
+  const { t } = useI18n()
+  if (diffInMinutes < 1) return t('humanDateNow')
+  if (diffInHours < 1) return `${diffInMinutes} ` + t('humanDateMinutes')
+  if (diffInDays < 1) return `${diffInHours} ` + t('humanDateHours')
+  if (diffInDays === 1) return t('humanDateYesterday')
+  if (diffInDays <= 7) return `${diffInDays} ` + t('humanDateDay')
 
   return date.format('D MMMM')
 }

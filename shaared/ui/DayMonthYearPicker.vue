@@ -3,20 +3,39 @@ const props = defineProps<{ initialDate?: Date }>()
 
 const emit = defineEmits<{ (e: 'select', value: Date): void }>()
 
-const months = [
-  'янв.',
-  'фев.',
-  'мар.',
-  'апр.',
-  'май',
-  'июнь',
-  'июль',
-  'авг.',
-  'сен.',
-  'окт.',
-  'ноя.',
-  'дек.',
-]
+const { locale } = useI18n()
+
+const months = ref(
+  locale.value === 'ru'
+    ? [
+        'янв.',
+        'фев.',
+        'мар.',
+        'апр.',
+        'май',
+        'июнь',
+        'июль',
+        'авг.',
+        'сен.',
+        'окт.',
+        'ноя.',
+        'дек.',
+      ]
+    : [
+        'jan.',
+        'feb.',
+        'mar.',
+        'apr.',
+        'may',
+        'june',
+        'july',
+        'aug.',
+        'sep.',
+        'oct.',
+        'nov.',
+        'dec.',
+      ]
+)
 
 const days = ref<number[]>([])
 const years = Array.from({ length: 30 }, (_, i) => 2025 + i)
@@ -26,7 +45,7 @@ const selectedMonthIndex = ref(0)
 const selectedYearIndex = ref(0)
 
 const paddedDays = computed(() => [...days.value])
-const paddedMonths = computed(() => [...months])
+const paddedMonths = computed(() => [...months.value])
 const paddedYears = computed(() => [...years])
 
 const itemHeight = 48
@@ -68,7 +87,7 @@ const onScroll = (e: Event, type: 'day' | 'month' | 'year') => {
     index >=
       {
         day: days.value.length,
-        month: months.length,
+        month: months.value.length,
         year: years.length,
       }[type]
   )

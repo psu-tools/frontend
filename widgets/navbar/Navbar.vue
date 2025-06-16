@@ -18,6 +18,15 @@ const isProfileActive = computed(() =>
     '/time',
     '/about',
     '/support',
+    '/en/profile',
+    '/en/edit',
+    '/en/addresses',
+    '/en/informing',
+    '/en/language',
+    '/en/theme',
+    '/en/time',
+    '/en/about',
+    '/en/support',
   ].includes(route.path)
 )
 </script>
@@ -25,13 +34,13 @@ const isProfileActive = computed(() =>
   <div
     class="fixed sm:absolute bottom-0 right-0 flex justify-between bg-(--primary-white)/40 dark:bg-(--primary-black-bg)/40 backdrop-blur-2xl w-full px-16 pt-5 pb-9"
   >
-    <NuxtLink to="/" class="flex flex-col items-center gap-1">
-      <Home :is-active="isActive('/') || isActive('/notifications')" />
+    <NuxtLink :to="$localePath('/')" class="flex flex-col items-center gap-1">
+      <Home :is-active="isActive($localePath('/')) || isActive($localePath('/notifications'))" />
     </NuxtLink>
-    <NuxtLink to="/trips">
-      <Routes :is-active="isActive('/trips')" />
+    <NuxtLink :to="$localePath('/trips')">
+      <Routes :is-active="isActive($localePath('/trips'))" />
     </NuxtLink>
-    <NuxtLink to="/profile">
+    <NuxtLink :to="$localePath('/profile')">
       <Profile :is-active="isProfileActive" />
     </NuxtLink>
   </div>

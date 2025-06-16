@@ -27,12 +27,12 @@ const changeTheme = (value: string) => {
 
 <template>
   <div class="pb-24">
-    <PagesTitle title="Тема оформления" />
+    <PagesTitle :title="$t('appTheme')" />
     <div class="flex flex-col gap-[15px]">
       <CheckWidget
         v-for="theme in themes"
+        :title="theme === 'Светлая' ? $t('bright') : theme === 'Темная' ? $t('dark') : $t('system')"
         :key="theme"
-        :title="theme"
         :is-active="activeTheme === theme"
         @click="changeTheme(theme)"
       />

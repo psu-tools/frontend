@@ -37,7 +37,7 @@ onMounted(async () => {
 <template>
   <div class="pb-24">
     <div class="mb-[25px]">
-      <PagesTitle title="Запас времени" />
+      <PagesTitle :title="$t('reserveTime')" />
     </div>
     <div class="flex flex-col gap-[15px]">
       <div
@@ -49,13 +49,12 @@ onMounted(async () => {
         <h3
           class="text-sm text-(--color-text) dark:text-(--primary-white) font-semibold text-center mb-[8px]"
         >
-          Запас времени
+          {{ $t('reserveTime') }}
         </h3>
         <p
           class="px-[30px] flex irems-center justify-center text-xs text-center text-(--primary-gray)"
         >
-          Дополнительный процент времени, чтобы учесть пробки, задержки и другие непредвиденные
-          ситуации
+          {{ $t('timeReserveMessage') }}
         </p>
       </div>
       <div
@@ -63,7 +62,9 @@ onMounted(async () => {
         @click="openPopup"
       >
         <div class="flex w-full justify-between items-center">
-          <div class="text-sm text-(--color-text) dark:text-(--primary-white)">Текущий запас</div>
+          <div class="text-sm text-(--color-text) dark:text-(--primary-white)">
+            {{ $t('currentTimeReserve') }}
+          </div>
           <button
             class="text-sm text-(--color-text) dark:text-(--primary-white) rounded-[12px] bg-(--secondary-white-bg) py-[8px] px-[16px] dark:bg-(--third-black-bg)"
           >

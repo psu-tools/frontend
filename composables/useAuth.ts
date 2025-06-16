@@ -92,9 +92,10 @@ export function useAuth() {
   }
 
   const logout = () => {
+    const localePath = useLocalePath()
     accessToken.value = null
     refreshToken.value = null
-    navigateTo('/welcome')
+    navigateTo(localePath('/welcome'))
     localStorage.removeItem('userId')
     return true
   }

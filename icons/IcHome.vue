@@ -27,7 +27,7 @@ defineProps({ isActive: Boolean })
           !isActive,
       }"
     >
-      Главная
+      {{ $t('navbarHome') }}
     </p>
   </div>
 </template>

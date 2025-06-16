@@ -224,7 +224,7 @@ const sendForm = () => {
         <PrimaryYellowButton
           :disabled="!tripFormStore.isFirstStepValid"
           @click.stop="partOfForm === 2 ? sendForm() : (partOfForm = 2)"
-          >{{ partOfForm === 1 ? 'Продолжить' : 'Добавить поездку' }}</PrimaryYellowButton
+          >{{ partOfForm === 1 ? $t('continueButton') : $t('addTripButton') }}</PrimaryYellowButton
         >
       </BottomSheetBottomBar>
     </Transition>

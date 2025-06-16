@@ -6,16 +6,20 @@ import YandexMaps from '~/pages/yandexMaps.vue'
 import { useTripsStore } from '~/stores/trips'
 import { NuxtLayout } from '#components'
 import { useYandexMapsModalStore } from '~/stores/yandexMaps'
+import { useUserInfo } from '~/stores/userInfo'
 
 const route = useRoute()
 const tripsStore = useTripsStore()
 const yandexMapsModalStore = useYandexMapsModalStore()
+const userInfoStore = useUserInfo()
 
 const isFullscreenRoute = computed(() => route.path === '/about')
 
 onMounted(async () => {
   useTheme()
   await tripsStore.fetchTrips()
+  userInfoStore.loadUserIdFromStorage()
+  await userInfoStore.getUserInfo()
 })
 </script>
 
@@ -32,8 +36,8 @@ onMounted(async () => {
           alt="Flow logo"
         />
         <h1 class="text-text dark:text-(--primary-orange) sm:text-4xl lg:text-6xl 2xl:pl-20">
-          <span class="font-bold">Flow</span> — <br />
-          Напоминания о поездках
+          <span class="font-bold">{{ $t('appName') }}</span> — <br />
+          {{ $t('appDescriptionLayout') }}
         </h1>
       </div>
     </div>
@@ -49,6 +53,8 @@ onMounted(async () => {
         :is="isFullscreenRoute ? 'div' : NuxtLayout"
         :class="isFullscreenRoute ? '' : 'sm:rounded-3xl sm:shadow-2xl sm:mx-auto overflow-hidden'"
       >
+        <!--        <NuxtLink :to="$switchLocalePath('en')">English</NuxtLink>-->
+        <!--        <NuxtLink :to="$switchLocalePath('ru')">Русский</NuxtLink>-->
         <NuxtPage />
         <TripPopup v-if="!isFullscreenRoute" />
         <AddTripModal v-if="!isFullscreenRoute" />
