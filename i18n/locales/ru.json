@@ -77,5 +77,6 @@
   "redirectMessage": "Вас перенаправит на другую страницу",
   "selectOnMap": "Выбрать на карте",
   "selectPointOnMap": "Выбрать точку на карте",
-  "selectedPoint": "Выбранная точка"
+  "selectedPoint": "Выбранная точка",
+  "loadingPleaseWait": "Загрузка. Пожалуйста, подождите"
 }

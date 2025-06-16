@@ -77,5 +77,6 @@
   "redirectMessage": "You will be redirected to another page",
   "selectOnMap": "Select on map",
   "selectPointOnMap": "Select point on map",
-  "selectedPoint": "Selected point"
+  "selectedPoint": "Selected point",
+  "loadingPleaseWait": "Loading. Please wait"
 }
