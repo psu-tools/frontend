@@ -74,6 +74,8 @@
   "system": "System",
   "timeReserveMessage": "An additional percentage of time to account for traffic jams, delays and other unforeseen situations",
   "currentTimeReserve": "Current reserve",
-  "redirectMessage": "You will be redirected to another page"
-
+  "redirectMessage": "You will be redirected to another page",
+  "selectOnMap": "Select on map",
+  "selectPointOnMap": "Select point on map",
+  "selectedPoint": "Selected point"
 }

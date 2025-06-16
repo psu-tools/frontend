@@ -97,12 +97,12 @@ onMounted(async () => {
       class="bg-(--primary-white) dark:bg-(--secondary-black-bg) text-(--color-text) dark:text-(--primary-white) p-4 flex gap-2 items-center"
     >
       <IcBack @click="closeModal" class="cursor-pointer" />
-      <h2 class="text-lg font-semibold">Выбрать точку на карте</h2>
+      <h2 class="text-lg font-semibold">{{ $t('selectPointOnMap') }}</h2>
     </div>
     <div ref="mapRef" style="width: 100%; height: 100%"></div>
     <SelectedPointOnMapModal
       v-if="store.isOpen && selectedAddress"
-      label="Выбранная точка"
+      :label="$t('selectedPoint')"
       :value="selectedAddress"
       input-disabled
       without-background
