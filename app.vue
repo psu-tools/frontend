@@ -6,16 +6,20 @@ import YandexMaps from '~/pages/yandexMaps.vue'
 import { useTripsStore } from '~/stores/trips'
 import { NuxtLayout } from '#components'
 import { useYandexMapsModalStore } from '~/stores/yandexMaps'
+import { useUserInfo } from '~/stores/userInfo'
 
 const route = useRoute()
 const tripsStore = useTripsStore()
 const yandexMapsModalStore = useYandexMapsModalStore()
+const userInfoStore = useUserInfo()
 
 const isFullscreenRoute = computed(() => route.path === '/about')
 
 onMounted(async () => {
   useTheme()
   await tripsStore.fetchTrips()
+  userInfoStore.loadUserIdFromStorage()
+  await userInfoStore.getUserInfo()
 })
 </script>
 
