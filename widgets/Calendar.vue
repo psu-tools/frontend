@@ -5,6 +5,10 @@ const { locale } = useI18n()
 
 const tripsStore = useTripsStore()
 
+const emit = defineEmits<{
+  (e: 'toggleExpand', value: boolean): void
+}>()
+
 const isExpanded = ref(false)
 const selectedDate = ref(tripsStore.selectedDate || new Date())
 const currentDate = ref(new Date())
@@ -210,6 +214,10 @@ const updateHeights = async () => {
 
 onMounted(updateHeights)
 watch([isExpanded, currentDate], updateHeights)
+
+watch(isExpanded, () => {
+  emit('toggleExpand', isExpanded.value)
+})
 </script>
 
 <template>
@@ -301,12 +309,12 @@ watch([isExpanded, currentDate], updateHeights)
     </div>
     <div
       class="border-b rounded-b-[15px] border-b-(--medium-gray) dark:border-b-(--third-black-bg)"
+      @click.stop="toggleCalendar"
+      @mousedown.stop="handleVerticalStart"
+      @touchstart.stop="handleTouchVerticalStart"
     >
       <div
         class="mx-auto my-2.5 h-1 w-8 rounded-full bg-(--medium-gray) dark:opacity-30 cursor-pointer"
-        @click="toggleCalendar"
-        @mousedown.stop="handleVerticalStart"
-        @touchstart.stop="handleTouchVerticalStart"
       ></div>
     </div>
   </div>

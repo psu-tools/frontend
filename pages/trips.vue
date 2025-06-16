@@ -9,19 +9,28 @@ const tripsStore = useTripsStore()
 const addTripModalStore = useAddTripModalStore()
 
 const openModal = () => addTripModalStore.openModal()
+
+const isCalendarExpanded = ref<boolean>(false)
+
+const calendarExpandToggle = (value: boolean) => (isCalendarExpanded.value = value)
 </script>
 
 <template>
-  <div class="pb-24">
-    <h1 class="text-3xl font-bold text-text dark:text-(--primary-white)">
-      {{ $t('tripsPageTitle') }}
-    </h1>
-    <Calendar class="mt-6 -mx-4" />
+  <div class="h-full" :class="{ 'pt-48': !isCalendarExpanded, 'pt-[430px]': isCalendarExpanded }">
+    <header
+      class="absolute z-10 top-0 left-0 right-0 pt-4 px-4 bg-(--primary-white) dark:bg-(--primary-black-bg)"
+    >
+      <h1 class="text-3xl font-bold text-text dark:text-(--primary-white)">
+        {{ $t('tripsPageTitle') }}
+      </h1>
+      <Calendar class="mt-6 -mx-4" @toggle-expand="calendarExpandToggle" />
+    </header>
 
-    <div v-if="tripsStore.selectedDate" class="mt-6 space-y-4">
+    <div v-if="tripsStore.selectedDate" class="space-y-4 transition-all">
       <h2 class="text-xs font-semibold dark:text-(--primary-white)">
         {{ tripsStore.formatDate(tripsStore.selectedDate.toISOString()) }}
       </h2>
+
       <div v-if="tripsStore.filteredTrips.length !== 0" class="space-y-4">
         <TripCard
           v-for="trip in tripsStore.filteredTrips"
@@ -34,15 +43,12 @@ const openModal = () => addTripModalStore.openModal()
       <div v-else class="text-center opacity-40 py-5 dark:text-(--primary-white)">
         {{ $t('noTripsMessageTitle') }}
       </div>
-
-      <button
-        class="bg-(--primary-yellow) p-4 rounded-[15px] shadow-lg absolute bottom-28 right-5 overflow-hidden group transition cursor-pointer"
-        @click="openModal"
-      >
-        <IcPlus />
-      </button>
     </div>
+    <button
+      class="bg-(--primary-yellow) p-4 rounded-[15px] shadow-lg absolute bottom-28 right-5 overflow-hidden group transition cursor-pointer"
+      @click="openModal"
+    >
+      <IcPlus />
+    </button>
   </div>
 </template>
-
-<style scoped></style>

@@ -6,6 +6,19 @@ body {
   font-family: 'Open Sans', sans-serif;
 }
 
+html,
+body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  overscroll-behavior: none;
+  touch-action: none;
+}
+
+#__nuxt {
+  height: 100%;
+}
+
 @theme {
   /* colors */
   --primary-orange: #ff724c;

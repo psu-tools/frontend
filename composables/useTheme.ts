@@ -34,6 +34,30 @@ export function useTheme() {
       localStorage.removeItem('isSystemTheme')
       applyTheme(value)
     }
+    updateMetaThemeColor(value)
+  }
+
+  const updateMetaThemeColor = (value: 'light' | 'dark' | 'system') => {
+    const meta = document.querySelector('meta[name="theme-color"]')
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+
+    const color =
+      value === 'light'
+        ? '#ffffff'
+        : value === 'dark'
+          ? '#1f1f1f'
+          : prefersDark
+            ? '#1f1f1f'
+            : '#ffffff'
+
+    if (meta) {
+      meta.setAttribute('content', color)
+    } else {
+      const newMeta = document.createElement('meta')
+      newMeta.name = 'theme-color'
+      newMeta.content = color
+      document.head.appendChild(newMeta)
+    }
   }
 
   onMounted(() => {

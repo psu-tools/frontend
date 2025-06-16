@@ -16,7 +16,19 @@ const userInfoStore = useUserInfo()
 const isFullscreenRoute = computed(() => route.path === '/about')
 
 onMounted(async () => {
-  useTheme()
+  const { setTheme } = useTheme()
+
+  const isSystem = localStorage.getItem('isSystemTheme') === 'true'
+  const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null
+
+  if (isSystem) {
+    setTheme('system')
+  } else if (savedTheme) {
+    setTheme(savedTheme)
+  } else {
+    setTheme('light')
+  }
+
   await tripsStore.fetchTrips()
   userInfoStore.loadUserIdFromStorage()
   await userInfoStore.getUserInfo()
@@ -25,6 +37,9 @@ onMounted(async () => {
 
 <template>
   <VitePwaManifest />
+  <Head>
+    <meta name="theme-color" content="#ffffff" />
+  </Head>
   <div
     class="sm:flex sm:justify-between sm:items-center sm:px-10 lg:px-24 2xl:justify-center 2xl:gap-20 sm:h-screen sm:bg-gradient-to-br sm:from-[#f4f4f8] sm:to-(--primary-orange) dark:sm:from-black dark:to-(--primary-orange)"
   >
