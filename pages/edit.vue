@@ -6,6 +6,8 @@ import { useUserInfo } from '~/stores/userInfo'
 import IcUser from '~/icons/IcUser.vue'
 import EditFieldModal from '~/pages/editFieldModal.vue'
 import { useUploadImage } from '~/composables/useUploadImage'
+import AvatarCropper from '~/features/AvatarCropper.vue'
+import NoButtonsModal from '~/features/NoButtonsModal.vue'
 const userInfoStore = useUserInfo()
 
 const { uploadImage, imageUrl, error } = useUploadImage()
@@ -52,18 +54,32 @@ const handleModalSave = (newValue: string) => {
 }
 
 const fileInput = ref<HTMLInputElement | null>(null)
+const showCropper = ref(false)
+const selectedImage = ref<string | null>(null)
+const isImageUploading = ref<boolean>(false)
 
 const triggerFileInput = () => {
   fileInput.value?.click()
 }
 
-const handleFileChange = async (event: Event) => {
+const handleFileChange = (event: Event) => {
   const input = event.target as HTMLInputElement
   const file = input.files?.[0]
   if (!file) return
 
+  const reader = new FileReader()
+  reader.onload = () => {
+    selectedImage.value = reader.result as string
+    showCropper.value = true
+  }
+  reader.readAsDataURL(file)
+  input.value = ''
+}
+
+const handleCrop = async (croppedFile: File) => {
+  isImageUploading.value = true
   try {
-    await uploadImage(file)
+    await uploadImage(croppedFile)
 
     if (imageUrl.value) {
       await userInfoStore.updateUserInfo({
@@ -74,13 +90,27 @@ const handleFileChange = async (event: Event) => {
   } catch (err) {
     console.error('Ошибка при загрузке изображения:', err)
   } finally {
-    input.value = ''
+    showCropper.value = false
+    selectedImage.value = null
+    isImageUploading.value = false
   }
+}
+
+const handleCancelCrop = () => {
+  selectedImage.value = null
+  showCropper.value = false
 }
 </script>
 
 <template>
   <div class="pb-24">
+    <AvatarCropper
+      v-if="showCropper && selectedImage"
+      :image="selectedImage"
+      @cancel="handleCancelCrop"
+      @crop="handleCrop"
+    />
+    <NoButtonsModal :is-open="isImageUploading" :message="$t('loadingPleaseWait')" />
     <PagesTitle :title="$t('editing')" />
     <div class="mt-2.5 w-full flex items-center justify-center mb-[35px]">
       <div class="flex flex-col items-center gap-[10px]">
