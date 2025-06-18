@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import PrimaryOrangeButton from '~/shaared/ui/buttons/PrimaryOrangeButton.vue'
+import IcApp from '~/icons/IcApp.vue'
 
 useSeoMeta({
   title: 'Flow – всегда вовремя',
@@ -21,13 +22,9 @@ definePageMeta({
   <div
     class="here bg-(--primary-white) w-full min-h-screen xl:pt-[70px] lg:pt-[70px] pt-[40px] px-5 sm:px-10 md:px-16 lg:px-[180px] xl:px-[220px] 2xl:px-[240px] gap-[70px] flex flex-col justify-between items-center"
   >
-    <div class="xl:w-[80px] lg:w-[80px] w-[40px]">
+    <div class="mx-auto">
       <NuxtLink to="/">
-        <NuxtImg
-          src="/web-app-manifest-192x192.png"
-          class="bg-gradient-to-b from-(--smoke-gray) to-[#EBEBEB] h-20 w-20 rounded-(--radius-2xl) mt-1.5"
-          alt="Flow logo"
-        />
+        <IcApp :height="80" :width="80" />
       </NuxtLink>
     </div>
     <div
