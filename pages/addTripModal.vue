@@ -11,6 +11,7 @@ import PrimaryYellowButton from '~/shaared/ui/buttons/PrimaryYellowButton.vue'
 import BottomSheetBottomBar from '~/shaared/ui/BottomSheetBottomBar.vue'
 import { useUserPointsStore } from '~/stores/userPoints'
 import AddTripFirstStep from '~/pages/addTripFirstStep.vue'
+import ErrorModal from '~/features/ErrorModal.vue'
 
 const { fetchUserPoints } = useUserPointsStore()
 const addTripModalStore = useAddTripModalStore()
@@ -31,13 +32,15 @@ const closeModal = () => {
   isVisible.value = false
   setTimeout(() => {
     addTripModalStore.closeModal()
-  }, 1000)
+  }, 50)
 }
 
 const isDayMonthYearPopupOpen = ref(false)
 const isTimePopupOpen = ref(false)
 const isReminderPopupOpen = ref(false)
 const isStopTimePopupOpen = ref(false)
+
+const hasFormSendingError = ref<boolean>(false)
 
 const toggleDayMonthYearPopup = () =>
   (isDayMonthYearPopupOpen.value = !isDayMonthYearPopupOpen.value)
@@ -122,13 +125,16 @@ watch(
   }
 )
 
-const sendForm = () => {
-  tripFormStore.sendForm().then(() => {
+const sendForm = async () => {
+  const success = await tripFormStore.sendForm()
+  if (!success) {
+    hasFormSendingError.value = true
+  } else {
     closeModal()
     addTripModalStore.closeModal()
     tripFormStore.clearForm()
     partOfForm.value = 1
-  })
+  }
 }
 </script>
 
@@ -137,7 +143,6 @@ const sendForm = () => {
     v-show="addTripModalStore.isModalOpen"
     class="absolute inset-0 z-20 flex justify-center items-end bg-black/20 transition-opacity duration-300"
     :class="{ 'opacity-100': isVisible, 'opacity-0': !isVisible }"
-    @click.self="closeModal"
   >
     <div
       class="w-full bg-(--primary-white-bg) dark:bg-(--primary-black-bg) items-end rounded-t-3xl px-5 transition-all duration-300 touch-none overflow-auto scrollbar-hide pb-[120px]"
@@ -152,9 +157,17 @@ const sendForm = () => {
       @touchmove="onTouchMove"
       @touchend="onTouchEnd"
     >
+      <ErrorModal
+        class="absolute z-50"
+        :is-open="hasFormSendingError"
+        :message="$t('addingTripError')"
+        :description="$t('availableOnlyInRussia')"
+        button-text="OK"
+        @on-click="hasFormSendingError = false"
+      />
+
       <AddTripFirstStep
         v-if="!isPointSelectorOpen && partOfForm === 1"
-        @toggle-expand="toggleExpand"
         @close-modal="closeModal"
         @on-click-stop-point="onClickStopPoint"
         @open-point-selector="openPointSelector"
@@ -179,7 +192,7 @@ const sendForm = () => {
               </button>
               <input
                 type="text"
-                placeholder="Название поездки"
+                :placeholder="$t('tripNamePlaceholder')"
                 class="text-2xl font-bold text-(--color-text) dark:text-(--primary-white) outline-none caret-(--primary-orange)"
                 v-model="tripFormStore.tripName"
               />

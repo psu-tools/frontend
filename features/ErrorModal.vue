@@ -23,7 +23,7 @@ const emit = defineEmits<{
       >
         <IcWarning />
         <p
-          class="px-8 text-center mt-[15px] text-(--color-text) dark:text-(--primary-white) font-semibold text-sm"
+          class="px-8 text-center mt-[15px] text-(--color-text) dark:text-(--primary-white) font-semibold text-sm leading-4.5"
         >
           {{ message }}
         </p>

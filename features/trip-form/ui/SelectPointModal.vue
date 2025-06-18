@@ -14,11 +14,11 @@ const touchStartY = ref(0)
 const touchMoveY = ref(0)
 
 const closeModal = () => {
-  isExpanded.value = false
-  isVisible.value = false
+  // isExpanded.value = false
+  // isVisible.value = false
   setTimeout(() => {
     emit('close')
-  }, 300)
+  }, 50)
 }
 
 const toggleExpand = () => (isExpanded.value = !isExpanded.value)
@@ -62,7 +62,6 @@ onMounted(() => {
     <div
       class="absolute inset-0 z-10 flex justify-center items-end bg-black/20 transition-opacity duration-300"
       :class="{ 'opacity-100': isVisible, 'opacity-0': !isVisible }"
-      @click.self="closeModal"
     >
       <div
         class="w-full bg-(--primary-white-bg) dark:bg-(--primary-black-bg) rounded-t-3xl px-5 transition-all duration-300 touch-none overflow-auto scrollbar-hide"

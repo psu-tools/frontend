@@ -78,5 +78,7 @@
   "selectOnMap": "Выбрать на карте",
   "selectPointOnMap": "Выбрать точку на карте",
   "selectedPoint": "Выбранная точка",
-  "loadingPleaseWait": "Загрузка. Пожалуйста, подождите"
+  "loadingPleaseWait": "Загрузка. Пожалуйста, подождите",
+  "addingTripError": "Ошибка добавления поездки",
+  "availableOnlyInRussia": "Сервис доступен только на территории России"
 }

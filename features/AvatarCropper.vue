@@ -26,10 +26,12 @@ const onCrop = () => {
 </script>
 
 <template>
-  <div class="absolute inset-0 bg-black/40 flex items-center justify-center z-10">
-    <div class="bg-white rounded-(--radius-2xl) overflow-hidden w-[90%] max-w-md">
+  <div class="absolute inset-0 bg-black/60 flex items-center justify-center z-10">
+    <div
+      class="bg-(--primary-white) dark:bg-(--primary-black-bg) rounded-(--radius-2xl) overflow-hidden w-[90%] max-w-md"
+    >
       <Cropper
-        class="w-full h-[300px]"
+        class="w-full h-[350px]"
         :src="image"
         :stencil-props="{ aspectRatio: 1, movable: true, previewClass: 'preview' }"
         :stencil-component="CircleStencil"

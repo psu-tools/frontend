@@ -78,5 +78,7 @@
   "selectOnMap": "Select on map",
   "selectPointOnMap": "Select point on map",
   "selectedPoint": "Selected point",
-  "loadingPleaseWait": "Loading. Please wait"
+  "loadingPleaseWait": "Loading. Please wait",
+  "addingTripError": "Error adding trip",
+  "availableOnlyInRussia": "The service is available only in Russia"
 }
