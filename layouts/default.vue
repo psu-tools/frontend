@@ -1,7 +1,31 @@
 <script setup lang="ts">
 import Navbar from '~/widgets/navbar/Navbar.vue'
+import { useTripsStore } from '~/stores/trips'
+import { useUserInfo } from '~/stores/userInfo'
 
 const route = useRoute()
+
+const tripsStore = useTripsStore()
+const userInfoStore = useUserInfo()
+
+onMounted(async () => {
+  const { setTheme } = useTheme()
+
+  const isSystem = localStorage.getItem('isSystemTheme') === 'true'
+  const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null
+
+  if (isSystem) {
+    setTheme('system')
+  } else if (savedTheme) {
+    setTheme(savedTheme)
+  } else {
+    setTheme('light')
+  }
+
+  await tripsStore.fetchTrips()
+  userInfoStore.loadUserIdFromStorage()
+  await userInfoStore.getUserInfo()
+})
 </script>
 
 <template>

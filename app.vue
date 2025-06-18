@@ -2,38 +2,14 @@
 import TripPopup from '~/pages/tripPopup.vue'
 import AddTripModal from '~/pages/addTripModal.vue'
 import YandexMaps from '~/pages/yandexMaps.vue'
-
-import { useTripsStore } from '~/stores/trips'
 import { NuxtLayout } from '#components'
 import { useYandexMapsModalStore } from '~/stores/yandexMaps'
-import { useUserInfo } from '~/stores/userInfo'
 import IcApp from '~/icons/IcApp.vue'
 
 const route = useRoute()
-const tripsStore = useTripsStore()
 const yandexMapsModalStore = useYandexMapsModalStore()
-const userInfoStore = useUserInfo()
 
 const isFullscreenRoute = computed(() => route.path === '/about')
-
-onMounted(async () => {
-  const { setTheme } = useTheme()
-
-  const isSystem = localStorage.getItem('isSystemTheme') === 'true'
-  const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null
-
-  if (isSystem) {
-    setTheme('system')
-  } else if (savedTheme) {
-    setTheme(savedTheme)
-  } else {
-    setTheme('light')
-  }
-
-  await tripsStore.fetchTrips()
-  userInfoStore.loadUserIdFromStorage()
-  await userInfoStore.getUserInfo()
-})
 </script>
 
 <template>
@@ -67,8 +43,6 @@ onMounted(async () => {
         :is="isFullscreenRoute ? 'div' : NuxtLayout"
         :class="isFullscreenRoute ? '' : 'sm:rounded-3xl sm:shadow-2xl sm:mx-auto overflow-hidden'"
       >
-        <!--        <NuxtLink :to="$switchLocalePath('en')">English</NuxtLink>-->
-        <!--        <NuxtLink :to="$switchLocalePath('ru')">Русский</NuxtLink>-->
         <NuxtPage />
         <TripPopup v-if="!isFullscreenRoute" />
         <AddTripModal v-if="!isFullscreenRoute" />
