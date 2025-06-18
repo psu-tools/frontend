@@ -10,6 +10,22 @@ const route = useRoute()
 const yandexMapsModalStore = useYandexMapsModalStore()
 
 const isFullscreenRoute = computed(() => route.path === '/about')
+
+useHead({
+  meta: [
+    { property: 'og:type', content: 'website' },
+    { property: 'og:url', content: 'https://flow.psu-tools.ru/' },
+    { property: 'og:title', content: 'Flow — всегда вовремя' },
+    {
+      property: 'og:description',
+      content: 'Планируйте путешествия с Flow: поиск мест, маршрутов и напоминания о поездках',
+    },
+    { property: 'og:image', content: 'https://ibb.co/qMyk8gLC' },
+    { property: 'og:image:type', content: 'image/jpeg' },
+    { property: 'og:image:width', content: '1200' },
+    { property: 'og:image:height', content: '630' },
+  ],
+})
 </script>
 
 <template>
