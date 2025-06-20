@@ -60,7 +60,7 @@ onMounted(() => {
       </div>
     </div>
     <div ref="sentinel" class="h-1"></div>
-    <div v-if="loading" class="mt-4 text-center">Загрузка...</div>
+    <div v-if="loading" class="mt-4 text-center">{{ $t('loadingMessage') }}</div>
     <div v-if="error" class="mt-4 text-center text-red-500">{{ error }}</div>
   </div>
 </template>
