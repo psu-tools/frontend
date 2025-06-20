@@ -24,7 +24,6 @@ onMounted(async () => {
 
   await tripsStore.fetchTrips()
   userInfoStore.loadUserIdFromStorage()
-  await userInfoStore.getUserInfo()
 })
 </script>
 
