@@ -51,7 +51,6 @@ export function useAuth() {
       refreshToken.value = response.refresh_token
 
       navigateTo('/')
-      await tripsStore.fetchTrips()
 
       return true
     } catch (e: any) {
@@ -84,6 +83,7 @@ export function useAuth() {
 
       accessToken.value = response.access_token
       refreshToken.value = response.refresh_token
+
       return true
     } catch (e) {
       console.error('Ошибка обновления токена:', e)
@@ -95,8 +95,8 @@ export function useAuth() {
     const localePath = useLocalePath()
     accessToken.value = null
     refreshToken.value = null
-    navigateTo(localePath('/welcome'))
     localStorage.removeItem('userId')
+    navigateTo(localePath('/welcome'))
     return true
   }
 
