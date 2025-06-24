@@ -28,9 +28,10 @@ const sendForm = async () => {
   //   errorDescription.value = 'Попробуйте позже'
   //   hasError.value = true
   // }
-  errorMessage.value = 'Регистрация недоступна'
-  errorDescription.value = 'Зарегистрируйтесь после демо'
-  hasError.value = true
+  setTimeout(() => {
+    errorMessage.value = 'Регистрация временно недоступна'
+    hasError.value = true
+  }, 1000)
 }
 </script>
 

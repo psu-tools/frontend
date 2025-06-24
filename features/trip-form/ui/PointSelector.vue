@@ -209,7 +209,7 @@ watch(
         v-if="favoritePoints && favoritePoints.length > 0 && !props.showMyAddresses"
       >
         <h2 class="font-semibold text-(--color-text) dark:text-(--primary-white) mb-1">
-          Мои адреса
+          {{ $t('myAddresses') }}
         </h2>
         <div
           v-for="(point, index) in favoritePoints"
